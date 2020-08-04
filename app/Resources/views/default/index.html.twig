@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+{% block title %} Quali-Hope3k | Document {% endblock %}
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/jquery-ui.custom.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/chosen.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datepicker3.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-timepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/daterangepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datetimepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-colorpicker.min.css"/>
+        <style type="text/css">
+
+
+            .label-file {
+                cursor: pointer;
+                color: #00b1ca;
+                font-weight: bold;
+            }
+
+            .label-file:hover {
+                color: #25a5c4;
+            }
+
+            .input-file {
+                display: none;
+            }
+        </style>
+
+    {% endblock %}
+   {% block menu %}  <a href="{{ path('homepage') }}">Document</a>   {% endblock %}
+
+   {% block menu_active %}    Ajouter un document {% endblock %}
+{% block content %}
+
+    <div class="col-md-10  widget-container-col ui-sortable" id="widget-container-col-1">
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Ajouter nouveau document :</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="#" data-action="settings" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">
+                            <li>
+                                <a data-toggle="tab" href="#dropdown1">Option#1</a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#dropdown2">Option#2</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+                    <a href="#" data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+
+    {{ parent() }}
+    <script src=" {{ asset('') }}assets/js/jquery-ui.custom.min.js"></script>
+    <script src="{{ asset('') }}assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="{{ asset('') }}assets/js/chosen.jquery.min.js"></script>
+    <script src="{{ asset('') }}assets/js/spinbox.min.js"></script>
+    <script src="{{ asset('') }}assets/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{ asset('') }}assets/js/bootstrap-timepicker.min.js"></script>
+    <script src="{{ asset('') }}assets/js/moment.min.js"></script>
+    <script src="{{ asset('') }}assets/js/daterangepicker.min.js"></script>
+    <script src="{{ asset('') }}assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="{{ asset('') }}assets/js/bootstrap-colorpicker.min.js"></script>
+    <script src="{{ asset('') }}assets/js/jquery.knob.min.js"></script>
+    <script src="{{ asset('') }}assets/js/autosize.min.js"></script>
+    <script src="{{ asset('') }}assets/js/jquery.inputlimiter.min.js"></script>
+    <script src="{{ asset('') }}assets/js/jquery.maskedinput.min.js"></script>
+    <script src="{{ asset('') }}assets/js/bootstrap-tag.min.js"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+
+    <script type="text/javascript">
+
+
+
+    </script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

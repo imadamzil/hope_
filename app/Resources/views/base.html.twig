@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>{% block title %}Qualiso - Hope3k{% endblock %}</title>
+
+    {% block stylesheets %}
+
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('assets/font-awesome/4.5.0/css/font-awesome.min.css') }}"/>
+
+
+        <!-- page specific plugin styles -->
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/jquery-ui.custom.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/chosen.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datepicker3.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-timepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/daterangepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datetimepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-colorpicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/jquery-ui.custom.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/jquery-ui.min.css"/>
+
+
+
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/fonts.googleapis.com.css"/>
+
+
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/ace.min.css" class="ace-main-stylesheet"
+              id="main-ace-style"/>
+
+        {#<!--  <link rel="stylesheet" href="{{ asset('') }}assets/css/ace-skins.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/ace-rtl.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/main.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/chosen.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/Datatable.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/Datepicker.css"/>
+    -->#}
+
+
+        <script src="{{ asset('assets/js/ace-extra.min.js') }}"></script>
+
+        <script src="{{ asset('assets/js/jquery-2.1.4.min.js') }}"></script>
+        <script src="{{ asset('assets/js/main.js') }}"></script>
+
+
+        <style>
+            #loading {
+                background-color: #350db5;
+                height: 100%;
+                width: 100%;
+                position: fixed;
+                z-index: 1;
+                margin-top: 0px;
+                top: 0px;
+            }
+
+            #loading-center {
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
+
+            #loading-center-absolute {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                height: 200px;
+                width: 200px;
+                margin-top: -100px;
+                margin-left: -100px;
+            }
+
+            .object {
+                width: 50px;
+                height: 50px;
+                background-color: rgba(255, 255, 255, 0);
+                margin-right: auto;
+                margin-left: auto;
+                border: 4px solid #FFF;
+                left: 73px;
+                top: 73px;
+                position: absolute;
+            }
+
+            #first_object {
+                -webkit-animation: first_object_animate 1s infinite ease-in-out;
+                animation: first_object_animate 1s infinite ease-in-out;
+            }
+
+            #second_object {
+                -webkit-animation: second_object 1s forwards, second_object_animate 1s infinite ease-in-out;
+                animation: second_object 1s forwards, second_object_animate 1s infinite ease-in-out;
+            }
+
+            #third_object {
+                -webkit-animation: third_object 1s forwards, third_object_animate 1s infinite ease-in-out;
+                animation: third_object 1s forwards, third_object_animate 1s infinite ease-in-out;
+            }
+
+            @-webkit-keyframes second_object {
+                100% {
+                    width: 100px;
+                    height: 100px;
+                    left: 48px;
+                    top: 48px;
+                }
+            }
+
+            @keyframes second_object {
+                100% {
+                    width: 100px;
+                    height: 100px;
+                    left: 48px;
+                    top: 48px;
+                }
+            }
+
+            @-webkit-keyframes third_object {
+                100% {
+                    width: 150px;
+                    height: 150px;
+                    left: 23px;
+                    top: 23px;
+                }
+            }
+
+            @keyframes third_object {
+                100% {
+                    width: 150px;
+                    height: 150px;
+                    left: 23px;
+                    top: 23px;
+                }
+            }
+
+            @-webkit-keyframes first_object_animate {
+                0% {
+                    -webkit-transform: perspective(100px);
+                }
+                50% {
+                    -webkit-transform: perspective(100px) rotateY(-180deg);
+                }
+                100% {
+                    -webkit-transform: perspective(100px) rotateY(-180deg) rotateX(-180deg);
+                }
+            }
+
+            @keyframes first_object_animate {
+                0% {
+                    transform: perspective(100px) rotateX(0deg) rotateY(0deg);
+                    -webkit-transform: perspective(100px) rotateX(0deg) rotateY(0deg);
+                }
+                50% {
+                    transform: perspective(100px) rotateX(-180deg) rotateY(0deg);
+                    -webkit-transform: perspective(100px) rotateX(-180deg) rotateY(0deg);
+                }
+                100% {
+                    transform: perspective(100px) rotateX(-180deg) rotateY(-180deg);
+                    -webkit-transform: perspective(100px) rotateX(-180deg) rotateY(-180deg);
+                }
+            }
+
+            @-webkit-keyframes second_object_animate {
+                0% {
+                    -webkit-transform: perspective(200px);
+                }
+                50% {
+                    -webkit-transform: perspective(200px) rotateY(180deg);
+                }
+                100% {
+                    -webkit-transform: perspective(200px) rotateY(180deg) rotateX(180deg);
+                }
+            }
+
+            @keyframes second_object_animate {
+                0% {
+                    transform: perspective(200px) rotateX(0deg) rotateY(0deg);
+                    -webkit-transform: perspective(200px) rotateX(0deg) rotateY(0deg);
+                }
+                50% {
+                    transform: perspective(200px) rotateX(180deg) rotateY(0deg);
+                    -webkit-transform: perspective(200px) rotateX(180deg) rotateY(0deg);
+                }
+                100% {
+                    transform: perspective(200px) rotateX(180deg) rotateY(180deg);
+                    -webkit-transform: perspective(200px) rotateX(180deg) rotateY(180deg);
+                }
+            }
+
+            @-webkit-keyframes third_object_animate {
+                0% {
+                    -webkit-transform: perspective(300px);
+                }
+                50% {
+                    -webkit-transform: perspective(300px) rotateY(-180deg);
+                }
+                100% {
+                    -webkit-transform: perspective(300px) rotateY(-180deg) rotateX(-180deg);
+                }
+            }
+
+            @keyframes third_object_animate {
+                0% {
+                    transform: perspective(300px) rotateX(0deg) rotateY(0deg);
+                    -webkit-transform: perspective(300px) rotateX(0deg) rotateY(0deg);
+                }
+                50% {
+                    transform: perspective(300px) rotateX(-180deg) rotateY(0deg);
+                    -webkit-transform: perspective(300px) rotateX(-180deg) rotateY(0deg);
+                }
+                100% {
+                    transform: perspective(300px) rotateX(-180deg) rotateY(-180deg);
+                    -webkit-transform: perspective(300px) rotateX(-180deg) rotateY(-180deg);
+                }
+            }
+
+
+        </style>
+
+
+
+    {% endblock %}
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+    <script src="{{ asset('') }}assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="{{ asset('') }}assets/js/html5shiv.min.js"></script>
+    <script src="{{ asset('') }}assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="no-skin">
+
+
+{#
+{% set notifications = app.session.get('notifications') %}
+#}
+{% set notifications = app.session.get('notifications') %}
+
+
+<div id="loading">
+    <div id="loading-center">
+        <div id="loading-center-absolute">
+            <div class="object" id="first_object"></div>
+            <div class="object" id="second_object"></div>
+            <div class="object" id="third_object"></div>
+
+        </div>
+    </div>
+
+</div>
+<div id="navbar" class="navbar navbar-default  ace-save-state">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            <a href="{{ path('homepage') }}" class="navbar-brand">
+                <small>
+                    <span> Qualiso</span>
+
+                </small>
+            </a>
+        </div>
+        {% if app.user is not null %}
+
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+
+                    <li class="purple dropdown-modal">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="ace-icon fa fa-bell icon-animated-bell"></i>
+                            <span class="badge badge-important">{{ notifications|length }}</span>
+                        </a>
+
+                        <ul class="dropdown-menu-right dropdown-navbar navbar-grey dropdown-menu dropdown-caret dropdown-close">
+                            <li class="dropdown-header" style="width: auto;">
+                                <i class="ace-icon fa fa-exclamation-triangle"></i>
+                                {{ notifications|length }} Notifications
+                            </li>
+
+                            <li class="dropdown-content" style="width: auto;">
+                                <ul class="dropdown-menu dropdown-navbar navbar-pink" id="notification">
+                                    {% for notification in notifications %}
+                                        <li class="">
+                                            <a href="{{ path(notification.path,{'id':notification.idd}) }}">
+                                                <div class="clearfix">
+													<span class="pull-left">
+                                                        <span class="blue"><b>[{{ notification.tab }}]</b></span>
+                                                        <span class="blue"><span></span></span>  <em>{{ notification.labelle }}</em>
+                                                    </span>
+
+                                                    <span class="pull-right green"><em>{{ notification.date |date('d/m/Y | H:i') }}</em></span>
+                                                </div>
+                                            </a>
+
+                                        </li>
+                                    {% endfor %}
+
+
+                                </ul>
+                            </li>
+
+                            <li class="dropdown-footer">
+                                <a href="{{ path('homepage') }}">
+                                    Voir tous
+                                    <i class="ace-icon fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="green dropdown-modal">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+                            <span class="badge badge-success">5</span>
+                        </a>
+
+                        <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+                            <li class="dropdown-header">
+                                <i class="ace-icon fa fa-envelope-o"></i>
+                                5 Messages
+                            </li>
+
+                            <li class="dropdown-content">
+                                <ul class="dropdown-menu dropdown-navbar">
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <img src="{{ asset('') }}assets/images/avatars/avatar.png" class="msg-photo"
+                                                 alt="Alex's Avatar"/>
+                                            <span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Alex:</span>
+														Ciao sociis natoque penatibus et auctor ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>a moment ago</span>
+													</span>
+												</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <img src="{{ asset('') }}assets/images/avatars/avatar3.png"
+                                                 class="msg-photo"
+                                                 alt="Susan's Avatar"/>
+                                            <span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Susan:</span>
+														Vestibulum id ligula porta felis euismod ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>20 minutes ago</span>
+													</span>
+												</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <img src="{{ asset('') }}assets/images/avatars/avatar4.png"
+                                                 class="msg-photo"
+                                                 alt="Bob's Avatar"/>
+                                            <span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Bob:</span>
+														Nullam quis risus eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>3:15 pm</span>
+													</span>
+												</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <img src="{{ asset('') }}assets/images/avatars/avatar2.png"
+                                                 class="msg-photo"
+                                                 alt="Kate's Avatar"/>
+                                            <span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Kate:</span>
+														Ciao sociis natoque eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>1:33 pm</span>
+													</span>
+												</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <img src="{{ asset('') }}assets/images/avatars/avatar5.png"
+                                                 class="msg-photo"
+                                                 alt="Fred's Avatar"/>
+                                            <span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Fred:</span>
+														Vestibulum id penatibus et auctor  ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>10:09 am</span>
+													</span>
+												</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown-footer">
+                                <a href="inbox.html">
+                                    See all messages
+                                    <i class="ace-icon fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="light-blue dropdown-modal">
+
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <img class="nav-user-photo" src="{{ asset('') }}assets/images/avatars/user.jpg"
+                                 alt="Jason's Photo"/>
+                            <span class="user-info">
+									<small>Bonjour,</small>
+                                {{ app.user.username }}
+								</span>
+
+                            <i class="ace-icon fa fa-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="#">
+                                    <i class="ace-icon fa fa-cog"></i>
+                                    Settings
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ path('fos_user_profile_edit') }}">
+                                    <i class="ace-icon fa fa-user"></i>
+                                    Profile
+                                </a>
+                            </li>
+
+                            <li class="divider"></li>
+
+                            <li>
+                                <a href="{{ path('fos_user_security_logout') }}">
+                                    <i class="ace-icon fa fa-power-off"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        {% else %}
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+
+
+                    <li class="light-blue dropdown-modal">
+
+                        <a href="{{ path('fos_user_security_login') }}" class="">
+
+                            <span class="">
+							Login
+
+								</span>
+
+                            <i class=" fa fa-sign-in"></i>
+                        </a>
+
+                    </li>
+                </ul>
+            </div>        {% endif %}
+    </div><!-- /.navbar-container -->
+</div>
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+
+    <div id="sidebar" class="sidebar responsive ace-save-state">
+        <script type="text/javascript">
+            try {
+                ace.settings.loadState('sidebar')
+            } catch (e) {
+            }
+        </script>
+
+        <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                <button class="btn btn-success">
+                    <i class="ace-icon fa fa-signal"></i>
+                </button>
+
+                <button class="btn btn-info">
+                    <i class="ace-icon fa fa-pencil"></i>
+                </button>
+
+                <button class="btn btn-warning">
+                    <i class="ace-icon fa fa-users"></i>
+                </button>
+
+                <button class="btn btn-danger">
+                    <i class="ace-icon fa fa-cogs"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                <span class="btn btn-success"></span>
+
+                <span class="btn btn-info"></span>
+
+                <span class="btn btn-warning"></span>
+
+                <span class="btn btn-danger"></span>
+            </div>
+        </div><!-- /.sidebar-shortcuts -->
+
+        <ul class="nav nav-list">
+            <li class="">
+                <a href="{{ path('homepage') }}">
+                    <i class="menu-icon fa fa-tachometer"></i>
+                    <span class="menu-text"> Dashboard </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-desktop"></i>
+                    <span class="menu-text">
+								SMQ
+							</span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+
+                    <li class="">
+                        <a href="">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Politique qualité
+
+                        </a>
+
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Déploiement des objectifs </a>
+
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-caret-right"></i>
+
+                            Ecoute Client
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Fiche réclamation client
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Enquêtes Client
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Réponses Client
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-caret-right"></i>
+
+                            Processus <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="{{ path('homepage') }}">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Cartographie des processus </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Tableau des interractions </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a href="{{ path('homepage') }}">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Fiche processus </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Fiche Indicateur
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Liste des indicateurs
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Fiche non conformité
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-caret-right"></i>
+
+                            Audit
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Programme audit </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Recherche plans d'audit </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a href="two-menu-1.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Recherche rapport d'audit </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Recherche remarques d'audit
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Revue de direction
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-caret-right"></i>
+
+                            Gestion des risques
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    S.W.O.T </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Cartographie des risques </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Fiche risque </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-caret-right"></i>
+
+                            Fournisseur
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Evaluation fournisseur</a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-caret-right"></i>
+
+                            Parties prenantes
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Identification partie prenante </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Exigence </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Base de connaissance
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
+
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-list"></i>
+                    <span class="menu-text"> RH </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-tag"></i>
+                            <span class="menu-text"> Formations</span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="profile.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    calendrier des séances </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Calendrier des formations
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+                </ul>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-tag"></i>
+                    <span class="menu-text"> Plan des Actions </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a href="profile.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Plan d'action </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
+                    <li class="">
+                        <a href="inbox.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Recherche actions
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
+                    <li class="">
+                        <a href="pricing.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Recherche tache
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
+
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-file"></i>
+                    <span class="menu-text"> Document </span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+
+                    <li class="">
+                        <a href="{{ path('homepage') }}">
+                            <i class=" fa fa-list"></i>
+                            Liste des documents
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('homepage') }}">
+                            <i class=" fa fa-plus-circle"></i>
+                            Ajouter un document
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+
+                        <li class="">
+                            <a href="{{ path('homepage') }}">
+                                <i class=" fa fa-barcode"></i>
+                                Code du document
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{ path('homepage') }}">
+                                <i class="fa fa-calendar"></i>
+                                Durée de stockage
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{ path('homepage') }}">
+                                <i class=" fa fa-cloud"></i>
+                                Lieu de stockage
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{ path('homepage') }}">
+                                <i class=" fa fa-cogs"></i>
+                                Service
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{ path('homepage') }}">
+                                <i class=" fa fa-exclamation-circle"></i>
+                                Statut
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{ path('homepage') }}">
+                                <i class="fa fa-reorder"></i>
+                                Type du document
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{ path('homepage') }}">
+                                <i class="fa fa-globe"></i>
+                                Norme
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{ path('homepage') }}">
+                                <i class="fa fa-reorder"></i>
+                                Groupe pilote
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="">
+                            <a href="{{ path('homepage') }}">
+                                <i class="fa fa-tags"></i>
+                                Type de processus
+                            </a>
+
+                            <b class="arrow"></b>
+                        </li>
+
+                    {% endif %}
+                </ul>
+            </li>
+
+
+        </ul><!-- /.nav-list -->
+
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+               data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">Home</a>
+                    </li>
+
+                    <li>
+                        {% block menu %}     {% endblock %}
+                    </li>
+                    <li class="active">{% block menu_active %}{% endblock %}</li>
+                </ul><!-- /.breadcrumb -->
+
+
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input"
+                                           id="nav-search-input" autocomplete="off"/>
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+                    </form>
+                </div><!-- /.nav-search -->
+            </div>
+
+            <div class="page-content">
+                <div class="ace-settings-container" id="ace-settings-container">
+                    <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+                        <i class="ace-icon fa fa-cog bigger-130"></i>
+                    </div>
+
+                    <div class="ace-settings-box clearfix" id="ace-settings-box">
+                        <div class="pull-left width-50">
+                            <div class="ace-settings-item">
+                                <div class="pull-left">
+                                    <select id="skin-colorpicker" class="hide">
+                                        <option data-skin="no-skin" value="#438EB9">#438EB9</option>
+                                        <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+                                        <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+                                        <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+                                    </select>
+                                </div>
+                                <span>&nbsp; Choose Skin</span>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2 ace-save-state"
+                                       id="ace-settings-navbar" autocomplete="off"/>
+                                <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2 ace-save-state"
+                                       id="ace-settings-sidebar" autocomplete="off"/>
+                                <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2 ace-save-state"
+                                       id="ace-settings-breadcrumbs" autocomplete="off"/>
+                                <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl"
+                                       autocomplete="off"/>
+                                <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2 ace-save-state"
+                                       id="ace-settings-add-container" autocomplete="off"/>
+                                <label class="lbl" for="ace-settings-add-container">
+                                    Inside
+                                    <b>.container</b>
+                                </label>
+                            </div>
+                        </div><!-- /.pull-left -->
+
+                        <div class="pull-left width-50">
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover"
+                                       autocomplete="off"/>
+                                <label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact"
+                                       autocomplete="off"/>
+                                <label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+                            </div>
+
+                            <div class="ace-settings-item">
+                                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight"
+                                       autocomplete="off"/>
+                                <label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+                            </div>
+                        </div><!-- /.pull-left -->
+                    </div><!-- /.ace-settings-box -->
+                </div><!-- /.ace-settings-container -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        {% block content1 %} {% endblock %}
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="row">
+
+                                    {% block content %} {% endblock %}
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+    <div class="footer">
+        <div class="footer-inner">
+            <div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">Quali</span>
+							Hope3k &copy; 2018
+						</span>
+
+                &nbsp; &nbsp;
+                <span class="action-buttons">
+							<a href="#">
+								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+							</a>
+						</span>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+{% block javascripts %}
+
+    <script src="{{ asset('') }}assets/js/jquery-2.1.4.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='{{ asset('') }}assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+
+    <script src="{{ asset('') }}assets/js/bootstrap.min.js"></script>
+
+    <!-- page specific plugin scripts -->
+    <script src="{{ asset('') }}assets/js/pdfobject.js"></script>
+
+
+    <!-- ace scripts -->
+    <script src="{{ asset('') }}assets/js/ace-elements.min.js"></script>
+    <script src="{{ asset('') }}assets/js/ace.min.js"></script>
+{% endblock %}
+<!-- inline scripts related to this page -->
+<script src=" {{ asset('') }}assets/js/jquery-ui.custom.min.js"></script>
+<script src="{{ asset('') }}assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="{{ asset('') }}assets/js/chosen.jquery.min.js"></script>
+<script src="{{ asset('') }}assets/js/spinbox.min.js"></script>
+<script src="{{ asset('') }}assets/js/bootstrap-datepicker.min.js"></script>
+<script src="{{ asset('') }}assets/js/bootstrap-timepicker.min.js"></script>
+<script src="{{ asset('') }}assets/js/moment.min.js"></script>
+<script src="{{ asset('') }}assets/js/daterangepicker.min.js"></script>
+<script src="{{ asset('') }}assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="{{ asset('') }}assets/js/bootstrap-colorpicker.min.js"></script>
+<script src="{{ asset('') }}assets/js/jquery.knob.min.js"></script>
+<script src="{{ asset('') }}assets/js/autosize.min.js"></script>
+<script src="{{ asset('') }}assets/js/jquery.inputlimiter.min.js"></script>
+<script src="{{ asset('') }}assets/js/jquery-ui.min.js"></script>
+
+<script src="{{ asset('') }}assets/js/jquery.maskedinput.min.js"></script>
+<script src="{{ asset('') }}assets/js/bootstrap-tag.min.js"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('#ace-settings-compact').click();
+
+        function ajax() {
+            var url = Routing.generate('notification_all');
+            $.ajax({
+                type: "POST",
+                data: {}, // no need to stringify the data, jquery does it for you
+                url: url,
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+                    $.each(response, function (index, element) {
+
+                        {# $('#notification').append( '<li class=""> <a href="'+{{ path(notification.path,{'+'id':notification.idd}) }}">
+                             <div class="clearfix">
+                             <span class="pull-left">
+                             <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
+                                 {{ notification.labelle }}
+                             </span>
+                             <span class="pull-right badge badge-info">+12</span>
+                             </div>
+                             </a>
+                             </li>)#}
+                        notifications = null;
+                        notifications = response;
+
+
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+            setInterval(function () {
+                ajax() // this will run after every 5 seconds
+            }, 12000000);
+        }
+
+        ajax();
+    });
+
+
+</script>
+</body>
+</html>
