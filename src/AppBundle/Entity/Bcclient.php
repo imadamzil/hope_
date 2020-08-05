@@ -60,7 +60,7 @@ class Bcclient
      */
     private $client;
 
-/**
+    /**
      * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="bcclient")
      * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
      */
@@ -172,6 +172,7 @@ class Bcclient
     {
         return $this->nbJrsR;
     }
+
     /**
      * Constructor
      */
