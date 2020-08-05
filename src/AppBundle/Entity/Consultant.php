@@ -70,6 +70,11 @@ class Consultant
      */
     private $adresse;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="consultant",cascade={"persist", "remove"})
+     */
+    private $mission;
+
 
     /**
      * Get id
@@ -248,5 +253,45 @@ class Consultant
     {
         return $this->adresse;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->mission = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     *
+     * @return Consultant
+     */
+    public function addMission(\AppBundle\Entity\Mission $mission)
+    {
+        $this->mission[] = $mission;
+
+        return $this;
+    }
+
+    /**
+     * Remove mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     */
+    public function removeMission(\AppBundle\Entity\Mission $mission)
+    {
+        $this->mission->removeElement($mission);
+    }
+
+    /**
+     * Get mission
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMission()
+    {
+        return $this->mission;
+    }
+}

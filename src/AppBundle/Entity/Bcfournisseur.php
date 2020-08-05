@@ -156,4 +156,3 @@ class Bcfournisseur
         return $this->date;
     }
 }
-

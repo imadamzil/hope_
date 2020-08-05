@@ -56,6 +56,14 @@ class Client
      */
     private $adresse;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="client",cascade={"persist", "remove"})
+     */
+    private $mission;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="client",cascade={"persist", "remove"})
+     */
+    private $bcclient;
 
     /**
      * Get id
@@ -186,5 +194,79 @@ class Client
     {
         return $this->adresse;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->mission = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     *
+     * @return Client
+     */
+    public function addMission(\AppBundle\Entity\Mission $mission)
+    {
+        $this->mission[] = $mission;
+
+        return $this;
+    }
+
+    /**
+     * Remove mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     */
+    public function removeMission(\AppBundle\Entity\Mission $mission)
+    {
+        $this->mission->removeElement($mission);
+    }
+
+    /**
+     * Get mission
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMission()
+    {
+        return $this->mission;
+    }
+
+    /**
+     * Add bcclient
+     *
+     * @param \AppBundle\Entity\Mission $bcclient
+     *
+     * @return Client
+     */
+    public function addBcclient(\AppBundle\Entity\Mission $bcclient)
+    {
+        $this->bcclient[] = $bcclient;
+
+        return $this;
+    }
+
+    /**
+     * Remove bcclient
+     *
+     * @param \AppBundle\Entity\Mission $bcclient
+     */
+    public function removeBcclient(\AppBundle\Entity\Mission $bcclient)
+    {
+        $this->bcclient->removeElement($bcclient);
+    }
+
+    /**
+     * Get bcclient
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBcclient()
+    {
+        return $this->bcclient;
+    }
+}

@@ -38,7 +38,7 @@ class Bcclient
     /**
      * @var string
      *
-     * @ORM\Column(name="nbJrs", type="string", length=255)
+     * @ORM\Column(name="nbJrs", type="integer", nullable=true)
      */
     private $nbJrs;
 
@@ -50,9 +50,21 @@ class Bcclient
     private $nbJrsR;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="bclient",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="bcclient",cascade={"persist", "remove"})
      */
     private $mission;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="bcclient")
+     * @ORM\JoinColumn(name="id_bcclient", referencedColumnName="id")
+     */
+    private $client;
+
+/**
+     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="bcclient")
+     * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
+     */
+    private $consultant;
 
 
     /**
@@ -200,5 +212,53 @@ class Bcclient
     public function getMission()
     {
         return $this->mission;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \AppBundle\Entity\Client $client
+     *
+     * @return Bcclient
+     */
+    public function setClient(\AppBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \AppBundle\Entity\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \AppBundle\Entity\Consultant $consultant
+     *
+     * @return Bcclient
+     */
+    public function setConsultant(\AppBundle\Entity\Consultant $consultant = null)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \AppBundle\Entity\Consultant
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
     }
 }

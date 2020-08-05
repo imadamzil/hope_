@@ -50,6 +50,11 @@ class Fournisseur
     private $adresse;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="fournisseur",cascade={"persist", "remove"})
+     */
+    private $mission;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="rib", type="string", length=255, nullable=true)
@@ -186,5 +191,45 @@ class Fournisseur
     {
         return $this->rib;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->mission = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     *
+     * @return Fournisseur
+     */
+    public function addMission(\AppBundle\Entity\Mission $mission)
+    {
+        $this->mission[] = $mission;
+
+        return $this;
+    }
+
+    /**
+     * Remove mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     */
+    public function removeMission(\AppBundle\Entity\Mission $mission)
+    {
+        $this->mission->removeElement($mission);
+    }
+
+    /**
+     * Get mission
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMission()
+    {
+        return $this->mission;
+    }
+}

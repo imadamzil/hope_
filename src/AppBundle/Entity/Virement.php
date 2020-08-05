@@ -94,4 +94,3 @@ class Virement
         return $this->etat;
     }
 }
-

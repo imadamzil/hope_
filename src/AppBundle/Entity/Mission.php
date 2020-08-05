@@ -66,6 +66,28 @@ class Mission
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="Bcclient", inversedBy="mission")
+     * @ORM\JoinColumn(name="id_bcclient", referencedColumnName="id")
+     */
+    private $bcclient;
+    /**
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="mission")
+     * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
+     */
+    private $client;
+    /**
+     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="mission")
+     * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
+     */
+    private $consultant;
+    /**
+     * @ORM\ManyToOne(targetEntity="Fournisseur", inversedBy="mission")
+     * @ORM\JoinColumn(name="id_fournisseur", referencedColumnName="id")
+     */
+    private $fournisseur;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -218,5 +240,100 @@ class Mission
     {
         return $this->contratClient;
     }
-}
 
+    /**
+     * Set bcclient
+     *
+     * @param \AppBundle\Entity\Bcclient $bcclient
+     *
+     * @return Mission
+     */
+    public function setBcclient(\AppBundle\Entity\Bcclient $bcclient = null)
+    {
+        $this->bcclient = $bcclient;
+
+        return $this;
+    }
+
+    /**
+     * Get bcclient
+     *
+     * @return \AppBundle\Entity\Bcclient
+     */
+    public function getBcclient()
+    {
+        return $this->bcclient;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \AppBundle\Entity\client $client
+     *
+     * @return Mission
+     */
+    public function setClient(\AppBundle\Entity\client $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \AppBundle\Entity\client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \AppBundle\Entity\Consultant $consultant
+     *
+     * @return Mission
+     */
+    public function setConsultant(\AppBundle\Entity\Consultant $consultant = null)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \AppBundle\Entity\Consultant
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
+    }
+
+    /**
+     * Set fournisseur
+     *
+     * @param \AppBundle\Entity\Fournisseur $fournisseur
+     *
+     * @return Mission
+     */
+    public function setFournisseur(\AppBundle\Entity\Fournisseur $fournisseur = null)
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get fournisseur
+     *
+     * @return \AppBundle\Entity\Fournisseur
+     */
+    public function getFournisseur()
+    {
+        return $this->fournisseur;
+    }
+}
