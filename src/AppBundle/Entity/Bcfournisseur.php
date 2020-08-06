@@ -166,7 +166,7 @@ class Bcfournisseur
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @Vich\UploadableField(mapping="contrat_client_path", fileNameProperty="documentName")
+     * @Vich\UploadableField(mapping="document_path", fileNameProperty="documentName")
      *
      * @var File
      */

@@ -10483,7 +10483,7 @@ td .lbl:only-child, th .lbl:only-child {
 }
 
 .table-header {
-    background-color: #307ECC;
+    background-color: rgba(9, 4, 7, 0.94);
     color: #FFF;
     font-size: 14px;
     line-height: 38px;

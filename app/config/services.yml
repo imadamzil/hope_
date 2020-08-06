@@ -2,9 +2,9 @@
 # https://symfony.com/doc/current/service_container.html
 parameters:
     #parameter_name: value
-    app.path.contrat_client_path: /client/contrat/
-    app.path.client_path: /uploads/client
-    app.path.fournisseur_path: /uploads/fournisseur
+    app.path.document_path: /uploads/documents/
+#    app.path.client_path: /uploads/client
+#    app.path.fournisseur_path: /uploads/fournisseur
     #app.path.backup_path: /uploads/backup
 
 services:

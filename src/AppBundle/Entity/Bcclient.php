@@ -262,4 +262,9 @@ class Bcclient
     {
         return $this->consultant;
     }
+
+    public function __toString()
+    {
+        return $this->getClient()->getNom().'~'.$this->getCode();
+    }
 }

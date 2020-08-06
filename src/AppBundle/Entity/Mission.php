@@ -4,12 +4,16 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
  * Mission
  *
  * @ORM\Table(name="mission")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MissionRepository")
+ * @Vich\Uploadable
  */
 class Mission
 {
@@ -39,30 +43,18 @@ class Mission
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateDebut", type="date", nullable=true)
+     * @ORM\Column(name="dateDebut", type="datetime", nullable=true)
      */
     private $dateDebut;
 
     /**
      * @var date
      *
-     * @ORM\Column(name="dateFin", type="date", length=255)
+     * @ORM\Column(name="dateFin", type="datetime", nullable=true)
      */
     private $dateFin;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="contratFournisseur", type="string", length=255, nullable=true)
-     */
-    private $contratFournisseur;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="contratClient", type="string", length=255, nullable=true)
-     */
-    private $contratClient;
 
 
     /**
@@ -86,6 +78,227 @@ class Mission
      */
     private $fournisseur;
 
+
+
+
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_ceation", type="datetime", nullable=true)
+     */
+    private $createdAt;
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="document_path", fileNameProperty="contratFName")
+     *
+     * @var File
+     */
+    private $contratFFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $contratFName;
+
+
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $contratF
+     */
+    public function setcontratFFile(?File $contratF = null): void
+    {
+        $this->contratFFile = $contratF;
+
+        if (null !== $contratF) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getcontratFFile(): ?File
+    {
+        return $this->contratFFile;
+    }
+
+    public function setcontratFName(?string $contratFName): void
+    {
+        $this->contratFName = $contratFName;
+    }
+
+    public function getcontratFName(): ?string
+    {
+        return $this->contratFName;
+    }
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="document_path", fileNameProperty="contratCName")
+     *
+     * @var File
+     */
+    private $contratCFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $contratCName;
+
+
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $contratC
+     */
+    public function setcontratCFile(?File $contratC = null): void
+    {
+        $this->contratCFile = $contratC;
+
+        if (null !== $contratC) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getcontratCFile(): ?File
+    {
+        return $this->contratCFile;
+    }
+
+    public function setcontratCName(?string $contratCName): void
+    {
+        $this->contratCName = $contratCName;
+    }
+
+    public function getcontratCName(): ?string
+    {
+        return $this->contratCName;
+    }
+
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Bcfournisseur
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Bcfournisseur
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="document_path", fileNameProperty="bcName")
+     *
+     * @var File
+     */
+    private $bcFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $bcName;
+
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $bc
+     */
+    public function setBcFile(?File $bc = null): void
+    {
+        $this->bcFile = $bc;
+
+        if (null !== $bc) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getBcFile(): ?File
+    {
+        return $this->bcFile;
+    }
+
+    public function setBcName(?string $bcName): void
+    {
+        $this->bcName = $bcName;
+    }
+
+    public function getBcName(): ?string
+    {
+        return $this->bcName;
+    }
 
     /**
      * Get id
@@ -336,4 +549,63 @@ class Mission
     {
         return $this->fournisseur;
     }
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="document_path", fileNameProperty="documentName")
+     *
+     * @var File
+     */
+    private $documentFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $documentName;
+
+
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $document
+     */
+    public function setDocumentFile(?File $document = null): void
+    {
+        $this->documentFile = $document;
+
+        if (null !== $document) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getDocumentFile(): ?File
+    {
+        return $this->documentFile;
+    }
+
+    public function setDocumentName(?string $documentName): void
+    {
+        $this->documentName = $documentName;
+    }
+
+    public function getDocumentName(): ?string
+    {
+        return $this->documentName;
+    }
+
+    public function __construct()
+    {
+
+        $this->createdAt = new \DateTime('now');
+    }
+
 }

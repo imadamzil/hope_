@@ -77,9 +77,7 @@ fos_user:
 vich_uploader:
     db_driver: orm # or mongodb or propel or phpcr
     mappings:
-        contrat_client_path:
+        document_path:
             uri_prefix:         '%app.path.document_path%'
             upload_destination: '%kernel.root_dir%/../web%app.path.document_path%'
-        image_path:
-            uri_prefix:         '%app.path.image_path%'
-            upload_destination: '%kernel.root_dir%/../web%app.path.image_path%'
+
