@@ -232,4 +232,9 @@ class Fournisseur
     {
         return $this->mission;
     }
+
+    public function __toString()
+    {
+        return $this->getNom();
+    }
 }

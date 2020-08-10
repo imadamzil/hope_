@@ -608,4 +608,14 @@ class Mission
         $this->createdAt = new \DateTime('now');
     }
 
+    public function __toString()
+    {
+if ($this->getConsultant() != null) {
+
+    return 'Mission-'.$this->getClient()->getNom().'-'.$this->getConsultant()->getNom();
+}
+        return 'Mission-'.$this->getClient()->getNom();
+
+    }
+
 }

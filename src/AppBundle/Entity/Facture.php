@@ -27,6 +27,12 @@ class Facture
      * @ORM\Column(name="etat", type="string", length=255, nullable=true)
      */
     private $etat;
+  /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_jours", type="integer", nullable=true)
+     */
+    private $nbjour;
 
     /**
      * @var string
@@ -34,6 +40,18 @@ class Facture
      * @ORM\Column(name="mois", type="string", length=255, nullable=true)
      */
     private $mois;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="total_HT", type="float", nullable=true)
+     */
+    private $totalHT;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="total_TTC", type="float", nullable=true)
+     */
+    private $totalTTC;
 
     /**
      * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="facture")
@@ -46,6 +64,11 @@ class Facture
      * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
      */
     private $client;
+    /**
+     * @ORM\ManyToOne(targetEntity="Mission", inversedBy="facture")
+     * @ORM\JoinColumn(name="id_mission", referencedColumnName="id")
+     */
+    private $mission;
 
     /**
      * @var \DateTime
@@ -210,5 +233,101 @@ class Facture
     public function getBcclient()
     {
         return $this->bcclient;
+    }
+
+    /**
+     * Set totalHT
+     *
+     * @param float $totalHT
+     *
+     * @return Facture
+     */
+    public function setTotalHT($totalHT)
+    {
+        $this->totalHT = $totalHT;
+
+        return $this;
+    }
+
+    /**
+     * Get totalHT
+     *
+     * @return float
+     */
+    public function getTotalHT()
+    {
+        return $this->totalHT;
+    }
+
+    /**
+     * Set totalTTC
+     *
+     * @param float $totalTTC
+     *
+     * @return Facture
+     */
+    public function setTotalTTC($totalTTC)
+    {
+        $this->totalTTC = $totalTTC;
+
+        return $this;
+    }
+
+    /**
+     * Get totalTTC
+     *
+     * @return float
+     */
+    public function getTotalTTC()
+    {
+        return $this->totalTTC;
+    }
+
+    /**
+     * Set nbjour
+     *
+     * @param integer $nbjour
+     *
+     * @return Facture
+     */
+    public function setNbjour($nbjour)
+    {
+        $this->nbjour = $nbjour;
+
+        return $this;
+    }
+
+    /**
+     * Get nbjour
+     *
+     * @return integer
+     */
+    public function getNbjour()
+    {
+        return $this->nbjour;
+    }
+
+    /**
+     * Set mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     *
+     * @return Facture
+     */
+    public function setMission(\AppBundle\Entity\Mission $mission = null)
+    {
+        $this->mission = $mission;
+
+        return $this;
+    }
+
+    /**
+     * Get mission
+     *
+     * @return \AppBundle\Entity\Mission
+     */
+    public function getMission()
+    {
+        return $this->mission;
     }
 }

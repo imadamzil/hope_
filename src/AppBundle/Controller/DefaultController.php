@@ -13,9 +13,22 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you fd
+        $em = $this->getDoctrine()->getManager();
+
+        $clients = $em->getRepository('AppBundle:Client')->findAll();
+        $fournisseurs = $em->getRepository('AppBundle:Fournisseur')->findAll();
+        $consultants = $em->getRepository('AppBundle:Consultant')->findAll();
+        $missions = $em->getRepository('AppBundle:Mission')->findAll();
+
+
+
         return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'nb_client'=>count($clients),
+            'nb_fournisseur'=>count($fournisseurs),
+            'nb_consultant'=>count($consultants),
+            'nb_mission'=>count($missions),
+
+
         ]);
     }
 }

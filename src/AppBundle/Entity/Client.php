@@ -269,4 +269,9 @@ class Client
     {
         return $this->bcclient;
     }
+
+    public function __toString()
+    {
+        return $this->getNom();
+    }
 }

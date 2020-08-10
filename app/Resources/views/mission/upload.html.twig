@@ -1,0 +1,200 @@
+{% extends 'base.html.twig' %}
+{% block title %} Hope3k | Mission {% endblock %}
+
+{% block menu %}  <a href="{{ path('mission_index') }}">Mission</a>   {% endblock %}
+
+   {% block menu_active %}    Ajouter {% endblock %}
+{% block content %}
+
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Uploader contrat & BC : {{ dump(mission) }}</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="{{ path('mission_index') }}">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="row">
+                        {{ form_start(form) }}
+                        <div class="col-md-6 col-md-offset-3">
+                            {{ form_row(form.client) }}
+                            {{ form_row(form.consultant) }}
+                            {{ form_row(form.fournisseur) }}
+                        </div>
+
+
+                    </div>
+
+
+                    {#   <div class="row">
+                           <div class="col-md-5 col-md-offset-1 border-right">
+
+                               <div class="form-group"><label for="appbundle_mission_dateDebut" class="required">Date
+                                       Début</label>
+                                   <input type="text" id="appbundle_mission_dateDebut" name="appbundle_mission[dateDebut]"
+                                          required="required" class="date-timepicker1 form-control "
+                                          placeholder="MM/DD/YYYY" value="   {{ mission.dateDebut|date('Y-m-d') }}">
+                               </div>
+                               <div class="form-group"><label for="appbundle_mission_dateFin" class="required">Date
+                                       fin</label>
+                                   <input type="text" id="appbundle_mission_dateFin" name="appbundle_mission[dateFin]"
+                                          required="required" class="date-timepicker1 form-control "
+                                          placeholder="MM/DD/YYYY" value=" {{ mission.dateFin|date('Y-m-d') }}">
+                               </div>
+                           </div>
+                           <div class="col-md-3 col-md-offset-2 ">
+
+                               <label for="spinner1">Prix Achat: </label>
+                               <div class="input-group">
+                                   <input type="text" id="spinner1" name="appbundle_mission[prixAchat]"
+                                          class="spinbox-input form-control text-center spinner1">
+                                   <div class="spinbox-buttons input-group-btn btn-group-vertical">
+
+                                   </div>
+                               </div>
+
+                               <label for="spinner1">Prix Vente: </label>
+                               <div class="input-group">
+                                   <input type="text" id="appbundle_mission_prixVente" name="appbundle_mission[prixVente]"
+                                          class="spinbox-input form-control text-center spinner1">
+                                   <div class="spinbox-buttons input-group-btn btn-group-vertical">
+
+                                   </div>
+                               </div>
+
+
+                           </div>
+                       </div>#}
+                    <div class="space"></div>
+                    <hr>
+
+                    {% if mission.bcName is null %}
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-4">
+                                <label for="appbundle_mission_bcFile_file" class="">Bon de commande client</label>
+                                <input type="file" id="appbundle_mission_bcFile_file"
+                                       name="appbundle_mission[bcFile][file]" class="form-control-file btn btn-white">
+
+                                </label>
+                            </div>
+
+                        </div>
+                    {% endif %}
+
+                    {% if mission.contratCName is null %}
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-4">
+                                <label for="appbundle_mission_contratCFile_file" class="">Contrat client</label>
+                                <input type="file" id="appbundle_mission_contratCFile_file"
+                                       name="appbundle_mission[contratCFile][file]"
+                                       class="form-control-file btn btn-white">
+
+                                </label>
+                            </div>
+
+
+                        </div>
+                    {% endif %}
+                    {% if mission.contratFName is null %}
+
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-4">
+                                <label for="appbundle_mission_bcFile_file" class="">Contrat fournisseur</label>
+                                <input type="file" id="appbundle_mission_contratFFile_file"
+                                       name="appbundle_mission[contratFFile][file]"
+                                       class="form-control-file btn btn-white">
+
+                                </label>
+                            </div>
+
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-1">
+                    {#{{ form_row(form.bcclient) }}#}
+                    {#{{ form_row(form.verifiedBy) }}#}
+                    {#{{ form_row(form.validatedBy) }}#}
+
+                    <a href="{{ path('mission_index') }}" class="btn btn-white btn-info btn-block"><i
+                                class="fa fa-reply"></i> Retour</a>
+                </div>
+                <div class="col-md-4 col-md-offset-1">
+
+
+                    <button class="btn btn-white btn-success btn-block" type="submit" formnovalidate>
+                        <i class="ace-icon fa fa-check"></i>
+                        Enregistrer
+                    </button>
+                </div>
+
+            </div>
+            <div class="space"></div>
+            {{ form_widget(form._token) }}
+
+            {{ form_end(form , {'render_rest': false}) }}
+
+
+        </div>
+
+
+    </div>
+
+    </div>
+
+
+    </div>
+
+
+    </div>
+    </div>
+
+
+
+{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script src="{{ asset('js/jquery.collection.js') }}"></script>
+
+        <script>
+            $(document).ready(function () {
+
+                $('.spinner1').ace_spinner({
+                    value: 100,
+                    min: 0,
+                    max: 10000,
+                    step: 200,
+                    btn_up_class: 'btn-info',
+                    btn_down_class: 'btn-info'
+                })
+                    .closest('.ace-spinner')
+                ;
+
+
+            });
+        </script>
+    {% endblock %}

@@ -574,8 +574,16 @@
 
             <li class="">
                 <a href="{{ path('fournisseur_index') }}">
-                    <i class="menu-icon fa fa-tachometer"></i>
+                    <i class="menu-icon fa fa-user"></i>
                     <span class="menu-text"> Fournisseurs </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="{{ path('bcclient_index') }}">
+                    <i class="menu-icon fa fa-object-ungroup"></i>
+                    <span class="menu-text"> BC clients </span>
                 </a>
 
                 <b class="arrow"></b>
@@ -817,7 +825,7 @@
             {
                 locale: moment.locale('pt'),
                 format: 'YYYY-MM-DD HH:mm' ,
-                maxDate: moment(),
+                //maxDate: moment(),
                 widgetPositioning: {
                     horizontal: 'left',
                     vertical: 'bottom'
