@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | Mission {% endblock %}{% block menu %}  <a href="{{ path('mission_index') }}">Mission</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+    <h1>Virements list</h1>
+
+    <table class="table table-detail">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Etat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for virement in virements %}
+            <tr>
+                <td><a href="{{ path('virement_show', { 'id': virement.id }) }}">{{ virement.id }}</a></td>
+                <td>{% if virement.date %}{{ virement.date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ virement.etat }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('virement_show', { 'id': virement.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('virement_edit', { 'id': virement.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('virement_new') }}">Create a new virement</a>
+        </li>
+    </ul>
+{% endblock %}

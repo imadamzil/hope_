@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | Mission {% endblock %}{% block menu %}  <a href="{{ path('mission_index') }}">Mission</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+    <h1>Mission</h1>
+
+    <table class="table table-detail">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ mission.id }}</td>
+            </tr>
+            <tr>
+                <th>Prixvente</th>
+                <td>{{ mission.prixVente }}</td>
+            </tr>
+            <tr>
+                <th>Prixachat</th>
+                <td>{{ mission.prixAchat }}</td>
+            </tr>
+            <tr>
+                <th>Datedebut</th>
+                <td>{% if mission.dateDebut %}{{ mission.dateDebut|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Datefin</th>
+                <td>{% if mission.dateFin %}{{ mission.dateFin|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if mission.updatedAt %}{{ mission.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if mission.createdAt %}{{ mission.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Contratfname</th>
+                <td>{{ mission.contratFName }}</td>
+            </tr>
+            <tr>
+                <th>Contratcname</th>
+                <td>{{ mission.contratCName }}</td>
+            </tr>
+            <tr>
+                <th>Bcname</th>
+                <td>{{ mission.bcName }}</td>
+            </tr>
+            <tr>
+                <th>Documentname</th>
+                <td>{{ mission.documentName }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('mission_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('mission_edit', { 'id': mission.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

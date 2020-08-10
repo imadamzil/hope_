@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | Fournisseur {% endblock %}{% block menu %}  <a
+        href="{{ path('fournisseur_index') }}">Fournisseur</a>   {% endblock %}   {% block menu_active %}    détails {% endblock %}{% block content %}
+
+    <div class="col-md-10 col-md-offset-1">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">Fournisseur détails | <b> {{ fournisseur.nom }}</b>   </h4>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main no-padding">
+
+                    <table class="table table-detail text-center">
+                        <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ fournisseur.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ fournisseur.nom }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tel</th>
+                            <td>{{ fournisseur.tel }}</td>
+                        </tr>
+                        <tr>
+                            <th>Fax</th>
+                            <td>{{ fournisseur.fax }}</td>
+                        </tr>
+                        <tr>
+                            <th>Adresse</th>
+                            <td>{{ fournisseur.adresse }}</td>
+                        </tr>
+                        <tr>
+                            <th>Rib</th>
+                            <td>{{ fournisseur.rib }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="form-actions center">
+                        <a class="btn btn-sm btn-primary border-right" href="{{ path('fournisseur_index') }}"> <i class="ace-icon fa fa-list icon-on-right bigger-110"></i> liste
+                        </a>
+                        <a class="btn btn-sm btn-warning"
+                                href="{{ path('fournisseur_edit', { 'id': fournisseur.id }) }}">Modifier <i
+                                    class="ace-icon fa fa-pencil icon-on-right bigger-110"></i>
+                        </a>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

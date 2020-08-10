@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | Mission {% endblock %}{% block menu %}  <a href="{{ path('mission_index') }}">Mission</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+    <h1>Consultants list</h1>
+
+    <table class="table table-detail">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>Salaire</th>
+                <th>Rib</th>
+                <th>Tel</th>
+                <th>Email</th>
+                <th>Adresse</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for consultant in consultants %}
+            <tr>
+                <td><a href="{{ path('consultant_show', { 'id': consultant.id }) }}">{{ consultant.id }}</a></td>
+                <td>{{ consultant.nom }}</td>
+                <td>{{ consultant.type }}</td>
+                <td>{{ consultant.salaire }}</td>
+                <td>{{ consultant.rib }}</td>
+                <td>{{ consultant.tel }}</td>
+                <td>{{ consultant.email }}</td>
+                <td>{{ consultant.adresse }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('consultant_show', { 'id': consultant.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('consultant_edit', { 'id': consultant.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('consultant_new') }}">Create a new consultant</a>
+        </li>
+    </ul>
+{% endblock %}
