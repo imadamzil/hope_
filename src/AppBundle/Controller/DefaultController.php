@@ -19,6 +19,7 @@ class DefaultController extends Controller
         $fournisseurs = $em->getRepository('AppBundle:Fournisseur')->findAll();
         $consultants = $em->getRepository('AppBundle:Consultant')->findAll();
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
+        $virements = $em->getRepository('AppBundle:Virement')->findAll();
 
 
 
@@ -27,6 +28,7 @@ class DefaultController extends Controller
             'nb_fournisseur'=>count($fournisseurs),
             'nb_consultant'=>count($consultants),
             'nb_mission'=>count($missions),
+            'virements'=>$virements,
 
 
         ]);

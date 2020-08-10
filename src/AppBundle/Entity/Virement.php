@@ -34,7 +34,29 @@ class Virement
      * @ORM\Column(name="etat", type="string", length=255, nullable=true)
      */
     private $etat;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=255, nullable=true)
+     */
+    private $code;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="achatTTC", type="float",  nullable=true)
+     */
+    private $achat;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Bcfournisseur", inversedBy="virement")
+     * @ORM\JoinColumn(name="id_bcfournisseur", referencedColumnName="id")
+     */
+    private $bcfournisseur;
+    /**
+     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="virement")
+     * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
+     */
+    private $consultant;
 
     /**
      * Get id
@@ -92,5 +114,125 @@ class Virement
     public function getEtat()
     {
         return $this->etat;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return Virement
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set bcfournissuer
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $bcfournissuer
+     *
+     * @return Virement
+     */
+    public function setBcfournissuer(\AppBundle\Entity\Bcfournisseur $bcfournissuer = null)
+    {
+        $this->bcfournissuer = $bcfournissuer;
+
+        return $this;
+    }
+
+    /**
+     * Get bcfournissuer
+     *
+     * @return \AppBundle\Entity\Bcfournisseur
+     */
+    public function getBcfournissuer()
+    {
+        return $this->bcfournissuer;
+    }
+
+    /**
+     * Set achat
+     *
+     * @param float $achat
+     *
+     * @return Virement
+     */
+    public function setAchat($achat)
+    {
+        $this->achat = $achat;
+
+        return $this;
+    }
+
+    /**
+     * Get achat
+     *
+     * @return float
+     */
+    public function getAchat()
+    {
+        return $this->achat;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \AppBundle\Entity\Consultant $consultant
+     *
+     * @return Virement
+     */
+    public function setConsultant(\AppBundle\Entity\Consultant $consultant = null)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \AppBundle\Entity\Consultant
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
+    }
+
+    /**
+     * Set bcfournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $bcfournisseur
+     *
+     * @return Virement
+     */
+    public function setBcfournisseur(\AppBundle\Entity\Bcfournisseur $bcfournisseur = null)
+    {
+        $this->bcfournisseur = $bcfournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get bcfournisseur
+     *
+     * @return \AppBundle\Entity\Bcfournisseur
+     */
+    public function getBcfournisseur()
+    {
+        return $this->bcfournisseur;
     }
 }

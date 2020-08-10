@@ -41,6 +41,12 @@ class Facture
      */
     private $mois;
     /**
+     * @var string
+     *
+     * @ORM\Column(name="année", type="string", length=255, nullable=true)
+     */
+    private $year;
+    /**
      * @var float
      *
      * @ORM\Column(name="total_HT", type="float", nullable=true)
@@ -329,5 +335,29 @@ class Facture
     public function getMission()
     {
         return $this->mission;
+    }
+
+    /**
+     * Set year
+     *
+     * @param string $year
+     *
+     * @return Facture
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return string
+     */
+    public function getYear()
+    {
+        return $this->year;
     }
 }

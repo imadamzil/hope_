@@ -52,8 +52,22 @@
 
 
                         </div>
-                        <div class="col-md-4 ">
+                        <div class="col-md-2 ">
                             {{ form_row(form.mois) }}
+
+
+
+                        </div>
+                        <div class="col-md-2 ">
+
+                            <label for="spinner2">Année: </label>
+                            <div class="input-group">
+                                <input type="text" id="spinner2" name="appbundle_facture[year]"
+                                       class="spinbox-input form-control text-center spinner2">
+                                <div class="spinbox-buttons input-group-btn btn-group-vertical">
+
+                                </div>
+                            </div>
 
 
                         </div>
@@ -83,6 +97,7 @@
 
                                 </div>
                             </div>
+
 
 
                         </div>
@@ -143,6 +158,12 @@
     <script>
         $(document).ready(function () {
 
+            var TodayDate = new Date();
+            var d = TodayDate.getDay();
+            var m = TodayDate.getMonth()+1;
+            var y = TodayDate.getFullYear();
+
+
             $('.spinner1').ace_spinner({
                 value: 10,
                 min: 0,
@@ -153,7 +174,17 @@
             })
                 .closest('.ace-spinner')
             ;
-
+            $('.spinner2').ace_spinner({
+                value: y,
+                min: 2000,
+                max: 2050,
+                step: 1,
+                btn_up_class: 'btn-info',
+                btn_down_class: 'btn-info'
+            })
+                .closest('.ace-spinner')
+            ;
+            $("#appbundle_facture_mois").val(m);
 
         });
     </script>

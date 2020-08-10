@@ -615,6 +615,14 @@
 
                 <b class="arrow"></b>
             </li>
+            <li class="">
+                <a href="{{ path('facture_index') }}">
+                    <i class="menu-icon fa fa-money"></i>
+                    <span class="menu-text"> Facturation </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
 
 
         </ul><!-- /.nav-list -->
@@ -824,7 +832,7 @@
         if (!ace.vars['old_ie']) $('.date-timepicker1').datetimepicker(
             {
                 locale: moment.locale('pt'),
-                format: 'YYYY-MM-DD HH:mm' ,
+                format: 'YYYY-MM-DD HH:mm',
                 //maxDate: moment(),
                 widgetPositioning: {
                     horizontal: 'left',
@@ -848,7 +856,6 @@
         $('.js-datepicker').datepicker({
             format: 'yyyy-mm-dd'
         });
-
 
 
         $(".chosen-select").chosen();

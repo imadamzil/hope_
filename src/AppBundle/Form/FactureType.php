@@ -25,6 +25,7 @@ class FactureType extends AbstractType
 
                 ),
             ))
+            ->add('year')
             ->add('mois', ChoiceType::class, array(
                 'choices' => array(
                     'Janvier' => 1,

@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Virement;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Virement controller.
@@ -25,7 +26,7 @@ class VirementController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $virements = $em->getRepository('AppBundle:Virement')->findAll();
-
+        dump($virements);
         return $this->render('virement/index.html.twig', array(
             'virements' => $virements,
         ));
@@ -40,11 +41,13 @@ class VirementController extends Controller
     public function newAction(Request $request)
     {
         $virement = new Virement();
+        $virement->setEtat('en attente');
         $form = $this->createForm('AppBundle\Form\VirementType', $virement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $virement->setEtat('en attente');
             $em->persist($virement);
             $em->flush();
 
@@ -130,7 +133,6 @@ class VirementController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('virement_delete', array('id' => $virement->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

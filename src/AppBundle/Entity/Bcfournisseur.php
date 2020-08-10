@@ -56,7 +56,10 @@ class Bcfournisseur
      */
     private $fournisseur;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="bcfournisseur",cascade={"persist", "remove"})
+     */
+    private $virments;
     /**
      * Get id
      *
@@ -299,5 +302,51 @@ class Bcfournisseur
     public function getFournisseur()
     {
         return $this->fournisseur;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->virments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add virment
+     *
+     * @param \AppBundle\Entity\Virement $virment
+     *
+     * @return Bcfournisseur
+     */
+    public function addVirment(\AppBundle\Entity\Virement $virment)
+    {
+        $this->virments[] = $virment;
+
+        return $this;
+    }
+
+    /**
+     * Remove virment
+     *
+     * @param \AppBundle\Entity\Virement $virment
+     */
+    public function removeVirment(\AppBundle\Entity\Virement $virment)
+    {
+        $this->virments->removeElement($virment);
+    }
+
+    /**
+     * Get virments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVirments()
+    {
+        return $this->virments;
+    }
+
+    public function __toString()
+    {
+        return $this->getFournisseur()->getNom();
     }
 }

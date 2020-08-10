@@ -75,6 +75,11 @@ class Consultant
      */
     private $mission;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="consultant",cascade={"persist", "remove"})
+     */
+    private $virment;
+
 
     /**
      * Get id
@@ -298,5 +303,39 @@ class Consultant
     public function __toString()
     {
         return $this->getNom();
+    }
+
+    /**
+     * Add virment
+     *
+     * @param \AppBundle\Entity\Virement $virment
+     *
+     * @return Consultant
+     */
+    public function addVirment(\AppBundle\Entity\Virement $virment)
+    {
+        $this->virment[] = $virment;
+
+        return $this;
+    }
+
+    /**
+     * Remove virment
+     *
+     * @param \AppBundle\Entity\Virement $virment
+     */
+    public function removeVirment(\AppBundle\Entity\Virement $virment)
+    {
+        $this->virment->removeElement($virment);
+    }
+
+    /**
+     * Get virment
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVirment()
+    {
+        return $this->virment;
     }
 }
