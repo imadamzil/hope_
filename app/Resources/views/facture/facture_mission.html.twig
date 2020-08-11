@@ -1,0 +1,319 @@
+{% extends 'base.html.twig' %}
+{% block title %} Hope3k | Facture {% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+
+     <style type="text/css">
+
+
+     </style>
+ {% endblock %}
+{% block menu %}  <a href="{{ path('facture_index') }}">Facture</a>   {% endblock %}
+
+   {% block menu_active %}    Ajouter {% endblock %}
+{% block content %}
+
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Ajouter une facture :</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="{{ path('facture_index') }}">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="row">
+                        {{ form_start(form) }}
+                        <div class="col-md-6 col-md-offset-3">
+                            {{ form_row(form.client) }}
+                            {{ form_row(form.mission) }}
+                            {{ form_row(form.consultant) }}
+                            {{ form_row(form.bcclient) }}
+
+                        </div>
+
+
+                    </div>
+                    <hr>
+                    <div class="row">
+
+                        <div class="col-md-5 col-md-offset-1 border-right ">
+                            {{ form_row(form.etat) }}
+
+
+                        </div>
+                        <div class="col-md-2 ">
+                            <div class="form-group mois">
+                                <label class="required" for="appbundle_facture_mois">Mois</label>
+                                <select id="appbundle_facture_mois" name="appbundle_facture[mois]" class="form-control">
+                                    <option value="1">Janvier</option>
+                                    <option value="2">Fevrier</option>
+                                    <option value="3">Mars</option>
+                                    <option value="4">Avril</option>
+                                    <option value="5">Mai</option>
+                                    <option value="6">Juin</option>
+                                    <option value="7">Juillet</option>
+                                    <option value="8">Aout</option>
+                                    <option value="9">Septembre</option>
+                                    <option value="10">Octobre</option>
+                                    <option value="11">Novembre</option>
+                                    <option value="12">Décembre</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-2 ">
+
+                            <div class="form-group"><label for="appbundle_facture_year">Année</label><input
+                                        type="number" id="appbundle_facture_year" name="appbundle_facture[year]"
+                                        class="form-control"></div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="space"></div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-5 col-md-offset-1 border-right">
+
+                            <div class="form-group"><label for="appbundle_facture_date" class="required">Date
+                                    de facture</label>
+                                <input type="text" id="appbundle_facture_date" name="appbundle_facture[date]"
+                                       required="required" class="date-timepicker1 form-control "
+                                       placeholder="MM/DD/YYYY">
+                            </div>
+
+                        </div>
+                        <div class="col-md-3 col-md-offset-2 " id="nbjour">
+
+                            <div class="form-group"><label for="appbundle_facture_nbjour">Nombre de jours</label><input
+                                        type="number" id="appbundle_facture_nbjour" name="appbundle_facture[nbjour]"
+                                        class="form-control" value=""></div>
+
+
+                        </div>
+                    </div>
+                    <div class="space"></div>
+                    <hr>
+
+
+                </div>
+                <div class="space"></div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-1">
+                        {#{{ form_row(form.bcclient) }}#}
+                        {#{{ form_row(form.verifiedBy) }}#}
+                        {#{{ form_row(form.validatedBy) }}#}
+
+                        <a href="{{ path('facture_index') }}" class="btn btn-white btn-info btn-block"><i
+                                    class="fa fa-reply"></i> Retour</a>
+                    </div>
+                    <div class="col-md-4 col-md-offset-1">
+
+
+                        <button class="btn btn-white btn-success btn-block" type="submit" formnovalidate>
+                            <i class="ace-icon fa fa-check"></i>
+                            Enregistrer
+                        </button>
+                    </div>
+
+                </div>
+                <div class="space"></div>
+                {{ form_widget(form._token) }}
+
+                {{ form_end(form , {'render_rest': false}) }}
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    </div>
+
+
+    </div>
+    </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/jquery.collection.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var TodayDate = new Date();
+            var d = TodayDate.getDay();
+            var m = TodayDate.getMonth() + 1;
+            var y = TodayDate.getFullYear();
+
+
+            $('.spinner1').ace_spinner({
+                value: 10,
+                min: 0,
+                max: 31,
+                step: 1,
+                btn_up_class: 'btn-info',
+                btn_down_class: 'btn-info'
+            })
+                .closest('.ace-spinner')
+            ;
+            $('.spinner2').ace_spinner({
+                value: y,
+                min: 2000,
+                max: 2050,
+                step: 1,
+                btn_up_class: 'btn-info',
+                btn_down_class: 'btn-info'
+            })
+                .closest('.ace-spinner')
+            ;
+            $("#appbundle_facture_mois").val(m);
+            $("#appbundle_facture_year").val(y);
+
+            // debut
+            var  sel=  $('select[name*="appbundle_facture[mission]"]').prop('selected', true);
+            // $('#adminbundle_inscription_frais').show();
+
+            var Id = sel.val();
+            var year = $("#appbundle_facture_year").val();
+            var url = Routing.generate('route_to_retrieve_mission');
+
+            /*  $.post(url,
+             { 'idClass': Id
+             }, function(data, status){
+             if(status=='200'){
+             alert("Data: " + data + "\nStatus: " + status);
+             }else {
+             alert("erreur");
+             }
+
+             });
+             */
+            $.ajax({
+                type: "POST",
+                data: {
+                    idMission: Id, year: year
+
+                }, // no need to stringify the data, jquery does it for you
+                url: url,
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+                    if (response.data == 'mensuel') {
+
+                        $('#nbjour').hide();
+                    } else {
+
+                        $('#nbjour').show();
+                    }
+                    if (response.mois != null) {
+
+                        for (i = 0; i < response.mois.length; i++) {
+
+                            $('.mois option[value="' + response.mois[i] + '"]').attr("disabled", "disabled");
+
+
+                        }
+                    }else{
+
+                        $(".mois option").prop('disabled', false);
+                    }
+
+
+                },
+                error: function (error) {
+                    console.log(error);
+                    $(".mois option").each(function () {
+                        //  this.removeAttr("disabled");
+                    });
+                }
+            });
+
+            // fin
+
+            $('select[name*="appbundle_facture[mission]"]').prop('selected', true).change(function () {
+                // $('#adminbundle_inscription_frais').show();
+
+                var Id = $(this).val();
+                var year = $("#appbundle_facture_year").val();
+                var url = Routing.generate('route_to_retrieve_mission');
+
+                /*  $.post(url,
+                 { 'idClass': Id
+                 }, function(data, status){
+                 if(status=='200'){
+                 alert("Data: " + data + "\nStatus: " + status);
+                 }else {
+                 alert("erreur");
+                 }
+
+                 });
+                 */
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        idMission: Id, year: year
+
+                    }, // no need to stringify the data, jquery does it for you
+                    url: url,
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+                        if (response.data == 'mensuel') {
+
+                            $('#nbjour').hide();
+                        } else {
+
+                            $('#nbjour').show();
+                        }
+                        if (response.mois != null) {
+
+                            for (i = 0; i < response.mois.length; i++) {
+
+                                $('.mois option[value="' + response.mois[i] + '"]').attr("disabled", "disabled");
+
+
+                            }
+                        }
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $(".mois option").each(function () {
+                            //  this.removeAttr("disabled");
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
+{% endblock %}
