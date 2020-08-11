@@ -45,7 +45,7 @@
                     <div class="space"></div>
                     <hr>
                     <div class="row">
-                        <div class="col-md-5 col-md-offset-1 border-right">
+                        <div class="col-md-4 border-right">
 
                             <div class="form-group"><label for="appbundle_mission_dateDebut" class="required">Date
                                     Début</label>
@@ -60,25 +60,30 @@
                                        placeholder="MM/DD/YYYY">
                             </div>
                         </div>
-                        <div class="col-md-3 col-md-offset-2 ">
+                        <div class="col-md-4 border-right ">
 
-                            <label for="spinner1">Prix Achat: </label>
-                            <div class="input-group">
-                                <input type="text" id="spinner1" name="appbundle_mission[prixAchat]"
-                                       class="spinbox-input form-control text-center spinner1">
-                                <div class="spinbox-buttons input-group-btn btn-group-vertical">
 
-                                </div>
+                            <div class="form-group" id="achat">
+                                <label for="appbundle_mission_prixAchat">Prix achat</label>
+                                <input type="number" id="appbundle_mission_prixAchat"
+                                       name="appbundle_mission[prixAchat]"
+                                       maxlength="255" class="form-control" value="100">
                             </div>
 
-                            <label for="spinner1">Prix Vente: </label>
-                            <div class="input-group">
-                                <input type="text" id="appbundle_mission_prixVente" name="appbundle_mission[prixVente]"
-                                       class="spinbox-input form-control text-center spinner1">
-                                <div class="spinbox-buttons input-group-btn btn-group-vertical">
-
-                                </div>
+                            <div class="form-group" id="vente">
+                                <label for="appbundle_mission_prixVente">Prix vente</label>
+                                <input
+                                        type="number" id="appbundle_mission_prixVente"
+                                        name="appbundle_mission[prixVente]"
+                                        class="form-control" value="200">
                             </div>
+
+                        </div>
+
+                        <div class="col-md-4 ">
+
+                            {{ form_row(form.type) }}
+                            {{ form_row(form.devise) }}
 
 
                         </div>
@@ -174,7 +179,13 @@
             })
                 .closest('.ace-spinner')
             ;
-
+            $(".spinner1").blur(function () {
+                //  alert(this.value);
+                $('#appbundle_mission_prixAchat').val(this.value);
+            });
+            $("#spinner2").blur(function () {
+                $('#appbundle_mission_prixVente').val(this.value);
+            });
 
         });
     </script>

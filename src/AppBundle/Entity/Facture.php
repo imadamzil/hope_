@@ -35,15 +35,15 @@ class Facture
     private $nbjour;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="mois", type="string", length=255, nullable=true)
+     * @ORM\Column(name="mois", type="integer", nullable=true)
      */
     private $mois;
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="année", type="string", length=255, nullable=true)
+     * @ORM\Column(name="année", type="integer", nullable=true)
      */
     private $year;
     /**

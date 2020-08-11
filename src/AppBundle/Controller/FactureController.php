@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Facture controller.
@@ -27,7 +28,7 @@ class FactureController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $factures = $em->getRepository('AppBundle:Facture')->findAll();
-
+        dump($factures);
         return $this->render('facture/index.html.twig', array(
             'factures' => $factures,
         ));
@@ -47,6 +48,8 @@ class FactureController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+
             $em->persist($facture);
             $em->flush();
 
@@ -70,10 +73,11 @@ class FactureController extends Controller
         $facture = new Facture();
         $facture->setBcclient($mission->getBcclient());
         $facture->setClient($mission->getClient());
+        $facture->setMission($mission);
 
         $prixAchatHT = $mission->getPrixAchat();
         $prixVenteHT = $mission->getPrixVente();
-               $facture->setConsultant($mission->getConsultant());
+        $facture->setConsultant($mission->getConsultant());
         $form = $this->createForm('AppBundle\Form\FactureType', $facture);
         $form->handleRequest($request);
 
@@ -82,7 +86,7 @@ class FactureController extends Controller
 
             $em->persist($facture);
             $em->flush();
-         $facture=  $em->getRepository('AppBundle:Facture')->find($facture->getId());
+            $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
 
             $facture->setTotalHT($prixVenteHT * $facture->getNbjour());
             $em->persist($facture);
@@ -90,8 +94,9 @@ class FactureController extends Controller
             return $this->redirectToRoute('facture_show', array('id' => $facture->getId()));
         }
 
-        return $this->render('facture/new.html.twig', array(
+        return $this->render('facture/facture_mission.html.twig', array(
             'facture' => $facture,
+            'mission'=>$mission,
             'form' => $form->createView(),
         ));
     }
@@ -170,5 +175,56 @@ class FactureController extends Controller
             ->setAction($this->generateUrl('facture_delete', array('id' => $facture->getId())))
             ->setMethod('DELETE')
             ->getForm();
+    }
+
+    /**
+     *
+     * @Route("/test", name="route_to_retrieve_mission",options={"expose"=true})
+     ** @Method({"GET", "POST"})
+     */
+    public function getNiveau(Request $request)
+    {
+        $Id = $request->get('idMission');
+        $year = $request->get('year');
+        /*  $Id = 6;
+          $year = 2020;*/
+        $em = $this->getDoctrine()->getManager();
+        $mission = $em->getRepository('AppBundle:Mission')->find($Id);
+        $factures = $em->getRepository('AppBundle:Facture')->findBy(
+
+            [
+                'mission' => $mission,
+                'year' => $year
+            ]
+
+
+        );
+        if ($mission->getType()) {
+            $type = $mission->getType();
+        } else {
+
+            $type = null;
+        }
+
+
+        if ($factures != null) {
+            foreach ($factures as $facture) {
+
+                $output[] = array($facture->getMois());
+            }
+
+            $response = json_encode(array('data' => $type, 'mois' => $output));
+        }else {
+            $response = json_encode(array('data' => $type, 'mois' => null));
+        }
+
+
+
+
+
+        return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
+
     }
 }

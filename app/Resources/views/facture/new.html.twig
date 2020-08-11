@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block title %} Hope3k | Facture {% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
 
+     <style type="text/css">
+
+
+     </style>
+ {% endblock %}
 {% block menu %}  <a href="{{ path('facture_index') }}">Facture</a>   {% endblock %}
 
    {% block menu_active %}    Ajouter {% endblock %}
@@ -53,22 +60,31 @@
 
                         </div>
                         <div class="col-md-2 ">
-                            {{ form_row(form.mois) }}
-
+                            <div class="form-group mois">
+                                <label class="required" for="appbundle_facture_mois">Mois</label>
+                                <select id="appbundle_facture_mois" name="appbundle_facture[mois]" class="form-control">
+                                    <option value="1">Janvier</option>
+                                    <option value="2">Fevrier</option>
+                                    <option value="3">Mars</option>
+                                    <option value="4">Avril</option>
+                                    <option value="5">Mai</option>
+                                    <option value="6">Juin</option>
+                                    <option value="7">Juillet</option>
+                                    <option value="8">Aout</option>
+                                    <option value="9">Septembre</option>
+                                    <option value="10">Octobre</option>
+                                    <option value="11">Novembre</option>
+                                    <option value="12">Décembre</option>
+                                </select>
+                            </div>
 
 
                         </div>
                         <div class="col-md-2 ">
 
-                            <label for="spinner2">Année: </label>
-                            <div class="input-group">
-                                <input type="text" id="spinner2" name="appbundle_facture[year]"
-                                       class="spinbox-input form-control text-center spinner2">
-                                <div class="spinbox-buttons input-group-btn btn-group-vertical">
-
-                                </div>
-                            </div>
-
+                            <div class="form-group"><label for="appbundle_facture_year">Année</label><input
+                                        type="number" id="appbundle_facture_year" name="appbundle_facture[year]"
+                                        class="form-control"></div>
 
                         </div>
 
@@ -87,17 +103,11 @@
                             </div>
 
                         </div>
-                        <div class="col-md-3 col-md-offset-2 ">
+                        <div class="col-md-3 col-md-offset-2 " id="nbjour">
 
-                            <label for="spinner1">Nombre des jours: </label>
-                            <div class="input-group">
-                                <input type="text" id="spinner1" name="appbundle_facture[nbjour]"
-                                       class="spinbox-input form-control text-center spinner1">
-                                <div class="spinbox-buttons input-group-btn btn-group-vertical">
-
-                                </div>
-                            </div>
-
+                            <div class="form-group"><label for="appbundle_facture_nbjour">Nombre de jours</label><input
+                                        type="number" id="appbundle_facture_nbjour" name="appbundle_facture[nbjour]"
+                                        class="form-control" value=""></div>
 
 
                         </div>
@@ -160,7 +170,7 @@
 
             var TodayDate = new Date();
             var d = TodayDate.getDay();
-            var m = TodayDate.getMonth()+1;
+            var m = TodayDate.getMonth() + 1;
             var y = TodayDate.getFullYear();
 
 
@@ -185,6 +195,124 @@
                 .closest('.ace-spinner')
             ;
             $("#appbundle_facture_mois").val(m);
+            $("#appbundle_facture_year").val(y);
+
+            // debut
+          var  sel=  $('select[name*="appbundle_facture[mission]"]').prop('selected', true);
+                // $('#adminbundle_inscription_frais').show();
+
+                var Id = sel.val();
+                var year = $("#appbundle_facture_year").val();
+                var url = Routing.generate('route_to_retrieve_mission');
+
+                /*  $.post(url,
+                 { 'idClass': Id
+                 }, function(data, status){
+                 if(status=='200'){
+                 alert("Data: " + data + "\nStatus: " + status);
+                 }else {
+                 alert("erreur");
+                 }
+
+                 });
+                 */
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        idMission: Id, year: year
+
+                    }, // no need to stringify the data, jquery does it for you
+                    url: url,
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+                        if (response.data == 'mensuel') {
+
+                            $('#nbjour').hide();
+                        } else {
+
+                            $('#nbjour').show();
+                        }
+                        if (response.mois != null) {
+
+                            for (i = 0; i < response.mois.length; i++) {
+
+                                $('.mois option[value="' + response.mois[i] + '"]').attr("disabled", "disabled");
+
+
+                            }
+                        }else{
+
+                            $(".mois option").prop('disabled', false);
+                        }
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $(".mois option").each(function () {
+                            //  this.removeAttr("disabled");
+                        });
+                    }
+                });
+
+            // fin
+
+            $('select[name*="appbundle_facture[mission]"]').prop('selected', true).change(function () {
+                // $('#adminbundle_inscription_frais').show();
+
+                var Id = $(this).val();
+                var year = $("#appbundle_facture_year").val();
+                var url = Routing.generate('route_to_retrieve_mission');
+
+                /*  $.post(url,
+                 { 'idClass': Id
+                 }, function(data, status){
+                 if(status=='200'){
+                 alert("Data: " + data + "\nStatus: " + status);
+                 }else {
+                 alert("erreur");
+                 }
+
+                 });
+                 */
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        idMission: Id, year: year
+
+                    }, // no need to stringify the data, jquery does it for you
+                    url: url,
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+                        if (response.data == 'mensuel') {
+
+                            $('#nbjour').hide();
+                        } else {
+
+                            $('#nbjour').show();
+                        }
+                        if (response.mois != null) {
+
+                            for (i = 0; i < response.mois.length; i++) {
+
+                                $('.mois option[value="' + response.mois[i] + '"]').attr("disabled", "disabled");
+
+
+                            }
+                        }
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $(".mois option").each(function () {
+                            //  this.removeAttr("disabled");
+                        });
+                    }
+                });
+            });
 
         });
     </script>

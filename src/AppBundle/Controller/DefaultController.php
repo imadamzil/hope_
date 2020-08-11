@@ -14,14 +14,27 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
+/*
         $clients = $em->getRepository('AppBundle:Client')->findAll();
         $fournisseurs = $em->getRepository('AppBundle:Fournisseur')->findAll();
         $consultants = $em->getRepository('AppBundle:Consultant')->findAll();
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
-        $virements = $em->getRepository('AppBundle:Virement')->findAll();
+        $virements = $em->getRepository('AppBundle:Virement')->findAll();*/
+
+        $Id = 6;
+        $year = 2020;
+        $em = $this->getDoctrine()->getManager();
+        $mission = $em->getRepository('AppBundle:Mission')->find($Id);
+        $factures = $em->getRepository('AppBundle:Facture')->findBy(
+
+            [
+                'mission' => $mission,
+                'year' => $year
+            ]
 
 
+        );
+        dump($factures);
 
         return $this->render('default/index.html.twig', [
             'nb_client'=>count($clients),

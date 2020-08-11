@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -113,7 +114,25 @@ class MissionType extends AbstractType
                 'label' => 'Contrat Client'
                 //   'delete_label' => 'form.label.delete',
 
-            ]);
+            ])
+            ->add('type', ChoiceType::class, array(
+                'choices' => array(
+                    'Mensuel' => 'mensuel',
+                    'Journaliere' => 'journaliere',
+
+
+                ),
+            ))
+            ->add('devise', ChoiceType::class, array(
+                'choices' => array(
+                    'DH' => 'DH',
+                    'Euro' => 'euro',
+                    'Dollar' => 'dollar',
+
+
+                ),
+            ))
+        ;
 
 
     }

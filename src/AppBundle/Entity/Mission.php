@@ -39,6 +39,18 @@ class Mission
      * @ORM\Column(name="prixAchat", type="string", length=255, nullable=true)
      */
     private $prixAchat;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    private $type;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="devise", type="string", length=255, nullable=true)
+     */
+    private $devise;
 
     /**
      * @var \DateTime
@@ -53,8 +65,6 @@ class Mission
      * @ORM\Column(name="dateFin", type="datetime", nullable=true)
      */
     private $dateFin;
-
-
 
 
     /**
@@ -77,9 +87,6 @@ class Mission
      * @ORM\JoinColumn(name="id_fournisseur", referencedColumnName="id")
      */
     private $fournisseur;
-
-
-
 
 
     /**
@@ -110,7 +117,6 @@ class Mission
      * @var string
      */
     private $contratFName;
-
 
 
     /**
@@ -147,6 +153,7 @@ class Mission
     {
         return $this->contratFName;
     }
+
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
@@ -162,7 +169,6 @@ class Mission
      * @var string
      */
     private $contratCName;
-
 
 
     /**
@@ -248,6 +254,7 @@ class Mission
     {
         return $this->createdAt;
     }
+
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
@@ -549,6 +556,7 @@ class Mission
     {
         return $this->fournisseur;
     }
+
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
@@ -564,7 +572,6 @@ class Mission
      * @var string
      */
     private $documentName;
-
 
 
     /**
@@ -610,12 +617,60 @@ class Mission
 
     public function __toString()
     {
-if ($this->getConsultant() != null) {
+        if ($this->getConsultant() != null) {
 
-    return 'Mission-'.$this->getClient()->getNom().'-'.$this->getConsultant()->getNom();
-}
-        return 'Mission-'.$this->getClient()->getNom();
+            return 'Mission-' . $this->getClient()->getNom() . '-' . $this->getConsultant()->getNom();
+        }
+        return 'Mission-' . $this->getClient()->getNom();
 
     }
 
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Mission
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set devise
+     *
+     * @param string $devise
+     *
+     * @return Mission
+     */
+    public function setDevise($devise)
+    {
+        $this->devise = $devise;
+
+        return $this;
+    }
+
+    /**
+     * Get devise
+     *
+     * @return string
+     */
+    public function getDevise()
+    {
+        return $this->devise;
+    }
 }
