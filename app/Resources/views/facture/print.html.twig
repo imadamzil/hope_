@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/Style_Page_Mission_Imprimer.css') }}">
+    <title>Imprimer Facture</title>
+    <meta charset="utf-8">
+</head>
+<body>
+
+<header class="A">
+    <p class="B">
+        <img src="https://media-exp1.licdn.com/dms/image/C4E1BAQFRyjYnYD3Drg/company-background_10000/0?e=2159024400&v=beta&t=RAlKPanZtaaj-QxmgPwR1edKWgyc6gHkuzuOteOPOKk"
+             alt="HOP3K" width="251" height="70"/><br>
+        {#<span class="F">H O P E &nbsp;A N D &nbsp;W E &nbsp;P E R F O R M</span>#}
+    </p>
+    <p class="C">
+        <img src="https://www.ecoenergiesolutions.com/uploads/labels/20121120-1548-afaq-9001.jpg" alt="AFAQA" width="80"
+             height="80"/><br>
+        <span class="G">ISO 9001 : 2015</span> <br>
+        <span class="GA">ID : 121497101356</span>
+    </p>
+</header>
+
+<p class="DF">
+
+    <strong class="SQ">FACTURE</strong><br>
+
+    <span class="QW">NUMÉRO &nbsp;: 50002<br>
+         DATE   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10/02/2018</span>
+
+</p>
+
+<div class="row QWF ">
+
+    <div class="col-sm-4.10 AZE">
+
+        <h4 class="RTY">HOP3K SERVICES</h4>
+        <p class="WXV">
+            Adresse : Rue François Ponsard, Résidence Oushmane1,<br>
+            3eme étage bureau N°16. Casablanca 20000
+        </p>
+        <p>
+            <span class="WXV">ICE</span> : <span class="ZEF">000077247000025</span>
+        </p>
+
+    </div>
+
+    <div class="col-sm-4 ZES">
+        <h4 class="RTY">{{ facture.client.nom }}</h4>
+
+
+        <p>
+            <span class="XLJ">Adresse : {{ facture.client.adresse }}</span>
+        </p>
+        </p>
+        <p>
+            <span class="XLJ">ICE</span> : <span class="ERZ">000077247000025</span>
+        </p>
+    </div>
+
+</div>
+
+<div class="container">
+
+    <table class="">
+        <tr>
+            <th class="NB"><strong>Désignation</strong></th>
+            <th class="NBV"><strong>Unité (Nbr jrs)</strong></th>
+            <th class="NBV"><strong>Prix Unitaire HT (DH)</strong></th>
+            <th class="NBV"><strong>Prix Total HT (DH)</strong></th>
+
+        </tr>
+
+        <tr>
+            <td class="lmk">
+                {% if facture.client.nom == "ATOS" %}
+                    <p>
+
+
+                        - &nbsp;&nbsp;<span class="PPP">Type de mission :
+                        {{ facture.mission.type }}
+                        <br>
+
+
+                    </span>
+                    </p>
+                {% endif %}
+                <p>
+                    - &nbsp;&nbsp;<span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
+                </p>
+                <p>
+                    - &nbsp;&nbsp;<span class="OLL">CONSULTANT <span
+                                class="NBt">JAVA</span></span>
+                </p>
+                <p>
+                    - &nbsp;&nbsp;<span class="YYY">Mois :</span><br><span
+                            class="OLL">&nbsp;&nbsp;&nbsp;&nbsp;{{ mois }}</span>
+                </p>
+                <p>
+                    <span class="YYY">Consultant :</span><br>
+                    <span class="NBt OLL">{{ facture.consultant.nom }}
+                        &nbsp;</span>
+
+                </p>
+                <p>
+                    <span class="YYY">Référence de contrat</span><br><span
+                            class="OLL">Contrat réference</span>
+                </p>
+
+            </td>
+            <td class="lmks"><strong></strong></td>
+            <td class="lmks"><strong></strong></td>
+            <td class="lmks"><strong>ddd</strong></td>
+        </tr>
+
+
+    </table>
+</div>
+
+<p class="AZX">
+
+
+    {#<table class="table">
+        <tbody>
+        <tr>
+            <th scope="row">Montant des sommes dues</th>
+            <td>{{ facture.totalHT }}</td>
+
+        </tr>
+
+        </tbody>
+    </table>#}
+
+    Montant des sommes dues &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ facture.totalHT }}
+    .00
+    DH <br>Montant TVA 20% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {{ facture.taxe }}.00
+    DH<br>Montant net à payer au prestataire &nbsp;&nbsp;{{ facture.totalTTC }}.00 DH
+
+</p>
+<p class="VVV">
+    Arrêté la présente facture à la somme de :<br>
+    <strong>
+        <span class="XWWO">
+           {{ total }} dirhams</span></strong>
+</p>
+<p class="ljj">
+    Signature et Cachet
+</p>
+<p class="WWM">
+    <span class="XXX">Mode de paiement</span> <span class="CCC">:</span><br><span
+            class="EEE">Virement au compte bancaire</span>
+
+</p>
+
+<div class="row">
+
+    <div class="col-md-10 col-md-offset-1">
+        <footer>
+            <p class="RRR text-center">
+                SOCIETE <span class="WII">&nbsp; <b>HOPE3K Service</b></span>, &nbsp;au capital de 700 000 DH -
+                Lotissement
+                Lina, &nbsp;316,
+                3éme étage, Sidi maarouf, Casablanca. CNSS N°7958492 - RC N°295375 - IF N°3383481 - Patente N° 36166787
+                -ICE
+                N°000077247000025 - RIB N° 013780011400017840019248 -SWIFT
+                : BMCIMAMC- Tél:0522990120
+            </p>
+
+            <div class="TTT">
+                <button class="btn btn-info" onclick="window.print()" id="vusz"><span class="fa fa-print"
+                                                                                      id="print"></span> Imprimer
+                </button>
+            </div>
+
+        </footer>
+
+    </div>
+</div>
+
+
+<script type="application/javascript">
+
+    $(document).ready(function () {
+
+        $('#print').click();
+
+
+    });
+
+</script>
+</body>
+</html>

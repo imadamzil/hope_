@@ -247,7 +247,8 @@
 </head>
 
 <body class="no-skin">
-
+{% block body1 %}
+{% endblock %}
 
 {#
 {% set notifications = app.session.get('notifications') %}
@@ -588,6 +589,14 @@
 
                 <b class="arrow"></b>
             </li>
+            <li class="">
+                <a href="{{ path('bcfournisseur_index') }}">
+                    <i class="menu-icon fa  fa-folder-open-o"></i>
+                    <span class="menu-text"> BC Fournisseurs </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
 
             <li class="">
                 <a href="{{ path('client_index') }}">
@@ -759,8 +768,8 @@
         <div class="footer-inner">
             <div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">Quali</span>
-							Hope3k &copy; 2018
+							<span class="blue bolder">HOPE3K</span>
+							 &copy; 2020
 						</span>
 
                 &nbsp; &nbsp;

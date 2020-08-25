@@ -80,6 +80,85 @@ class MissionController extends Controller
 
         ));
     }
+/**
+     * Lists all mission entities.
+     *
+     * @Route("/mission_sans_contract_client", name="mission_sans_contrat_client")
+     * @Method("GET")
+     */
+    public function missionssanscontracclientAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $missions = $em->getRepository('AppBundle:Mission')->findAll();
+
+        $missions_sans_contratC = $em->getRepository('AppBundle:Mission')->findBy([
+            'contratCName' => null
+
+        ]);
+
+
+        return $this->render('mission/missions_sans_contract_client.html.twig', array(
+            'missions' => $missions_sans_contratC,
+
+
+
+        ));
+    }
+/**
+     * Lists all mission entities.
+     *
+     * @Route("/mission_sans_contract_fournisseur", name="mission_sans_contrat_fournisseur")
+     * @Method("GET")
+     */
+    public function missionssanscontratfournisseurAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $missions_sans_contratF = $em->getRepository('AppBundle:Mission')->findBy([
+            'contratFName' => null
+
+        ]);
+
+
+
+
+
+        return $this->render('mission/missions_sans_contract_fournisseur.html.twig', array(
+            'missions' => $missions_sans_contratF,
+
+
+
+        ));
+    }
+/**
+     * Lists all mission entities.
+     *
+     * @Route("/mission_sans_bc_client", name="mission_sans_bc_client")
+     * @Method("GET")
+     */
+    public function missionssansbcclientAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+
+        $missions_sans_BC = $em->getRepository('AppBundle:Mission')->findBy([
+            'bcName' => null
+
+        ]);
+
+
+
+
+        return $this->render('mission/missions_sans_bc_client.html.twig', array(
+            'missions' => $missions_sans_BC,
+
+
+
+        ));
+    }
+
 
     /**
      * Creates a new mission entity.

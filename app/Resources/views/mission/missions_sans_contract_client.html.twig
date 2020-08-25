@@ -6,65 +6,12 @@
    {% block menu_active %}    Liste {% endblock %}
 {% block content %}
 
-        <ul class="list-group text-center col-md-10">
-
-
-        {% if( nb_C is not null and nb_C != 0) %}
-
-
-            <li class="list-group-item list-group-item-danger bigger-140">
-
-
-                <strong>
-                    <i class="ace-icon fa fa-warning"></i>
-                    {{ nb_C }}
-                </strong>
-                Missions sans contrat clients,
-                <a href="{{ path('mission_sans_contrat_client') }}" class="btn btn-sm btn-danger">
-                    <i class="ace-icon fa fa-list bigger-110"></i>
-                    <span class="bigger-110 no-text-shadow">Liste</span>
-                </a>
-            </li>
-        {% endif %}
-
-        {% if( nb_F is not null and nb_F != 0) %}
-            <li class="list-group-item list-group-item-danger">
-
-
-                <strong>
-                    <i class="ace-icon fa fa-warning"></i>
-                    {{ nb_F }}
-                </strong>
-                Missions sans Contrats Fournisseurs,
-                <a href="{{ path('mission_sans_contrat_fournisseur') }}" class="btn btn-sm btn-danger">
-                    <i class="ace-icon fa fa-list bigger-110"></i>
-                    <span class="bigger-110 no-text-shadow">Liste</span>
-                </a>
-            </li>
-        {% endif %}
-        {% if( nb_BC is not null and nb_BC != 0) %}
-            <li class="list-group-item list-group-item-danger">
-
-
-                <strong>
-                    <i class="ace-icon fa fa-alert"></i>
-                    {{ nb_BC }}
-                </strong>
-                Missions sans Bon de commandes,
-                <a href="{{ path('mission_sans_bc_client') }}" class="btn btn-sm btn-danger align-right">
-                    <i class="ace-icon fa fa-list bigger-110"></i>
-                    <span class="bigger-110 no-text-shadow">Liste</span>
-                </a>
-            </li>
-        {% endif %}
-        </ul>
-
 
     <div class="col-md-10  widget-container-col ui-sortable" id="widget-container-col-1">
 
         <div class="widget-box ui-sortable-handle" id="widget-box-1">
             <div class="widget-header">
-                <h5 class="widget-title">Liste des Missions :</h5>
+                <h5 class="widget-title">Liste des Missions sans contrat client:</h5>
 
                 <div class="widget-toolbar">
                     <div class="widget-menu">

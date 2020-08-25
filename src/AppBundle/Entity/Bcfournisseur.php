@@ -25,9 +25,39 @@ class Bcfournisseur
     /**
      * @var float
      *
-     * @ORM\Column(name="achat", type="float", nullable=true)
+     * @ORM\Column(name="achatHT", type="float", nullable=true)
      */
-    private $achat;
+    private $achatHT;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_jours", type="integer", nullable=true)
+     */
+    private $nbjours;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="mois", type="integer", nullable=true)
+     */
+    private $mois;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="year", type="integer", nullable=true)
+     */
+    private $year;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="achatTTC", type="float", nullable=true)
+     */
+    private $achatTTC;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="taxe", type="float", nullable=true)
+     */
+    private $taxe;
 
     /**
      * @var string
@@ -46,7 +76,7 @@ class Bcfournisseur
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="date",nullable=true)
      */
     private $date;
 
@@ -348,5 +378,149 @@ class Bcfournisseur
     public function __toString()
     {
         return $this->getFournisseur()->getNom();
+    }
+
+    /**
+     * Set achatHT
+     *
+     * @param float $achatHT
+     *
+     * @return Bcfournisseur
+     */
+    public function setAchatHT($achatHT)
+    {
+        $this->achatHT = $achatHT;
+
+        return $this;
+    }
+
+    /**
+     * Get achatHT
+     *
+     * @return float
+     */
+    public function getAchatHT()
+    {
+        return $this->achatHT;
+    }
+
+    /**
+     * Set achatTTC
+     *
+     * @param float $achatTTC
+     *
+     * @return Bcfournisseur
+     */
+    public function setAchatTTC($achatTTC)
+    {
+        $this->achatTTC = $achatTTC;
+
+        return $this;
+    }
+
+    /**
+     * Get achatTTC
+     *
+     * @return float
+     */
+    public function getAchatTTC()
+    {
+        return $this->achatTTC;
+    }
+
+    /**
+     * Set taxe
+     *
+     * @param float $taxe
+     *
+     * @return Bcfournisseur
+     */
+    public function setTaxe($taxe)
+    {
+        $this->taxe = $taxe;
+
+        return $this;
+    }
+
+    /**
+     * Get taxe
+     *
+     * @return float
+     */
+    public function getTaxe()
+    {
+        return $this->taxe;
+    }
+
+    /**
+     * Set nbjours
+     *
+     * @param integer $nbjours
+     *
+     * @return Bcfournisseur
+     */
+    public function setNbjours($nbjours)
+    {
+        $this->nbjours = $nbjours;
+
+        return $this;
+    }
+
+    /**
+     * Get nbjours
+     *
+     * @return integer
+     */
+    public function getNbjours()
+    {
+        return $this->nbjours;
+    }
+
+    /**
+     * Set mois
+     *
+     * @param integer $mois
+     *
+     * @return Bcfournisseur
+     */
+    public function setMois($mois)
+    {
+        $this->mois = $mois;
+
+        return $this;
+    }
+
+    /**
+     * Get mois
+     *
+     * @return integer
+     */
+    public function getMois()
+    {
+        return $this->mois;
+    }
+
+    /**
+     * Set year
+     *
+     * @param integer $year
+     *
+     * @return Bcfournisseur
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer
+     */
+    public function getYear()
+    {
+        return $this->year;
     }
 }

@@ -1,17 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Hope3k | Consultant {% endblock %}{% block menu %}  <a href="{{ path('consultant_index') }}">Consultant</a>   {% endblock %}   {% block menu_active %}    Détails {% endblock %}{% block content %}
+{% block body %}
     <h1>Bcfournisseur</h1>
 
-    <table class="table table-detail">
+    <table>
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ bcfournisseur.id }}</td>
             </tr>
             <tr>
-                <th>Achat</th>
-                <td>{{ bcfournisseur.achat }}</td>
+                <th>Achatht</th>
+                <td>{{ bcfournisseur.achatHT }}</td>
+            </tr>
+            <tr>
+                <th>Achatttc</th>
+                <td>{{ bcfournisseur.achatTTC }}</td>
+            </tr>
+            <tr>
+                <th>Taxe</th>
+                <td>{{ bcfournisseur.taxe }}</td>
             </tr>
             <tr>
                 <th>Facturefournisseur</th>

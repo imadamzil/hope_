@@ -14,12 +14,12 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-/*
+
         $clients = $em->getRepository('AppBundle:Client')->findAll();
         $fournisseurs = $em->getRepository('AppBundle:Fournisseur')->findAll();
         $consultants = $em->getRepository('AppBundle:Consultant')->findAll();
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
-        $virements = $em->getRepository('AppBundle:Virement')->findAll();*/
+        $virements = $em->getRepository('AppBundle:Virement')->findAll();
 
         $Id = 6;
         $year = 2020;

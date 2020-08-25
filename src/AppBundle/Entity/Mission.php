@@ -51,6 +51,18 @@ class Mission
      * @ORM\Column(name="devise", type="string", length=255, nullable=true)
      */
     private $devise;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="motif", type="string", length=255, nullable=true)
+     */
+    private $motif;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     */
+    private $description;
 
     /**
      * @var \DateTime
@@ -672,5 +684,53 @@ class Mission
     public function getDevise()
     {
         return $this->devise;
+    }
+
+    /**
+     * Set motif
+     *
+     * @param string $motif
+     *
+     * @return Mission
+     */
+    public function setMotif($motif)
+    {
+        $this->motif = $motif;
+
+        return $this;
+    }
+
+    /**
+     * Get motif
+     *
+     * @return string
+     */
+    public function getMotif()
+    {
+        return $this->motif;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Mission
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

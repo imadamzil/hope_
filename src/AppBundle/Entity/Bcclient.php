@@ -265,6 +265,8 @@ class Bcclient
 
     public function __toString()
     {
-        return $this->getClient()->getNom().'~'.$this->getCode();
+        return $this->getClient()->getNom() . '~' . $this->getCode();
     }
+
+
 }

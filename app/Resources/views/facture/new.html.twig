@@ -55,7 +55,13 @@
                     <div class="row">
 
                         <div class="col-md-5 col-md-offset-1 border-right ">
-                            {{ form_row(form.etat) }}
+                            <div class="form-group">
+                                <label class="required" for="appbundle_facture_etat">Etat</label>
+                                <select id="appbundle_facture_etat" name="appbundle_facture[etat]" class="form-control">
+                                    <option value="payé">Payé</option>
+                                    <option value="non payé" selected="selected">Non Payé</option>
+                                </select>
+                            </div>
 
 
                         </div>
@@ -194,67 +200,67 @@
             })
                 .closest('.ace-spinner')
             ;
-            $("#appbundle_facture_mois").val(m);
+            $("#appbundle_facture_mois").val(m - 1);
             $("#appbundle_facture_year").val(y);
 
             // debut
-          var  sel=  $('select[name*="appbundle_facture[mission]"]').prop('selected', true);
-                // $('#adminbundle_inscription_frais').show();
+            var sel = $('select[name*="appbundle_facture[mission]"]').prop('selected', true);
+            // $('#adminbundle_inscription_frais').show();
 
-                var Id = sel.val();
-                var year = $("#appbundle_facture_year").val();
-                var url = Routing.generate('route_to_retrieve_mission');
+            var Id = sel.val();
+            var year = $("#appbundle_facture_year").val();
+            var url = Routing.generate('route_to_retrieve_mission');
 
-                /*  $.post(url,
-                 { 'idClass': Id
-                 }, function(data, status){
-                 if(status=='200'){
-                 alert("Data: " + data + "\nStatus: " + status);
-                 }else {
-                 alert("erreur");
-                 }
+            /*  $.post(url,
+             { 'idClass': Id
+             }, function(data, status){
+             if(status=='200'){
+             alert("Data: " + data + "\nStatus: " + status);
+             }else {
+             alert("erreur");
+             }
 
-                 });
-                 */
-                $.ajax({
-                    type: "POST",
-                    data: {
-                        idMission: Id, year: year
+             });
+             */
+            $.ajax({
+                type: "POST",
+                data: {
+                    idMission: Id, year: year
 
-                    }, // no need to stringify the data, jquery does it for you
-                    url: url,
-                    dataType: 'json',
-                    success: function (response) {
-                        console.log(response);
-                        if (response.data == 'mensuel') {
+                }, // no need to stringify the data, jquery does it for you
+                url: url,
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+                    if (response.data == 'mensuel') {
 
-                            $('#nbjour').hide();
-                        } else {
+                        $('#nbjour').hide();
+                    } else {
 
-                            $('#nbjour').show();
-                        }
-                        if (response.mois != null) {
-
-                            for (i = 0; i < response.mois.length; i++) {
-
-                                $('.mois option[value="' + response.mois[i] + '"]').attr("disabled", "disabled");
-
-
-                            }
-                        }else{
-
-                            $(".mois option").prop('disabled', false);
-                        }
-
-
-                    },
-                    error: function (error) {
-                        console.log(error);
-                        $(".mois option").each(function () {
-                            //  this.removeAttr("disabled");
-                        });
+                        $('#nbjour').show();
                     }
-                });
+                    if (response.mois != null) {
+
+                        for (i = 0; i < response.mois.length; i++) {
+
+                            $('.mois option[value="' + response.mois[i] + '"]').attr("disabled", "disabled");
+
+
+                        }
+                    } else {
+
+                        $(".mois option").prop('disabled', false);
+                    }
+
+
+                },
+                error: function (error) {
+                    console.log(error);
+                    $(".mois option").each(function () {
+                        //  this.removeAttr("disabled");
+                    });
+                }
+            });
 
             // fin
 

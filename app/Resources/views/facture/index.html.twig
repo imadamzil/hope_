@@ -1,17 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Hope3k | facture {% endblock %}{% block menu %}  <a href="{{ path('facture_index') }}">facture</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
-    <h1>Factures list</h1>
+{% block title %} Hope3k | facture {% endblock %}{% block menu %}  <a
+        href="{{ path('facture_index') }}">facture</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
 
+    {% if nb_non_factured_missions is not null and nb_non_factured_missions > 0 %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">
+                <i class="ace-icon fa fa-times"></i>
+            </button>
+
+            <strong>
+                <i class="ace-icon fa fa-times"></i>
+                Attention! {{ nb_non_factured_missions }}
+            </strong>
+
+            Missions sans facture pour le mois <b>{{ mois }}</b>
+            <a href="{{ path('mission_sans_facture') }}" class="btn btn-sm btn-danger">
+                <i class="ace-icon fa fa-list bigger-110"></i>
+                <span class="bigger-110 no-text-shadow">Liste</span>
+            </a>
+            <br>
+        </div>
+    {% endif %}
     <table class="table table-detail">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Etat</th>
-                <th>Mois</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Etat</th>
+            <th>Mois</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for facture in factures %}

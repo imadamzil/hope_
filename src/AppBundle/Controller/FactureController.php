@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Bcfournisseur;
 use AppBundle\Entity\Facture;
 use AppBundle\Entity\Mission;
+use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -28,9 +30,115 @@ class FactureController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $factures = $em->getRepository('AppBundle:Facture')->findAll();
-        dump($factures);
+        $missions = $em->getRepository('AppBundle:Mission')->findAll();
+
+        $date = new \DateTime('now');
+        $mois = intval($date->format('m')) - 1;
+        $day = intval($date->format('d'));
+        if ($day >= 10) {
+
+            foreach ($missions as $mission) {
+
+                $facture = $em->getRepository('AppBundle:Facture')->findBy(
+
+                    [
+                        'mission' => $mission,
+                        'mois' => $mois
+                    ]
+
+
+                );
+                if ($facture != null) {
+
+                    $missions_factured[] = $mission;
+                    $diff = array_diff_assoc($missions, $missions_factured);
+                    $nb_non_factured_missions = count($diff);
+                } else {
+
+                    $missions_factured[] = null;
+                    $diff = array_diff_assoc($missions, $missions_factured);
+                    $nb_non_factured_missions = count($diff);
+                }
+
+            }
+
+
+            // dump($diff, $missions, $missions_factured, count($diff));
+
+            // $nb_non_factured_missions = count($diff);
+        } else {
+
+            $nb_non_factured_missions = null;
+            //$diff = array_diff_assoc($missions, $missions_factured);
+        }
+
+
         return $this->render('facture/index.html.twig', array(
             'factures' => $factures,
+            'nb_non_factured_missions' => $nb_non_factured_missions,
+            'mois' => $mois
+        ,
+        ));
+    }
+
+    /**
+     * Lists all facture entities.
+     *
+     * @Route("/mission_sans_facture", name="mission_sans_facture")
+     * @Method("GET")
+     */
+    public function missionsSansFactureAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $factures = $em->getRepository('AppBundle:Facture')->findAll();
+        $missions = $em->getRepository('AppBundle:Mission')->findAll();
+
+        $date = new \DateTime('now');
+        $mois = intval($date->format('m')) - 1;
+        $day = intval($date->format('d'));
+        if ($day >= 10) {
+
+            foreach ($missions as $mission) {
+
+                $facture = $em->getRepository('AppBundle:Facture')->findBy(
+
+                    [
+                        'mission' => $mission,
+                        'mois' => $mois
+                    ]
+
+
+                );
+                if ($facture != null) {
+
+                    $missions_factured[] = $mission;
+                    $diff = array_diff_assoc($missions, $missions_factured);
+                    $nb_non_factured_missions = count($diff);
+                } else {
+
+                    $missions_factured[] = null;
+                    $diff = array_diff_assoc($missions, $missions_factured);
+                    $nb_non_factured_missions = count($diff);
+                }
+
+            }
+
+
+            // dump($diff, $missions, $missions_factured, count($diff));
+
+            // $nb_non_factured_missions = count($diff);
+        } else {
+
+            $nb_non_factured_missions = null;
+            //$diff = array_diff_assoc($missions, $missions_factured);
+        }
+
+
+        return $this->render('facture/missionsansfacture.html.twig', array(
+            'factures' => $factures,
+            'mois' => $mois,
+            'missions' => $diff
         ));
     }
 
@@ -43,15 +151,121 @@ class FactureController extends Controller
     public function newAction(Request $request)
     {
         $facture = new Facture();
+        $bcfournisseur = new Bcfournisseur();
+
+        $bcfournisseur->setEtat('non payé');
+        $facture->setEtat('non payé');
+
         $form = $this->createForm('AppBundle\Form\FactureType', $facture);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-
             $em->persist($facture);
             $em->flush();
+            $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
+            $mission = $facture->getMission();
+            dump($mission);
+            $facture->setBcclient($mission->getBcclient());
+            $facture->setBcclient($mission->getBcclient());
+
+            $facture->setClient($mission->getClient());
+            $facture->setMission($mission);
+
+            $prixAchatHT = $mission->getPrixAchat();
+            $prixVenteHT = $mission->getPrixVente();
+            $facture->setConsultant($mission->getConsultant());
+            if ($mission->getDevise() == 'DH') {
+
+                if ($mission->getType() == 'journaliere') {
+
+                    $totalHT = $prixVenteHT * $facture->getNbjour();
+                    $achatHT = $prixAchatHT * $facture->getNbjour();
+                    $TVA = ($prixVenteHT * $facture->getNbjour()) * 0.2;
+                    $TVA_Achat = $achatHT * 0.2;
+                    $bcfournisseur->setAchatHT($achatHT);
+                    $bcfournisseur->setTaxe($TVA_Achat);
+                    $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $facture->setTotalHT($totalHT);
+                    $facture->setTaxe($TVA);
+                    $facture->setTotalTTC($TVA + $totalHT);
+                    $bcclient = $facture->getBcclient();
+                    dump($bcclient);
+                    if ($bcclient != null) {
+
+                        $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
+                        $em->persist($bcclient);
+                        $em->flush();
+                    }
+                } else {
+                    $totalHT = $prixVenteHT;
+                    $achatHT = $prixAchatHT;
+                    $TVA_Achat = $achatHT * 0.2;
+                    $bcfournisseur->setAchatHT($achatHT);
+                    $bcfournisseur->setTaxe($TVA_Achat);
+                    $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $TVA = ($prixVenteHT) * 0.2;
+                    $facture->setTaxe($TVA);
+
+                    $facture->setTotalHT($totalHT);
+                    $facture->setTotalTTC($TVA + $totalHT);
+
+                }
+
+
+            } else {
+                if ($mission->getType() == 'journaliere') {
+
+                    $totalHT = $prixVenteHT * $facture->getNbjour();
+                    $achatHT = $prixAchatHT * $facture->getNbjour();
+                    $TVA = 0;
+                    $TVA_Achat = 0;
+                    $bcfournisseur->setAchatHT($achatHT);
+                    $bcfournisseur->setTaxe($TVA_Achat);
+                    $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $facture->setTotalHT($totalHT);
+                    $facture->setTaxe($TVA);
+                    $facture->setTotalTTC($TVA + $totalHT);
+                    $bcclient = $facture->getBcclient();
+                    dump($bcclient);
+                    if ($bcclient != null) {
+
+                        $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
+                        $em->persist($bcclient);
+                        $em->flush();
+                    }
+                } else {
+                    $totalHT = $prixVenteHT;
+                    $achatHT = $prixAchatHT;
+                    $TVA_Achat = 0;
+                    $bcfournisseur->setAchatHT($achatHT);
+                    $bcfournisseur->setTaxe($TVA_Achat);
+                    $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $TVA = 0;
+                    $facture->setTaxe($TVA);
+
+                    $facture->setTotalHT($totalHT);
+                    $facture->setTotalTTC($TVA + $totalHT);
+
+                }
+
+
+            }
+            $em->persist($facture);
+            $em->flush();
+
+
+            $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
+
+
+            $bcfournisseur->setFournisseur($facture->getMission()->getFournisseur());
+            $bcfournisseur->setNbjours($facture->getNbjour());
+            $bcfournisseur->setMois($facture->getMois());
+            $bcfournisseur->setYear($facture->getYear());
+            $em->persist($bcfournisseur);
+            $em->flush();
+
 
             return $this->redirectToRoute('facture_show', array('id' => $facture->getId()));
         }
@@ -71,6 +285,10 @@ class FactureController extends Controller
     public function newfromMissionAction(Request $request, Mission $mission)
     {
         $facture = new Facture();
+        $bcfournisseur = new Bcfournisseur();
+
+        $bcfournisseur->setEtat('non payé');
+        $facture->setEtat('non payé');
         $facture->setBcclient($mission->getBcclient());
         $facture->setClient($mission->getClient());
         $facture->setMission($mission);
@@ -88,15 +306,104 @@ class FactureController extends Controller
             $em->flush();
             $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
 
-            $facture->setTotalHT($prixVenteHT * $facture->getNbjour());
+            if ($mission->getDevise() == 'DH') {
+
+                if ($mission->getType() == 'journaliere') {
+
+                    $totalHT = $prixVenteHT * $facture->getNbjour();
+                    $achatHT = $prixAchatHT * $facture->getNbjour();
+                    $TVA = ($prixVenteHT * $facture->getNbjour()) * 0.2;
+                    $TVA_Achat = $achatHT * 0.2;
+                    $bcfournisseur->setAchatHT($achatHT);
+                    $bcfournisseur->setTaxe($TVA_Achat);
+                    $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $facture->setTotalHT($totalHT);
+                    $facture->setTaxe($TVA);
+                    $facture->setTotalTTC($TVA + $totalHT);
+                    $bcclient = $facture->getBcclient();
+                    dump($bcclient);
+                    if ($bcclient != null) {
+
+                        $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
+                        $em->persist($bcclient);
+                        $em->flush();
+                    }
+                } else {
+                    $totalHT = $prixVenteHT;
+                    $achatHT = $prixAchatHT;
+                    $TVA_Achat = $achatHT * 0.2;
+                    $bcfournisseur->setAchatHT($achatHT);
+                    $bcfournisseur->setTaxe($TVA_Achat);
+                    $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $TVA = ($prixVenteHT) * 0.2;
+                    $facture->setTaxe($TVA);
+
+                    $facture->setTotalHT($totalHT);
+                    $facture->setTotalTTC($TVA + $totalHT);
+
+                }
+
+
+            } else {
+                if ($mission->getType() == 'journaliere') {
+
+                    $totalHT = $prixVenteHT * $facture->getNbjour();
+                    $achatHT = $prixAchatHT * $facture->getNbjour();
+                    $TVA = 0;
+                    $TVA_Achat = 0;
+                    $bcfournisseur->setAchatHT($achatHT);
+                    $bcfournisseur->setTaxe($TVA_Achat);
+                    $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $facture->setTotalHT($totalHT);
+                    $facture->setTaxe($TVA);
+                    $facture->setTotalTTC($TVA + $totalHT);
+                    $bcclient = $facture->getBcclient();
+                    dump($bcclient);
+                    if ($bcclient != null) {
+
+                        $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
+                        $em->persist($bcclient);
+                        $em->flush();
+
+                    }
+                } else {
+                    $totalHT = $prixVenteHT;
+                    $achatHT = $prixAchatHT;
+                    $TVA_Achat = 0;
+                    $bcfournisseur->setAchatHT($achatHT);
+                    $bcfournisseur->setTaxe($TVA_Achat);
+                    $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $TVA = 0;
+                    $facture->setTaxe($TVA);
+
+                    $facture->setTotalHT($totalHT);
+                    $facture->setTotalTTC($TVA + $totalHT);
+
+                }
+
+
+            }
             $em->persist($facture);
             $em->flush();
+
+
+            $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
+
+
+            $bcfournisseur->setFournisseur($facture->getMission()->getFournisseur());
+            $bcfournisseur->setNbjours($facture->getNbjour());
+            $bcfournisseur->setMois($facture->getMois());
+            $bcfournisseur->setYear($facture->getYear());
+            $em->persist($bcfournisseur);
+            $em->flush();
+
+
             return $this->redirectToRoute('facture_show', array('id' => $facture->getId()));
         }
 
         return $this->render('facture/facture_mission.html.twig', array(
             'facture' => $facture,
-            'mission'=>$mission,
+            'mission' => $mission,
             'form' => $form->createView(),
         ));
     }
@@ -114,6 +421,173 @@ class FactureController extends Controller
         return $this->render('facture/show.html.twig', array(
             'facture' => $facture,
             'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a facture entity.
+     *
+     * @Route("/{id}/print", name="facture_print")
+     * @Method("GET")
+     */
+    public function showfactureAction(Facture $facture)
+    {
+        //  $deleteForm = $this->createDeleteForm($facture);
+        dump($facture);
+
+        function mois_convert($m)
+        {
+
+            switch ($m) {
+                case 1:
+                    return "Janvier";
+                    break;
+                case 2:
+                    return "Février";
+                    break;
+                case 3:
+                    return "Mars";
+                    break;
+                case 4:
+                    return "Avril";
+                    break;
+                case 5:
+                    return "Mai";
+                    break;
+                case 6:
+                    return "Juin";
+                    break;
+                case 7:
+                    return "Juillet";
+                    break;
+                case 8:
+                    return "Aout";
+                    break;
+                case 9:
+                    return "Septembre";
+                    break;
+                case 10:
+                    return "Octobre";
+                    break;
+                case 11:
+                    return "Novembre";
+                    break;
+                case 12:
+                    return "Décembre";
+                    break;
+
+            }
+        }
+
+        function int2str($a)
+        {
+            $convert = explode('.', $a);
+            if (isset($convert[1]) && $convert[1] != '') {
+                return int2str($convert[0]) . 'Dinars' . ' et ' . int2str($convert[1]) . 'Centimes';
+            }
+            if ($a < 0) return 'moins ' . int2str(-$a);
+            if ($a < 17) {
+                switch ($a) {
+                    case 0:
+                        return 'zero';
+                    case 1:
+                        return 'un';
+                    case 2:
+                        return 'deux';
+                    case 3:
+                        return 'trois';
+                    case 4:
+                        return 'quatre';
+                    case 5:
+                        return 'cinq';
+                    case 6:
+                        return 'six';
+                    case 7:
+                        return 'sept';
+                    case 8:
+                        return 'huit';
+                    case 9:
+                        return 'neuf';
+                    case 10:
+                        return 'dix';
+                    case 11:
+                        return 'onze';
+                    case 12:
+                        return 'douze';
+                    case 13:
+                        return 'treize';
+                    case 14:
+                        return 'quatorze';
+                    case 15:
+                        return 'quinze';
+                    case 16:
+                        return 'seize';
+                }
+            } else if ($a < 20) {
+                return 'dix-' . int2str($a - 10);
+            } else if ($a < 100) {
+                if ($a % 10 == 0) {
+                    switch ($a) {
+                        case 20:
+                            return 'vingt';
+                        case 30:
+                            return 'trente';
+                        case 40:
+                            return 'quarante';
+                        case 50:
+                            return 'cinquante';
+                        case 60:
+                            return 'soixante';
+                        case 70:
+                            return 'soixante-dix';
+                        case 80:
+                            return 'quatre-vingt';
+                        case 90:
+                            return 'quatre-vingt-dix';
+                    }
+                } elseif (substr($a, -1) == 1) {
+                    if (((int)($a / 10) * 10) < 70) {
+                        return int2str((int)($a / 10) * 10) . '-et-un';
+                    } elseif ($a == 71) {
+                        return 'soixante-et-onze';
+                    } elseif ($a == 81) {
+                        return 'quatre-vingt-un';
+                    } elseif ($a == 91) {
+                        return 'quatre-vingt-onze';
+                    }
+                } elseif ($a < 70) {
+                    return int2str($a - $a % 10) . '-' . int2str($a % 10);
+                } elseif ($a < 80) {
+                    return int2str(60) . '-' . int2str($a % 20);
+                } else {
+                    return int2str(80) . '-' . int2str($a % 20);
+                }
+            } else if ($a == 100) {
+                return 'cent';
+            } else if ($a < 200) {
+                return int2str(100) . ' ' . int2str($a % 100);
+            } else if ($a < 1000) {
+                return int2str((int)($a / 100)) . ' ' . int2str(100) . ' ' . int2str($a % 100);
+            } else if ($a == 1000) {
+                return 'mille';
+            } else if ($a < 2000) {
+                return int2str(1000) . ' ' . int2str($a % 1000) . ' ';
+            } else if ($a < 1000000) {
+                return int2str((int)($a / 1000)) . ' ' . int2str(1000) . ' ' . int2str($a % 1000);
+            } else if ($a == 1000000) {
+                return 'millions';
+            } else if ($a < 2000000) {
+                return int2str(1000000) . ' ' . int2str($a % 1000000) . ' ';
+            } else if ($a < 1000000000) {
+                return int2str((int)($a / 1000000)) . ' ' . int2str(1000000) . ' ' . int2str($a % 1000000);
+            }
+        }
+
+        return $this->render('facture/print.html.twig', array(
+            'facture' => $facture,
+            'total' => int2str($facture->getTotalTTC()),
+            'mois'=>mois_convert($facture->getMois()),
+            // 'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -214,12 +688,9 @@ class FactureController extends Controller
             }
 
             $response = json_encode(array('data' => $type, 'mois' => $output));
-        }else {
+        } else {
             $response = json_encode(array('data' => $type, 'mois' => null));
         }
-
-
-
 
 
         return new Response($response, 200, array(

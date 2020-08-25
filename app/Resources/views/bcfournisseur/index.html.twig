@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Hope3k | BC fournisseur {% endblock %}{% block menu %}  <a href="{{ path('bcfournisseur_index') }}">BC fournisseur</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+{% block body %}
     <h1>Bcfournisseurs list</h1>
 
-    <table class="table table-detail">
+    <table>
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Achat</th>
+                <th>Achatht</th>
+                <th>Achatttc</th>
+                <th>Taxe</th>
                 <th>Facturefournisseur</th>
                 <th>Etat</th>
                 <th>Date</th>
@@ -21,7 +23,9 @@
         {% for bcfournisseur in bcfournisseurs %}
             <tr>
                 <td><a href="{{ path('bcfournisseur_show', { 'id': bcfournisseur.id }) }}">{{ bcfournisseur.id }}</a></td>
-                <td>{{ bcfournisseur.achat }}</td>
+                <td>{{ bcfournisseur.achatHT }}</td>
+                <td>{{ bcfournisseur.achatTTC }}</td>
+                <td>{{ bcfournisseur.taxe }}</td>
                 <td>{{ bcfournisseur.factureFournisseur }}</td>
                 <td>{{ bcfournisseur.etat }}</td>
                 <td>{% if bcfournisseur.date %}{{ bcfournisseur.date|date('Y-m-d') }}{% endif %}</td>

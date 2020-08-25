@@ -1,0 +1,232 @@
+.A
+{
+	display: flex;
+	justify-content: space-between;
+}
+.B
+{
+	margin-left: 30px;
+	margin-top: 20px;
+}
+.C
+{
+	margin-right: 30px;
+	margin-top: 25px;
+}
+.F
+{
+	color: #666666;
+}
+.GA
+{
+	font-size: 9px;
+	margin-top: 5px;
+	
+	color: #561164;
+}
+.G
+{
+	font-size: 9px;
+	margin-left: 4px;
+	color: #561164;
+}
+.DF
+{
+	margin-left: 825px;
+	margin-top: 40px;
+}
+.SQ
+{
+	color: rgb(0,31,95);
+	font-size: 19px;
+}
+.QW
+{
+	color: rgb(0,31,95);
+}
+/*.AZE
+{
+	margin-left: 90px;
+	background-color: #C0C0C0;
+	opacity: 1;
+	padding-right:9px;
+	padding-top: 15px;
+	padding-left: 5px;
+}*/
+.QWF
+{
+	margin-top: 60px;
+
+}
+.ZES
+{
+	margin-left: 200px;
+	border:solid 1px black;
+	/*padding-top: 15px;*/
+	width: 100%;
+	padding: 17px;
+
+}
+.RTY
+{
+	font-size: 16px;
+	color: rgb(0,31,95);
+}
+.ZEF
+{
+	color: rgb(0,31,95);
+}
+.WXV
+{
+	color: #454545;
+}
+.ERZ
+{
+	color: rgb(0,31,95);
+}
+.XLJ
+{
+	color: rgb(0,31,95);
+}
+table
+{
+   /*border-collapse: collapse;*/
+   margin-top: 40px;
+   margin-left: 10px;
+
+
+
+}
+td,th
+{
+	border:1px solid black;
+
+
+}
+.NB
+{
+	padding: 20px 20px 10px 10px;
+	padding-right: 100px;
+	text-align: center;
+	color: rgb(0,31,95);
+}
+.NBV
+{
+	padding: 10px 15px 10px 10px;
+	padding-right: 100px;
+    text-align: center;
+	color: rgb(0,31,95);
+}
+.lmk
+{
+	padding: 15px 10px 8px 40px;
+	padding-right: 100px;
+}
+.lmks
+{
+	padding: 8px 10px 8px 40px;
+	padding-right: 103px;
+}
+.NBt
+{
+	text-transform: uppercase;
+}
+.PPP
+{
+	color: rgb(0,31,95);
+}
+.YYY
+{
+	text-decoration: underline;
+	color: rgb(0,31,95);
+}
+.OLL
+{
+	color: #808080 ;
+	font-weight: bold;
+}
+.AZX
+{
+	margin-top: 30px;
+	margin-left: 600px;
+	color: #000080;
+	font-weight: bold;
+}
+.VVV
+{
+	color: rgb(0,31,95);
+	margin-left: 140px;
+	margin-top: 40px;
+}
+.ljj
+{
+	color: rgb(0,31,95);
+	margin-left: 900px;
+	margin-top: 66px;
+}
+.XXX
+{
+	color: rgb(0,31,95);
+	text-decoration: underline;
+}
+.EEE
+{
+	color: #000080;
+	font-weight: bold;
+	font-style: italic;
+}
+.WWM
+{
+	margin-top: 65px;
+	margin-left: 160px;
+}
+.CCC
+{
+	color: rgb(0,31,95);
+}
+.RRR
+{
+	color: rgb(0,31,95);
+	font-size: 11px;
+	margin-top: 60px;
+	margin-left: 100px;
+	margin-bottom: 20px;
+}
+.WII
+{
+  
+  font-size: 11px;
+  color: #000080;
+  font-weight: bold;
+
+}
+.TTT
+{
+	margin-top: 100px;
+	margin-left: 600px;
+	margin-bottom: 20px;
+}
+.XWWO
+{
+	color: #000080;
+  font-weight: bold;
+  font-style: italic;
+  margin-left: 10px;
+  text-transform: capitalize;
+}.AZE
+ {
+	 margin-left: 90px;
+	 background: rgb(167,167,167);
+	 background: linear-gradient(90deg, rgba(167,167,167,1) 0%, rgba(241,248,250,0.8127626050420168) 93%);
+	 opacity: 1;
+	 padding-right:9px;
+	 padding-top: 15px;
+	 padding-left: 5px;
+ }
+@media print
+{
+	#vusz{
+		display: none;
+	}
+
+}

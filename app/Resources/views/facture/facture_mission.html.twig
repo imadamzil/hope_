@@ -38,14 +38,20 @@
             </div>
 
             <div class="widget-body">
-                <div class="widget-main">
+                <div class="widget-main" id="facture">
                     <div class="row">
                         {{ form_start(form) }}
                         <div class="col-md-6 col-md-offset-3">
-                            {{ form_row(form.client) }}
-                            {{ form_row(form.mission) }}
-                            {{ form_row(form.consultant) }}
-                            {{ form_row(form.bcclient) }}
+                            {#{{ form_row(form.client) }}#}
+
+
+                            {{ form_row(form.mission, { 'attr':{'readonly':true} }) }}
+                            {{ form_row(form.consultant, { 'attr':{'readonly':true} }) }}
+                            {{ form_row(form.bcclient, { 'attr':{'readonly':true} }) }}
+
+                            {#{{ form_row(form.mission) }}#}
+                            {#{{ form_row(form.consultant) }}#}
+                            {#{{ form_row(form.bcclient) }}#}
 
                         </div>
 
@@ -55,7 +61,8 @@
                     <div class="row">
 
                         <div class="col-md-5 col-md-offset-1 border-right ">
-                            {{ form_row(form.etat) }}
+                            {#{{ form_row(form.etat) }}#}
+                            {{ form_row(form.etat, { 'attr':{'readonly':true} }) }}
 
 
                         </div>
@@ -194,7 +201,7 @@
             })
                 .closest('.ace-spinner')
             ;
-            $("#appbundle_facture_mois").val(m);
+            $("#appbundle_facture_mois").val(m-1);
             $("#appbundle_facture_year").val(y);
 
             // debut
@@ -239,11 +246,16 @@
 
                             $('.mois option[value="' + response.mois[i] + '"]').attr("disabled", "disabled");
 
+                          //
 
                         }
+                    //    $('#facture').before('<div class="alert alert-danger text-center" id="alert">Mission déja facture pour ce mois</div>');
                     }else{
 
                         $(".mois option").prop('disabled', false);
+
+                      //  $('#facture').after('<div id="alert">Mission déja facture pour ce mois</div>');
+
                     }
 
 
@@ -257,7 +269,7 @@
             });
 
             // fin
-
+            $('select[name*="appbundle_facture[client]"]').prop('readonly', true)
             $('select[name*="appbundle_facture[mission]"]').prop('selected', true).change(function () {
                 // $('#adminbundle_inscription_frais').show();
 
