@@ -85,6 +85,11 @@ class Bcfournisseur
      * @ORM\JoinColumn(name="id_fournisseur", referencedColumnName="id")
      */
     private $fournisseur;
+    /**
+     * @ORM\ManyToOne(targetEntity="Mission", inversedBy="bcfournisseur")
+     * @ORM\JoinColumn(name="id_mission", referencedColumnName="id")
+     */
+    private $mission;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="bcfournisseur",cascade={"persist", "remove"})
@@ -522,5 +527,29 @@ class Bcfournisseur
     public function getYear()
     {
         return $this->year;
+    }
+
+    /**
+     * Set mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     *
+     * @return Bcfournisseur
+     */
+    public function setMission(\AppBundle\Entity\Mission $mission = null)
+    {
+        $this->mission = $mission;
+
+        return $this;
+    }
+
+    /**
+     * Get mission
+     *
+     * @return \AppBundle\Entity\Mission
+     */
+    public function getMission()
+    {
+        return $this->mission;
     }
 }

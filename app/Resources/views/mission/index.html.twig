@@ -4,7 +4,7 @@
 {% block menu %}  <a href="{{ path('mission_index') }}">Mission</a>   {% endblock %}
 
    {% block menu_active %}    Liste {% endblock %}
-{% block content %}
+{% block content1 %}
 
         <ul class="list-group text-center col-md-10">
 
@@ -12,7 +12,7 @@
         {% if( nb_C is not null and nb_C != 0) %}
 
 
-            <li class="list-group-item list-group-item-danger bigger-140">
+            <li class="list-group-item list-group-item-danger">
 
 
                 <strong>
@@ -47,7 +47,7 @@
 
 
                 <strong>
-                    <i class="ace-icon fa fa-alert"></i>
+                    <i class="ace-icon fa fa-warning"></i>
                     {{ nb_BC }}
                 </strong>
                 Missions sans Bon de commandes,
@@ -60,7 +60,7 @@
         </ul>
 
 
-    <div class="col-md-10  widget-container-col ui-sortable" id="widget-container-col-1">
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
 
         <div class="widget-box ui-sortable-handle" id="widget-box-1">
             <div class="widget-header">

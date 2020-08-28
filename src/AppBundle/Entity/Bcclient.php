@@ -178,7 +178,7 @@ class Bcclient
      */
     public function __construct()
     {
-        $this->mission = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mission =  new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

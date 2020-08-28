@@ -72,7 +72,7 @@ class FactureController extends Controller
             //$diff = array_diff_assoc($missions, $missions_factured);
         }
 
-
+dump($factures);
         return $this->render('facture/index.html.twig', array(
             'factures' => $factures,
             'nb_non_factured_missions' => $nb_non_factured_missions,
@@ -93,7 +93,7 @@ class FactureController extends Controller
 
         $factures = $em->getRepository('AppBundle:Facture')->findAll();
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
-
+dump($factures);
         $date = new \DateTime('now');
         $mois = intval($date->format('m')) - 1;
         $day = intval($date->format('d'));
@@ -153,7 +153,20 @@ class FactureController extends Controller
         $facture = new Facture();
         $bcfournisseur = new Bcfournisseur();
 
+        $date = new \DateTime('now');
+        $mois = intval($date->format('m')) - 1;
+        $year = intval($date->format('y')) - 1;
+        $em = $this->getDoctrine()->getManager();
+
+        /* $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
+
+             'mois'=>$mois,
+             'year'=>$year
+         )));*/
+
+
         $bcfournisseur->setEtat('non payé');
+
         $facture->setEtat('non payé');
 
         $form = $this->createForm('AppBundle\Form\FactureType', $facture);
@@ -165,8 +178,15 @@ class FactureController extends Controller
             $em->persist($facture);
             $em->flush();
             $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
+            $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
+
+                'mois' => $facture->getMois(),
+                'year' => $facture->getYear(),
+            )));
             $mission = $facture->getMission();
-            dump($mission);
+            dump($mission, $nb);
+            $nb_facture = $nb + 1;
+            $facture->setNumero('H3K-' . substr($year, -2) . '-' . $mois . '-' . $nb_facture);
             $facture->setBcclient($mission->getBcclient());
             $facture->setBcclient($mission->getBcclient());
 
@@ -175,6 +195,7 @@ class FactureController extends Controller
 
             $prixAchatHT = $mission->getPrixAchat();
             $prixVenteHT = $mission->getPrixVente();
+            $bcfournisseur->setMission($mission);
             $facture->setConsultant($mission->getConsultant());
             if ($mission->getDevise() == 'DH') {
 
@@ -263,6 +284,7 @@ class FactureController extends Controller
             $bcfournisseur->setNbjours($facture->getNbjour());
             $bcfournisseur->setMois($facture->getMois());
             $bcfournisseur->setYear($facture->getYear());
+            $bcfournisseur->setDate(new \DateTime('now'));
             $em->persist($bcfournisseur);
             $em->flush();
 
@@ -285,8 +307,11 @@ class FactureController extends Controller
     public function newfromMissionAction(Request $request, Mission $mission)
     {
         $facture = new Facture();
-        $bcfournisseur = new Bcfournisseur();
 
+        $bcfournisseur = new Bcfournisseur();
+        $date = new \DateTime('now');
+        $mois = intval($date->format('m')) - 1;
+        $year = intval($date->format('y')) - 1;
         $bcfournisseur->setEtat('non payé');
         $facture->setEtat('non payé');
         $facture->setBcclient($mission->getBcclient());
@@ -305,7 +330,16 @@ class FactureController extends Controller
             $em->persist($facture);
             $em->flush();
             $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
+            $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
 
+                'mois' => $facture->getMois(),
+                'year' => $facture->getYear(),
+            )));
+            $mission = $facture->getMission();
+            $bcfournisseur->setMission($mission);
+            dump($mission, $nb);
+            $nb_facture = $nb + 1;
+            $facture->setNumero('H3K-' . substr($year, -2) . '-' . $mois . '-' . $nb_facture);
             if ($mission->getDevise() == 'DH') {
 
                 if ($mission->getType() == 'journaliere') {
@@ -394,6 +428,8 @@ class FactureController extends Controller
             $bcfournisseur->setNbjours($facture->getNbjour());
             $bcfournisseur->setMois($facture->getMois());
             $bcfournisseur->setYear($facture->getYear());
+            $bcfournisseur->setDate(new \DateTime('now'));
+
             $em->persist($bcfournisseur);
             $em->flush();
 
@@ -416,11 +452,159 @@ class FactureController extends Controller
      */
     public function showAction(Facture $facture)
     {
+        function mois_convert($m)
+        {
+        switch ($m) {
+            case 1:
+                return "Janvier";
+                break;
+            case 2:
+                return "Février";
+                break;
+            case 3:
+                return "Mars";
+                break;
+            case 4:
+                return "Avril";
+                break;
+            case 5:
+                return "Mai";
+                break;
+            case 6:
+                return "Juin";
+                break;
+            case 7:
+                return "Juillet";
+                break;
+            case 8:
+                return "Aout";
+                break;
+            case 9:
+                return "Septembre";
+                break;
+            case 10:
+                return "Octobre";
+                break;
+            case 11:
+                return "Novembre";
+                break;
+            case 12:
+                return "Décembre";
+                break;
+
+        }}
+        function int2str($a)
+        {
+            $convert = explode('.', $a);
+            if (isset($convert[1]) && $convert[1] != '') {
+                return int2str($convert[0]) . 'Dinars' . ' et ' . int2str($convert[1]) . 'Centimes';
+            }
+            if ($a < 0) return 'moins ' . int2str(-$a);
+            if ($a < 17) {
+                switch ($a) {
+                    case 0:
+                        return 'zero';
+                    case 1:
+                        return 'un';
+                    case 2:
+                        return 'deux';
+                    case 3:
+                        return 'trois';
+                    case 4:
+                        return 'quatre';
+                    case 5:
+                        return 'cinq';
+                    case 6:
+                        return 'six';
+                    case 7:
+                        return 'sept';
+                    case 8:
+                        return 'huit';
+                    case 9:
+                        return 'neuf';
+                    case 10:
+                        return 'dix';
+                    case 11:
+                        return 'onze';
+                    case 12:
+                        return 'douze';
+                    case 13:
+                        return 'treize';
+                    case 14:
+                        return 'quatorze';
+                    case 15:
+                        return 'quinze';
+                    case 16:
+                        return 'seize';
+                }
+            } else if ($a < 20) {
+                return 'dix-' . int2str($a - 10);
+            } else if ($a < 100) {
+                if ($a % 10 == 0) {
+                    switch ($a) {
+                        case 20:
+                            return 'vingt';
+                        case 30:
+                            return 'trente';
+                        case 40:
+                            return 'quarante';
+                        case 50:
+                            return 'cinquante';
+                        case 60:
+                            return 'soixante';
+                        case 70:
+                            return 'soixante-dix';
+                        case 80:
+                            return 'quatre-vingt';
+                        case 90:
+                            return 'quatre-vingt-dix';
+                    }
+                } elseif (substr($a, -1) == 1) {
+                    if (((int)($a / 10) * 10) < 70) {
+                        return int2str((int)($a / 10) * 10) . '-et-un';
+                    } elseif ($a == 71) {
+                        return 'soixante-et-onze';
+                    } elseif ($a == 81) {
+                        return 'quatre-vingt-un';
+                    } elseif ($a == 91) {
+                        return 'quatre-vingt-onze';
+                    }
+                } elseif ($a < 70) {
+                    return int2str($a - $a % 10) . '-' . int2str($a % 10);
+                } elseif ($a < 80) {
+                    return int2str(60) . '-' . int2str($a % 20);
+                } else {
+                    return int2str(80) . '-' . int2str($a % 20);
+                }
+            } else if ($a == 100) {
+                return 'cent';
+            } else if ($a < 200) {
+                return int2str(100) . ' ' . int2str($a % 100);
+            } else if ($a < 1000) {
+                return int2str((int)($a / 100)) . ' ' . int2str(100) . ' ' . int2str($a % 100);
+            } else if ($a == 1000) {
+                return 'mille';
+            } else if ($a < 2000) {
+                return int2str(1000) . ' ' . int2str($a % 1000) . ' ';
+            } else if ($a < 1000000) {
+                return int2str((int)($a / 1000)) . ' ' . int2str(1000) . ' ' . int2str($a % 1000);
+            } else if ($a == 1000000) {
+                return 'millions';
+            } else if ($a < 2000000) {
+                return int2str(1000000) . ' ' . int2str($a % 1000000) . ' ';
+            } else if ($a < 1000000000) {
+                return int2str((int)($a / 1000000)) . ' ' . int2str(1000000) . ' ' . int2str($a % 1000000);
+            }
+        }
+
         $deleteForm = $this->createDeleteForm($facture);
 
         return $this->render('facture/show.html.twig', array(
             'facture' => $facture,
             'delete_form' => $deleteForm->createView(),
+            'total' => int2str($facture->getTotalTTC()),
+            'mois' => mois_convert($facture->getMois()),
+
         ));
     }
 
@@ -586,7 +770,7 @@ class FactureController extends Controller
         return $this->render('facture/print.html.twig', array(
             'facture' => $facture,
             'total' => int2str($facture->getTotalTTC()),
-            'mois'=>mois_convert($facture->getMois()),
+            'mois' => mois_convert($facture->getMois()),
             // 'delete_form' => $deleteForm->createView(),
         ));
     }

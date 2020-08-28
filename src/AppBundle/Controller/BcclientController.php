@@ -24,10 +24,47 @@ class BcclientController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $bcclients = $em->getRepository('AppBundle:Bcclient')->findAll();
+        $query = $em->createQuery(
+            'SELECT p
+    FROM AppBundle:Bcclient p
+    WHERE p.nbJrsR < :nbJrsR'
+        )->setParameter('nbJrsR', 30);
 
+        $alerts = $query->getResult();
+        $count = count($query->getResult());
+
+        $bcclients = $em->getRepository('AppBundle:Bcclient')->findAll();
+dump($bcclients,$alerts);
         return $this->render('bcclient/index.html.twig', array(
             'bcclients' => $bcclients,
+            'count'=>$count,
+
+        ));
+    }
+ /**
+     * Lists all bcclient entities.
+     *
+     * @Route("/bcclient_alerts", name="bcclient_alert")
+     * @Method("GET")
+     */
+    public function alertAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery(
+            'SELECT p
+    FROM AppBundle:Bcclient p
+    WHERE p.nbJrsR < :nbJrsR'
+        )->setParameter('nbJrsR', 30);
+
+        $bcalerts = $query->getResult();
+        $count = count($query->getResult());
+
+
+        return $this->render('bcclient/bcalert.html.twig', array(
+            'bcclients' => $bcalerts,
+
+
         ));
     }
 

@@ -1,40 +1,238 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Hope3k | facture {% endblock %}{% block menu %}  <a href="{{ path('facture_index') }}">facture</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
-    <h1>Facture</h1>
+{% block title %} Hope3k | facture {% endblock %}{% block menu %}  <a
+        href="{{ path('facture_index') }}">facture</a>   {% endblock %}   {% block menu_active %}    détails {% endblock %}{% block content %}
 
-    <table class="table table-detail">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ facture.id }}</td>
-            </tr>
-            <tr>
-                <th>Etat</th>
-                <td>{{ facture.etat }}</td>
-            </tr>
-            <tr>
-                <th>Mois</th>
-                <td>{{ facture.mois }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{% if facture.date %}{{ facture.date|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('facture_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('facture_edit', { 'id': facture.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <div class="space-6"></div>
+
+        <div class="row">
+            <div class="col-sm-12 ">
+                <div class="widget-box transparent">
+                    <div class="widget-header widget-header-large">
+                        <h3 class="widget-title grey lighter">
+                            <i class="ace-icon fa fa-leaf green"></i>
+                            Facture
+                        </h3>
+
+                        <div class="widget-toolbar no-border invoice-info">
+                            <span class="invoice-info-label">Numéro:</span>
+                            <span class="red">{{ facture.numero }}</span>
+
+                            <br>
+                            <span class="invoice-info-label">Date:</span>
+                            <span class="blue">{% if facture.date %}{{ facture.date|date('d-m-Y') }}{% endif %}</span>
+
+
+                        </div>
+
+                        <div class="widget-toolbar hidden-480">
+                            <a href="{{ path('facture_print', { 'id': facture.id }) }}" target="_blank">
+                                <i class="ace-icon fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main padding-24">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-xs-11 label label-lg label-info arrowed-in arrowed-right">
+                                            <b>HOP3K SERVICES</b>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <ul class="list-unstyled spaced">
+                                            <li>
+                                                <i class="ace-icon fa fa-map-marker blue"></i>Rue François Ponsard,
+                                                Résidence Oushmane1,<br>
+                                                3eme étage bureau N°16. Casablanca 20000
+                                            </li>
+
+
+                                            <li>
+                                                <i class="ace-icon fa fa-phone blue"></i>
+                                                Phone:
+                                                <b class="red">+212522990120</b>
+                                            </li>
+
+                                            <li class="divider"></li>
+
+                                            <li>
+                                                <i class="ace-icon fa fa-caret-right blue"></i>
+                                                ICE : 000077247000025
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><!-- /.col -->
+
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-xs-11 label label-lg label-success arrowed-in arrowed-right">
+                                            <b>{{ facture.client.nom }}</b>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <ul class="list-unstyled  spaced">
+                                            <li>
+                                                <i class="ace-icon fa fa-map-marker green"></i>{{ facture.client.adresse }}
+                                            </li>
+
+                                            <li>
+                                                <i class="ace-icon fa fa-phone green"></i>
+                                                Phone:
+                                                <b class="black">{{ facture.client.tel }}</b>
+                                            </li>
+
+
+                                            <li class="divider"></li>
+
+                                            <li>
+                                                <i class="ace-icon fa fa-caret-right green"></i>
+                                                ICE : 000077247000025
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><!-- /.col -->
+                            </div><!-- /.row -->
+
+                            <div class="space"></div>
+
+                            <div>
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+
+                                        <th class="center">Désignation</th>
+                                        <th class="center"> Unité {% if facture.mission.type == 'mensuel' %}
+                                                (Nbr mois)
+                                            {% else %}
+                                                (Nbr jrs)
+
+                                            {% endif %}</th>
+                                        <th class="center">Prix Unitaire HT (DH)</th>
+                                        <th class="center">Prix Total HT (DH)</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr>
+                                        <td>
+
+
+                                            {% if facture.client.nom == "ATOS" %}
+                                                <p>
+
+
+                                                 <span class="PPP">Type de mission :
+                                                                  {{ facture.mission.type }}
+                                                                                  <br>
+
+
+                                                                     </span>
+                                                </p>
+                                            {% endif %}
+                                            <p>
+                                                 &nbsp;&nbsp;<span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
+                                            </p>
+                                            <p>
+                                                &nbsp;&nbsp;<span class="OLL">CONSULTANT <span
+                                                            class="NBt">JAVA</span></span>
+                                            </p>
+
+                                            <p>
+                                                <span class="YYY"><u>Consultant :</u></span><br>
+                                                <span class="NBt OLL">{{ facture.consultant.nom }}
+                        &nbsp;</span>
+
+                                            </p>
+                                            <p>
+                                                <span class="YYY"><u>Référence de contrat</u></span><br><span
+                                                        class="OLL">Contrat réference</span>
+                                            </p>
+
+                                            <p>
+                                                &nbsp;&nbsp;<span class="YYY"><u>Mois :</u></span><br><span
+                                                        class="OLL">&nbsp;&nbsp;&nbsp;&nbsp;{{ mois }}</span>
+                                            </p>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            {% if facture.mission.type == 'mensuel' %}
+                                                1
+                                            {% else %}
+                                                {{ facture.nbjour }}
+
+                                            {% endif %}
+                                        </td>
+                                        <td class=" center  align-middle"> {{ facture.mission.prixVente }}</td>
+                                        <td class="center  align-middle">{{ facture.totalHt }}</td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="hr hr8 hr-double hr-dotted"></div>
+
+                            <div class="row">
+                                <div class="col-sm-5 pull-right">
+                                    <h4 class="">
+                                        Total HT :
+                                        <span class="red">{{ facture.totalHT }}</span>
+                                    </h4>
+
+                                    <h4 class="">
+                                        Taxe :
+                                        <span class="red">{{ facture.taxe }} DH</span>
+                                    </h4>
+                                    <br>
+                                    <h4 class="pull-right">
+                                        Total TTC :
+                                        <span class="red">{{ facture.totalTTC }} DH</span>
+                                    </h4>
+                                </div>
+                                <div class="col-sm-7 pull-left">
+                                    <div class="space-6"></div>
+                                    <p class="VVV">
+                                        Arrêté la présente facture à la somme de :<br>
+
+                                        <strong>
+                                  <span class="">
+                                   &nbsp;&nbsp;&nbsp;        {{ total }} dirhams
+                                  </span>
+                                        </strong>
+                                    </p></div>
+                            </div>
+
+
+                            <hr>
+                            <div class="space-6"></div>
+                            <div class="well">
+                                <p class="RRR text-center">
+                                    SOCIETE <span class="WII">&nbsp; <b>HOPE3K Service</b></span>, &nbsp;au capital de
+                                    700 000 DH -
+                                    Lotissement
+                                    Lina, &nbsp;316,
+                                    3éme étage, Sidi maarouf, Casablanca. CNSS N°7958492 - RC N°295375 - IF N°3383481 -
+                                    Patente N° 36166787
+                                    -ICE
+                                    N°000077247000025 - RIB N° 013780011400017840019248 -SWIFT
+                                    : BMCIMAMC- Tél:0522990120
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT ENDS -->
+    </div>
+
 {% endblock %}

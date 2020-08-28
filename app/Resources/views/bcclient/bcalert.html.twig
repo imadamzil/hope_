@@ -1,23 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} Hope3k | BC Client {% endblock %}{% block menu %}  <a href="{{ path('bcclient_index') }}">BC Client</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
-    <h1>Bcclients list</h1>
+    <h1>Bcclients list  - 30 jours restants </h1>
 
-{%  if count ==0 %}
-{% else %}
-    <div class="alert alert-danger"> {{  count }} BC clients avec moins de 30 jours restants</div>
-
-{% endif %}
     <table class="table table-detail">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Code</th>
-                <th>Date</th>
-                <th>Nbjrs</th>
-                <th>Nbjrsr</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Code</th>
+            <th>Date</th>
+            <th>Nbjrs</th>
+            <th>Nbjrsr</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for bcclient in bcclients %}

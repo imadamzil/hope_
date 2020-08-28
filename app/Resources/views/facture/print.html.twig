@@ -31,7 +31,7 @@
     <strong class="SQ">FACTURE</strong><br>
 
     <span class="QW">NUMÉRO &nbsp;: 50002<br>
-         DATE   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10/02/2018</span>
+         DATE   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {% if facture.date %}{{ facture.date|date('d-m-Y') }}{% endif %}</span>
 
 </p>
 
@@ -70,7 +70,16 @@
     <table class="">
         <tr>
             <th class="NB"><strong>Désignation</strong></th>
-            <th class="NBV"><strong>Unité (Nbr jrs)</strong></th>
+            <th class="NBV"><strong>
+
+
+                    Unité {% if facture.mission.type == 'mensuel' %}
+                        (Nbr mois)
+                    {% else %}
+                        (Nbr jrs)
+
+                    {% endif %}
+                </strong></th>
             <th class="NBV"><strong>Prix Unitaire HT (DH)</strong></th>
             <th class="NBV"><strong>Prix Total HT (DH)</strong></th>
 
@@ -113,9 +122,15 @@
                 </p>
 
             </td>
-            <td class="lmks"><strong></strong></td>
-            <td class="lmks"><strong></strong></td>
-            <td class="lmks"><strong>ddd</strong></td>
+            <td class=" text-center"><strong>{% if facture.mission.type == 'mensuel' %}
+                        1
+                    {% else %}
+                        {{ facture.nbjour }}
+
+                    {% endif %}</strong></td>
+            <td class=" text-center"><strong>{{ facture.mission.prixVente }}</strong></td>
+            <td class="text-center"><strong> {{ facture.totalHt }}
+                </strong></td>
         </tr>
 
 
@@ -188,9 +203,8 @@
 
     $(document).ready(function () {
 
-        $('#print').click();
-
-
+       $('#print').click();
+       // $('body').hide();
     });
 
 </script>

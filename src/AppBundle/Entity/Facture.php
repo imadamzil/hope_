@@ -28,6 +28,12 @@ class Facture
      * @ORM\Column(name="etat", type="string", length=255, nullable=true)
      */
     private $etat;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero", type="string", length=255, nullable=true)
+     */
+    private $numero;
   /**
      * @var integer
      *
@@ -94,6 +100,9 @@ class Facture
      * @ORM\JoinColumn(name="id_bcclient", referencedColumnName="id")
      */
     private $bcclient;
+
+
+
     /**
      * Get id
      *
@@ -472,5 +481,29 @@ class Facture
         else if ($a<1000000000){
             return int2str((int)($a/1000000)).' '.int2str(1000000).' '.int2str($a%1000000);
         }
+    }
+
+    /**
+     * Set numero
+     *
+     * @param string $numero
+     *
+     * @return Facture
+     */
+    public function setNumero($numero)
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * Get numero
+     *
+     * @return string
+     */
+    public function getNumero()
+    {
+        return $this->numero;
     }
 }
