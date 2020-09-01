@@ -382,7 +382,7 @@ class Bcfournisseur
 
     public function __toString()
     {
-        return $this->getFournisseur()->getNom();
+        return $this->getFournisseur()->getNom().'--'.$this->getMois().'/'.$this->getYear();
     }
 
     /**

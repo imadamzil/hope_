@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -38,7 +39,7 @@ class VirementType extends AbstractType
 
                 )
             ))
-            ->add('bcfournisseur', EntityType::class, array(
+           /* ->add('bcfournisseur', EntityType::class, array(
                 'class' => 'AppBundle:Bcfournisseur',
                 'multiple' => false,
                 'label' => 'Bon de commande fournisseur',
@@ -48,7 +49,28 @@ class VirementType extends AbstractType
                     'multiple' => false
 
                 )
-            ));
+            ))*/
+
+            ->add('bcfournisseur', EntityType::class, [
+                'class' => 'AppBundle:Bcfournisseur',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->where('u.etat = :uid')
+
+
+                        ->setParameter('uid', 'non payé')
+                        ->orderBy('u.date', 'ASC');
+                },
+                'multiple' => false,
+                'label' => 'Bon de commande fournisseur',
+                'attr' => array(
+                    'class' => 'chosen-select',
+                    'data-placeholder' => 'Selectionner',
+                    'multiple' => false
+
+                )
+            ])
+        ;
     }
 
     /**

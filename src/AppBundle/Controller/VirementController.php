@@ -3,10 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Virement;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Virement controller.
@@ -18,7 +20,7 @@ class VirementController extends Controller
     /**
      * Lists all virement entities.
      *
-     * @Route("/", name="virement_index")
+     * @Route("/", name="virement_index",options={"expose"=true}))
      * @Method("GET")
      */
     public function indexAction()
@@ -58,6 +60,51 @@ class VirementController extends Controller
             'virement' => $virement,
             'form' => $form->createView(),
         ));
+    }
+    /**
+     *
+     * @Route("/tests", name="route_to_retrieve_bc",options={"expose"=true})
+     ** @Method({"GET", "POST"})
+     */
+    public function newFromBcfournisseurAction(Request $request)
+
+    {
+
+
+        $Ids = $request->get('idBCfournisseur');
+        $em = $this->getDoctrine()->getManager();
+
+        $bcfournisseurs = $em->getRepository('AppBundle:Bcfournisseur')->findBy(array('id' => $Ids));
+
+//        $form = $this->createForm('AppBundle\Form\VirementType', $virement);
+//        $form->handleRequest($request);
+        foreach ($bcfournisseurs as $bc) {
+            $virement = new Virement();
+            $virement->setEtat('en attente');
+            $virement->setBcfournisseur($bc);
+            $virement->setConsultant($bc->getMission()->getConsultant());
+            $virement->setAchat($bc->getAchatTTC());
+            $virement->setDate( new \DateTime('now'));
+            $em->persist($virement);
+
+            $em->flush() ;
+
+        }
+
+        $response = json_encode(array('data' => $Ids,'bc'=>$bcfournisseurs));
+
+        return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
+       /* if ($form->isSubmitted() && $form->isValid()) {
+
+
+        }
+
+        return $this->render('virement/new.html.twig', array(
+            'virement' => $virement,
+            'form' => $form->createView(),
+        ));*/
     }
 
     /**
