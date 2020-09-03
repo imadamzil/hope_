@@ -55,8 +55,13 @@ class Bcclient
     private $mission;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="bcclient",cascade={"persist", "remove"})
+     */
+    private $factures;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="bcclient")
-     * @ORM\JoinColumn(name="id_bcclient", referencedColumnName="id")
+     * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
      */
     private $client;
 
@@ -269,4 +274,38 @@ class Bcclient
     }
 
 
+
+    /**
+     * Add facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     *
+     * @return Bcclient
+     */
+    public function addFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures[] = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Remove facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     */
+    public function removeFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures->removeElement($facture);
+    }
+
+    /**
+     * Get factures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFactures()
+    {
+        return $this->factures;
+    }
 }

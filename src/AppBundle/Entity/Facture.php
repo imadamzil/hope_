@@ -73,18 +73,18 @@ class Facture
     private $taxe;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="facture")
+     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="factures")
      * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
      */
     private $consultant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="facture")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="factures")
      * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
      */
     private $client;
     /**
-     * @ORM\ManyToOne(targetEntity="Mission", inversedBy="facture")
+     * @ORM\ManyToOne(targetEntity="Mission", inversedBy="factures")
      * @ORM\JoinColumn(name="id_mission", referencedColumnName="id")
      */
     private $mission;
@@ -96,7 +96,7 @@ class Facture
      */
     private $date;
     /**
-     * @ORM\ManyToOne(targetEntity="Bcclient", inversedBy="facture")
+     * @ORM\ManyToOne(targetEntity="Bcclient", inversedBy="factures")
      * @ORM\JoinColumn(name="id_bcclient", referencedColumnName="id")
      */
     private $bcclient;

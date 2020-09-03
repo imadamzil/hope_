@@ -71,6 +71,10 @@ class Fournisseur
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="fournisseur",cascade={"persist", "remove"})
      */
     private $mission;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcfournisseur", mappedBy="fournisseur",cascade={"persist", "remove"})
+     */
+    private $bcfournisseur;
 
     /**
      * @var string
@@ -327,5 +331,39 @@ class Fournisseur
     public function getIf()
     {
         return $this->if;
+    }
+
+    /**
+     * Add bcfournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $bcfournisseur
+     *
+     * @return Fournisseur
+     */
+    public function addBcfournisseur(\AppBundle\Entity\Bcfournisseur $bcfournisseur)
+    {
+        $this->bcfournisseur[] = $bcfournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove bcfournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $bcfournisseur
+     */
+    public function removeBcfournisseur(\AppBundle\Entity\Bcfournisseur $bcfournisseur)
+    {
+        $this->bcfournisseur->removeElement($bcfournisseur);
+    }
+
+    /**
+     * Get bcfournisseur
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBcfournisseur()
+    {
+        return $this->bcfournisseur;
     }
 }

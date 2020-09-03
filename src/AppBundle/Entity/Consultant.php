@@ -78,7 +78,16 @@ class Consultant
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="consultant",cascade={"persist", "remove"})
      */
-    private $virment;
+    private $virement;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="consultant",cascade={"persist", "remove"})
+     */
+    private $factures;
+
+ /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcclient", mappedBy="consultant",cascade={"persist", "remove"})
+     */
+    private $bcclient;
 
 
     /**
@@ -337,5 +346,107 @@ class Consultant
     public function getVirment()
     {
         return $this->virment;
+    }
+
+    /**
+     * Add virement
+     *
+     * @param \AppBundle\Entity\Virement $virement
+     *
+     * @return Consultant
+     */
+    public function addVirement(\AppBundle\Entity\Virement $virement)
+    {
+        $this->virement[] = $virement;
+
+        return $this;
+    }
+
+    /**
+     * Remove virement
+     *
+     * @param \AppBundle\Entity\Virement $virement
+     */
+    public function removeVirement(\AppBundle\Entity\Virement $virement)
+    {
+        $this->virement->removeElement($virement);
+    }
+
+    /**
+     * Get virement
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVirement()
+    {
+        return $this->virement;
+    }
+
+    /**
+     * Add bcclient
+     *
+     * @param \AppBundle\Entity\Bcclient $bcclient
+     *
+     * @return Consultant
+     */
+    public function addBcclient(\AppBundle\Entity\Bcclient $bcclient)
+    {
+        $this->bcclient[] = $bcclient;
+
+        return $this;
+    }
+
+    /**
+     * Remove bcclient
+     *
+     * @param \AppBundle\Entity\Bcclient $bcclient
+     */
+    public function removeBcclient(\AppBundle\Entity\Bcclient $bcclient)
+    {
+        $this->bcclient->removeElement($bcclient);
+    }
+
+    /**
+     * Get bcclient
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBcclient()
+    {
+        return $this->bcclient;
+    }
+
+    /**
+     * Add facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     *
+     * @return Consultant
+     */
+    public function addFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures[] = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Remove facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     */
+    public function removeFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures->removeElement($facture);
+    }
+
+    /**
+     * Get factures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFactures()
+    {
+        return $this->factures;
     }
 }

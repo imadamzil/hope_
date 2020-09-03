@@ -42,7 +42,7 @@ class Departement
      */
     private $tel;
     /**
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="client")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="departement")
      * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
      */
     private $client;

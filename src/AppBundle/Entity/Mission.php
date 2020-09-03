@@ -106,9 +106,13 @@ class Mission
      */
     private $fournisseur;
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcfournisseur", mappedBy="bcfournisseur",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcfournisseur", mappedBy="mission",cascade={"persist", "remove"})
      */
     private $bcfournisseur;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="mission",cascade={"persist", "remove"})
+     */
+    private $factures;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -799,5 +803,39 @@ class Mission
     public function getStatut()
     {
         return $this->statut;
+    }
+
+    /**
+     * Add facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     *
+     * @return Mission
+     */
+    public function addFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures[] = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Remove facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     */
+    public function removeFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures->removeElement($facture);
+    }
+
+    /**
+     * Get factures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFactures()
+    {
+        return $this->factures;
     }
 }

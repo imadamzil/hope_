@@ -65,7 +65,11 @@ class Client
      */
     private $departement;
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="client",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="client",cascade={"persist", "remove"})
+     */
+    private $factures;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcclient", mappedBy="client",cascade={"persist", "remove"})
      */
     private $bcclient;
 
@@ -311,5 +315,39 @@ class Client
     public function getDepartement()
     {
         return $this->departement;
+    }
+
+    /**
+     * Add facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     *
+     * @return Client
+     */
+    public function addFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures[] = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Remove facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     */
+    public function removeFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures->removeElement($facture);
+    }
+
+    /**
+     * Get factures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFactures()
+    {
+        return $this->factures;
     }
 }

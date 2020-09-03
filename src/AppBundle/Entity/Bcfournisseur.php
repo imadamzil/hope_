@@ -94,7 +94,7 @@ class Bcfournisseur
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="bcfournisseur",cascade={"persist", "remove"})
      */
-    private $virments;
+    private $virement;
     /**
      * Get id
      *
@@ -551,5 +551,49 @@ class Bcfournisseur
     public function getMission()
     {
         return $this->mission;
+    }
+
+    /**
+     * Add virement
+     *
+     * @param \AppBundle\Entity\Virement $virement
+     *
+     * @return Bcfournisseur
+     */
+    public function addVirement(\AppBundle\Entity\Virement $virement)
+    {
+        $this->virements[] = $virement;
+
+        return $this;
+    }
+
+    /**
+     * Remove virement
+     *
+     * @param \AppBundle\Entity\Virement $virement
+     */
+    public function removeVirement(\AppBundle\Entity\Virement $virement)
+    {
+        $this->virements->removeElement($virement);
+    }
+
+    /**
+     * Get virements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVirements()
+    {
+        return $this->virements;
+    }
+
+    /**
+     * Get virement
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVirement()
+    {
+        return $this->virement;
     }
 }
