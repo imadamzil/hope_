@@ -16,37 +16,13 @@
                             <i class="ace-icon fa fa-bars"></i>
                         </a>
 
-                        <ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">
-                            <li>
-                                <a data-toggle="tab" href="#dropdown1" id="vir">Option#1</a>
-                            </li>
 
-                            <li> <div class="col-sm-9">
-                                    <div class="input-medium">
-                                        <div class="input-group">
-                                            <input class="input-medium date-picker" id="form-field-date" type="text" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy">
-                                            <span class="input-group-addon">
-																				<i class="ace-icon fa fa-calendar"></i>
-																			</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </li>
-                        </ul>
                     </div>
 
                     <a href="#" data-action="fullscreen" class="orange2">
                         <i class="ace-icon fa fa-expand"></i>
                     </a>
 
-                    <a href="#" data-action="reload">
-                        <i class="ace-icon fa fa-refresh"></i>
-                    </a>
-
-                    <a href="#" data-action="collapse">
-                        <i class="ace-icon fa fa-chevron-up"></i>
-                    </a>
 
                     <a href="#" data-action="close">
                         <i class="ace-icon fa fa-times"></i>
@@ -338,6 +314,14 @@
                                         </tbody>
 
                                     </table>
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            <a href="#"  id="vir" class=" btn btn-primary text-center btn-block ">
+                                                <i class="ace-icon fa fa-exchange"></i> Régler Virement
+                                            </a></div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -377,7 +361,7 @@
                     .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                     .DataTable({
                         initComplete: function () {
-                            this.api().columns([4, 8]).every(function () {
+                            this.api().columns([5, 9]).every(function () {
                                 var column = this;
                                 var select = $('<select><option value="" class="pull_right">-- filtrer --</option></select>')
                                     .appendTo($(column.header()))

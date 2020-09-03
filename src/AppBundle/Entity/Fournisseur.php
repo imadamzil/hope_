@@ -48,6 +48,24 @@ class Fournisseur
      * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
      */
     private $adresse;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rc", type="string", length=255, nullable=true)
+     */
+    private $rc;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ice", type="string", length=255, nullable=true)
+     */
+    private $ice;
+/**
+     * @var string
+     *
+     * @ORM\Column(name="if", type="string", length=255, nullable=true)
+     */
+    private $if;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="fournisseur",cascade={"persist", "remove"})
@@ -191,6 +209,7 @@ class Fournisseur
     {
         return $this->rib;
     }
+
     /**
      * Constructor
      */
@@ -236,5 +255,77 @@ class Fournisseur
     public function __toString()
     {
         return $this->getNom();
+    }
+
+    /**
+     * Set rc
+     *
+     * @param string $rc
+     *
+     * @return Fournisseur
+     */
+    public function setRc($rc)
+    {
+        $this->rc = $rc;
+
+        return $this;
+    }
+
+    /**
+     * Get rc
+     *
+     * @return string
+     */
+    public function getRc()
+    {
+        return $this->rc;
+    }
+
+    /**
+     * Set ice
+     *
+     * @param string $ice
+     *
+     * @return Fournisseur
+     */
+    public function setIce($ice)
+    {
+        $this->ice = $ice;
+
+        return $this;
+    }
+
+    /**
+     * Get ice
+     *
+     * @return string
+     */
+    public function getIce()
+    {
+        return $this->ice;
+    }
+
+    /**
+     * Set if
+     *
+     * @param string $if
+     *
+     * @return Fournisseur
+     */
+    public function setIf($if)
+    {
+        $this->if = $if;
+
+        return $this;
+    }
+
+    /**
+     * Get if
+     *
+     * @return string
+     */
+    public function getIf()
+    {
+        return $this->if;
     }
 }

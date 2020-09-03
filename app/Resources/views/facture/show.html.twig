@@ -147,7 +147,14 @@
 
                                             <p>
                                                 <span class="YYY"><u>Consultant :</u></span><br>
-                                                <span class="NBt OLL">{{ facture.consultant.nom }}
+                                                <span class="NBt OLL">
+
+                                                    {% if facture.consultant is null %}
+                                                   --
+
+                                                    {% else %}
+                                                        {{ facture.consultant.nom }}
+                                                    {% endif %}
                         &nbsp;</span>
 
                                             </p>

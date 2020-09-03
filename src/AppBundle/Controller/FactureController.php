@@ -72,7 +72,7 @@ class FactureController extends Controller
             //$diff = array_diff_assoc($missions, $missions_factured);
         }
 
-dump($factures);
+        dump($factures);
         return $this->render('facture/index.html.twig', array(
             'factures' => $factures,
             'nb_non_factured_missions' => $nb_non_factured_missions,
@@ -93,7 +93,7 @@ dump($factures);
 
         $factures = $em->getRepository('AppBundle:Facture')->findAll();
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
-dump($factures);
+        dump($factures);
         $date = new \DateTime('now');
         $mois = intval($date->format('m')) - 1;
         $day = intval($date->format('d'));
@@ -317,18 +317,21 @@ dump($factures);
         $facture->setBcclient($mission->getBcclient());
         $facture->setClient($mission->getClient());
         $facture->setMission($mission);
-
+        /*dump($mission->getClient(), $facture);
+        die();*/
         $prixAchatHT = $mission->getPrixAchat();
         $prixVenteHT = $mission->getPrixVente();
         $facture->setConsultant($mission->getConsultant());
+
+
         $form = $this->createForm('AppBundle\Form\FactureType', $facture);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($facture);
             $em->flush();
+
             $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
             $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
 
@@ -352,9 +355,11 @@ dump($factures);
                     $bcfournisseur->setTaxe($TVA_Achat);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
                     $facture->setTotalHT($totalHT);
+                    $facture->setClient($mission->getClient());
                     $facture->setTaxe($TVA);
                     $facture->setTotalTTC($TVA + $totalHT);
                     $bcclient = $facture->getBcclient();
+                    $facture->setClient($mission->getClient());
                     dump($bcclient);
                     if ($bcclient != null) {
 
@@ -390,6 +395,7 @@ dump($factures);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
                     $facture->setTotalHT($totalHT);
                     $facture->setTaxe($TVA);
+                    $facture->setClient($mission->getClient());
                     $facture->setTotalTTC($TVA + $totalHT);
                     $bcclient = $facture->getBcclient();
                     dump($bcclient);
@@ -411,12 +417,14 @@ dump($factures);
                     $facture->setTaxe($TVA);
 
                     $facture->setTotalHT($totalHT);
+                    $facture->setClient($mission->getClient());
                     $facture->setTotalTTC($TVA + $totalHT);
 
                 }
 
 
             }
+            $facture->setClient($mission->getClient());
             $em->persist($facture);
             $em->flush();
 
@@ -454,45 +462,47 @@ dump($factures);
     {
         function mois_convert($m)
         {
-        switch ($m) {
-            case 1:
-                return "Janvier";
-                break;
-            case 2:
-                return "Février";
-                break;
-            case 3:
-                return "Mars";
-                break;
-            case 4:
-                return "Avril";
-                break;
-            case 5:
-                return "Mai";
-                break;
-            case 6:
-                return "Juin";
-                break;
-            case 7:
-                return "Juillet";
-                break;
-            case 8:
-                return "Aout";
-                break;
-            case 9:
-                return "Septembre";
-                break;
-            case 10:
-                return "Octobre";
-                break;
-            case 11:
-                return "Novembre";
-                break;
-            case 12:
-                return "Décembre";
-                break;
+            switch ($m) {
+                case 1:
+                    return "Janvier";
+                    break;
+                case 2:
+                    return "Février";
+                    break;
+                case 3:
+                    return "Mars";
+                    break;
+                case 4:
+                    return "Avril";
+                    break;
+                case 5:
+                    return "Mai";
+                    break;
+                case 6:
+                    return "Juin";
+                    break;
+                case 7:
+                    return "Juillet";
+                    break;
+                case 8:
+                    return "Aout";
+                    break;
+                case 9:
+                    return "Septembre";
+                    break;
+                case 10:
+                    return "Octobre";
+                    break;
+                case 11:
+                    return "Novembre";
+                    break;
+                case 12:
+                    return "Décembre";
+                    break;
 
-        }}
+            }
+        }
+
         function int2str($a)
         {
             $convert = explode('.', $a);

@@ -28,7 +28,7 @@ class BcclientController extends Controller
             'SELECT p
     FROM AppBundle:Bcclient p
     WHERE p.nbJrsR < :nbJrsR'
-        )->setParameter('nbJrsR', 30);
+        )->setParameter('nbJrsR', 20);
 
         $alerts = $query->getResult();
         $count = count($query->getResult());

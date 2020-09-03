@@ -14,7 +14,17 @@ class FournisseurType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('tel')->add('fax')->add('adresse',TextareaType::class)->add('rib');
+        $builder
+            ->add('nom')
+            ->add('tel')
+            ->add('fax')
+            ->add('adresse',TextareaType::class)
+            ->add('rib')
+            ->add('rc')
+            ->add('ice')
+            ->add('if')
+
+        ;
     }/**
      * {@inheritdoc}
      */

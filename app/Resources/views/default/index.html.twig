@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %} Quali-Hope3k | Document {% endblock %}
+{% block title %} Hope3k | Dashboard {% endblock %}
     {% block stylesheets %}
         {{ parent() }}
         <link rel="stylesheet" href="{{ asset('') }}assets/css/jquery-ui.custom.min.css"/>
@@ -83,6 +83,16 @@
             <div class="infobox-data">
                 <span class="infobox-data-number">{{ nb_mission }}</span>
                 <div class="infobox-content">Missions</div>
+            </div>
+        </div>
+        <div class="infobox infobox-orange">
+            <div class="infobox-icon">
+                <i class="ace-icon fa fa-money"></i>
+            </div>
+
+            <div class="infobox-data">
+                <span class="infobox-data-number">{{ factures }}</span>
+                <div class="infobox-content">Factures</div>
             </div>
         </div>
 

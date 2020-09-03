@@ -61,6 +61,10 @@ class Client
      */
     private $mission;
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Departement", mappedBy="client",cascade={"persist", "remove"})
+     */
+    private $departement;
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="client",cascade={"persist", "remove"})
      */
     private $bcclient;
@@ -273,5 +277,39 @@ class Client
     public function __toString()
     {
         return $this->getNom();
+    }
+
+    /**
+     * Add departement
+     *
+     * @param \AppBundle\Entity\Departement $departement
+     *
+     * @return Client
+     */
+    public function addDepartement(\AppBundle\Entity\Departement $departement)
+    {
+        $this->departement[] = $departement;
+
+        return $this;
+    }
+
+    /**
+     * Remove departement
+     *
+     * @param \AppBundle\Entity\Departement $departement
+     */
+    public function removeDepartement(\AppBundle\Entity\Departement $departement)
+    {
+        $this->departement->removeElement($departement);
+    }
+
+    /**
+     * Get departement
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDepartement()
+    {
+        return $this->departement;
     }
 }

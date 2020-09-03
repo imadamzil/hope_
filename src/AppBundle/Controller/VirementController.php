@@ -9,6 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet as Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Reader\Xls;
+use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
+
 
 /**
  * Virement controller.
@@ -25,6 +31,10 @@ class VirementController extends Controller
      */
     public function indexAction()
     {
+        // export excel
+
+
+
         $em = $this->getDoctrine()->getManager();
 
         $virements = $em->getRepository('AppBundle:Virement')->findAll();
@@ -92,6 +102,49 @@ class VirementController extends Controller
         }
 
         $response = json_encode(array('data' => $Ids,'bc'=>$bcfournisseurs));
+
+        return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
+       /* if ($form->isSubmitted() && $form->isValid()) {
+
+
+        }
+
+        return $this->render('virement/new.html.twig', array(
+            'virement' => $virement,
+            'form' => $form->createView(),
+        ));*/
+    }
+ /**
+     *
+     * @Route("/validate_virement", name="route_to_validate_virement",options={"expose"=true})
+     ** @Method({"GET", "POST"})
+     */
+    public function validateAction(Request $request)
+
+    {
+
+
+        $Ids = $request->get('idVirments');
+        $em = $this->getDoctrine()->getManager();
+
+        $virements = $em->getRepository('AppBundle:Virement')->findBy(array('id' => $Ids));
+
+//        $form = $this->createForm('AppBundle\Form\VirementType', $virement);
+//        $form->handleRequest($request);
+        foreach ($virements as $virement) {
+
+            $virement->setEtat('validé');
+
+
+            $em->persist($virement);
+
+            $em->flush() ;
+
+        }
+
+        $response = json_encode(array('data' => $Ids,'bc'=>"ok"));
 
         return new Response($response, 200, array(
             'Content-Type' => 'application/json'
