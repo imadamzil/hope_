@@ -157,6 +157,7 @@ class Departement
     {
         return $this->client;
     }
+
     /**
      * Constructor
      */
@@ -197,5 +198,11 @@ class Departement
     public function getMissions()
     {
         return $this->missions;
+    }
+
+    public function __toString()
+    {
+        return $this->getClient()->getNom() . ' département-' . $this->getNom();
+
     }
 }

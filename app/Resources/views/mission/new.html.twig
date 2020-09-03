@@ -35,7 +35,10 @@
                     <div class="row">
                         {{ form_start(form) }}
                         <div class="col-md-6 col-md-offset-3">
+
+
                             {{ form_row(form.client) }}
+                            {{ form_row(form.departement) }}
                             {{ form_row(form.consultant) }}
                             {{ form_row(form.fournisseur) }}
                             {{ form_row(form.bcclient) }}
@@ -186,6 +189,163 @@
             });
             $("#spinner2").blur(function () {
                 $('#appbundle_mission_prixVente').val(this.value);
+            });
+            var Id = $('select[name*="appbundle_mission[client]"]').val();
+
+            var url = Routing.generate('route_to_retrieve_departement');
+
+
+            $.ajax({
+                type: "POST",
+                data: {
+                    idClient: Id,
+
+                }, // no need to stringify the data, jquery does it for you
+                url: url,
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+
+                    if (response.exist == false) {
+
+                        //    $('#appbundle_mission_departement_chosen').hide();
+                        $('#appbundle_mission_departement_chosen').parent().closest('div').hide();
+                    } else {
+                        $('#appbundle_mission_departement_chosen').parent().closest('div').show();
+                        $('#appbundle_mission_departement').empty(); //remove all child nodes
+
+
+                        $.each(response.departements, function (i, departement) {
+
+                            var newOption = $('<option value=' + departement.id[i] + '>departement.nom[i]</option>');
+                            $('#appbundle_mission_departement').append(newOption);
+                            $('#appbundle_mission_departement').trigger("chosen:updated");
+
+                        });
+
+
+                    }
+
+
+                },
+                error: function (error) {
+                    console.log(error);
+
+                }
+            });
+            var Id = $(this).val();
+
+            var url = Routing.generate('route_to_retrieve_date_fin');
+
+
+            $.ajax({
+                type: "POST",
+                data: {
+                    idBClient: Id,
+
+                }, // no need to stringify the data, jquery does it for you
+                url: url,
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+
+
+                },
+                error: function (error) {
+                    console.log(error);
+
+                }
+            });
+            $('#appbundle_mission_dateDebut').on('blur', function () {
+
+
+
+                var date2 = $('#appbundle_mission_dateDebut').datepicker('getDate', '+'+20+'d);
+                var date2=  $( this ).datepicker().val();
+
+
+                date2.setDate(date2.getDate()+1);
+                $('#nxtDate').datepicker('setDate', date2);
+                $('#appbundle_mission_dateFin').datepicker('setDate', date2);
+
+console.log(date2);
+
+            });
+            // var day1 = $("#appbundle_mission_dateDebut").datepicker('getDate').getDate();
+            // console.log(day1);
+            $('select[name*="appbundle_mission[client]"]').prop('selected', true).change(function () {
+
+
+                var Id = $(this).val();
+
+                var url = Routing.generate('route_to_retrieve_departement');
+
+
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        idClient: Id,
+
+                    }, // no need to stringify the data, jquery does it for you
+                    url: url,
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+
+                        if (response.exist == false) {
+
+                            //    $('#appbundle_mission_departement_chosen').hide();
+                            $('#appbundle_mission_departement_chosen').parent().closest('div').hide();
+                        } else {
+                            $('#appbundle_mission_departement_chosen').parent().closest('div').show();
+                            $('#appbundle_mission_departement').empty(); //remove all child nodes
+
+
+                            $.each(response.departements, function (i, departement) {
+
+                                var newOption = $('<option value=' + departement.id[i] + '>departement.nom[i]</option>');
+                                $('#appbundle_mission_departement').append(newOption);
+                                $('#appbundle_mission_departement').trigger("chosen:updated");
+
+                            });
+
+
+                        }
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+
+                    }
+                });
+            });
+            $('select[name*="appbundle_mission[bcclient]"]').prop('selected', true).change(function () {
+
+
+                var Id = $(this).val();
+
+                var url = Routing.generate('route_to_retrieve_date_fin');
+
+
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        idBClient: Id,
+
+                    }, // no need to stringify the data, jquery does it for you
+                    url: url,
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+
+                    }
+                });
             });
 
         });

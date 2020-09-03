@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Mission controller.
@@ -44,7 +45,6 @@ class MissionController extends Controller
         $nb_sans_BC = count($missions_sans_BC);
 
 
-
         /* foreach ($missions as $mission) {
 
              // $time = new \DateTime('now');
@@ -73,14 +73,15 @@ class MissionController extends Controller
 
         return $this->render('mission/index.html.twig', array(
             'missions' => $missions,
-            'nb_F'=>$nb_sans_contratF,
-            'nb_C'=>$nb_sans_contratC,
-            'nb_BC'=>$nb_sans_BC,
+            'nb_F' => $nb_sans_contratF,
+            'nb_C' => $nb_sans_contratC,
+            'nb_BC' => $nb_sans_BC,
 
 
         ));
     }
-/**
+
+    /**
      * Lists all mission entities.
      *
      * @Route("/mission_sans_contract_client", name="mission_sans_contrat_client")
@@ -102,10 +103,10 @@ class MissionController extends Controller
             'missions' => $missions_sans_contratC,
 
 
-
         ));
     }
-/**
+
+    /**
      * Lists all mission entities.
      *
      * @Route("/mission_sans_contract_fournisseur", name="mission_sans_contrat_fournisseur")
@@ -121,17 +122,14 @@ class MissionController extends Controller
         ]);
 
 
-
-
-
         return $this->render('mission/missions_sans_contract_fournisseur.html.twig', array(
             'missions' => $missions_sans_contratF,
 
 
-
         ));
     }
-/**
+
+    /**
      * Lists all mission entities.
      *
      * @Route("/mission_sans_bc_client", name="mission_sans_bc_client")
@@ -142,18 +140,14 @@ class MissionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
 
-
         $missions_sans_BC = $em->getRepository('AppBundle:Mission')->findBy([
             'bcName' => null
 
         ]);
 
 
-
-
         return $this->render('mission/missions_sans_bc_client.html.twig', array(
             'missions' => $missions_sans_BC,
-
 
 
         ));
@@ -287,5 +281,82 @@ class MissionController extends Controller
             ->setAction($this->generateUrl('mission_delete', array('id' => $mission->getId())))
             ->setMethod('DELETE')
             ->getForm();
+    }
+
+    /**
+     *
+     * @Route("/dep", name="route_to_retrieve_departement",options={"expose"=true})
+     ** @Method({"GET", "POST"})
+     */
+    public function getDepartement(Request $request)
+    {
+        $Id = $request->get('idClient');
+        $departement_exist = false;
+        $em = $this->getDoctrine()->getManager();
+        $client = $em->getRepository('AppBundle:Client')->find($Id);
+
+        if ($client != null) {
+            $departements = $client->getDepartements();
+
+            if ($client->getDepartements() != null and $client->getDepartements()->count() >> 0) {
+                $departement_exist = true;
+                $count = $client->getDepartements()->count();
+
+            } else {
+
+                $departement_exist = false;
+                $count = 0;
+            }
+        } else {
+
+            $departements = null;
+        }
+
+
+        $response = json_encode(array('exist' => $departement_exist,
+            'count' => $count,
+            'departements' => $departements
+
+        ));
+
+
+        return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
+
+    }
+
+    /**
+     *
+     * @Route("/bc_date_fin", name="route_to_retrieve_date_fin",options={"expose"=true})
+     ** @Method({"GET", "POST"})
+     */
+    public function getDateFin(Request $request)
+    {
+        $Id = $request->get('idBClient');
+      //  $departement_exist = false;
+        $em = $this->getDoctrine()->getManager();
+        $bclient = $em->getRepository('AppBundle:Bcclient')->find($Id);
+
+        if ($bclient != null) {
+
+            $nbr_joursR = $bclient->getNbJrsR();
+
+        } else {
+
+            $nbr_joursR = null;
+        }
+
+
+        $response = json_encode(array('nb_jrs' => $nbr_joursR,
+
+
+        ));
+
+
+        return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
+
     }
 }
