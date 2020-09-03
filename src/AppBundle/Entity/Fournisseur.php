@@ -70,11 +70,11 @@ class Fournisseur
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="fournisseur",cascade={"persist", "remove"})
      */
-    private $mission;
+    private $missions;
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcfournisseur", mappedBy="fournisseur",cascade={"persist", "remove"})
      */
-    private $bcfournisseur;
+    private $bcfournisseurs;
 
     /**
      * @var string

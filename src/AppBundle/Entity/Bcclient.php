@@ -52,7 +52,7 @@ class Bcclient
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="bcclient",cascade={"persist", "remove"})
      */
-    private $mission;
+    private $missions;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="bcclient",cascade={"persist", "remove"})
@@ -60,13 +60,13 @@ class Bcclient
     private $factures;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="bcclient")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="bcclients")
      * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
      */
     private $client;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="bcclient")
+     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="bcclients")
      * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
      */
     private $consultant;

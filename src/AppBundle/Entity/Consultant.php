@@ -73,12 +73,12 @@ class Consultant
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="consultant",cascade={"persist", "remove"})
      */
-    private $mission;
+    private $missions;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="consultant",cascade={"persist", "remove"})
      */
-    private $virement;
+    private $virements;
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="consultant",cascade={"persist", "remove"})
      */
@@ -87,7 +87,7 @@ class Consultant
  /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcclient", mappedBy="consultant",cascade={"persist", "remove"})
      */
-    private $bcclient;
+    private $bcclients;
 
 
     /**

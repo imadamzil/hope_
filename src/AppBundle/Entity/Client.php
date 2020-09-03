@@ -59,11 +59,11 @@ class Client
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="client",cascade={"persist", "remove"})
      */
-    private $mission;
+    private $missions;
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Departement", mappedBy="client",cascade={"persist", "remove"})
      */
-    private $departement;
+    private $departements;
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="client",cascade={"persist", "remove"})
      */
@@ -71,7 +71,7 @@ class Client
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcclient", mappedBy="client",cascade={"persist", "remove"})
      */
-    private $bcclient;
+    private $bcclients;
 
     /**
      * Get id
@@ -349,5 +349,15 @@ class Client
     public function getFactures()
     {
         return $this->factures;
+    }
+
+    /**
+     * Get departements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDepartements()
+    {
+        return $this->departements;
     }
 }

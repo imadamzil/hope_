@@ -86,29 +86,34 @@ class Mission
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bcclient", inversedBy="mission")
+     * @ORM\ManyToOne(targetEntity="Bcclient", inversedBy="missions")
      * @ORM\JoinColumn(name="id_bcclient", referencedColumnName="id")
      */
     private $bcclient;
     /**
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="mission")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="missions")
      * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
      */
     private $client;
     /**
-     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="mission")
+     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="missions")
      * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
      */
     private $consultant;
     /**
-     * @ORM\ManyToOne(targetEntity="Fournisseur", inversedBy="mission")
+     * @ORM\ManyToOne(targetEntity="Fournisseur", inversedBy="missions")
      * @ORM\JoinColumn(name="id_fournisseur", referencedColumnName="id")
      */
     private $fournisseur;
     /**
+     * @ORM\ManyToOne(targetEntity="Departement", inversedBy="missions")
+     * @ORM\JoinColumn(name="id_departement", referencedColumnName="id")
+     */
+    private $departement;
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcfournisseur", mappedBy="mission",cascade={"persist", "remove"})
      */
-    private $bcfournisseur;
+    private $bcfournisseurs;
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="mission",cascade={"persist", "remove"})
      */
@@ -837,5 +842,29 @@ class Mission
     public function getFactures()
     {
         return $this->factures;
+    }
+
+    /**
+     * Set departement
+     *
+     * @param \AppBundle\Entity\Departement $departement
+     *
+     * @return Mission
+     */
+    public function setDepartement(\AppBundle\Entity\Departement $departement = null)
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    /**
+     * Get departement
+     *
+     * @return \AppBundle\Entity\Departement
+     */
+    public function getDepartement()
+    {
+        return $this->departement;
     }
 }

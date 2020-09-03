@@ -42,7 +42,12 @@ class Departement
      */
     private $tel;
     /**
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="departement")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="departement",cascade={"persist", "remove"})
+     */
+    private $missions;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="departements")
      * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
      */
     private $client;
@@ -151,5 +156,46 @@ class Departement
     public function getClient()
     {
         return $this->client;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->missions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     *
+     * @return Departement
+     */
+    public function addMission(\AppBundle\Entity\Mission $mission)
+    {
+        $this->missions[] = $mission;
+
+        return $this;
+    }
+
+    /**
+     * Remove mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     */
+    public function removeMission(\AppBundle\Entity\Mission $mission)
+    {
+        $this->missions->removeElement($mission);
+    }
+
+    /**
+     * Get missions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMissions()
+    {
+        return $this->missions;
     }
 }

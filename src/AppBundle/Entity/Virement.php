@@ -48,12 +48,12 @@ class Virement
     private $achat;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Bcfournisseur", inversedBy="virement")
+     * @ORM\ManyToOne(targetEntity="Bcfournisseur", inversedBy="virements")
      * @ORM\JoinColumn(name="id_bcfournisseur", referencedColumnName="id")
      */
     private $bcfournisseur;
     /**
-     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="virement")
+     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="virements")
      * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
      */
     private $consultant;

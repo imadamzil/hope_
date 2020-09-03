@@ -81,12 +81,12 @@ class Bcfournisseur
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Fournisseur", inversedBy="bcfournisseur")
+     * @ORM\ManyToOne(targetEntity="Fournisseur", inversedBy="bcfournisseurs")
      * @ORM\JoinColumn(name="id_fournisseur", referencedColumnName="id")
      */
     private $fournisseur;
     /**
-     * @ORM\ManyToOne(targetEntity="Mission", inversedBy="bcfournisseur")
+     * @ORM\ManyToOne(targetEntity="Mission", inversedBy="bcfournisseurs")
      * @ORM\JoinColumn(name="id_mission", referencedColumnName="id")
      */
     private $mission;
@@ -94,7 +94,7 @@ class Bcfournisseur
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="bcfournisseur",cascade={"persist", "remove"})
      */
-    private $virement;
+    private $virements;
     /**
      * Get id
      *
