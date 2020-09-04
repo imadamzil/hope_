@@ -62,7 +62,7 @@ class MissionType extends AbstractType
             )) ->add('departement', EntityType::class, array(
                 'class' => 'AppBundle:Departement',
                 'multiple' => false,
-                'placeholder'=>'--',
+              //  'placeholder'=>'--',
                 'label' => 'Département',
                 'attr' => array(
                     'class' => 'chosen-select',
