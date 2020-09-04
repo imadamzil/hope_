@@ -155,7 +155,7 @@ class FactureController extends Controller
 
         $date = new \DateTime('now');
         $mois = intval($date->format('m')) - 1;
-        $year = intval($date->format('y')) - 1;
+        $year = intval($date->format('y'));
         $em = $this->getDoctrine()->getManager();
 
         /* $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
@@ -186,7 +186,7 @@ class FactureController extends Controller
             $mission = $facture->getMission();
             dump($mission, $nb);
             $nb_facture = $nb + 1;
-            $facture->setNumero('H3K-' . substr($year, -2) . '-' . $mois . '-' . $nb_facture);
+            $facture->setNumero('H3K-' . substr($facture->getYear(), -2) . '-' .str_pad($facture->getMois(), 2, '0', STR_PAD_LEFT)   . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
             $facture->setBcclient($mission->getBcclient());
             $facture->setBcclient($mission->getBcclient());
 
@@ -342,7 +342,8 @@ class FactureController extends Controller
             $bcfournisseur->setMission($mission);
             dump($mission, $nb);
             $nb_facture = $nb + 1;
-            $facture->setNumero('H3K-' . substr($year, -2) . '-' . $mois . '-' . $nb_facture);
+            $facture->setNumero('H3K-' . substr($facture->getYear(), -2) . '-' .str_pad($facture->getMois(), 2, '0', STR_PAD_LEFT)   . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
+
             if ($mission->getDevise() == 'DH') {
 
                 if ($mission->getType() == 'journaliere') {

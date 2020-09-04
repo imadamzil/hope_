@@ -79,6 +79,7 @@ class FactureType extends AbstractType
             ->add('bcclient', EntityType::class, array(
                 'class' => 'AppBundle:Bcclient',
                 'multiple' => false,
+                'placeholder'=>'--',
                 'label' => 'Bon de commande client',
 //                'choice_label' => 'code',
                 'attr' => array(
