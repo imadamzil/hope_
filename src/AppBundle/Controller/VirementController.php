@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Virement;
 use Doctrine\ORM\Mapping\Id;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,6 +15,11 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet as Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+//use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 
 /**
@@ -32,13 +38,77 @@ class VirementController extends Controller
     public function indexAction()
     {
         // export excel
+        $spreadsheet = new Spreadsheet();
+//get current active sheet (first sheet)
+        $sheet = $spreadsheet->getActiveSheet();
 
+//set default font
+        $spreadsheet->getDefaultStyle()
+            ->getFont()
+            ->setName('Calibri')
+            ->setSize(11);
 
 
         $em = $this->getDoctrine()->getManager();
 
         $virements = $em->getRepository('AppBundle:Virement')->findAll();
-        dump($virements);
+        $counter = 1;
+
+        $tableHead = [
+            'font' => [
+                'color' => [
+                    'rgb' => '000000'
+                ],
+                'bold' => true,
+                'size' => 11
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => [
+                    'rgb' => '7b211'
+                ]
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ];
+
+        $evenRow = [
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => [
+                    'rgb' => 'f5f3ed'
+                ],
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ];
+        $sheet->getStyle('A' . $counter . ':R' . $counter)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+
+
+
+        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        header("Content-Disposition: attachment; filename=\"results.xlsx\"");
+        header("Cache-Control: max-age=0");
+
+        // $file = "ALL_Coverage.xlsx";
+        $file = $this->get('kernel')->getRootDir() . '\..\web\H3k_virement.xlsx';
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+//save into php output
+        ob_clean();
+
+        $writer->save('php://output');
+
+
+
         return $this->render('virement/index.html.twig', array(
             'virements' => $virements,
         ));

@@ -138,7 +138,7 @@
                                                 </p>
                                             {% endif %}
                                             <p>
-                                                 &nbsp;&nbsp;<span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
+                                                &nbsp;&nbsp;<span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
                                             </p>
                                             <p>
                                                 &nbsp;&nbsp;<span class="OLL">CONSULTANT <span
@@ -150,7 +150,7 @@
                                                 <span class="NBt OLL">
 
                                                     {% if facture.consultant is null %}
-                                                   --
+                                                        --
 
                                                     {% else %}
                                                         {{ facture.consultant.nom }}
@@ -191,17 +191,41 @@
                                 <div class="col-sm-5 pull-right">
                                     <h4 class="">
                                         Total HT :
-                                        <span class="red">{{ facture.totalHT }}</span>
+                                        <span class="red">{{ facture.totalHT }}  {% if facture.mission.devise is not null %}
+
+
+                                                {{ facture.mission.devise }}
+
+
+                                            {% else %}
+                                                DH
+                                            {% endif %}</span>
                                     </h4>
 
                                     <h4 class="">
                                         Taxe :
-                                        <span class="red">{{ facture.taxe }} DH</span>
+                                        <span class="red">{{ facture.taxe }}  {% if facture.mission.devise is not null %}
+
+
+                                                {{ facture.mission.devise }}
+
+
+                                            {% else %}
+                                                DH
+                                            {% endif %}</span>
                                     </h4>
                                     <br>
                                     <h4 class="pull-right">
                                         Total TTC :
-                                        <span class="red">{{ facture.totalTTC }} DH</span>
+                                        <span class="red">{{ facture.totalTTC }}  {% if facture.mission.devise is not null %}
+
+
+                                                {{ facture.mission.devise }}
+
+
+                                            {% else %}
+                                                DH
+                                            {% endif %}</span>
                                     </h4>
                                 </div>
                                 <div class="col-sm-7 pull-left">
@@ -211,7 +235,19 @@
 
                                         <strong>
                                   <span class="">
-                                   &nbsp;&nbsp;&nbsp;        {{ total }} dirhams
+                                   &nbsp;&nbsp;&nbsp;        {{ total }}  {% if facture.mission.devise is not null %}
+
+                                          {% if facture.mission.devise =='DH' %}
+                                              Dirhames
+                                          {% else %}
+                                              {{ facture.mission.devise }}
+                                          {% endif %}
+
+                                      {% else %}
+
+                                      {% endif %}
+
+
                                   </span>
                                         </strong>
                                     </p></div>

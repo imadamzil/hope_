@@ -162,7 +162,20 @@
     Arrêté la présente facture à la somme de :<br>
     <strong>
         <span class="XWWO">
-           {{ total }} dirhams</span></strong>
+           {{ total }}
+            {% if facture.mission.devise is not null %}
+
+                {% if facture.mission.devise =='DH' %}
+                    Dirhames
+                {% else %}
+                    {{ facture.mission.devise }}
+                {% endif %}
+
+            {% else %}
+
+            {% endif %}
+
+        </span></strong>
 </p>
 <p class="ljj">
     Signature et Cachet
@@ -203,8 +216,8 @@
 
     $(document).ready(function () {
 
-       $('#print').click();
-       // $('body').hide();
+        $('#print').click();
+        // $('body').hide();
     });
 
 </script>

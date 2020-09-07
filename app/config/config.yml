@@ -66,14 +66,16 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    spool:     { type: memory }
+    spool:
+        type: file
+        path: '%kernel.project_dir%/var/spool/'
 fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
     user_class: AppBundle\Entity\User
     from_email:
-        address: "aaaimad@gmail.com"
-        sender_name: "aaaimad@gmail.com"
+        address: "imad.amzil@hope3k.net"
+        sender_name: "imad amzil"
 vich_uploader:
     db_driver: orm # or mongodb or propel or phpcr
     mappings:

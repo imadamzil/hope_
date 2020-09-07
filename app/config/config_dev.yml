@@ -40,6 +40,6 @@ monolog:
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
 swiftmailer:
-    transport: gmail
-    username:  aaaimad@gmail.com
+    transport: smtp
+    username:  imad.amzil@hope3k.net
     password:  aaaa@12519942017
