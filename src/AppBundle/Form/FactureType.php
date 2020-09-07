@@ -20,6 +20,7 @@ class FactureType extends AbstractType
             ->add('etat', ChoiceType::class, array(
                 'choices' => array(
                     'Payé' => 'payé',
+                    'Payé avec devise' => 'payé avec devise',
                     'Non Payé' => 'non payé',
 
 

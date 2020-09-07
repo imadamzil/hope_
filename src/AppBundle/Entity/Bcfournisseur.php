@@ -66,12 +66,7 @@ class Bcfournisseur
      */
     private $factureFournisseur;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="etat", type="string", length=255, nullable=true)
-     */
-    private $etat;
+
 
     /**
      * @var \DateTime

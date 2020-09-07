@@ -449,4 +449,34 @@ class Consultant
     {
         return $this->factures;
     }
+
+    /**
+     * Get missions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMissions()
+    {
+        return $this->missions;
+    }
+
+    /**
+     * Get virements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVirements()
+    {
+        return $this->virements;
+    }
+
+    /**
+     * Get bcclients
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBcclients()
+    {
+        return $this->bcclients;
+    }
 }

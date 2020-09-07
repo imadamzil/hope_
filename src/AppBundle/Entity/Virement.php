@@ -53,6 +53,11 @@ class Virement
      */
     private $bcfournisseur;
     /**
+     * @ORM\ManyToOne(targetEntity="FactureFournisseur", inversedBy="virements")
+     * @ORM\JoinColumn(name="id_facturefournisseur", referencedColumnName="id")
+     */
+    private $facturefournisseur;
+    /**
      * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="virements")
      * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
      */
@@ -234,5 +239,29 @@ class Virement
     public function getBcfournisseur()
     {
         return $this->bcfournisseur;
+    }
+
+    /**
+     * Set facturefournisseur
+     *
+     * @param \AppBundle\Entity\FactureFournisseur $facturefournisseur
+     *
+     * @return Virement
+     */
+    public function setFacturefournisseur(\AppBundle\Entity\FactureFournisseur $facturefournisseur = null)
+    {
+        $this->facturefournisseur = $facturefournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get facturefournisseur
+     *
+     * @return \AppBundle\Entity\FactureFournisseur
+     */
+    public function getFacturefournisseur()
+    {
+        return $this->facturefournisseur;
     }
 }

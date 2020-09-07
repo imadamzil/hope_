@@ -8828,7 +8828,7 @@ input[type=checkbox].ace.ace-switch + .lbl {
 
 input[type=checkbox].ace.ace-switch + .lbl::before {
     font-family: 'Open Sans';
-    content: "ON\a0\a0\a0\a0\a0\a0\a0\a0\a0OFF";
+    content: "YES\a0\a0\a0\a0\a0\a0\a0\a0\a0NO";
     color: #999;
     text-shadow: 0 0 0 #999;
     font-weight: 400;
@@ -8919,7 +8919,7 @@ input[type=checkbox].ace.ace-switch.ace-switch-4, input[type=checkbox].ace.ace-s
 }
 
 input[type=checkbox].ace.ace-switch.ace-switch-4 + .lbl::before, input[type=checkbox].ace.ace-switch.ace-switch-5 + .lbl::before {
-    content: "ON\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0OFF";
+    content: "OUI\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0NON";
     font-size: 12px;
     line-height: 21px;
     height: 24px;

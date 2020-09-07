@@ -308,4 +308,14 @@ class Bcclient
     {
         return $this->factures;
     }
+
+    /**
+     * Get missions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMissions()
+    {
+        return $this->missions;
+    }
 }

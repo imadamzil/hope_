@@ -168,11 +168,29 @@ class MissionController extends Controller
 
         if ($form->isSubmitted()) {
             dump($request);
+
+            $cc = $request->request->get('switch-field-1');
+
+
             // die();
             $em = $this->getDoctrine()->getManager();
             $em->persist($mission);
             $em->flush();
+            $miss = $em->getRepository('AppBundle:Mission')->find($mission->getId());
 
+            if ($cc == 'on') {
+
+                $miss->setcontratCName($miss->getClient()->getContratCadre());
+                $em->persist($miss);
+                $em->flush();
+                /*dump($miss);
+                die();*/
+            } else {
+//                $p = 'ok';
+//                dump($p);
+//                die();
+
+            }
             return $this->redirectToRoute('mission_show', array('id' => $mission->getId()));
         }
 
@@ -334,7 +352,7 @@ class MissionController extends Controller
     public function getDateFin(Request $request)
     {
         $Id = $request->get('idBClient');
-      //  $departement_exist = false;
+        //  $departement_exist = false;
         $em = $this->getDoctrine()->getManager();
         $bclient = $em->getRepository('AppBundle:Bcclient')->find($Id);
 

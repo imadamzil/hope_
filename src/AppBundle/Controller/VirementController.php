@@ -52,7 +52,7 @@ class VirementController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $virements = $em->getRepository('AppBundle:Virement')->findAll();
-        $counter = 1;
+       /* $counter = 1;
 
         $tableHead = [
             'font' => [
@@ -90,7 +90,7 @@ class VirementController extends Controller
                 ],
             ],
         ];
-        $sheet->getStyle('A' . $counter . ':R' . $counter)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+               $sheet->getStyle('A' . $counter . ':R' . $counter)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
 
 
@@ -105,7 +105,7 @@ class VirementController extends Controller
 //save into php output
         ob_clean();
 
-        $writer->save('php://output');
+        $writer->save('php://output');*/
 
 
 

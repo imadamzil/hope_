@@ -75,6 +75,10 @@ class Fournisseur
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcfournisseur", mappedBy="fournisseur",cascade={"persist", "remove"})
      */
     private $bcfournisseurs;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\FactureFournisseur", mappedBy="fournisseur",cascade={"persist", "remove"})
+     */
+    private $facturefournisseurs;
 
     /**
      * @var string
@@ -365,5 +369,59 @@ class Fournisseur
     public function getBcfournisseur()
     {
         return $this->bcfournisseur;
+    }
+
+    /**
+     * Get missions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMissions()
+    {
+        return $this->missions;
+    }
+
+    /**
+     * Get bcfournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBcfournisseurs()
+    {
+        return $this->bcfournisseurs;
+    }
+
+    /**
+     * Add facturefournisseur
+     *
+     * @param \AppBundle\Entity\FactureFournisseur $facturefournisseur
+     *
+     * @return Fournisseur
+     */
+    public function addFacturefournisseur(\AppBundle\Entity\FactureFournisseur $facturefournisseur)
+    {
+        $this->facturefournisseurs[] = $facturefournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove facturefournisseur
+     *
+     * @param \AppBundle\Entity\FactureFournisseur $facturefournisseur
+     */
+    public function removeFacturefournisseur(\AppBundle\Entity\FactureFournisseur $facturefournisseur)
+    {
+        $this->facturefournisseurs->removeElement($facturefournisseur);
+    }
+
+    /**
+     * Get facturefournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFacturefournisseurs()
+    {
+        return $this->facturefournisseurs;
     }
 }
