@@ -115,7 +115,7 @@ class Mission
      */
     private $bcfournisseurs;
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\FactureFournisseur", mappedBy="mission",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facturefournisseur", mappedBy="mission",cascade={"persist", "remove"})
      */
     private $facturefournisseurs;
     /**
@@ -886,11 +886,11 @@ class Mission
     /**
      * Add facturefournisseur
      *
-     * @param \AppBundle\Entity\FactureFournisseur $facturefournisseur
+     * @param \AppBundle\Entity\Facturefournisseur $facturefournisseur
      *
      * @return Mission
      */
-    public function addFacturefournisseur(\AppBundle\Entity\FactureFournisseur $facturefournisseur)
+    public function addFacturefournisseur(\AppBundle\Entity\Facturefournisseur $facturefournisseur)
     {
         $this->facturefournisseurs[] = $facturefournisseur;
 
@@ -900,9 +900,9 @@ class Mission
     /**
      * Remove facturefournisseur
      *
-     * @param \AppBundle\Entity\FactureFournisseur $facturefournisseur
+     * @param \AppBundle\Entity\Facturefournisseur $facturefournisseur
      */
-    public function removeFacturefournisseur(\AppBundle\Entity\FactureFournisseur $facturefournisseur)
+    public function removeFacturefournisseur(\AppBundle\Entity\Facturefournisseur $facturefournisseur)
     {
         $this->facturefournisseurs->removeElement($facturefournisseur);
     }

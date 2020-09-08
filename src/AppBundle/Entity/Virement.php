@@ -53,7 +53,12 @@ class Virement
      */
     private $bcfournisseur;
     /**
-     * @ORM\ManyToOne(targetEntity="FactureFournisseur", inversedBy="virements")
+     * @ORM\ManyToOne(targetEntity="Virementf", inversedBy="virements")
+     * @ORM\JoinColumn(name="id_virementf", referencedColumnName="id")
+     */
+    private $virementf;
+    /**
+     * @ORM\ManyToOne(targetEntity="Facturefournisseur", inversedBy="virements")
      * @ORM\JoinColumn(name="id_facturefournisseur", referencedColumnName="id")
      */
     private $facturefournisseur;
@@ -244,11 +249,11 @@ class Virement
     /**
      * Set facturefournisseur
      *
-     * @param \AppBundle\Entity\FactureFournisseur $facturefournisseur
+     * @param \AppBundle\Entity\Facturefournisseur $facturefournisseur
      *
      * @return Virement
      */
-    public function setFacturefournisseur(\AppBundle\Entity\FactureFournisseur $facturefournisseur = null)
+    public function setFacturefournisseur(\AppBundle\Entity\Facturefournisseur $facturefournisseur = null)
     {
         $this->facturefournisseur = $facturefournisseur;
 
@@ -258,10 +263,34 @@ class Virement
     /**
      * Get facturefournisseur
      *
-     * @return \AppBundle\Entity\FactureFournisseur
+     * @return \AppBundle\Entity\Facturefournisseur
      */
     public function getFacturefournisseur()
     {
         return $this->facturefournisseur;
+    }
+
+    /**
+     * Set virementf
+     *
+     * @param \AppBundle\Entity\Virementf $virementf
+     *
+     * @return Virement
+     */
+    public function setVirementf(\AppBundle\Entity\Virementf $virementf = null)
+    {
+        $this->virementf = $virementf;
+
+        return $this;
+    }
+
+    /**
+     * Get virementf
+     *
+     * @return \AppBundle\Entity\Virementf
+     */
+    public function getVirementf()
+    {
+        return $this->virementf;
     }
 }

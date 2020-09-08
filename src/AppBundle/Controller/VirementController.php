@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Virement;
+use AppBundle\Entity\Virementf;
 use Doctrine\ORM\Mapping\Id;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -52,61 +53,60 @@ class VirementController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $virements = $em->getRepository('AppBundle:Virement')->findAll();
-       /* $counter = 1;
+        /* $counter = 1;
 
-        $tableHead = [
-            'font' => [
-                'color' => [
-                    'rgb' => '000000'
-                ],
-                'bold' => true,
-                'size' => 11
-            ],
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'startColor' => [
-                    'rgb' => '7b211'
-                ]
-            ],
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => Border::BORDER_THIN,
-                    'color' => ['argb' => '000000'],
-                ],
-            ],
-        ];
+         $tableHead = [
+             'font' => [
+                 'color' => [
+                     'rgb' => '000000'
+                 ],
+                 'bold' => true,
+                 'size' => 11
+             ],
+             'fill' => [
+                 'fillType' => Fill::FILL_SOLID,
+                 'startColor' => [
+                     'rgb' => '7b211'
+                 ]
+             ],
+             'borders' => [
+                 'allBorders' => [
+                     'borderStyle' => Border::BORDER_THIN,
+                     'color' => ['argb' => '000000'],
+                 ],
+             ],
+         ];
 
-        $evenRow = [
-            'fill' => [
-                'fillType' => Fill::FILL_SOLID,
-                'startColor' => [
-                    'rgb' => 'f5f3ed'
-                ],
-            ],
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => Border::BORDER_THIN,
-                    'color' => ['argb' => '000000'],
-                ],
-            ],
-        ];
-               $sheet->getStyle('A' . $counter . ':R' . $counter)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-
-
+         $evenRow = [
+             'fill' => [
+                 'fillType' => Fill::FILL_SOLID,
+                 'startColor' => [
+                     'rgb' => 'f5f3ed'
+                 ],
+             ],
+             'borders' => [
+                 'allBorders' => [
+                     'borderStyle' => Border::BORDER_THIN,
+                     'color' => ['argb' => '000000'],
+                 ],
+             ],
+         ];
+                $sheet->getStyle('A' . $counter . ':R' . $counter)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
 
-        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        header("Content-Disposition: attachment; filename=\"results.xlsx\"");
-        header("Cache-Control: max-age=0");
 
-        // $file = "ALL_Coverage.xlsx";
-        $file = $this->get('kernel')->getRootDir() . '\..\web\H3k_virement.xlsx';
-        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-//save into php output
-        ob_clean();
 
-        $writer->save('php://output');*/
+         header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+         header("Content-Disposition: attachment; filename=\"results.xlsx\"");
+         header("Cache-Control: max-age=0");
 
+         // $file = "ALL_Coverage.xlsx";
+         $file = $this->get('kernel')->getRootDir() . '\..\web\H3k_virement.xlsx';
+         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+ //save into php output
+         ob_clean();
+
+         $writer->save('php://output');*/
 
 
         return $this->render('virement/index.html.twig', array(
@@ -141,6 +141,7 @@ class VirementController extends Controller
             'form' => $form->createView(),
         ));
     }
+
     /**
      *
      * @Route("/tests", name="route_to_retrieve_bc",options={"expose"=true})
@@ -164,29 +165,30 @@ class VirementController extends Controller
             $virement->setBcfournisseur($bc);
             $virement->setConsultant($bc->getMission()->getConsultant());
             $virement->setAchat($bc->getAchatTTC());
-            $virement->setDate( new \DateTime('now'));
+            $virement->setDate(new \DateTime('now'));
             $em->persist($virement);
 
-            $em->flush() ;
+            $em->flush();
 
         }
 
-        $response = json_encode(array('data' => $Ids,'bc'=>$bcfournisseurs));
+        $response = json_encode(array('data' => $Ids, 'bc' => $bcfournisseurs));
 
         return new Response($response, 200, array(
             'Content-Type' => 'application/json'
         ));
-       /* if ($form->isSubmitted() && $form->isValid()) {
+        /* if ($form->isSubmitted() && $form->isValid()) {
 
 
-        }
+         }
 
-        return $this->render('virement/new.html.twig', array(
-            'virement' => $virement,
-            'form' => $form->createView(),
-        ));*/
+         return $this->render('virement/new.html.twig', array(
+             'virement' => $virement,
+             'form' => $form->createView(),
+         ));*/
     }
- /**
+
+    /**
      *
      * @Route("/validate_virement", name="route_to_validate_virement",options={"expose"=true})
      ** @Method({"GET", "POST"})
@@ -210,24 +212,70 @@ class VirementController extends Controller
 
             $em->persist($virement);
 
-            $em->flush() ;
+            $em->flush();
 
         }
 
-        $response = json_encode(array('data' => $Ids,'bc'=>"ok"));
+        $response = json_encode(array('data' => $Ids, 'bc' => "ok"));
 
         return new Response($response, 200, array(
             'Content-Type' => 'application/json'
         ));
-       /* if ($form->isSubmitted() && $form->isValid()) {
+        /* if ($form->isSubmitted() && $form->isValid()) {
 
+
+         }
+
+         return $this->render('virement/new.html.twig', array(
+             'virement' => $virement,
+             'form' => $form->createView(),
+         ));*/
+    }
+
+    /**
+     *
+     * @Route("/add_virement", name="route_to_add_virement",options={"expose"=true})
+     ** @Method({"GET", "POST"})
+     */
+    public function addVirementsAction(Request $request)
+
+    {
+
+
+        $Ids = $request->get('idVirments');
+        $em = $this->getDoctrine()->getManager();
+
+        $virements = $em->getRepository('AppBundle:Virement')->findBy(array('id' => $Ids));
+
+        $virementf = new Virementf();
+
+
+        foreach ($virements as $virement) {
+            $em->persist($virementf);
+
+            $em->flush();
+
+            $virement->setVirementf($virementf);
+
+            $em->persist($virement);
+            $em->flush();
 
         }
 
-        return $this->render('virement/new.html.twig', array(
-            'virement' => $virement,
-            'form' => $form->createView(),
-        ));*/
+        $response = json_encode(array('data' => $Ids, 'bc' => "ok"));
+
+        return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
+        /* if ($form->isSubmitted() && $form->isValid()) {
+
+
+         }
+
+         return $this->render('virement/new.html.twig', array(
+             'virement' => $virement,
+             'form' => $form->createView(),
+         ));*/
     }
 
     /**

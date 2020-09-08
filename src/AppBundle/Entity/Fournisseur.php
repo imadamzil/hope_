@@ -76,7 +76,7 @@ class Fournisseur
      */
     private $bcfournisseurs;
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\FactureFournisseur", mappedBy="fournisseur",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facturefournisseur", mappedBy="fournisseur",cascade={"persist", "remove"})
      */
     private $facturefournisseurs;
 
@@ -394,11 +394,11 @@ class Fournisseur
     /**
      * Add facturefournisseur
      *
-     * @param \AppBundle\Entity\FactureFournisseur $facturefournisseur
+     * @param \AppBundle\Entity\Facturefournisseur $facturefournisseur
      *
      * @return Fournisseur
      */
-    public function addFacturefournisseur(\AppBundle\Entity\FactureFournisseur $facturefournisseur)
+    public function addFacturefournisseur(\AppBundle\Entity\Facturefournisseur $facturefournisseur)
     {
         $this->facturefournisseurs[] = $facturefournisseur;
 
@@ -408,9 +408,9 @@ class Fournisseur
     /**
      * Remove facturefournisseur
      *
-     * @param \AppBundle\Entity\FactureFournisseur $facturefournisseur
+     * @param \AppBundle\Entity\Facturefournisseur $facturefournisseur
      */
-    public function removeFacturefournisseur(\AppBundle\Entity\FactureFournisseur $facturefournisseur)
+    public function removeFacturefournisseur(\AppBundle\Entity\Facturefournisseur $facturefournisseur)
     {
         $this->facturefournisseurs->removeElement($facturefournisseur);
     }

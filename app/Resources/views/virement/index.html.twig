@@ -231,11 +231,7 @@
                                                            title="modifier">
                                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                                         </a>
-                                                        <a class="success"
-                                                           href="{{ path('facture_mission', { 'id': virement.id }) }}"
-                                                           title="ajouter une facture ">
-                                                            <i class="ace-icon fa fa-money bigger-130"></i>
-                                                        </a>
+
 
                                                         <a class="red" href=""
                                                            onclick="return confirm('vous êtes sûr que vous voulez le supprimé?');">
@@ -295,9 +291,15 @@
 
                                  <div class="row">
                                      <div class="col-md-4"></div>
-                                     <div class="col-md-4"> <a href="#" data-action="settings" id="vir" class=" btn btn-white btn-success text-center btn-block ">
+                                     <div class="col-md-4">
+                                         <a href="#" data-action="settings" id="vir" class=" btn btn-white btn-success text-center btn-block ">
                                              <i class="ace-icon fa fa-check-circle green"></i> Valider
-                                         </a></div>
+                                         </a>
+                                     <a href="#" data-action="settings" id="virement" class=" btn btn-white btn-success text-center btn-block ">
+                                             <i class="ace-icon fa fa-check-circle green"></i> Virements
+                                         </a>
+
+                                     </div>
 
                                  </div>
                                 </div>
@@ -570,6 +572,79 @@
 
 
                 var url = Routing.generate('route_to_validate_virement');
+
+                /*  $.post(url,
+                 { 'idClass': Id
+                 }, function(data, status){
+                 if(status=='200'){
+                 alert("Data: " + data + "\nStatus: " + status);
+                 }else {
+                 alert("erreur");
+                 }
+
+                 });
+                 */
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        idVirments: searchIDs,
+
+                    }, // no need to stringify the data, jquery does it for you
+                    url: url,
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+                      location.href=  Routing.generate('virement_index');
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+
+                    }
+                });
+
+
+                ///////////////////////////////////////////
+                $('#user-profile-3')
+                    .find('input[type=file]').ace_file_input({
+                    style:'well',
+                    btn_choose:'Change avatar',
+                    btn_change:null,
+                    no_icon:'ace-icon fa fa-picture-o',
+                    thumbnail:'large',
+                    droppable:true,
+
+                    allowExt: ['jpg', 'jpeg', 'png', 'gif'],
+                    allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
+                })
+                    .end().find('button[type=reset]').on(ace.click_event, function(){
+                    $('#user-profile-3 input[type=file]').ace_file_input('reset_input');
+                })
+                    .end().find('.date-picker').datepicker().next().on(ace.click_event, function(){
+                    $(this).prev().focus();
+                })
+                $('.input-mask-phone').mask('(999) 999-9999');
+
+                $('#user-profile-3').find('input[type=file]').ace_file_input('show_file_list', [{type: 'image', name: $('#avatar').attr('src')}]);
+
+
+                ////////////////////
+
+            });
+            $("#virement").click(function(event){
+                event.preventDefault();
+                var searchIDs = $("#dynamic-table input:checkbox:checked").map(function(){
+                    return $(this).val();
+                }).get(); // <----
+
+
+
+
+
+
+
+                var url = Routing.generate('route_to_add_virement');
 
                 /*  $.post(url,
                  { 'idClass': Id

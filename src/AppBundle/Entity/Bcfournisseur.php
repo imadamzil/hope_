@@ -10,6 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Table(name="bcfournisseur")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BcfournisseurRepository")
+ * @Vich\Uploadable
  */
 class Bcfournisseur
 {
@@ -131,7 +132,7 @@ class Bcfournisseur
      *
      * @return Bcfournisseur
      */
-    public function setFactureFournisseur($factureFournisseur)
+    public function setFacturefournisseur($factureFournisseur)
     {
         $this->factureFournisseur = $factureFournisseur;
 
@@ -143,7 +144,7 @@ class Bcfournisseur
      *
      * @return string
      */
-    public function getFactureFournisseur()
+    public function getFacturefournisseur()
     {
         return $this->factureFournisseur;
     }
@@ -339,6 +340,7 @@ class Bcfournisseur
     public function __construct()
     {
         $this->virments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime('now');
     }
 
     /**
