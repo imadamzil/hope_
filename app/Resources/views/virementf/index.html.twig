@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Virementfs list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for virementf in virementfs %}
+            <tr>
+                <td><a href="{{ path('virementf_show', { 'id': virementf.id }) }}">{{ virementf.id }}</a></td>
+                <td>{{ virementf.numero }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('virementf_show', { 'id': virementf.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('virementf_edit', { 'id': virementf.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('virementf_new') }}">Create a new virementf</a>
+        </li>
+    </ul>
+{% endblock %}
