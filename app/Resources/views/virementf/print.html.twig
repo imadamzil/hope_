@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/Style_Page_Mission_Imprimer.css') }}">
+    <title>Imprimer Facture</title>
+    <meta charset="utf-8">
+</head>
+<body>
+
+<header class="A">
+    <p class="B">
+        <img src="https://media-exp1.licdn.com/dms/image/C4E1BAQFRyjYnYD3Drg/company-background_10000/0?e=2159024400&v=beta&t=RAlKPanZtaaj-QxmgPwR1edKWgyc6gHkuzuOteOPOKk"
+             alt="HOP3K" width="251" height="70"/><br>
+        {#<span class="F">H O P E &nbsp;A N D &nbsp;W E &nbsp;P E R F O R M</span>#}
+    </p>
+    <p class="C">
+        <img src="https://www.ecoenergiesolutions.com/uploads/labels/20121120-1548-afaq-9001.jpg" alt="AFAQA" width="80"
+             height="80"/><br>
+        <span class="G">ISO 9001 : 2015</span> <br>
+        <span class="GA">ID : 121497101356</span>
+    </p>
+</header>
+<div class="space-10" style="margin-top: 10%"></div>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <p class="text-center">
+
+            <strong class="SQ">Virement </strong><br>
+
+            <span class="QW">N° 00-50002<br></span>
+
+
+        </p>
+
+
+    </div>
+    <div class="col-md-4"></div>
+
+</div>
+
+
+<div class="row  ">
+<div class="col-md-3"></div>
+<div class="col-md-6 text-center">
+
+    <h4 class="SQ">
+        Compte bancaire : RIB
+    </h4>
+    <p>
+        Nous vous prions de bien vouloir effectuer les virements suivants aujourd'hui :
+    </p>
+
+</div>
+<div class="col-md-3"></div>
+
+</div>
+
+
+<div class="row" style="margin-top: 3%">
+
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <table class="" >
+            <thead>
+            <tr>
+
+                <th class="">N° orde <br> virement</th>
+                <th class="NBV">Bénéficiaire</th>
+                <th class="NBV">N° compte</th>
+                <th class="NBV">Montant</th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+            {% set num = 0 %}
+            {% for detail in details %}
+                <tr class="center">
+                    <td class="lmk center">
+                        {{ num }}
+
+                    </td>
+                    <td class="lmk text-center align-middle">
+                        {{ detail.fournisseur.nom }}
+                    </td>
+                    <td class=" center  align-middle"> {{ detail.fournisseur.rib }}</td>
+                    <td class="center  align-middle">{{ detail.total }}</td>
+
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+
+</div>
+
+
+<div class="row" style="margin-top: 7%">
+    <div class="col-md-6"></div>
+    <div class="col-md-6">
+        <p class="text-center bolder XWWO">
+            TOTAL =
+            <strong>
+        <span class="">
+           {{ total['total'] }} DH
+
+
+        </span></strong>
+        </p>
+
+    </div>
+
+</div>
+<div class="row" style="margin-top: 4%">
+    <div class="col-md-7"></div>
+    <div class="col-md-5">
+        <p class="text-center bolder XWWO">
+            LE =
+            <strong>
+        <span class="">
+           {{ total['total'] }} DH
+
+
+        </span></strong>
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="row" style="margin-top:56%;">
+
+    <div class="col-md-10 col-md-offset-1">
+        <footer style="">
+            <p class="RRR text-center">
+                SOCIETE <span class="WII">&nbsp; <b>HOPE3K Service</b></span>, &nbsp;au capital de 700 000 DH -
+                Lotissement
+                Lina, &nbsp;316,
+                3éme étage, Sidi maarouf, Casablanca. CNSS N°7958492 - RC N°295375 - IF N°3383481 - Patente N° 36166787
+                -ICE
+                N°000077247000025 - RIB N° 013780011400017840019248 -SWIFT
+                : BMCIMAMC- Tél:0522990120
+                <br>
+                BMCI 013780011400017840019248
+            </p>
+
+
+            <div class="TTT">
+                <button class="btn btn-info" onclick="window.print()" id="vusz"><span class="fa fa-print"
+                                                                                      id="print"></span> Imprimer
+                </button>
+            </div>
+
+        </footer>
+
+    </div>
+</div>
+
+
+<script type="application/javascript">
+
+    $(document).ready(function () {
+
+        //  $('#print').click();
+        // $('body').hide();
+    });
+
+</script>
+</body>
+</html>

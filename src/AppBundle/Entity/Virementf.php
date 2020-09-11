@@ -29,9 +29,21 @@ class Virementf
     private $numero;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime", nullable=true)
+     */
+    private $date;
+
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="virementf",cascade={"persist", "remove"})
      */
     private $virements;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Detailvirement", mappedBy="virementf",cascade={"persist", "remove"})
+     */
+    private $detailfournisseurs;
     /**
      * Get id
      *
@@ -105,5 +117,63 @@ class Virementf
     public function getVirements()
     {
         return $this->virements;
+    }
+
+    /**
+     * Add detailfournisseur
+     *
+     * @param \AppBundle\Entity\Detailvirement $detailfournisseur
+     *
+     * @return Virementf
+     */
+    public function addDetailfournisseur(\AppBundle\Entity\Detailvirement $detailfournisseur)
+    {
+        $this->detailfournisseurs[] = $detailfournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove detailfournisseur
+     *
+     * @param \AppBundle\Entity\Detailvirement $detailfournisseur
+     */
+    public function removeDetailfournisseur(\AppBundle\Entity\Detailvirement $detailfournisseur)
+    {
+        $this->detailfournisseurs->removeElement($detailfournisseur);
+    }
+
+    /**
+     * Get detailfournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDetailfournisseurs()
+    {
+        return $this->detailfournisseurs;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return Virementf
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }

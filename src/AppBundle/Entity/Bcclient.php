@@ -53,6 +53,10 @@ class Bcclient
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="bcclient",cascade={"persist", "remove"})
      */
     private $missions;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Projet", mappedBy="bcclient",cascade={"persist", "remove"})
+     */
+    private $projets;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="bcclient",cascade={"persist", "remove"})
@@ -317,5 +321,39 @@ class Bcclient
     public function getMissions()
     {
         return $this->missions;
+    }
+
+    /**
+     * Add projet
+     *
+     * @param \AppBundle\Entity\Projet $projet
+     *
+     * @return Bcclient
+     */
+    public function addProjet(\AppBundle\Entity\Projet $projet)
+    {
+        $this->projets[] = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Remove projet
+     *
+     * @param \AppBundle\Entity\Projet $projet
+     */
+    public function removeProjet(\AppBundle\Entity\Projet $projet)
+    {
+        $this->projets->removeElement($projet);
+    }
+
+    /**
+     * Get projets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjets()
+    {
+        return $this->projets;
     }
 }

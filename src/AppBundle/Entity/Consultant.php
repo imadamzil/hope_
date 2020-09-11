@@ -91,6 +91,12 @@ class Consultant
 
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Projetconsultant", mappedBy="consultant",cascade={"persist", "remove"})
+     */
+    private $projetconsultants;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -478,5 +484,39 @@ class Consultant
     public function getBcclients()
     {
         return $this->bcclients;
+    }
+
+    /**
+     * Add projetconsultant
+     *
+     * @param \AppBundle\Entity\Projetconsultant $projetconsultant
+     *
+     * @return Consultant
+     */
+    public function addProjetconsultant(\AppBundle\Entity\Projetconsultant $projetconsultant)
+    {
+        $this->projetconsultants[] = $projetconsultant;
+
+        return $this;
+    }
+
+    /**
+     * Remove projetconsultant
+     *
+     * @param \AppBundle\Entity\Projetconsultant $projetconsultant
+     */
+    public function removeProjetconsultant(\AppBundle\Entity\Projetconsultant $projetconsultant)
+    {
+        $this->projetconsultants->removeElement($projetconsultant);
+    }
+
+    /**
+     * Get projetconsultants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjetconsultants()
+    {
+        return $this->projetconsultants;
     }
 }

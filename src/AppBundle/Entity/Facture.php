@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use function AppBundle\Controller\int2str;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**

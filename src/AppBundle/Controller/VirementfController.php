@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Virementf;
+use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -73,32 +74,91 @@ GROUP BY c.fournisseur
     /**
      * Finds and displays a virementf entity.
      *
-     * @Route("/{id}", name="virementf_show")
+     * @Route("/{id}", name="virementf_show",options={"expose"=true})
      * @Method("GET")
      */
-    public function showAction(Virementf $virementf)
+    public function showAction(Request $request,Virementf $virementf)
     {
         $deleteForm = $this->createDeleteForm($virementf);
         $em = $this->getDoctrine()->getManager();
         $arr = [];
 
-        $virements = $virementf->getVirements();
+        /* $virements = $virementf->getVirements();
 
-        foreach ($virements as $virement) {
+         foreach ($virements as $virement) {
 
-            $arr[] = $virement->getId();
-        }
+             $arr[] = $virement->getId();
+         }
+                     $query = $em->createQuery('
+             SELECT p as fournisseur,sum(p.achat) as total FROM AppBundle:Virement p
+             JOIN AppBundle:Bcfournisseur c
+             WHERE p.bcfournisseur = c.id AND p.id IN (:ids)
+
+             GROUP BY c.fournisseur
+                     ')->setParameter('ids', $arr)->getResult(Query::HYDRATE_OBJECT);
+
+         var_dump($query);*/
+        $details = $em->getRepository('AppBundle:Detailvirement')->findBy(
+            array('virementf' => $virementf),
+            array('priorite' => 'ASC')
+        );
+
+
         $query = $em->createQuery('
-SELECT p,sum(p.achat) as total FROM AppBundle:Virement p 
-JOIN AppBundle:Bcfournisseur c 
-WHERE p.bcfournisseur = c.id AND p.id IN (:ids)
-        
-GROUP BY c.fournisseur
-        ')->setParameter('ids', $arr)->execute();
-
-        dump($query);
+SELECT sum(p.total) as total FROM AppBundle:Detailvirement p 
+WHERE p.virementf = :id
+        ')->setParameter('id', $virementf->getId())->getSingleResult();
+        dump($details, $query);
         return $this->render('virementf/show.html.twig', array(
             'virementf' => $virementf,
+            'details' => $details,
+            'total' => $query,
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a virementf entity.
+     *
+     * @Route("/{id}/print", name="virementf_print",options={"expose"=true})
+     * @Method("GET")
+     */
+    public function printAction(Request $request,Virementf $virementf)
+    {
+        $deleteForm = $this->createDeleteForm($virementf);
+        $em = $this->getDoctrine()->getManager();
+        $arr = [];
+
+        /* $virements = $virementf->getVirements();
+
+         foreach ($virements as $virement) {
+
+             $arr[] = $virement->getId();
+         }
+                     $query = $em->createQuery('
+             SELECT p as fournisseur,sum(p.achat) as total FROM AppBundle:Virement p
+             JOIN AppBundle:Bcfournisseur c
+             WHERE p.bcfournisseur = c.id AND p.id IN (:ids)
+
+             GROUP BY c.fournisseur
+                     ')->setParameter('ids', $arr)->getResult(Query::HYDRATE_OBJECT);
+
+         var_dump($query);*/
+        $details = $em->getRepository('AppBundle:Detailvirement')->findBy(
+            array('virementf' => $virementf),
+            array('priorite' => 'ASC')
+        );
+
+
+        $query = $em->createQuery('
+SELECT sum(p.total) as total FROM AppBundle:Detailvirement p 
+WHERE p.virementf = :id
+        ')->setParameter('id', $virementf->getId())->getSingleResult();
+        dump($details, $query);
+        return $this->render('virementf/print.html.twig', array(
+            'virementf' => $virementf,
+            'details' => $details,
+            'total' => $query,
             'delete_form' => $deleteForm->createView(),
         ));
     }

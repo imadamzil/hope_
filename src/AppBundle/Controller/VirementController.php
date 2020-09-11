@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Detailvirement;
 use AppBundle\Entity\Virement;
 use AppBundle\Entity\Virementf;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Query;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -243,11 +245,13 @@ class VirementController extends Controller
 
 
         $Ids = $request->get('idVirments');
+//        $Ids = [22,24];
         $em = $this->getDoctrine()->getManager();
 
         $virements = $em->getRepository('AppBundle:Virement')->findBy(array('id' => $Ids));
 
         $virementf = new Virementf();
+        $virementf->setDate(new \DateTime('now'));
 
 
         foreach ($virements as $virement) {
@@ -260,9 +264,30 @@ class VirementController extends Controller
             $em->persist($virement);
             $em->flush();
 
+
+        }
+        $query = $em->createQuery('
+            SELECT c as fournisseur,sum(p.achat) as total FROM AppBundle:Virement p 
+            JOIN AppBundle:Bcfournisseur c 
+            WHERE p.bcfournisseur = c.id AND p.id IN (:ids)
+                    
+            GROUP BY c.fournisseur
+                    ')->setParameter('ids', $Ids)->getResult(Query::HYDRATE_OBJECT);
+
+//        var_dump($query);
+
+
+        foreach ($query as $item) {
+            $detail = new Detailvirement();
+            $detail->setFournisseur($item['fournisseur']->getFournisseur());
+            $detail->setTotal($item['total']);
+            $detail->setVirementf($virementf);
+
+            $em->persist($detail);
+            $em->flush();
         }
 
-        $response = json_encode(array('data' => $Ids, 'bc' => "ok"));
+        $response = json_encode(array('data' => $Ids, 'id' => $virementf->getId()));
 
         return new Response($response, 200, array(
             'Content-Type' => 'application/json'

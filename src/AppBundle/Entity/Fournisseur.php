@@ -76,6 +76,10 @@ class Fournisseur
      */
     private $bcfournisseurs;
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Detailvirement", mappedBy="fournisseur",cascade={"persist", "remove"})
+     */
+    private $detailfournisseurs;
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facturefournisseur", mappedBy="fournisseur",cascade={"persist", "remove"})
      */
     private $facturefournisseurs;
@@ -423,5 +427,39 @@ class Fournisseur
     public function getFacturefournisseurs()
     {
         return $this->facturefournisseurs;
+    }
+
+    /**
+     * Add detailfournisseur
+     *
+     * @param \AppBundle\Entity\Detailvirement $detailfournisseur
+     *
+     * @return Fournisseur
+     */
+    public function addDetailfournisseur(\AppBundle\Entity\Detailvirement $detailfournisseur)
+    {
+        $this->detailfournisseurs[] = $detailfournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove detailfournisseur
+     *
+     * @param \AppBundle\Entity\Detailvirement $detailfournisseur
+     */
+    public function removeDetailfournisseur(\AppBundle\Entity\Detailvirement $detailfournisseur)
+    {
+        $this->detailfournisseurs->removeElement($detailfournisseur);
+    }
+
+    /**
+     * Get detailfournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDetailfournisseurs()
+    {
+        return $this->detailfournisseurs;
     }
 }

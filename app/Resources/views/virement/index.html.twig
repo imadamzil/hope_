@@ -10,7 +10,7 @@
 
                 <div class="widget-toolbar">
                     <div class="widget-menu">
-                        <a href="#" data-action="settings" >
+                        <a href="#" data-action="settings">
                             <i class="ace-icon fa fa-check-circle green"></i>
                         </a>
 
@@ -154,7 +154,7 @@
                                                             --
                                                         {% else %}
 
-                                                            {{ virement.bcfournisseur.fournisseur.nom}}
+                                                            {{ virement.bcfournisseur.fournisseur.nom }}
                                                         {% endif %}
 
                                                     {% endif %}
@@ -212,8 +212,6 @@
 
 
                                                     {% endif %}
-
-
 
 
                                                 </td>
@@ -289,19 +287,21 @@
 
                                     </table>
 
-                                 <div class="row">
-                                     <div class="col-md-4"></div>
-                                     <div class="col-md-4">
-                                         <a href="#" data-action="settings" id="vir" class=" btn btn-white btn-success text-center btn-block ">
-                                             <i class="ace-icon fa fa-check-circle green"></i> Valider
-                                         </a>
-                                     <a href="#" data-action="settings" id="virement" class=" btn btn-white btn-success text-center btn-block ">
-                                             <i class="ace-icon fa fa-check-circle green"></i> Virements
-                                         </a>
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            <a href="#" data-action="settings" id="vir"
+                                               class=" btn btn-white btn-success text-center btn-block ">
+                                                <i class="ace-icon fa fa-check-circle green"></i> Valider
+                                            </a>
+                                            <a href="#" data-action="settings" id="virement"
+                                               class=" btn btn-white btn-success text-center btn-block ">
+                                                <i class="ace-icon fa fa-check-circle green"></i> Virements
+                                            </a>
 
-                                     </div>
+                                        </div>
 
-                                 </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -491,18 +491,16 @@
                 return 'left';
             }
 
-            myTable.on( 'select', function ( e, dt, type, index ) {
-                if ( type === 'row' ) {
-                    $( myTable.row( index ).node() ).find('input:checkbox').prop('checked', true);
+            myTable.on('select', function (e, dt, type, index) {
+                if (type === 'row') {
+                    $(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
                 }
-            } );
-            myTable.on( 'deselect', function ( e, dt, type, index ) {
-                if ( type === 'row' ) {
-                    $( myTable.row( index ).node() ).find('input:checkbox').prop('checked', false);
+            });
+            myTable.on('deselect', function (e, dt, type, index) {
+                if (type === 'row') {
+                    $(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
                 }
-            } );
-
-
+            });
 
 
             /////////////////////////////////
@@ -510,65 +508,58 @@
             $('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
 
             //select/deselect all rows according to table header checkbox
-            $('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function(){
+            $('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function () {
                 var th_checked = this.checked;//checkbox inside "TH" table header
 
-                $('#dynamic-table').find('tbody > tr').each(function(){
+                $('#dynamic-table').find('tbody > tr').each(function () {
                     var row = this;
-                    if(th_checked) myTable.row(row).select();
+                    if (th_checked) myTable.row(row).select();
                     else  myTable.row(row).deselect();
                 });
             });
 
             //select/deselect a row when the checkbox is checked/unchecked
-            $('#dynamic-table').on('click', 'td input[type=checkbox]' , function(){
+            $('#dynamic-table').on('click', 'td input[type=checkbox]', function () {
                 var row = $(this).closest('tr').get(0);
-                if(this.checked) myTable.row(row).deselect();
+                if (this.checked) myTable.row(row).deselect();
                 else myTable.row(row).select();
             });
 
 
-
-            $(document).on('click', '#dynamic-table .dropdown-toggle', function(e) {
+            $(document).on('click', '#dynamic-table .dropdown-toggle', function (e) {
                 e.stopImmediatePropagation();
                 e.stopPropagation();
                 e.preventDefault();
             });
 
 
-
             //And for the first simple table, which doesn't have TableTools or dataTables
             //select/deselect all rows according to table header checkbox
             var active_class = 'active';
-            $('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+            $('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function () {
                 var th_checked = this.checked;//checkbox inside "TH" table header
 
-                $(this).closest('table').find('tbody > tr').each(function(){
+                $(this).closest('table').find('tbody > tr').each(function () {
                     var row = this;
-                    if(th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+                    if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
                     else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
                     //$('#vir').hide();
                 });
             });
 
             //select/deselect a row when the checkbox is checked/unchecked
-            $('#simple-table').on('click', 'td input[type=checkbox]' , function(){
+            $('#simple-table').on('click', 'td input[type=checkbox]', function () {
                 var $row = $(this).closest('tr');
-                if($row.is('.detail-row ')) return;
-                if(this.checked) $row.addClass(active_class);
+                if ($row.is('.detail-row ')) return;
+                if (this.checked) $row.addClass(active_class);
                 else $row.removeClass(active_class);
             });
 
-            $("#vir").click(function(event){
+            $("#vir").click(function (event) {
                 event.preventDefault();
-                var searchIDs = $("#dynamic-table input:checkbox:checked").map(function(){
+                var searchIDs = $("#dynamic-table input:checkbox:checked").map(function () {
                     return $(this).val();
                 }).get(); // <----
-
-
-
-
-
 
 
                 var url = Routing.generate('route_to_validate_virement');
@@ -594,7 +585,7 @@
                     dataType: 'json',
                     success: function (response) {
                         console.log(response);
-                      location.href=  Routing.generate('virement_index');
+                        location.href = Routing.generate('virement_index');
 
 
                     },
@@ -608,66 +599,53 @@
                 ///////////////////////////////////////////
                 $('#user-profile-3')
                     .find('input[type=file]').ace_file_input({
-                    style:'well',
-                    btn_choose:'Change avatar',
-                    btn_change:null,
-                    no_icon:'ace-icon fa fa-picture-o',
-                    thumbnail:'large',
-                    droppable:true,
+                    style: 'well',
+                    btn_choose: 'Change avatar',
+                    btn_change: null,
+                    no_icon: 'ace-icon fa fa-picture-o',
+                    thumbnail: 'large',
+                    droppable: true,
 
                     allowExt: ['jpg', 'jpeg', 'png', 'gif'],
                     allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
                 })
-                    .end().find('button[type=reset]').on(ace.click_event, function(){
+                    .end().find('button[type=reset]').on(ace.click_event, function () {
                     $('#user-profile-3 input[type=file]').ace_file_input('reset_input');
                 })
-                    .end().find('.date-picker').datepicker().next().on(ace.click_event, function(){
+                    .end().find('.date-picker').datepicker().next().on(ace.click_event, function () {
                     $(this).prev().focus();
                 })
                 $('.input-mask-phone').mask('(999) 999-9999');
 
-                $('#user-profile-3').find('input[type=file]').ace_file_input('show_file_list', [{type: 'image', name: $('#avatar').attr('src')}]);
+                $('#user-profile-3').find('input[type=file]').ace_file_input('show_file_list', [{
+                    type: 'image',
+                    name: $('#avatar').attr('src')
+                }]);
 
 
                 ////////////////////
 
             });
-            $("#virement").click(function(event){
+            $("#virement").click(function (event) {
                 event.preventDefault();
-                var searchIDs = $("#dynamic-table input:checkbox:checked").map(function(){
+                var searchIDs = $("#dynamic-table input:checkbox:checked").map(function () {
                     return $(this).val();
                 }).get(); // <----
 
 
+                var urls = Routing.generate('route_to_add_virement');
 
-
-
-
-
-                var url = Routing.generate('route_to_add_virement');
-
-                /*  $.post(url,
-                 { 'idClass': Id
-                 }, function(data, status){
-                 if(status=='200'){
-                 alert("Data: " + data + "\nStatus: " + status);
-                 }else {
-                 alert("erreur");
-                 }
-
-                 });
-                 */
                 $.ajax({
                     type: "POST",
                     data: {
                         idVirments: searchIDs,
 
                     }, // no need to stringify the data, jquery does it for you
-                    url: url,
+                    url: urls,
                     dataType: 'json',
                     success: function (response) {
                         console.log(response);
-                      location.href=  Routing.generate('virement_index');
+                        location.href = Routing.generate('virementf_show', {'id': response.id});
 
 
                     },
@@ -681,34 +659,33 @@
                 ///////////////////////////////////////////
                 $('#user-profile-3')
                     .find('input[type=file]').ace_file_input({
-                    style:'well',
-                    btn_choose:'Change avatar',
-                    btn_change:null,
-                    no_icon:'ace-icon fa fa-picture-o',
-                    thumbnail:'large',
-                    droppable:true,
+                    style: 'well',
+                    btn_choose: 'Change avatar',
+                    btn_change: null,
+                    no_icon: 'ace-icon fa fa-picture-o',
+                    thumbnail: 'large',
+                    droppable: true,
 
                     allowExt: ['jpg', 'jpeg', 'png', 'gif'],
                     allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
                 })
-                    .end().find('button[type=reset]').on(ace.click_event, function(){
+                    .end().find('button[type=reset]').on(ace.click_event, function () {
                     $('#user-profile-3 input[type=file]').ace_file_input('reset_input');
                 })
-                    .end().find('.date-picker').datepicker().next().on(ace.click_event, function(){
+                    .end().find('.date-picker').datepicker().next().on(ace.click_event, function () {
                     $(this).prev().focus();
                 })
                 $('.input-mask-phone').mask('(999) 999-9999');
 
-                $('#user-profile-3').find('input[type=file]').ace_file_input('show_file_list', [{type: 'image', name: $('#avatar').attr('src')}]);
+                $('#user-profile-3').find('input[type=file]').ace_file_input('show_file_list', [{
+                    type: 'image',
+                    name: $('#avatar').attr('src')
+                }]);
 
 
                 ////////////////////
 
             });
-
-
-
-
 
 
         })
