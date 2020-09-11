@@ -217,6 +217,23 @@ class MissionController extends Controller
     }
 
     /**
+     * Finds and displays a mission entity.
+     *
+     * @Route("/{id}/end", name="mission_end")
+     * @Method("GET")
+     */
+    public function terminerAction(Mission $mission)
+    {
+        $mission->setStatut('Terminé');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($mission);
+        $em->flush();
+
+        return $this->redirectToRoute('mission_show', array('id' => $mission->getId()));
+
+    }
+
+    /**
      * Displays a form to edit an existing mission entity.
      *
      * @Route("/{id}/edit", name="mission_edit")

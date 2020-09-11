@@ -647,7 +647,7 @@ class Mission
     {
 
         $this->createdAt = new \DateTime('now');
-        $this->statut = 'active';
+        $this->statut = 'En cours';
     }
 
     public function __toString()
