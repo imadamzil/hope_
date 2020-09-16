@@ -2,7 +2,9 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +15,43 @@ class BcclientType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('code')->add('date')->add('nbJrs')->add('nbJrsR')->add('client')->add('consultant');
+        $builder
+            ->add('code')
+            ->add('date', DateTimeType::class, [
+                'widget' => 'single_text',
+
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+
+                // adds a class that can be selected in JavaScript
+                'attr' => ['class' => 'date-timepicker1'],
+            ])
+            ->add('client', EntityType::class, array(
+                'class' => 'AppBundle:Client',
+                'multiple' => false,
+                'label' => 'Client',
+                'attr' => array(
+                    'class' => 'chosen-select',
+                    'data-placeholder' => 'Selectionner',
+                    'multiple' => false
+
+                )
+            ))
+            ->add('consultant', EntityType::class, array(
+                'class' => 'AppBundle:Consultant',
+                'multiple' => false,
+                'label' => 'Consultant',
+                'attr' => array(
+                    'class' => 'chosen-select',
+                    'data-placeholder' => 'Selectionner',
+                    'multiple' => false
+
+                )
+            ))
+            ->add('nbJrs')
+            //->add('nbJrsR')
+
+         ;
     }/**
      * {@inheritdoc}
      */

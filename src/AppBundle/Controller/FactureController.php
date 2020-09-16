@@ -279,6 +279,7 @@ class FactureController extends Controller
                     $facturefournisseur->setTaxe($TVA_Achat);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
                     $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $facturefournisseur->setBcfournisseur($bcfournisseur);
                     $TVA = 0;
                     $facture->setTaxe($TVA);
 
@@ -289,6 +290,7 @@ class FactureController extends Controller
 
 
             }
+
             $em->persist($facture);
             $em->flush();
 
@@ -306,7 +308,10 @@ class FactureController extends Controller
             $facturefournisseur->setMois($facture->getMois());
             $facturefournisseur->setYear($facture->getYear());
             $facturefournisseur->setDate(new \DateTime('now'));
+            $facturefournisseur->setBcfournisseur($bcfournisseur);
+
             $em->persist($bcfournisseur);
+            $em->flush();
             $em->persist($facturefournisseur);
             $em->flush();
 
@@ -414,7 +419,9 @@ class FactureController extends Controller
                 }
 
 
-            } else {
+            }
+            else
+                {
                 if ($mission->getType() == 'journaliere') {
 
                     $totalHT = $prixVenteHT * $facture->getNbjour();
@@ -461,6 +468,7 @@ class FactureController extends Controller
 
 
             }
+
             $facture->setClient($mission->getClient());
             $em->persist($facture);
             $em->flush();
@@ -479,8 +487,11 @@ class FactureController extends Controller
             $facturefournisseur->setMois($facture->getMois());
             $facturefournisseur->setYear($facture->getYear());
             $facturefournisseur->setDate(new \DateTime('now'));
+            $facturefournisseur->setBcfournisseur($bcfournisseur);
+
 
             $em->persist($bcfournisseur);
+            $em->flush();
             $em->persist($facturefournisseur);
             $em->flush();
 

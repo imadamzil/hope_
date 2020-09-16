@@ -54,7 +54,7 @@
                             <div>
                                 <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline ">
                                     <table id="dynamic-table"
-                                           class="table table-striped table-bordered table-hover dataTable no-footer text-left"
+                                           class="table table-striped table-bordered table-hover dataTable no-footer text-center"
                                            role="grid" aria-describedby="dynamic-table_info">
                                         <thead style="font-weight: bold;">
                                         <tr role="row">
@@ -205,6 +205,9 @@
                                                     {% else %}
                                                         {% if virement.etat == 'en attente' %}
                                                             <span class="label label-warning arrowed arrowed-right"> {{ virement.etat }}</span>
+                                                        {% elseif virement.etat == 'executé' %}
+
+                                                            <span class="label label-primary arrowed arrowed-right"> {{ virement.etat }}</span>
                                                         {% else %}
                                                             <span class="label label-success arrowed arrowed-right"> {{ virement.etat }}</span>
                                                         {% endif %}
@@ -291,12 +294,12 @@
                                         <div class="col-md-4"></div>
                                         <div class="col-md-4">
                                             <a href="#" data-action="settings" id="vir"
-                                               class=" btn btn-white btn-success text-center btn-block ">
-                                                <i class="ace-icon fa fa-check-circle green"></i> Valider
+                                               class=" btn btn-success text-center btn-block ">
+                                                <i class="ace-icon fa fa-check-circle"></i> Valider
                                             </a>
                                             <a href="#" data-action="settings" id="virement"
-                                               class=" btn btn-white btn-success text-center btn-block ">
-                                                <i class="ace-icon fa fa-check-circle green"></i> Virements
+                                               class=" btn btn-primary text-center btn-block ">
+                                                <i class="ace-icon fa fa-exchange "></i> Virements
                                             </a>
 
                                         </div>

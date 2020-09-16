@@ -51,7 +51,19 @@ class Departement
      * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
      */
     private $client;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_ceation", type="datetime", nullable=true)
+     */
+    private $createdAt;
     /**
      * Get id
      *
@@ -204,5 +216,53 @@ class Departement
     {
         return $this->getClient()->getNom() . ' département-' . $this->getNom();
 
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Departement
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Departement
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

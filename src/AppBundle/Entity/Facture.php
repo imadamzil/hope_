@@ -100,7 +100,19 @@ class Facture
      * @ORM\JoinColumn(name="id_bcclient", referencedColumnName="id")
      */
     private $bcclient;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_ceation", type="datetime", nullable=true)
+     */
+    private $createdAt;
 
 
     /**
@@ -505,5 +517,53 @@ class Facture
     public function getNumero()
     {
         return $this->numero;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Facture
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Facture
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

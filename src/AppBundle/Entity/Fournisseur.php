@@ -63,9 +63,9 @@ class Fournisseur
 /**
      * @var string
      *
-     * @ORM\Column(name="if", type="string", length=255, nullable=true)
+     * @ORM\Column(name="iif", type="string", length=255, nullable=true)
      */
-    private $if;
+    private $iif;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="fournisseur",cascade={"persist", "remove"})
@@ -461,5 +461,29 @@ class Fournisseur
     public function getDetailfournisseurs()
     {
         return $this->detailfournisseurs;
+    }
+
+    /**
+     * Set iif
+     *
+     * @param string $iif
+     *
+     * @return Fournisseur
+     */
+    public function setIif($iif)
+    {
+        $this->iif = $iif;
+
+        return $this;
+    }
+
+    /**
+     * Get iif
+     *
+     * @return string
+     */
+    public function getIif()
+    {
+        return $this->iif;
     }
 }

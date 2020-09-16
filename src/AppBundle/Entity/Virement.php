@@ -150,29 +150,7 @@ class Virement
         return $this->code;
     }
 
-    /**
-     * Set bcfournissuer
-     *
-     * @param \AppBundle\Entity\Bcfournisseur $bcfournissuer
-     *
-     * @return Virement
-     */
-    public function setBcfournissuer(\AppBundle\Entity\Bcfournisseur $bcfournissuer = null)
-    {
-        $this->bcfournissuer = $bcfournissuer;
 
-        return $this;
-    }
-
-    /**
-     * Get bcfournissuer
-     *
-     * @return \AppBundle\Entity\Bcfournisseur
-     */
-    public function getBcfournissuer()
-    {
-        return $this->bcfournissuer;
-    }
 
     /**
      * Set achat

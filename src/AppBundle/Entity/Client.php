@@ -289,7 +289,7 @@ class Client
      */
     public function addMission(\AppBundle\Entity\Mission $mission)
     {
-        $this->mission[] = $mission;
+        $this->missions[] = $mission;
 
         return $this;
     }
@@ -301,7 +301,7 @@ class Client
      */
     public function removeMission(\AppBundle\Entity\Mission $mission)
     {
-        $this->mission->removeElement($mission);
+        $this->missions->removeElement($mission);
     }
 
     /**
@@ -311,7 +311,7 @@ class Client
      */
     public function getMission()
     {
-        return $this->mission;
+        return $this->missions;
     }
 
     /**
@@ -323,7 +323,7 @@ class Client
      */
     public function addBcclient(\AppBundle\Entity\Mission $bcclient)
     {
-        $this->bcclient[] = $bcclient;
+        $this->bcclients[] = $bcclient;
 
         return $this;
     }
@@ -335,7 +335,7 @@ class Client
      */
     public function removeBcclient(\AppBundle\Entity\Mission $bcclient)
     {
-        $this->bcclient->removeElement($bcclient);
+        $this->bcclients->removeElement($bcclient);
     }
 
     /**
@@ -345,7 +345,7 @@ class Client
      */
     public function getBcclient()
     {
-        return $this->bcclient;
+        return $this->bcclients;
     }
 
     public function __toString()

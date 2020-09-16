@@ -46,18 +46,18 @@
 
 
 <div class="row  ">
-<div class="col-md-3"></div>
-<div class="col-md-6 text-center">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 text-center">
 
-    <h4 class="SQ">
-        Compte bancaire : RIB
-    </h4>
-    <p>
-        Nous vous prions de bien vouloir effectuer les virements suivants aujourd'hui :
-    </p>
+        <h4 class="SQ">
+            Compte bancaire : RIB
+        </h4>
+        <p>
+            Nous vous prions de bien vouloir effectuer les virements suivants aujourd'hui :
+        </p>
 
-</div>
-<div class="col-md-3"></div>
+    </div>
+    <div class="col-md-3"></div>
 
 </div>
 
@@ -66,14 +66,14 @@
 
     <div class="col-md-1"></div>
     <div class="col-md-10">
-        <table class="" >
+        <table class="text-center" style="color: rgb(0,31,95);">
             <thead>
-            <tr>
+            <tr style="line-height: 23px">
 
-                <th class="">N° orde <br> virement</th>
+                <th class="" style="">N° orde <br> virement</th>
                 <th class="NBV">Bénéficiaire</th>
                 <th class="NBV">N° compte</th>
-                <th class="NBV">Montant</th>
+                <th class="NBV text-center align-middle">Montant</th>
 
             </tr>
             </thead>
@@ -81,9 +81,9 @@
             <tbody>
             {% set num = 0 %}
             {% for detail in details %}
-                <tr class="center">
+                <tr class="center" style="line-height: 35px">
                     <td class="lmk center">
-                        {{ num }}
+                        {{ loop.index }}
 
                     </td>
                     <td class="lmk text-center align-middle">
@@ -126,7 +126,12 @@
             LE =
             <strong>
         <span class="">
-           {{ total['total'] }} DH
+           {% if virementf.date is null %}
+               --
+           {% else %}
+               {{ virementf.date|date('d/m/Y') }}
+
+           {% endif %}
 
 
         </span></strong>
@@ -137,7 +142,7 @@
 </div>
 
 
-<div class="row" style="margin-top:56%;">
+<div class="row" style="margin-top:30%;">
 
     <div class="col-md-10 col-md-offset-1">
         <footer style="">
@@ -170,7 +175,7 @@
 
     $(document).ready(function () {
 
-        //  $('#print').click();
+        $('#print').click();
         // $('body').hide();
     });
 

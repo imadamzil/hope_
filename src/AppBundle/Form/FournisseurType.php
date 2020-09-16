@@ -22,7 +22,7 @@ class FournisseurType extends AbstractType
             ->add('rib')
             ->add('rc')
             ->add('ice')
-            ->add('if')
+            ->add('iif')
 
         ;
     }/**

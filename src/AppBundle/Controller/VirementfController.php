@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Virementf controller.
@@ -77,7 +78,7 @@ GROUP BY c.fournisseur
      * @Route("/{id}", name="virementf_show",options={"expose"=true})
      * @Method("GET")
      */
-    public function showAction(Request $request,Virementf $virementf)
+    public function showAction(Request $request, Virementf $virementf)
     {
         $deleteForm = $this->createDeleteForm($virementf);
         $em = $this->getDoctrine()->getManager();
@@ -118,12 +119,63 @@ WHERE p.virementf = :id
     }
 
     /**
+     *
+     * @Route("/add_priorite", name="route_to_add_priorite",options={"expose"=true})
+     ** @Method({"GET", "POST"})
+     */
+    public function addPrioriteAction(Request $request)
+
+    {
+
+
+        $Ids = $request->get('idVirments');
+        $id = $request->get('id');
+//        $Ids = [22,24];
+
+        $em = $this->getDoctrine()->getManager();
+
+        $virementf = $em->getRepository('AppBundle:Virementf')->find($id);
+        $details = $em->getRepository('AppBundle:Detailvirement')->findBy(
+            array('virementf' => $virementf),
+            array('priorite' => 'ASC')
+        );
+
+        if ($details) {
+
+            foreach ($details as $key=>$value) {
+                foreach ($Ids as $d) {
+
+                    $value->setPriorite($Ids[$key]);
+
+                }
+                $em->persist($value);
+                $em->flush();
+            }
+        }
+
+        $response = json_encode(array('data' => $Ids, 'id' => $virementf->getId()));
+
+        return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
+        /* if ($form->isSubmitted() && $form->isValid()) {
+
+
+         }
+
+         return $this->render('virement/new.html.twig', array(
+             'virement' => $virement,
+             'form' => $form->createView(),
+         ));*/
+    }
+
+    /**
      * Finds and displays a virementf entity.
      *
      * @Route("/{id}/print", name="virementf_print",options={"expose"=true})
      * @Method("GET")
      */
-    public function printAction(Request $request,Virementf $virementf)
+    public function printAction(Request $request, Virementf $virementf)
     {
         $deleteForm = $this->createDeleteForm($virementf);
         $em = $this->getDoctrine()->getManager();

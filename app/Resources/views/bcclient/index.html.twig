@@ -5,7 +5,7 @@
 
 {%  if count ==0 %}
 {% else %}
-    <div class="alert alert-danger"> {{  count }} BC clients avec moins de 30 jours restants</div>
+    <div class="alert alert-danger"> {{  count }} BC clients avec moins de 20 jours restants</div>
 
 {% endif %}
     <table class="table table-striped table-bordered">
@@ -27,15 +27,10 @@
                 <td>{% if bcclient.date %}{{ bcclient.date|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ bcclient.nbJrs }}</td>
                 <td>{{ bcclient.nbJrsR }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('bcclient_show', { 'id': bcclient.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('bcclient_edit', { 'id': bcclient.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                <td class="center">
+                    <a href="{{ path('bcclient_show', { 'id': bcclient.id }) }}"><i class="icon-menu fa fa-search-plus blue bigger-140"></i></a>
+
+                    <a href="{{ path('bcclient_edit', { 'id': bcclient.id }) }}"><i class="icon-menu fa fa-edit orange bigger-140"></i></a>
                 </td>
             </tr>
         {% endfor %}

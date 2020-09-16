@@ -44,38 +44,20 @@ class MissionController extends Controller
         $nb_sans_contratC = count($missions_sans_contratC);
         $nb_sans_BC = count($missions_sans_BC);
 
+        $query = $em->createQuery('
+SELECT COUNT(m) FROM AppBundle:Mission m 
+JOIN AppBundle:Client c 
+WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null 
+        
+        ')->execute();
 
-        /* foreach ($missions as $mission) {
-
-             // $time = new \DateTime('now');
-
-
-             $time = new DateTime();
-
-             $dateDebut = $mission->getDateDebut();
-
-             $interval = $time->diff($dateDebut, false);
-
-             $val = $interval->format('%d');
-
-             if ($val >= 30) {
-
-                 array_push($arr, $mission);
-             }
-             dump($interval, $interval->format('%d'));
-             $elapsed = $interval->format('%y years %m months %a days %h hours %i minutes %s seconds');
-
-
-         }*/
-
-
-        // dump($missions);
+        dump($query);
 
         return $this->render('mission/index.html.twig', array(
             'missions' => $missions,
             'nb_F' => $nb_sans_contratF,
             'nb_C' => $nb_sans_contratC,
-            'nb_BC' => $nb_sans_BC,
+            'nb_BC' => $query[0][1],
 
 
         ));

@@ -55,6 +55,7 @@ class VirementController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $virements = $em->getRepository('AppBundle:Virement')->findAll();
+        dump($virements);
         /* $counter = 1;
 
          $tableHead = [
@@ -154,17 +155,19 @@ class VirementController extends Controller
     {
 
 
-        $Ids = $request->get('idBCfournisseur');
+        $Ids = $request->get('idfacturefournisseur');
         $em = $this->getDoctrine()->getManager();
 
-        $bcfournisseurs = $em->getRepository('AppBundle:Bcfournisseur')->findBy(array('id' => $Ids));
+        $facturefournisseurs = $em->getRepository('AppBundle:Facturefournisseur')->findBy(array('id' => $Ids));
 
 //        $form = $this->createForm('AppBundle\Form\VirementType', $virement);
 //        $form->handleRequest($request);
-        foreach ($bcfournisseurs as $bc) {
+        foreach ($facturefournisseurs as $bc) {
             $virement = new Virement();
             $virement->setEtat('en attente');
-            $virement->setBcfournisseur($bc);
+
+            $virement->setBcfournisseur($bc->getBcfournisseur());
+            $virement->setFacturefournisseur($bc);
             $virement->setConsultant($bc->getMission()->getConsultant());
             $virement->setAchat($bc->getAchatTTC());
             $virement->setDate(new \DateTime('now'));
@@ -174,7 +177,7 @@ class VirementController extends Controller
 
         }
 
-        $response = json_encode(array('data' => $Ids, 'bc' => $bcfournisseurs));
+        $response = json_encode(array('data' => $Ids, 'bc' => $facturefournisseurs));
 
         return new Response($response, 200, array(
             'Content-Type' => 'application/json'
@@ -258,9 +261,14 @@ class VirementController extends Controller
             $em->persist($virementf);
 
             $em->flush();
+            if ($virement->getFacturefournisseur()) {
+                $virement->getFacturefournisseur()->setEtat('Payé');
+                $em->persist($virement->getFacturefournisseur());
+                $em->flush();
 
+            }
             $virement->setVirementf($virementf);
-
+            $virement->setEtat('executé');
             $em->persist($virement);
             $em->flush();
 
@@ -292,16 +300,8 @@ class VirementController extends Controller
         return new Response($response, 200, array(
             'Content-Type' => 'application/json'
         ));
-        /* if ($form->isSubmitted() && $form->isValid()) {
-
-
-         }
-
-         return $this->render('virement/new.html.twig', array(
-             'virement' => $virement,
-             'form' => $form->createView(),
-         ));*/
     }
+
 
     /**
      * Finds and displays a virement entity.

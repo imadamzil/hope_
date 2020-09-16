@@ -92,6 +92,11 @@ class Bcfournisseur
      */
     private $virements;
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facturefournisseur", mappedBy="bcfournisseur",cascade={"persist", "remove"})
+     */
+    private $facturefournisseurs;
+
+    /**
      * Get id
      *
      * @return int
@@ -592,5 +597,39 @@ class Bcfournisseur
     public function getVirement()
     {
         return $this->virement;
+    }
+
+    /**
+     * Add facturefournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $facturefournisseur
+     *
+     * @return Bcfournisseur
+     */
+    public function addFacturefournisseur(\AppBundle\Entity\Bcfournisseur $facturefournisseur)
+    {
+        $this->facturefournisseurs[] = $facturefournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove facturefournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $facturefournisseur
+     */
+    public function removeFacturefournisseur(\AppBundle\Entity\Bcfournisseur $facturefournisseur)
+    {
+        $this->facturefournisseurs->removeElement($facturefournisseur);
+    }
+
+    /**
+     * Get facturefournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFacturefournisseurs()
+    {
+        return $this->facturefournisseurs;
     }
 }

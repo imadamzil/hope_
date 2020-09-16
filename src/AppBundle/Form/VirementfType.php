@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +14,16 @@ class VirementfType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('numero');
+        $builder->add('numero')
+            ->add('date', DateTimeType::class, [
+            'widget' => 'single_text',
+
+            // prevents rendering it as type="date", to avoid HTML5 date pickers
+            'html5' => false,
+
+            // adds a class that can be selected in JavaScript
+            'attr' => ['class' => 'date-timepicker1'],
+        ]);
     }/**
      * {@inheritdoc}
      */

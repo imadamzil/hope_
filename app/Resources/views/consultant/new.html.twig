@@ -4,8 +4,8 @@
     <h1>Consultant creation</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+    {{ form_widget(form) }}
+    <input type="submit" value="Create"/>
     {{ form_end(form) }}
 
     <ul>
@@ -13,4 +13,36 @@
             <a href="{{ path('consultant_index') }}">Back to the list</a>
         </li>
     </ul>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            var type = $("#appbundle_consultant_type").val();
+            if (type == 'externe') {
+
+                $('#appbundle_consultant_salaire').parent().closest('div').hide();
+
+            } else {
+
+                $('#appbundle_consultant_salaire').parent().closest('div').show();
+            }
+            $('#appbundle_consultant_type').prop('selected', true).change(function () {
+               var test= $(this).val();
+                if (test == 'externe') {
+
+                    $('#appbundle_consultant_salaire').parent().closest('div').hide();
+
+                } else {
+
+                    $('#appbundle_consultant_salaire').parent().closest('div').show();
+                }
+
+            })
+        })
+    </script>
+
 {% endblock %}

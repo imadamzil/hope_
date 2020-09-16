@@ -5,7 +5,7 @@
 
 
     <div class="col-xs-12">
-        <!-- PAGE CONTENT BEGINS -->
+       <input id="virementf" value="{{ virementf.id }}" type="hidden">
         <div class="space-6"></div>
 
         <div class="row">
@@ -37,7 +37,92 @@
 
                     <div class="widget-body">
                         <div class="widget-main padding-24">
-                            <div class="row">
+                            <div class="row ">
+                               <div class="col-md-5"></div>
+                               <div class="col-md-2"><a href="#my-moda" role="button"
+                                                        class="btn btn-primary green btn-block" data-toggle="modal">
+                                       Ordre Virements  <i class="ace-icon fa fa-sort bigger-100"></i>
+                                   </a>
+                                   <div id="my-moda" class="modal fade" tabindex="-1">
+                                       <div class="modal-dialog">
+                                           <div class="modal-content">
+                                               <div class="modal-header">
+                                                   <button type="button" class="close" data-dismiss="modal"
+                                                           aria-hidden="true">&times;
+                                                   </button>
+                                                   <h3 class="smaller lighter blue no-margin">
+                                                       virements détails </h3>
+                                               </div>
+
+                                               <div class="modal-body">
+                                                   <table class="table table-striped table-bordered">
+                                                       <thead>
+                                                       <tr>
+
+                                                           <th class="center">N° orde virement</th>
+                                                           <th class="center">Bénéficiaire</th>
+                                                           <th class="center">N° compte</th>
+                                                           <th class="center">Montant</th>
+                                                           <th class="center">Priorité</th>
+                                                       </tr>
+                                                       </thead>
+
+                                                       <tbody>
+                                                       {% set num = 0 %}
+                                                       {% for detail in details %}
+                                                           <tr class="center">
+                                                               <td>
+                                                                   {{ loop.index }}
+
+                                                               </td>
+                                                               <td class="text-center align-middle">
+                                                                   {{ detail.fournisseur.nom }}
+                                                               </td>
+                                                               <td class=" center  align-middle"> {{ detail.fournisseur.rib }}</td>
+                                                               <td class="center  align-middle">{{ detail.total }}</td>
+                                                               <td>
+
+
+                                                                   <div class="ace-spinner middle" style="width: 125px;">
+                                                                       <div class="input-group">
+                                                                           <input type="text"
+                                                                                  class="spinbox-input form-control text-center spinner1"
+                                                                                  name="task[]" value="{{ loop.index }}">
+
+                                                                       </div>
+                                                                   </div>
+
+
+
+
+
+                                                               </td>
+                                                           </tr>
+                                                       {% endfor %}
+
+                                                       </tbody>
+                                                   </table>
+
+                                               </div>
+
+                                               <div class="modal-footer">
+                                                   <button class="btn btn-sm btn-success pull-right"
+                                                           id="ok">
+                                                       <i class="ace-icon fa fa-check"></i>
+                                                       Enregistrer
+                                                   </button>
+                                                   <button class="btn btn-sm btn-danger pull-left"
+                                                           data-dismiss="modal">
+                                                       <i class="ace-icon fa fa-times"></i>
+                                                       Close
+                                                   </button>
+                                               </div>
+                                           </div><!-- /.modal-content -->
+                                       </div><!-- /.modal-dialog -->
+                                   </div></div>
+                               <div class="col-md-5"></div>
+
+
 
 
                             </div><!-- /.row -->
@@ -62,7 +147,7 @@
                                     {% for detail in details %}
                                         <tr class="center">
                                             <td>
-                                                {{ num }}
+                                                {{ loop.index }}
 
                                             </td>
                                             <td class="text-center align-middle">
@@ -73,10 +158,12 @@
                                             <td>
 
 
-                                                <a href="{{ path('detailvirement_edit', { 'id': detail.id }) }}" role="button"
+                                                <a href="{{ path('detailvirement_edit', { 'id': detail.id }) }}"
+                                                   role="button"
                                                    class=" bigger-140 orange">
                                                     <i class="ace-icon fa fa-edit"></i>
-                                                </a> <a href="#my-modal{{ detail.id }}" role="button"
+                                                </a>
+                                                <a href="#my-modal{{ detail.id }}" role="button"
                                                    class=" bigger-160 green" data-toggle="modal">
                                                     <i class="ace-icon fa fa-angle-double-down"></i>
                                                 </a>
@@ -391,4 +478,99 @@
         <!-- PAGE CONTENT ENDS -->
     </div>
 
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('assets/js/jquery.collection.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.my-selector').collection({
+                up: '<a href="#" class="btn btn-white btn-purple pull-right"><span class="glyphicon glyphicon-arrow-up"></span></a>',
+                down: '<a href="#" class="btn btn-white btn-primary pull-right"><span class="glyphicon glyphicon-arrow-down"></span></a>',
+                add: '<a href="#" class="btn btn-white btn-info pull-right imad"><span class="glyphicon glyphicon-plus-sign"></span></a>',
+                remove: '<a href="#" class="btn btn-white btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span></a>'
+            });
+
+            if (!ace.vars['old_ie']) $('.date-timepicker1').datetimepicker(
+                {
+                    locale: moment.locale('pt'),
+                    format: 'YYYY-MM-DD HH:mm',
+                    maxDate: moment(),
+                    widgetPositioning: {
+                        horizontal: 'left',
+                        vertical: 'bottom'
+                    },
+                    icons: {
+                        time: 'fa fa-clock-o',
+                        date: 'fa fa-calendar',
+                        up: 'fa fa-chevron-up',
+                        down: 'fa fa-chevron-down',
+                        previous: 'fa fa-chevron-left',
+                        next: 'fa fa-chevron-right',
+                        today: 'fa fa-arrows ',
+                        clear: 'fa fa-trash',
+                        close: 'fa fa-times'
+                    }
+                }).next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+            $('.spinner1').ace_spinner({
+                value: 0,
+                min: 0,
+                max: 20,
+                step: 1,
+                btn_up_class: 'btn-info',
+                btn_down_class: 'btn-info'
+            })
+                .closest('.ace-spinner')
+            ;
+
+            $('.imad').click(function () {
+                $(".chosen-select").chosen();
+            });
+            $(".chosen-select").chosen();
+            $(".chosen-selects").chosen();
+            $('#ok').click(function () {
+                var values = $("input[name='task\\[\\]']")
+
+                    .map(function () {
+                        return $(this).val();
+
+                    }).get();
+                console.log(values);
+                var urls = Routing.generate('route_to_add_priorite');
+                var id = $('#virementf').val();
+
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        idVirments: values,
+                        id: id
+
+                    }, // no need to stringify the data, jquery does it for you
+                    url: urls,
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+                        location.href = Routing.generate('virementf_show', {'id': response.id});
+
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+
+                    }
+                });
+
+
+            });
+
+        });
+    </script>
 {% endblock %}
