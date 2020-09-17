@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Projetconsultants list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for projetconsultant in projetconsultants %}
+            <tr>
+                <td><a href="{{ path('projetconsultant_show', { 'id': projetconsultant.id }) }}">{{ projetconsultant.id }}</a></td>
+                <td>{{ projetconsultant.titre }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('projetconsultant_show', { 'id': projetconsultant.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('projetconsultant_edit', { 'id': projetconsultant.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('projetconsultant_new') }}">Create a new projetconsultant</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | Projet {% endblock %}{% block menu %}  <a href="{{ path('projet_index') }}">Projet</a>   {% endblock %}
+{% block menu_active %}    Liste {% endblock %}{% block content %}
+    <h3> Liste des Projets</h3>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Statut</th>
+                <th>Datedebut</th>
+                <th>Datefin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for projet in projets %}
+            <tr>
+                <td><a href="{{ path('projet_show', { 'id': projet.id }) }}">{{ projet.id }}</a></td>
+                <td>{{ projet.nom }}</td>
+                <td>{{ projet.statut }}</td>
+                <td>{% if projet.dateDebut %}{{ projet.dateDebut|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if projet.dateFin %}{{ projet.dateFin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('projet_show', { 'id': projet.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('projet_edit', { 'id': projet.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+            <a href="{{ path('projet_new') }}" class="col-sm-3 btn btn-white btn-purple ">Nouveau Projet</a>
+
+{% endblock %}
