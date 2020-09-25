@@ -20,6 +20,7 @@ class DefaultController extends Controller
         $consultants = $em->getRepository('AppBundle:Consultant')->findAll();
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
         $virements = $em->getRepository('AppBundle:Virement')->findAll();
+        $virements_att = $em->getRepository('AppBundle:Virement')->findBy(['etat'=>'en attente']);
         $facturess = $em->getRepository('AppBundle:Facture')->findAll();
         $Id = 6;
         $year = 2020;
@@ -57,10 +58,11 @@ class DefaultController extends Controller
 
         return $this->render('default/index.html.twig', [
             'nb_client'=>count($clients),
+            'virements'=>$virements_att,
             'nb_fournisseur'=>count($fournisseurs),
             'nb_consultant'=>count($consultants),
             'nb_mission'=>count($missions),
-            'virements'=>$virements,
+         //   'virements'=>$virements,
             'factures'=>count($facturess),
 
 

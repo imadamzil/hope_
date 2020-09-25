@@ -120,6 +120,12 @@ WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null
     public function missionssansbcclientAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('
+SELECT m FROM AppBundle:Mission m 
+JOIN AppBundle:Client c 
+WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null 
+        
+        ')->execute();
 
 
         $missions_sans_BC = $em->getRepository('AppBundle:Mission')->findBy([
@@ -129,7 +135,7 @@ WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null
 
 
         return $this->render('mission/missions_sans_bc_client.html.twig', array(
-            'missions' => $missions_sans_BC,
+            'missions' => $query,
 
 
         ));
