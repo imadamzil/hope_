@@ -72,7 +72,7 @@ class FactureController extends Controller
             $nb_non_factured_missions = null;
             //$diff = array_diff_assoc($missions, $missions_factured);
         }
-
+        $nb_non_factured_missions = null;
         dump($factures);
         return $this->render('facture/index.html.twig', array(
             'factures' => $factures,
