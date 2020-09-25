@@ -40,7 +40,7 @@ WHERE p.bcfournisseur = c.id
 GROUP BY c.fournisseur
         ')->execute();
 
-        dump($query);
+        //dump($query);
         return $this->render('virementf/index.html.twig', array(
             'virementfs' => $virementfs,
         ));
@@ -109,7 +109,7 @@ GROUP BY c.fournisseur
 SELECT sum(p.total) as total FROM AppBundle:Detailvirement p 
 WHERE p.virementf = :id
         ')->setParameter('id', $virementf->getId())->getSingleResult();
-        dump($details, $query);
+        //dump($details, $query);
         return $this->render('virementf/show.html.twig', array(
             'virementf' => $virementf,
             'details' => $details,
@@ -206,7 +206,7 @@ WHERE p.virementf = :id
 SELECT sum(p.total) as total FROM AppBundle:Detailvirement p 
 WHERE p.virementf = :id
         ')->setParameter('id', $virementf->getId())->getSingleResult();
-        dump($details, $query);
+        //dump($details, $query);
         return $this->render('virementf/print.html.twig', array(
             'virementf' => $virementf,
             'details' => $details,

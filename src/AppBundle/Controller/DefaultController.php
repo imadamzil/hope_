@@ -35,7 +35,7 @@ class DefaultController extends Controller
 
 
         );
-        dump($factures);
+        //dump($factures);
 
 
         $message = (new \Swift_Message('Hello Email'))

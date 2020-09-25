@@ -73,7 +73,7 @@ class ProjetController extends Controller
     {
         $deleteForm = $this->createDeleteForm($projet);
 
-        dump($projet);
+        //dump($projet);
 
         return $this->render('projet/show.html.twig', array(
             'projet' => $projet,

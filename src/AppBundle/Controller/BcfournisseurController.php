@@ -26,7 +26,7 @@ class BcfournisseurController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $bcfournisseurs = $em->getRepository('AppBundle:Bcfournisseur')->findAll();
-        dump($bcfournisseurs);
+        //dump($bcfournisseurs);
         return $this->render('bcfournisseur/index.html.twig', array(
             'bcfournisseurs' => $bcfournisseurs,
         ));

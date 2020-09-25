@@ -34,7 +34,7 @@ class BcclientController extends Controller
         $count = count($query->getResult());
 
         $bcclients = $em->getRepository('AppBundle:Bcclient')->findAll();
-dump($bcclients,$alerts);
+//dump($bcclients,$alerts);
         return $this->render('bcclient/index.html.twig', array(
             'bcclients' => $bcclients,
             'count'=>$count,

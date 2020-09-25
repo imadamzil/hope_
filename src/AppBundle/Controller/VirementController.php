@@ -55,7 +55,7 @@ class VirementController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $virements = $em->getRepository('AppBundle:Virement')->findAll();
-        dump($virements);
+        //dump($virements);
         /* $counter = 1;
 
          $tableHead = [

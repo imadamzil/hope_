@@ -51,7 +51,7 @@ WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null
         
         ')->execute();
 
-        dump($query);
+        //dump($query);
 
         return $this->render('mission/index.html.twig', array(
             'missions' => $missions,
@@ -155,7 +155,7 @@ WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            dump($request);
+            //dump($request);
 
             $cc = $request->request->get('switch-field-1');
 

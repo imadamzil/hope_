@@ -25,7 +25,7 @@ class ConsultantController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $consultants = $em->getRepository('AppBundle:Consultant')->findAll();
-dump($consultants);
+//dump($consultants);
         return $this->render('consultant/index.html.twig', array(
             'consultants' => $consultants,
         ));

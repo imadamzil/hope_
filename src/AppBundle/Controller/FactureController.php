@@ -64,7 +64,7 @@ class FactureController extends Controller
             }
 
 
-            // dump($diff, $missions, $missions_factured, count($diff));
+            // //dump($diff, $missions, $missions_factured, count($diff));
 
             // $nb_non_factured_missions = count($diff);
         } else {
@@ -73,7 +73,7 @@ class FactureController extends Controller
             //$diff = array_diff_assoc($missions, $missions_factured);
         }
         $nb_non_factured_missions = null;
-        dump($factures);
+        //dump($factures);
         return $this->render('facture/index.html.twig', array(
             'factures' => $factures,
             'nb_non_factured_missions' => $nb_non_factured_missions,
@@ -94,7 +94,7 @@ class FactureController extends Controller
 
         $factures = $em->getRepository('AppBundle:Facture')->findAll();
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
-        dump($factures);
+        //dump($factures);
         $date = new \DateTime('now');
         $mois = intval($date->format('m')) - 1;
         $day = intval($date->format('d'));
@@ -126,7 +126,7 @@ class FactureController extends Controller
             }
 
 
-            // dump($diff, $missions, $missions_factured, count($diff));
+            // //dump($diff, $missions, $missions_factured, count($diff));
 
             // $nb_non_factured_missions = count($diff);
         } else {
@@ -187,7 +187,7 @@ class FactureController extends Controller
                 'year' => $facture->getYear(),
             )));
             $mission = $facture->getMission();
-            dump($mission, $nb);
+            //dump($mission, $nb);
             $nb_facture = $nb + 1;
             $facture->setNumero('H3K-' . substr($facture->getYear(), -2) . '-' . str_pad($facture->getMois(), 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
             $facture->setBcclient($mission->getBcclient());
@@ -219,7 +219,7 @@ class FactureController extends Controller
                     $facture->setTaxe($TVA);
                     $facture->setTotalTTC($TVA + $totalHT);
                     $bcclient = $facture->getBcclient();
-                    dump($bcclient);
+                    //dump($bcclient);
                     if ($bcclient != null) {
 
                         $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
@@ -262,7 +262,7 @@ class FactureController extends Controller
                     $facture->setTaxe($TVA);
                     $facture->setTotalTTC($TVA + $totalHT);
                     $bcclient = $facture->getBcclient();
-                    dump($bcclient);
+                    //dump($bcclient);
                     if ($bcclient != null) {
 
                         $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
@@ -369,7 +369,7 @@ class FactureController extends Controller
             $mission = $facture->getMission();
             $bcfournisseur->setMission($mission);
             $facturefournisseur->setMission($mission);
-            dump($mission, $nb);
+            //dump($mission, $nb);
             $nb_facture = $nb + 1;
             $facture->setNumero('H3K-' . substr($facture->getYear(), -2) . '-' . str_pad($facture->getMois(), 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
 
@@ -393,7 +393,7 @@ class FactureController extends Controller
                     $facture->setTotalTTC($TVA + $totalHT);
                     $bcclient = $facture->getBcclient();
                     $facture->setClient($mission->getClient());
-                    dump($bcclient);
+                    //dump($bcclient);
                     if ($bcclient != null) {
 
                         $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
@@ -437,7 +437,7 @@ class FactureController extends Controller
                     $facture->setClient($mission->getClient());
                     $facture->setTotalTTC($TVA + $totalHT);
                     $bcclient = $facture->getBcclient();
-                    dump($bcclient);
+                    //dump($bcclient);
                     if ($bcclient != null) {
 
                         $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
@@ -841,7 +841,7 @@ class FactureController extends Controller
     public function showfactureAction(Facture $facture)
     {
         //  $deleteForm = $this->createDeleteForm($facture);
-        dump($facture);
+        //dump($facture);
 
         function mois_convert($m)
         {
