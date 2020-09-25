@@ -39,10 +39,21 @@ class ProjetType extends AbstractType
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'date-timepicker1'],
             ])
-            ->add('bcclient', EntityType::class, array(
+
+            ->add('client', EntityType::class, array(
+                'class' => 'AppBundle:Client',
+                'multiple' => false,
+                'label' => 'Client',
+                'attr' => array(
+                    'class' => 'chosen-select',
+                    'data-placeholder' => 'Selectionner',
+                    'multiple' => false
+
+                )
+            ))->add('bcclient', EntityType::class, array(
                 'class' => 'AppBundle:Bcclient',
                 'multiple' => false,
-                'placeholder'=>'--',
+                'placeholder' => '--',
                 'label' => 'Bon de commande client',
 //                'choice_label' => 'code',
                 'attr' => array(

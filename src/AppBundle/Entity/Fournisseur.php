@@ -83,7 +83,10 @@ class Fournisseur
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facturefournisseur", mappedBy="fournisseur",cascade={"persist", "remove"})
      */
     private $facturefournisseurs;
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Projetconsultant", mappedBy="fournisseur",cascade={"persist", "remove"})
+     */
+    private $projetconsultants;
     /**
      * @var string
      *
@@ -485,5 +488,39 @@ class Fournisseur
     public function getIif()
     {
         return $this->iif;
+    }
+
+    /**
+     * Add projetconsultant
+     *
+     * @param \AppBundle\Entity\Projetconsultant $projetconsultant
+     *
+     * @return Fournisseur
+     */
+    public function addProjetconsultant(\AppBundle\Entity\Projetconsultant $projetconsultant)
+    {
+        $this->projetconsultants[] = $projetconsultant;
+
+        return $this;
+    }
+
+    /**
+     * Remove projetconsultant
+     *
+     * @param \AppBundle\Entity\Projetconsultant $projetconsultant
+     */
+    public function removeProjetconsultant(\AppBundle\Entity\Projetconsultant $projetconsultant)
+    {
+        $this->projetconsultants->removeElement($projetconsultant);
+    }
+
+    /**
+     * Get projetconsultants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjetconsultants()
+    {
+        return $this->projetconsultants;
     }
 }

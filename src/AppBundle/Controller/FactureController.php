@@ -419,9 +419,7 @@ class FactureController extends Controller
                 }
 
 
-            }
-            else
-                {
+            } else {
                 if ($mission->getType() == 'journaliere') {
 
                     $totalHT = $prixVenteHT * $facture->getNbjour();
@@ -796,6 +794,42 @@ class FactureController extends Controller
             'mois' => mois_convert($facture->getMois()),
 
         ));
+    }
+
+    /**
+     * Finds and displays a facture entity.
+     *
+     * @Route("/{id}/paye", name="facture_payer")
+     * @Method("GET")
+     */
+    public function setPayedAction(Facture $facture)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $facture->setEtat('payé');
+        $em->persist($facture);
+        $em->flush();
+
+
+        return $this->redirectToRoute('facture_index');
+    }
+
+    /**
+     * Finds and displays a facture entity.
+     *
+     * @Route("/{id}/change", name="facture_change",options={"expose"=true})
+     * @Method("GET")
+     */
+    public function changeAction(Facture $facture)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $facture->setEtat('payé');
+        $em->persist($facture);
+        $em->flush();
+
+
+        return $this->redirectToRoute('facture_index');
     }
 
     /**

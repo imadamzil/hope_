@@ -78,7 +78,7 @@
                                                         {% if projet.bcclient is null %}
                                                             --
                                                         {% else %}
-                                                            {{ projet.bcclient.nom }}
+                                                           BC_ {{ projet.bcclient.client.nom }}
                                                         {% endif %}
 
                                                     </span>
@@ -169,27 +169,27 @@
                                                                         aria-controls="dynamic-table" rowspan="1"
                                                                         colspan="1" style="color: #707070;"
                                                                         aria-label="Domain: activate to sort column ascending">
-                                                                        Nom
+                                                                        Consultant
                                                                     </th>
                                                                     <th class="sorting" tabindex="0"
                                                                         aria-controls="dynamic-table" rowspan="1"
                                                                         colspan="1"
                                                                         aria-label="Domain: activate to sort column ascending">
-                                                                        email
+                                                                        Fournisseur
                                                                     </th>
                                                                     <th class="sorting_desc" tabindex="0"
                                                                         aria-controls="dynamic-table"
                                                                         rowspan="1" colspan="1"
                                                                         aria-label="Price: activate to sort column ascending"
                                                                         aria-sort="descending">
-                                                                        adresse
+                                                                        Prix Achat
                                                                     </th>
                                                                     <th class="sorting_desc" tabindex="0"
                                                                         aria-controls="dynamic-table"
                                                                         rowspan="1" colspan="1"
                                                                         aria-label="Price: activate to sort column ascending"
                                                                         aria-sort="descending">
-                                                                        tel
+                                                                        Prix Vente
                                                                     </th>
 
 
@@ -236,12 +236,12 @@
 
 
                                                                         <td>
-                                                                            {% if item.consultant.email is null %}
+                                                                            {% if item.fournisseur is null %}
                                                                                 --
 
                                                                             {% else %}
 
-                                                                                {{ item.consultant.email }}
+                                                                                {{ item.fournisseur.nom }}
 
 
                                                                             {% endif %}
@@ -249,12 +249,12 @@
 
 
                                                                         <td>
-                                                                            {% if item.consultant.adresse is null %}
+                                                                            {% if item.achat is null %}
                                                                                 --
 
                                                                             {% else %}
 
-                                                                                {{ item.consultant.adresse }}
+                                                                                {{ item.achat }}
 
 
                                                                             {% endif %}
@@ -262,10 +262,10 @@
                                                                         </td>
 
                                                                         <td class="hidden-480">
-                                                                            {% if item.consultant.tel is null %}
+                                                                            {% if item.vente is null %}
                                                                                 --
                                                                             {% else %}
-                                                                                {{ item.consultant.tel }}
+                                                                                {{ item.vente }}
 
                                                                             {% endif %}
 
@@ -306,13 +306,13 @@
                                                                         <td>
                                                                             <div class="hidden-sm hidden-xs action-buttons">
                                                                                 <a class="blue"
-                                                                                   href="{{ path('consultant_show', { 'id': item.consultant.id }) }}"
+                                                                                   href="{{ path('projetconsultant_show', { 'id': item.id }) }}"
                                                                                    title="voir">
                                                                                     <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                                                 </a>
 
                                                                                 <a class="orange"
-                                                                                   href="{{ path('consultant_edit', { 'id': item.consultant.id }) }}"
+                                                                                   href="{{ path('projetconsultant_edit', { 'id': item.id }) }}"
                                                                                    title="modifier">
                                                                                     <i class="ace-icon fa fa-pencil bigger-130"></i>
                                                                                 </a>

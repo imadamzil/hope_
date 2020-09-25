@@ -26,9 +26,19 @@ class ProjetconsultantType extends AbstractType
                     'multiple' => false
 
                 )
-            ))//    ->add('projet')
+            ))->add('fournisseur', EntityType::class, array(
+                'class' => 'AppBundle:Fournisseur',
+                'multiple' => false,
+                'label' => 'Fournisseur',
+                'attr' => array(
+                    'class' => 'chosen-select',
+                    'data-placeholder' => 'Selectionner',
+                    'multiple' => false
 
-        ;
+                )
+            ))
+            ->add('achat')
+            ->add('vente');
     }
 
     /**

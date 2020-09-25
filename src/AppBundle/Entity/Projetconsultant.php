@@ -28,10 +28,27 @@ class Projetconsultant
      */
     private $titre;
     /**
+     * @var float
+     *
+     * @ORM\Column(name="achat", type="float", nullable=true)
+     */
+    private $achat;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="vente", type="float", nullable=true)
+     */
+    private $vente;
+    /**
      * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="projetconsultants")
      * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
      */
     private $consultant;
+    /**
+     * @ORM\ManyToOne(targetEntity="Fournisseur", inversedBy="projetconsultants")
+     * @ORM\JoinColumn(name="id_fournisseur", referencedColumnName="id")
+     */
+    private $fournisseur;
     /**
      * @ORM\ManyToOne(targetEntity="Projet", inversedBy="projetconsultants")
      * @ORM\JoinColumn(name="id_projet", referencedColumnName="id")
@@ -118,5 +135,77 @@ class Projetconsultant
     public function getProjet()
     {
         return $this->projet;
+    }
+
+    /**
+     * Set achat
+     *
+     * @param float $achat
+     *
+     * @return Projetconsultant
+     */
+    public function setAchat($achat)
+    {
+        $this->achat = $achat;
+
+        return $this;
+    }
+
+    /**
+     * Get achat
+     *
+     * @return float
+     */
+    public function getAchat()
+    {
+        return $this->achat;
+    }
+
+    /**
+     * Set vente
+     *
+     * @param float $vente
+     *
+     * @return Projetconsultant
+     */
+    public function setVente($vente)
+    {
+        $this->vente = $vente;
+
+        return $this;
+    }
+
+    /**
+     * Get vente
+     *
+     * @return float
+     */
+    public function getVente()
+    {
+        return $this->vente;
+    }
+
+    /**
+     * Set fournisseur
+     *
+     * @param \AppBundle\Entity\Fournisseur $fournisseur
+     *
+     * @return Projetconsultant
+     */
+    public function setFournisseur(\AppBundle\Entity\Fournisseur $fournisseur = null)
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Get fournisseur
+     *
+     * @return \AppBundle\Entity\Fournisseur
+     */
+    public function getFournisseur()
+    {
+        return $this->fournisseur;
     }
 }

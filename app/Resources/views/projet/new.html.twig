@@ -107,7 +107,13 @@
                     </div>
 
 
-                    <div class="col-md-5 ">{{ form_row(form.nom) }}</div>
+                    <div class="col-md-5 ">
+                        {{ form_row(form.nom) }}
+                        {{ form_row(form.client) }}
+                        {{ form_row(form.bcclient) }}
+
+
+                    </div>
 
                 </div>
                 <div class="row" id="adminbundle_quantitecommande_bon">

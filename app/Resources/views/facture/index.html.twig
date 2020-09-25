@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} Hope3k | facture {% endblock %}{% block menu %}  <a
-        href="{{ path('facture_index') }}">facture</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+        href="{{ path('facture_index') }}">facture</a>   {% endblock %}   {% block menu_active %}    Liste {% endblock %}{% block content1 %}
 
     {% if nb_non_factured_missions is not null and nb_non_factured_missions > 0 %}
         <div class="alert alert-danger">
@@ -134,12 +134,18 @@
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
                                                 Total TTC
                                             </th>
- <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
-Etat                                            </th>
+                                                Etat
+                                            </th>
 
 
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="">devise
+                                            </th>
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="">TOTAL
+                                                (DH)
+                                            </th>
                                             <th class="sorting_disabled" rowspan="1" colspan="1" aria-label=""></th>
 
                                         </tr>
@@ -148,186 +154,268 @@ Etat                                            </th>
                                         <tbody>
                                         {% for facture in factures %}
 
-                                            <tr role="row" class="odd">
-                                                <td>
+                                        <tr role="row" class="odd">
+                                            <td>
 
 
-                                                     {{ facture.numero }}
+                                                {{ facture.numero }}
 
 
-                                                </td>
+                                            </td>
 
 
-                                                <td>
-                                                    {% if facture.client is null %}
-                                                        --
+                                            <td>
+                                                {% if facture.client is null %}
+                                                    --
 
+                                                {% else %}
+
+                                                    {{ facture.client.nom }}
+
+
+                                                {% endif %}
+                                            </td>
+                                            <td>
+
+                                                {% if facture.consultant is null %}
+                                                    --
+
+                                                {% else %}
+
+                                                    {{ facture.consultant.nom }}
+
+
+                                                {% endif %}
+
+
+                                            </td>
+
+
+                                            <td>
+                                                {% if facture.mois is null %}
+                                                    --
+
+                                                {% else %}
+
+                                                    {{ facture.mois }}-{{ facture.year }}
+
+
+
+                                                {% endif %}
+
+                                            </td>
+
+                                            <td class="hidden-480">
+                                                {% if facture.date is null %}
+                                                    --
+                                                {% else %}
+                                                    {{ facture.date|date('Y-m-d') }}
+
+                                                {% endif %}
+
+
+                                            </td>
+                                            <td class="hidden-480">
+                                                {% if facture.totalHT is null %}
+                                                    --
+                                                {% else %}
+                                                    {{ facture.totalHT }}
+
+                                                {% endif %}
+
+
+                                            </td>
+                                            <td>
+                                                {% if facture.totalTTC is null %}
+                                                    --
+
+                                                {% else %}
+
+                                                    {{ facture.totalTTC }}
+
+
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if facture.etat is null %}
+                                                    --
+
+                                                {% else %}
+                                                    {% if facture.etat == 'non payé' %}
+                                                        <span class="label label-warning arrowed arrowed-right"> {{ facture.etat }}</span>
                                                     {% else %}
-
-                                                        {{ facture.client.nom }}
-
-
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-
-                                                    {% if facture.consultant is null %}
-                                                        --
-
-                                                    {% else %}
-
-                                                        {{ facture.consultant.nom }}
-
-
+                                                        <span class="label label-success arrowed arrowed-right"> {{ facture.etat }}</span>
                                                     {% endif %}
 
 
-                                                </td>
+
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if facture.mission is null %}
+                                                    --
+
+                                                {% else %}
+
+                                                    {{ facture.mission.devise }}
 
 
-                                                <td>
-                                                    {% if facture.mois is null %}
-                                                        --
+                                                {% endif %}
+                                            </td>
+                                            <td>
 
-                                                    {% else %}
+                                                {% if facture.totalDH is null %}
+                                                    --
 
-                                                        {{ facture.mois }}-{{ facture.year }}
+                                                {% else %}
 
-
-
-                                                    {% endif %}
-
-                                                </td>
-
-                                                <td class="hidden-480">
-                                                    {% if facture.date is null %}
-                                                        --
-                                                    {% else %}
-                                                        {{ facture.date|date('Y-m-d') }}
-
-                                                    {% endif %}
+                                                    {{ facture.totalDH }}
 
 
-                                                </td>
-                                                <td class="hidden-480">
-                                                    {% if facture.totalHT is null %}
-                                                        --
-                                                    {% else %}
-                                                        {{ facture.totalHT }}
+                                                {% endif %}
 
-                                                    {% endif %}
+                                            </td>
 
+                                            <td>
+                                                <div class="hidden-sm hidden-xs action-buttons">
+                                                    <a class="blue"
+                                                       href="{{ path('facture_show', { 'id': facture.id }) }}"
+                                                       title="voir">
+                                                        <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                                    </a>
 
-                                                </td>
-                                                <td>
-                                                    {% if facture.totalTTC is null %}
-                                                        --
-
-                                                    {% else %}
-
-                                                        {{ facture.totalTTC }}
-
-
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-                                                    {% if facture.etat is null %}
-                                                        --
-
-                                                    {% else %}
-                                                        {% if facture.etat == 'non payé' %}
-                                                            <span class="label label-warning arrowed arrowed-right"> {{ facture.etat }}</span>
-                                                        {% else %}
-                                                            <span class="label label-success arrowed arrowed-right"> {{ facture.etat }}</span>
-                                                        {% endif %}
+                                                    <a class="orange"
+                                                       href="{{ path('facture_edit', { 'id': facture.id }) }}"
+                                                       title="modifier">
+                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                    </a>
 
 
+                                                    <a class="red" href=""
+                                                       onclick="return confirm('vous êtes sûr que vous voulez le supprimé?');">
+                                                        <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                                    </a>
+                                                    {% if facture.mission.devise !='DH' and facture.mission.devise is not null and facture.totalDH is null %}
 
-                                                    {% endif %}
-                                                </td>
+                                                    <a href="#my-moda{{ facture.id }}" role="button" class=""
+                                                       data-toggle="modal">
+                                                        <i class="ace-icon fa fa-exchange bigger-100 purple"></i>
+                                                    </a>
+                                                    <div id="my-moda{{ facture.id }}" class="modal fade" tabindex="-1">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal"
+                                                                            aria-hidden="true">&times;
+                                                                    </button>
+                                                                    <h3 class="smaller lighter blue no-margin">
+                                                                        {{ facture.totalTTC }} {{ facture.mission.devise }}
+                                                                        -> DH </h3>
+                                                                </div>
+
+                                                                <div class="modal-body">
 
 
-                                                <td>
-                                                    <div class="hidden-sm hidden-xs action-buttons">
-                                                        <a class="blue"
-                                                           href="{{ path('facture_show', { 'id': facture.id }) }}"
-                                                           title="voir">
-                                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                                        </a>
+                                                                    <input type="text" id=""
+                                                                           placeholder="Total en DH"
+                                                                           class="form-control">
 
-                                                        <a class="orange"
-                                                           href="{{ path('facture_edit', { 'id': facture.id }) }}"
-                                                           title="modifier">
-                                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                        </a>
+                                                                </div>
 
-
-                                                        <a class="red" href=""
-                                                           onclick="return confirm('vous êtes sûr que vous voulez le supprimé?');">
-                                                            <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                        </a>
-
+                                                                <div class="modal-footer">
+                                                                    <button class="btn btn-sm btn-success pull-right"
+                                                                            id="ok">
+                                                                        <i class="ace-icon fa fa-check"></i>
+                                                                        Enregistrer
+                                                                    </button>
+                                                                    <button class="btn btn-sm btn-danger pull-left"
+                                                                            data-dismiss="modal">
+                                                                        <i class="ace-icon fa fa-times"></i>
+                                                                        Close
+                                                                    </button>
+                                                                </div>
+                                                            </div><!-- /.modal-content -->
+                                                        </div><!-- /.modal-dialog -->
                                                     </div>
+                                                </div>
 
-                                                    <div class="hidden-md hidden-lg">
-                                                        <div class="inline pos-rel">
-                                                            <button class="btn btn-minier btn-yellow dropdown-toggle"
-                                                                    data-toggle="dropdown"
-                                                                    data-position="auto">
-                                                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-                                                            </button>
+                                                {% endif %}
+                                                {% if facture.etat !='payé' %}
 
-                                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                                <li>
-                                                                    <a href="#" class="tooltip-info" data-rel="tooltip"
-                                                                       title=""
-                                                                       data-original-title="View">
+                                                    <a href="{{ path('facture_payer', { 'id': facture.id }) }}"
+                                                       class="tooltip-error" data-rel="tooltip"
+                                                       title="" id=""
+                                                       data-original-title="-> DH">
+																				<span class="green">
+																					<i class="ace-icon fa fa-check-square bigger-120"></i>
+																				</span>
+                                                    </a>
+
+                                                {% endif %}
+                                </div>
+
+                                <div class="hidden-md hidden-lg">
+                                    <div class="inline pos-rel">
+                                        <button class="btn btn-minier btn-yellow dropdown-toggle"
+                                                data-toggle="dropdown"
+                                                data-position="auto">
+                                            <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                        </button>
+
+                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                            <li>
+                                                <a href="#" class="tooltip-info" data-rel="tooltip"
+                                                   title=""
+                                                   data-original-title="View">
                                                     <span class="blue">
                                                         <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                     </span>
-                                                                    </a>
-                                                                </li>
+                                                </a>
+                                            </li>
 
-                                                                <li>
-                                                                    <a href="#" class="tooltip-success"
-                                                                       data-rel="tooltip" title=""
-                                                                       data-original-title="Edit">
+                                            <li>
+                                                <a href="#" class="tooltip-success"
+                                                   data-rel="tooltip" title=""
+                                                   data-original-title="Edit">
 																				<span class="green">
 																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																				</span>
-                                                                    </a>
-                                                                </li>
+                                                </a>
+                                            </li>
 
-                                                                <li>
-                                                                    <a href="#" class="tooltip-error" data-rel="tooltip"
-                                                                       title=""
-                                                                       data-original-title="Delete">
+                                            <li>
+                                                <a href="#" class="tooltip-error" data-rel="tooltip"
+                                                   title=""
+                                                   data-original-title="Delete">
 																				<span class="red">
 																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																				</span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
+                                                </a>
+                                            </li>
 
-                                        </tbody>
 
-                                    </table>
+                                        </ul>
+                                    </div>
                                 </div>
+                                </td>
+                                </tr>
+                                {% endfor %}
+
+                                </tbody>
+
+                                </table>
                             </div>
                         </div>
-
-
                     </div>
 
 
                 </div>
+
+
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -356,7 +444,7 @@ Etat                                            </th>
                     .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                     .DataTable({
                         initComplete: function () {
-                            this.api().columns([]).every(function () {
+                            this.api().columns([3, 7]).every(function () {
                                 var column = this;
                                 var select = $('<select><option value="">--</option></select>')
                                     .appendTo($(column.header()))
@@ -384,7 +472,7 @@ Etat                                            </th>
                         bAutoWidth: false,
                         "aoColumns": [
                             {"bSortable": false},
-                            null, null, null, null, null,null,null,
+                            null, null, null, null, null, null, null, null, null,
                             {"bSortable": false}
                         ],
                         "aaSorting": [],
@@ -503,10 +591,6 @@ Etat                                            </th>
                 if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
                 return 'left';
             }
-
-
-            /***************/
-            /***************/
 
 
         })

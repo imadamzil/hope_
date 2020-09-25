@@ -68,6 +68,12 @@ class Facture
     /**
      * @var float
      *
+     * @ORM\Column(name="total_DH", type="float", nullable=true)
+     */
+    private $totalDH;
+    /**
+     * @var float
+     *
      * @ORM\Column(name="taxe", type="float", nullable=true)
      */
     private $taxe;
@@ -565,5 +571,29 @@ class Facture
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set totalDH
+     *
+     * @param float $totalDH
+     *
+     * @return Facture
+     */
+    public function setTotalDH($totalDH)
+    {
+        $this->totalDH = $totalDH;
+
+        return $this;
+    }
+
+    /**
+     * Get totalDH
+     *
+     * @return float
+     */
+    public function getTotalDH()
+    {
+        return $this->totalDH;
     }
 }

@@ -52,6 +52,11 @@ class Projet
      * @ORM\JoinColumn(name="id_bcclient", referencedColumnName="id")
      */
     private $bcclient;
+    /**
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="projets")
+     * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
+     */
+    private $client;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Projetconsultant", mappedBy="projet",cascade={"persist", "remove"})
@@ -314,5 +319,29 @@ class Projet
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \AppBundle\Entity\Client $client
+     *
+     * @return Projet
+     */
+    public function setClient(\AppBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \AppBundle\Entity\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }
