@@ -161,7 +161,7 @@ td,th
 .ljj
 {
 	color: rgb(0,31,95);
-	margin-left: 850px;
+	margin-left: 750px;
 	margin-top: 66px;
 }
 .XXX
@@ -211,12 +211,12 @@ td,th
 	color: #000080;
   font-weight: bold;
   font-style: normal;
-	font-size: 26px;
+	font-size: 16px;
   margin-left: 10px;
   text-transform: capitalize;
 }.AZE
  {
-	 margin-left: 90px;
+	 margin-left: 10px;
 	 background: rgb(167,167,167);
 	 background: linear-gradient(90deg, rgba(167,167,167,1) 0%, rgba(241,248,250,0.8127626050420168) 93%);
 	 opacity: 1;

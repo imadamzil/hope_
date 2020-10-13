@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block title %} Hope3k | Fiche {% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+
+     <style type="text/css">
+
+
+     </style>
+ {% endblock %}
+{% block menu %}  <a href="{{ path('fiche_index') }}">Fiche</a>   {% endblock %}
+
+   {% block menu_active %}    Liste {% endblock %}
+{% block content %}
+    <h1>Fiches list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Raisonsocial</th>
+                <th>Activite</th>
+                <th>Adresse</th>
+                <th>Capital</th>
+                <th>Ice</th>
+                <th>Iff</th>
+                <th>Cnss</th>
+                <th>Rib</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fiche in fiches %}
+            <tr>
+                <td><a href="{{ path('fiche_show', { 'id': fiche.id }) }}">{{ fiche.id }}</a></td>
+                <td>{{ fiche.nom }}</td>
+                <td>{{ fiche.raisonSocial }}</td>
+                <td>{{ fiche.activite }}</td>
+                <td>{{ fiche.adresse }}</td>
+                <td>{{ fiche.capital }}</td>
+                <td>{{ fiche.iCE }}</td>
+                <td>{{ fiche.iff }}</td>
+                <td>{{ fiche.cnss }}</td>
+                <td>{{ fiche.rib }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('fiche_show', { 'id': fiche.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('fiche_edit', { 'id': fiche.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('fiche_new') }}">Create a new fiche</a>
+        </li>
+    </ul>
+{% endblock %}

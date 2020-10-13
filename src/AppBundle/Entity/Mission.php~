@@ -921,28 +921,4 @@ class Mission
     {
         return $this->facturefournisseurs;
     }
-
-    /**
-     * Set job
-     *
-     * @param \AppBundle\Entity\Job $job
-     *
-     * @return Mission
-     */
-    public function setJob(\AppBundle\Entity\Job $job = null)
-    {
-        $this->job = $job;
-
-        return $this;
-    }
-
-    /**
-     * Get job
-     *
-     * @return \AppBundle\Entity\Job
-     */
-    public function getJob()
-    {
-        return $this->job;
-    }
 }

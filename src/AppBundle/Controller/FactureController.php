@@ -512,6 +512,9 @@ class FactureController extends Controller
      */
     public function showAction(Facture $facture)
     {
+
+        $em = $this->getDoctrine()->getManager();
+        $fiche = $em->getRepository('AppBundle:Fiche')->find(1);
         function mois_convert($m)
         {
             switch ($m) {
@@ -792,6 +795,7 @@ class FactureController extends Controller
             'delete_form' => $deleteForm->createView(),
             'total' => int2str($facture->getTotalTTC()),
             'mois' => mois_convert($facture->getMois()),
+            'fiche'=>$fiche
 
         ));
     }
@@ -840,8 +844,8 @@ class FactureController extends Controller
      */
     public function showfactureAction(Facture $facture)
     {
-        //  $deleteForm = $this->createDeleteForm($facture);
-        //dump($facture);
+        $em = $this->getDoctrine()->getManager();
+        $fiche = $em->getRepository('AppBundle:Fiche')->find(1);
 
         function mois_convert($m)
         {
@@ -1121,6 +1125,7 @@ class FactureController extends Controller
             'facture' => $facture,
             'total' => int2str($facture->getTotalTTC()),
             'mois' => mois_convert($facture->getMois()),
+            'fiche'=>$fiche
             // 'delete_form' => $deleteForm->createView(),
         ));
     }

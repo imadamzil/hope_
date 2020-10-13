@@ -15,7 +15,7 @@
 <header class="A">
     <p class="B">
         <img src="https://media-exp1.licdn.com/dms/image/C4E1BAQFRyjYnYD3Drg/company-background_10000/0?e=2159024400&v=beta&t=RAlKPanZtaaj-QxmgPwR1edKWgyc6gHkuzuOteOPOKk"
-             alt="HOP3K" width="251" height="70"/><br>
+             alt="HOP3K" width="256" height="94"/><br>
         {#<span class="F">H O P E &nbsp;A N D &nbsp;W E &nbsp;P E R F O R M</span>#}
     </p>
     <p class="C">
@@ -30,25 +30,40 @@
 
     <strong class="SQ">FACTURE</strong><br>
 
-    <span class="QW">NUMÉRO &nbsp;: 50002<br>
+    <span class="QW">NUMÉRO &nbsp;: {{ facture.numero }}<br>
          DATE   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {% if facture.date %}{{ facture.date|date('d-m-Y') }}{% endif %}</span>
 
 </p>
 
 <div class="row QWF ">
 
-    <div class="col-sm-4.10 AZE">
+    {% if fiche is defined %}
+        <div class="col-md-4 10 AZE">
 
-        <h4 class="RTY">HOP3K SERVICES</h4>
-        <p class="WXV">
-            Adresse : Rue François Ponsard, Résidence Oushmane1,<br>
-            3eme étage bureau N°16. Casablanca 20000
-        </p>
-        <p>
-            <span class="WXV">ICE</span> : <span class="ZEF">000077247000025</span>
-        </p>
+            <h4 class="RTY">{{ fiche.nom }}</h4>
+            <p class="WXV">
+                Adresse : {{ fiche.adresse| nl2br }}
+            </p>
+            <p>
+                <span class="WXV">ICE</span> : <span class="ZEF bolder">{{ fiche.ice }}</span>
+            </p>
 
-    </div>
+        </div>
+    {% else %}
+        <div class="col-md-5 10 AZE">
+
+            <h4 class="RTY">HOP3K SERVICES</h4>
+            <p class="WXV">
+                Adresse : Rue François Ponsard, Résidence Oushmane1,<br>
+                3eme étage bureau N°16. Casablanca 20000
+            </p>
+            <p>
+                <span class="WXV">ICE</span> : <span class="ZEF">000077247000025</span>
+            </p>
+
+        </div>
+    {% endif %}
+
 
     <div class="col-sm-4 ZES">
         <h4 class="RTY">{{ facture.client.nom }}</h4>
@@ -59,7 +74,7 @@
         </p>
         </p>
         <p>
-            <span class="XLJ">ICE</span> : <span class="ERZ">000077247000025</span>
+            <span class="XLJ">ICE</span> : <span class="ERZ">{{ facture.client.ice }}</span>
         </p>
     </div>
 
@@ -92,8 +107,8 @@
 
 
                         - &nbsp;&nbsp;<span class="PPP">Type de mission :
-                        {{ facture.mission.type }}
-                        <br>
+                            {{ facture.mission.type }}
+                            <br>
 
 
                     </span>
@@ -103,12 +118,23 @@
                     - &nbsp;&nbsp;<span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
                 </p>
                 <p>
-                    - &nbsp;&nbsp;<span class="OLL">CONSULTANT <span
-                                class="NBt">JAVA</span></span>
+                    - &nbsp;&nbsp;
+                    <span class="OLL">
+
+                                                    {% if facture.mission.job is not null %}
+
+                                                        {{ facture.mission.job.nom }}
+
+                                                    {% else %}
+
+                                                        --
+                                                    {% endif %}
+
+                                                </span>
                 </p>
                 <p>
                     - &nbsp;&nbsp;<span class="YYY">Mois :</span><br><span
-                            class="OLL">&nbsp;&nbsp;&nbsp;&nbsp;{{ mois }}</span>
+                            class="OLL">&nbsp;&nbsp;&nbsp;&nbsp;{{ mois }} {{ facture.year }}</span>
                 </p>
                 <p>
                     <span class="YYY">Consultant :</span><br>
@@ -116,11 +142,37 @@
                         &nbsp;</span>
 
                 </p>
-                <p>
-                    <span class="YYY">Référence de contrat</span><br><span
-                            class="OLL">Contrat réference</span>
-                </p>
+                {% if facture.mission.bcclient is not null %}
+                    <p>
+                        {% if facture.mission.bcclient.ncontrat is not null %}
 
+                            <span class="YYY">Référence de contrat</span><br>
+
+
+                            <span
+                                    class="OLL">{{ facture.mission.bcclient.ncontrat }}
+
+                            </span>
+
+                        {% else %}
+                        {% endif %}
+                        {% if facture.mission.bcclient.code is not null %}
+
+                            <span class="YYY">N° Bon de commande </span><br>
+
+
+                            <span
+                                    class="OLL">{{ facture.mission.bcclient.code }}</span>
+
+                        {% else %}
+
+                        {% endif %}
+
+
+                    </p>
+                {% else %}
+                    <p></p>
+                {% endif %}
             </td>
             <td class=" text-center"><strong>{% if facture.mission.type == 'mensuel' %}
                         1
@@ -184,21 +236,45 @@
     <span class="XXX">Mode de paiement</span> <span class="CCC">:</span><br><span
             class="EEE">Virement au compte bancaire</span>
 
+    {% if facture.comptebancaire %}
+        <span class="EEE">
+        RIB N°: {{ facture.comptebancaire.rib }}<br>
+        Ouvert à {{ facture.comptebancaire.banque }} Agence {{ facture.comptebancaire.banque }}
+            - {{ facture.comptebancaire.label }}
+
+    </span>
+    {% endif %}
 </p>
 
 <div class="row">
 
     <div class="col-md-10 col-md-offset-1">
         <footer>
-            <p class="RRR text-center">
-                SOCIETE <span class="WII">&nbsp; <b>HOPE3K Service</b></span>, &nbsp;au capital de 700 000 DH -
-                Lotissement
-                Lina, &nbsp;316,
-                3éme étage, Sidi maarouf, Casablanca. CNSS N°7958492 - RC N°295375 - IF N°3383481 - Patente N° 36166787
-                -ICE
-                N°000077247000025 - RIB N° 013780011400017840019248 -SWIFT
-                : BMCIMAMC- Tél:0522990120
-            </p>
+            {% if fiche is defined %}
+                <p class="RRR text-center">
+                    SOCIETE <span class="WII">&nbsp; <b>{{ fiche.nom }}</b></span>, &nbsp;au capital
+                    de {{ fiche.capital }} DH -
+                    {{ fiche.adresse }}. CNSS N°{{ fiche.cnss }} - RC N°{{ fiche.rc }} - IF N°3383481 - Patente N°
+                    36166787
+                    -ICE
+                    N°{{ fiche.ice }} - RIB N° {{ fiche.rib }} -SWIFT
+                    : BMCIMAMC- Tél:0522990120
+                </p>
+
+            {% else %}
+
+                <p class="RRR text-center">
+                    SOCIETE <span class="WII">&nbsp; <b>HOPE3K Service</b></span>, &nbsp;au capital de 700 000 DH -
+                    Lotissement
+                    Lina, &nbsp;316,
+                    3éme étage, Sidi maarouf, Casablanca. CNSS N°7958492 - RC N°295375 - IF N°3383481 - Patente N°
+                    36166787
+                    -ICE
+                    N°000077247000025 - RIB N° 013780011400017840019248 -SWIFT
+                    : BMCIMAMC- Tél:0522990120
+                </p>
+            {% endif %}
+
 
             <div class="TTT">
                 <button class="btn btn-info" onclick="window.print()" id="vusz"><span class="fa fa-print"

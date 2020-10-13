@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+{% block title %} Hope3k | Fiche {% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+
+     <style type="text/css">
+
+
+     </style>
+ {% endblock %}
+{% block menu %}  <a href="{{ path('fiche_index') }}">Fiche</a>   {% endblock %}
+
+   {% block menu_active %}    Details {% endblock %}
+{% block content %}
+    <h1>Fiche</h1>
+
+    <table class="table table-detail">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ fiche.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ fiche.nom }}</td>
+            </tr>
+            <tr>
+                <th>Raisonsocial</th>
+                <td>{{ fiche.raisonSocial }}</td>
+            </tr>
+            <tr>
+                <th>Activite</th>
+                <td>{{ fiche.activite }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ fiche.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Capital</th>
+                <td>{{ fiche.capital }}</td>
+            </tr>
+            <tr>
+                <th>Ice</th>
+                <td>{{ fiche.iCE }}</td>
+            </tr>
+            <tr>
+                <th>Iff</th>
+                <td>{{ fiche.iff }}</td>
+            </tr>
+            <tr>
+                <th>Cnss</th>
+                <td>{{ fiche.cnss }}</td>
+            </tr>
+            <tr>
+                <th>Rib</th>
+                <td>{{ fiche.rib }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('fiche_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('fiche_edit', { 'id': fiche.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

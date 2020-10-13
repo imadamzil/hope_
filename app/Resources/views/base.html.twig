@@ -666,8 +666,8 @@
             </li>
             <li class="">
                 <a href="{{ path('client_index') }}" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-list"></i>
-                    <span class="menu-text"> Tables </span>
+                    <i class="menu-icon fa fa-ellipsis-h"></i>
+                    <span class="menu-text"> Autres </span>
 
                     <b class="arrow fa fa-angle-down"></b>
                 </a>
@@ -683,15 +683,32 @@
 
                         <b class="arrow"></b>
                     </li>
-
                     <li class="">
-                        <a href="jqgrid.html">
+                        <a href="{{ path('fiche_index') }}">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            jqGrid plugin
+                            Fiche Hope3K
                         </a>
 
                         <b class="arrow"></b>
                     </li>
+                    <li class="">
+                        <a href="{{ path('job_index') }}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Jobs
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('comptebancaire_index') }}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Comptes Bancaires
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
+
                 </ul>
             </li>
 

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Comptebancaires list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Rib</th>
+                <th>Banque</th>
+                <th>Agence</th>
+                <th>Label</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for comptebancaire in comptebancaires %}
+            <tr>
+                <td><a href="{{ path('comptebancaire_show', { 'id': comptebancaire.id }) }}">{{ comptebancaire.id }}</a></td>
+                <td>{{ comptebancaire.rib }}</td>
+                <td>{{ comptebancaire.banque }}</td>
+                <td>{{ comptebancaire.agence }}</td>
+                <td>{{ comptebancaire.label }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('comptebancaire_show', { 'id': comptebancaire.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('comptebancaire_edit', { 'id': comptebancaire.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('comptebancaire_new') }}">Create a new comptebancaire</a>
+        </li>
+    </ul>
+{% endblock %}

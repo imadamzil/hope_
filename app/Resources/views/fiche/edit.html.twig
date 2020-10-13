@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block title %} Hope3k | Fiche {% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+
+     <style type="text/css">
+
+
+     </style>
+ {% endblock %}
+{% block menu %}  <a href="{{ path('fiche_index') }}">Fiche</a>   {% endblock %}
+
+   {% block menu_active %}    Modifier {% endblock %}
+{% block content %}
+    <h1>Fiche edit</h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Edit" />
+    {{ form_end(edit_form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('fiche_index') }}">Back to the list</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -59,6 +59,16 @@ class MissionType extends AbstractType
                     'multiple' => false
 
                 )
+            )) ->add('job', EntityType::class, array(
+                'class' => 'AppBundle:Job',
+                'multiple' => false,
+                'label' => 'Motif',
+                'attr' => array(
+                    'class' => 'chosen-select',
+                    'data-placeholder' => 'Selectionner',
+                    'multiple' => false
+
+                )
             )) ->add('departement', EntityType::class, array(
                 'class' => 'AppBundle:Departement',
                 'multiple' => false,
@@ -96,7 +106,7 @@ class MissionType extends AbstractType
             ->add('bcclient', EntityType::class, array(
                 'class' => 'AppBundle:Bcclient',
                 'multiple' => false,
-                'placeholder'=>'--',
+            //    'placeholder'=>'--',
                 'label' => 'Bon de commande client',
 //                'choice_label' => 'code',
                 'attr' => array(

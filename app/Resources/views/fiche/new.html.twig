@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %} Hope3k | Fiche {% endblock %}
+ {% block stylesheets %}
+     {{ parent() }}
+
+     <style type="text/css">
+
+
+     </style>
+ {% endblock %}
+{% block menu %}  <a href="{{ path('fiche_index') }}">Fiche</a>   {% endblock %}
+
+   {% block menu_active %}    Ajouter {% endblock %}
+{% block content %}
+    <h1>Fiche creation</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Create" />
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('fiche_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

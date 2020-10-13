@@ -101,7 +101,21 @@ class FactureType extends AbstractType
                     'multiple' => false
 
                 )
-            ));
+            ))
+            ->add('comptebancaire', EntityType::class, array(
+                'class' => 'AppBundle:Comptebancaire',
+                'multiple' => false,
+                'label' => 'Compte bancaire',
+                'attr' => array(
+                    'class' => 'chosen-select',
+                    'data-placeholder' => 'Selectionner',
+                    'multiple' => false
+
+                )
+            ))
+
+
+        ;
     }
 
     /**
