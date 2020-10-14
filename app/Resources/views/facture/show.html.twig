@@ -203,7 +203,7 @@
 
                                             {% if facture.mission.bcclient is not null %}
                                                 <p>
-                                                    {% if facture.mission.bcclient.ncontrat is not null %}
+                                                    {% if facture.mission.bcclient.ncontrat !='' %}
 
                                                         <span class="YYY">Référence de contrat</span><br>
 
@@ -215,7 +215,7 @@
 
                                                     {% else %}
                                                     {% endif %}
-                                                    {% if facture.mission.bcclient.code is not null %}
+                                                    {% if facture.mission.bcclient.code !='' %}
 
                                                         <span class="YYY">N° Bon de commande </span><br>
 

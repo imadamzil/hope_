@@ -121,6 +121,18 @@
                                             </div>
 
                                             <div class="profile-info-row">
+                                                <div class="profile-info-name"> Motif</div>
+
+                                                <div class="profile-info-value">
+                                                    {% if mission.job %}
+                                                    <span>{{ mission.job.nom }}</span>
+                                                        {% else %}
+                                                        --
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+
+                                            <div class="profile-info-row">
                                                 <div class="profile-info-name"> Date Début</div>
 
                                                 <div class="profile-info-value">

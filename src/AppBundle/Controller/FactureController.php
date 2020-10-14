@@ -64,7 +64,7 @@ class FactureController extends Controller
             }
 
 
-            // //dump($diff, $missions, $missions_factured, count($diff));
+          //  dump($diff, $missions, $missions_factured, count($diff));
 
             // $nb_non_factured_missions = count($diff);
         } else {

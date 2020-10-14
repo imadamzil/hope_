@@ -38,7 +38,7 @@
 <div class="row QWF ">
 
     {% if fiche is defined %}
-        <div class="col-md-4 10 AZE">
+        <div class="col-md-5 10 AZE">
 
             <h4 class="RTY">{{ fiche.nom }}</h4>
             <p class="WXV">
@@ -65,7 +65,7 @@
     {% endif %}
 
 
-    <div class="col-sm-4 ZES">
+    <div class="col-sm-5 ZES">
         <h4 class="RTY">{{ facture.client.nom }}</h4>
 
 
@@ -144,7 +144,7 @@
                 </p>
                 {% if facture.mission.bcclient is not null %}
                     <p>
-                        {% if facture.mission.bcclient.ncontrat is not null %}
+                        {% if facture.mission.bcclient.ncontrat !='' %}
 
                             <span class="YYY">Référence de contrat</span><br>
 
@@ -156,7 +156,7 @@
 
                         {% else %}
                         {% endif %}
-                        {% if facture.mission.bcclient.code is not null %}
+                        {% if facture.mission.bcclient.code != "" %}
 
                             <span class="YYY">N° Bon de commande </span><br>
 
@@ -234,12 +234,12 @@
 </p>
 <p class="WWM">
     <span class="XXX">Mode de paiement</span> <span class="CCC">:</span><br><span
-            class="EEE">Virement au compte bancaire</span>
+            class="EEE">Virement au compte bancaire</span><br>
 
     {% if facture.comptebancaire %}
         <span class="EEE">
         RIB N°: {{ facture.comptebancaire.rib }}<br>
-        Ouvert à {{ facture.comptebancaire.banque }} Agence {{ facture.comptebancaire.banque }}
+        Ouvert à {{ facture.comptebancaire.banque }} Agence {{ facture.comptebancaire.agence }}
             - {{ facture.comptebancaire.label }}
 
     </span>

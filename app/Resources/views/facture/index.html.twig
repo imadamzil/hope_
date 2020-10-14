@@ -1,9 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Hope3k | facture {% endblock %}{% block menu %}  <a
-        href="{{ path('facture_index') }}">facture</a>   {% endblock %}   {% block menu_active %}    Liste {% endblock %}{% block content1 %}
+{% block title %} Hope3k | facture {% endblock %}
+{% block menu %}
+    <a href="{{ path('facture_index') }}">facture</a>
 
-    {% if nb_non_factured_missions is not null and nb_non_factured_missions > 0 %}
+{% endblock %}
+{% block menu_active %}    Liste
+{% endblock %}
+{% block content1 %}
+
+    {#{% if nb_non_factured_missions is not null and nb_non_factured_missions > 0 %}#}
         <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert">
                 <i class="ace-icon fa fa-times"></i>
@@ -21,7 +27,7 @@
             </a>
             <br>
         </div>
-    {% endif %}
+    {#{% endif %}#}
 
 
     <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">

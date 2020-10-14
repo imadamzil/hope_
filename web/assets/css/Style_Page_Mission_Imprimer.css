@@ -60,7 +60,7 @@
 }
 .ZES
 {
-	margin-left: 200px;
+	margin-left: 100px;
 	border:solid 1px black;
 	/*padding-top: 15px;*/
 	width: 100%;
@@ -79,6 +79,7 @@
 .WXV
 {
 	color: #454545;
+	margin-left: 10px;
 }
 .ERZ
 {
@@ -220,9 +221,10 @@ td,th
 	 background: rgb(167,167,167);
 	 background: linear-gradient(90deg, rgba(167,167,167,1) 0%, rgba(241,248,250,0.8127626050420168) 93%);
 	 opacity: 1;
-	 padding-right:9px;
-	 padding-top: 15px;
-	 padding-left: 5px;
+	 padding-left: 10px;
+	 padding-right: 10px;
+	padding-top: 10px;
+	padding-bottom: 1px;
  }
 @media print
 {

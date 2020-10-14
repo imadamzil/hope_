@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class ConsultantType extends AbstractType
 {
@@ -27,6 +28,15 @@ class ConsultantType extends AbstractType
             ))
             ->add('salaire')
             ->add('rib')
+            ->add('cin')
+            ->add('tjm')
+            ->add('cvFile', VichFileType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'label' => 'CV'
+                //   'delete_label' => 'form.label.delete',
+
+            ])
             ->add('tel')
             ->add('email')
             ->add('adresse');

@@ -100,4 +100,45 @@ class Job
     {
         return $this->description;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->missions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     *
+     * @return Job
+     */
+    public function addMission(\AppBundle\Entity\Mission $mission)
+    {
+        $this->missions[] = $mission;
+
+        return $this;
+    }
+
+    /**
+     * Remove mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     */
+    public function removeMission(\AppBundle\Entity\Mission $mission)
+    {
+        $this->missions->removeElement($mission);
+    }
+
+    /**
+     * Get missions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMissions()
+    {
+        return $this->missions;
+    }
 }
