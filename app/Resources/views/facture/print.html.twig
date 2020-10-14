@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="web/assets/css/Style_Page_Mission_Imprimer.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -19,8 +20,8 @@
         {#<span class="F">H O P E &nbsp;A N D &nbsp;W E &nbsp;P E R F O R M</span>#}
     </p>
     <p class="C">
-        <img src="https://www.ecoenergiesolutions.com/uploads/labels/20121120-1548-afaq-9001.jpg" alt="AFAQA" width="80"
-             height="80"/><br>
+        <img src="https://www.ecoenergiesolutions.com/uploads/labels/20121120-1548-afaq-9001.jpg" alt="AFAQA" width="90"
+             height="90"/><br>
         <span class="G">ISO 9001 : 2015</span> <br>
         <span class="GA">ID : 121497101356</span>
     </p>
@@ -45,7 +46,7 @@
                 Adresse : {{ fiche.adresse| nl2br }}
             </p>
             <p>
-                <span class="WXV">ICE</span> : <span class="ZEF bolder">{{ fiche.ice }}</span>
+                <span class="WXV">ICE</span> : <span class="ZEF bolder"><b>{{ fiche.ice }}</b></span>
             </p>
 
         </div>
@@ -58,7 +59,7 @@
                 3eme étage bureau N°16. Casablanca 20000
             </p>
             <p>
-                <span class="WXV">ICE</span> : <span class="ZEF">000077247000025</span>
+                <span class="WXV">ICE</span> : <span class="ZEF bolder"><b>000077247000025</b></span>
             </p>
 
         </div>
@@ -80,45 +81,44 @@
 
 </div>
 
-<div class="container">
 
-    <table class="">
-        <tr>
-            <th class="NB"><strong>Désignation</strong></th>
-            <th class="NBV"><strong>
-
-
-                    Unité {% if facture.mission.type == 'mensuel' %}
-                        (Nbr mois)
-                    {% else %}
-                        (Nbr jrs)
-
-                    {% endif %}
-                </strong></th>
-            <th class="NBV"><strong>Prix Unitaire HT (DH)</strong></th>
-            <th class="NBV"><strong>Prix Total HT (DH)</strong></th>
-
-        </tr>
-
-        <tr>
-            <td class="lmk">
-                {% if facture.client.nom == "ATOS" %}
-                    <p>
+<table class="">
+    <tr>
+        <th class="NB"><strong>Désignation</strong></th>
+        <th class="NBV"><strong>
 
 
-                        - &nbsp;&nbsp;<span class="PPP">Type de mission :
+                Unité {% if facture.mission.type == 'mensuel' %}
+                    (Nbr mois)
+                {% else %}
+                    (Nbr jrs)
+
+                {% endif %}
+            </strong></th>
+        <th class="NBV"><strong>Prix Unitaire HT (DH)</strong></th>
+        <th class="NBV"><strong>Prix Total HT (DH)</strong></th>
+
+    </tr>
+
+    <tr>
+        <td class="lmk">
+            {% if facture.client.nom == "ATOS" %}
+                <p>
+
+
+                        <span class="PPP">Type de mission :
                             {{ facture.mission.type }}
                             <br>
 
 
                     </span>
-                    </p>
-                {% endif %}
-                <p>
-                    - &nbsp;&nbsp;<span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
                 </p>
-                <p>
-                    - &nbsp;&nbsp;
+            {% endif %}
+            <p>
+                <span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
+            </p>
+            <p>
+
                     <span class="OLL">
 
                                                     {% if facture.mission.job is not null %}
@@ -131,77 +131,89 @@
                                                     {% endif %}
 
                                                 </span>
-                </p>
+            </p>
+            <p>
+                <span class="YYY">Mois :</span><br><span
+                        class="OLL">{{ mois }} {{ facture.year }}</span>
+            </p>
+            <p>
+                <span class="YYY">Consultant :</span><br>
+                <span class="NBt OLL">{{ facture.consultant.nom }}
+                    &nbsp;</span>
+
+            </p>
+            {% if facture.mission.bcclient is not null %}
                 <p>
-                    - &nbsp;&nbsp;<span class="YYY">Mois :</span><br><span
-                            class="OLL">&nbsp;&nbsp;&nbsp;&nbsp;{{ mois }} {{ facture.year }}</span>
-                </p>
-                <p>
-                    <span class="YYY">Consultant :</span><br>
-                    <span class="NBt OLL">{{ facture.consultant.nom }}
-                        &nbsp;</span>
+                    {% if facture.mission.bcclient.ncontrat !='' %}
 
-                </p>
-                {% if facture.mission.bcclient is not null %}
-                    <p>
-                        {% if facture.mission.bcclient.ncontrat !='' %}
-
-                            <span class="YYY">Référence de contrat</span><br>
+                        <span class="YYY">Référence de contrat</span><br>
 
 
-                            <span
-                                    class="OLL">{{ facture.mission.bcclient.ncontrat }}
+                        <span
+                                class="OLL">{{ facture.mission.bcclient.ncontrat }}
 
                             </span>
 
-                        {% else %}
-                        {% endif %}
-                        {% if facture.mission.bcclient.code != "" %}
-
-                            <span class="YYY">N° Bon de commande </span><br>
-
-
-                            <span
-                                    class="OLL">{{ facture.mission.bcclient.code }}</span>
-
-                        {% else %}
-
-                        {% endif %}
-
-
-                    </p>
-                {% else %}
-                    <p></p>
-                {% endif %}
-            </td>
-            <td class=" text-center"><strong>{% if facture.mission.type == 'mensuel' %}
-                        1
                     {% else %}
-                        {{ facture.nbjour }}
+                    {% endif %}
+                    {% if facture.mission.bcclient.code != "" %}
 
-                    {% endif %}</strong></td>
-            <td class=" text-center"><strong>{{ facture.mission.prixVente }}</strong></td>
-            <td class="text-center"><strong> {{ facture.totalHt }}
-                </strong></td>
-        </tr>
+                        <span class="YYY">N° Bon de commande </span><br>
 
 
-    </table>
-</div>
+                        <span
+                                class="OLL">{{ facture.mission.bcclient.code }}</span>
 
-<p class="AZX">
+                    {% else %}
+
+                    {% endif %}
 
 
-    {#<table class="table">
+                </p>
+            {% else %}
+                <p></p>
+            {% endif %}
+        </td>
+        <td class=" text-center"><strong>{% if facture.mission.type == 'mensuel' %}
+                    1
+                {% else %}
+                    {{ facture.nbjour }}
+
+                {% endif %}</strong></td>
+        <td class=" text-center"><strong>{{ facture.mission.prixVente }}</strong></td>
+        <td class="text-center"><strong> {{ facture.totalHt }}
+            </strong></td>
+    </tr>
+
+
+</table>
+
+
+    <table class="jjj " cellspacing="0" cellpadding="0">
         <tbody>
-        <tr>
-            <th scope="row">Montant des sommes dues</th>
-            <td>{{ facture.totalHT }}</td>
+        <tr class="">
+            <th class="trr AZX">Montant des sommes dues</th>
+            <td class="trr AZX">:</td>
+            <td class="trr AZX" >{{ facture.totalHT }}</td>
+
+        </tr>
+        <tr class="">
+            <th class="trr AZX">Montant TVA 20%</th>
+            <td class="trr AZX">:</td>
+            <td class="trr AZX" >{{ facture.taxe }}.00
+                DH</td>
+
+        </tr>
+        <tr class="">
+            <th class="trr AZX">Montant net à payer au prestataire</th>
+            <td class="trr AZX">:</td>
+            <td class="trr AZX" >{{ facture.totalTTC }}.00 DH</td>
 
         </tr>
 
         </tbody>
-    </table>#}
+    </table>
+{#<p class="AZX">
 
     Montant des sommes dues &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ facture.totalHT }}
     .00
@@ -209,7 +221,7 @@
     {{ facture.taxe }}.00
     DH<br>Montant net à payer au prestataire &nbsp;&nbsp;{{ facture.totalTTC }}.00 DH
 
-</p>
+</p>#}
 <p class="VVV">
     Arrêté la présente facture à la somme de :<br>
     <strong>

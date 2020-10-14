@@ -6,8 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b403dbfe-33ca-4176-b4ff-6dc92a4d89fa" name="Default" comment="add project &amp; virement ok;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/facture/print.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/facture/print.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css" afterPath="$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,106 +38,76 @@
       <file leaf-file-name="print.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/print.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="146" column="67" lean-forward="false" selection-start-line="146" selection-start-column="67" selection-end-line="146" selection-end-column="67" />
+            <state relative-caret-position="96">
+              <caret line="83" column="0" lean-forward="false" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
               <folding>
-                <element signature="e#8038#8044#0#HTML" expanded="true" />
-                <element signature="e#8076#8082#0#HTML" expanded="true" />
-                <element signature="e#8563#8569#0#HTML" expanded="true" />
-                <element signature="e#8600#8606#0#HTML" expanded="true" />
-                <element signature="e#8691#8697#0#HTML" expanded="true" />
+                <element signature="e#4579#4585#0#HTML" expanded="true" />
+                <element signature="e#8301#8307#0#HTML" expanded="true" />
+                <element signature="e#8339#8345#0#HTML" expanded="true" />
+                <element signature="e#8826#8832#0#HTML" expanded="true" />
+                <element signature="e#8863#8869#0#HTML" expanded="true" />
+                <element signature="e#8954#8960#0#HTML" expanded="true" />
+                <marker date="1602692517170" expanded="false" signature="6668:6674" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6674:6680" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6680:6686" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6686:6692" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6692:6698" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6698:6704" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6704:6710" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6710:6716" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6716:6722" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6722:6728" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6728:6734" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6734:6740" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6740:6746" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6746:6752" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6752:6758" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6758:6764" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6764:6770" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6827:6833" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6833:6839" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6839:6845" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6845:6851" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6851:6857" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6857:6863" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6863:6869" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6869:6875" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6875:6881" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6881:6887" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6887:6893" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6893:6899" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6899:6905" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6905:6911" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6911:6917" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6917:6923" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6923:6929" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6929:6935" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6935:6941" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6941:6947" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6947:6953" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6953:6959" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6959:6965" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6965:6971" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6971:6977" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6977:6983" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6983:6989" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6989:6995" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="6995:7001" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="7001:7007" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="7007:7013" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="7085:7091" ph=" " />
+                <marker date="1602692517170" expanded="false" signature="7091:7097" ph=" " />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="show.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/mission/show.html.twig">
+      <file leaf-file-name="Style_Page_Mission_Imprimer.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="129" column="58" lean-forward="false" selection-start-line="129" selection-start-column="58" selection-end-line="129" selection-end-column="58" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Bcclient.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Bcclient.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8247">
-              <caret line="34" column="18" lean-forward="false" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Mission.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Mission.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Consultant.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Consultant.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-314">
-              <caret line="134" column="16" lean-forward="false" selection-start-line="134" selection-start-column="16" selection-end-line="134" selection-end-column="16" />
-              <folding>
-                <element signature="e#36#68#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConsultantType.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/ConsultantType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="31" column="24" lean-forward="false" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="show.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/show.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1479">
-              <caret line="205" column="95" lean-forward="false" selection-start-line="205" selection-start-column="95" selection-end-line="205" selection-end-column="95" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MissionType.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/MissionType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="138" column="14" lean-forward="false" selection-start-line="132" selection-start-column="11" selection-end-line="138" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Facturefournisseur.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Facturefournisseur.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4233">
-              <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+            <state relative-caret-position="281">
+              <caret line="100" column="18" lean-forward="false" selection-start-line="100" selection-start-column="18" selection-end-line="100" selection-end-column="18" />
+              <caret line="101" column="19" lean-forward="false" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -146,7 +117,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>{% block c %}</find>
       <find>{% block co %}</find>
       <find>{% block con %}</find>
       <find>{% block cont %}</find>
@@ -176,6 +146,7 @@
       <find>{% block body %}</find>
       <find>get</find>
       <find>contratF</find>
+      <find>bord</find>
     </findStrings>
     <replaceStrings>
       <replace>client</replace>
@@ -271,14 +242,14 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Form/MissionType.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/mission/new.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/facture/index.html.twig" />
-        <option value="$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css" />
-        <option value="$PROJECT_DIR$/app/Resources/views/facture/print.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/FactureController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Consultant.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Form/ConsultantType.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/facture/show.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mission/show.html.twig" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/Resources/views/facture/print.html.twig" />
+        <option value="$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css" />
       </list>
     </option>
   </component>
@@ -597,7 +568,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../imziiv2last" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -743,7 +714,7 @@
       <workItem from="1601042324730" duration="4406000" />
       <workItem from="1601049706404" duration="1732000" />
       <workItem from="1602073717375" duration="1850000" />
-      <workItem from="1602497410582" duration="29755000" />
+      <workItem from="1602497410582" duration="35548000" />
     </task>
     <task id="LOCAL-00001" summary="adding entities">
       <created>1596628606866</created>
@@ -987,7 +958,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="436348000" />
+    <option name="totallyTimeSpent" value="442141000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1109,20 +1080,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/virementf/print.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
-          <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/virementf/show.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2074">
-          <caret line="122" column="47" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="122" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Projet.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -1409,14 +1366,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="62" column="20" lean-forward="false" selection-start-line="62" selection-start-column="20" selection-end-line="62" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/FactureController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
@@ -1471,7 +1420,7 @@
         <state relative-caret-position="-314">
           <caret line="134" column="16" lean-forward="false" selection-start-line="134" selection-start-column="16" selection-end-line="134" selection-end-column="16" />
           <folding>
-            <element signature="e#36#68#0#PHP" expanded="true" />
+            <element signature="e#36#68#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1500,20 +1449,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/print.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="146" column="67" lean-forward="false" selection-start-line="146" selection-start-column="67" selection-end-line="146" selection-end-column="67" />
-          <folding>
-            <element signature="e#8038#8044#0#HTML" expanded="true" />
-            <element signature="e#8076#8082#0#HTML" expanded="true" />
-            <element signature="e#8563#8569#0#HTML" expanded="true" />
-            <element signature="e#8600#8606#0#HTML" expanded="true" />
-            <element signature="e#8691#8697#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/mission/show.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -1525,7 +1460,97 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/resources/html5-schema/html5/tables.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="202" column="22" lean-forward="false" selection-start-line="202" selection-start-column="22" selection-end-line="202" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/css/ace.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="777" column="1" lean-forward="false" selection-start-line="777" selection-start-column="1" selection-end-line="777" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/print.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="83" column="0" lean-forward="false" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding>
+            <element signature="e#4579#4585#0#HTML" expanded="true" />
+            <element signature="e#8301#8307#0#HTML" expanded="true" />
+            <element signature="e#8339#8345#0#HTML" expanded="true" />
+            <element signature="e#8826#8832#0#HTML" expanded="true" />
+            <element signature="e#8863#8869#0#HTML" expanded="true" />
+            <element signature="e#8954#8960#0#HTML" expanded="true" />
+            <marker date="1602692517170" expanded="false" signature="6668:6674" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6674:6680" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6680:6686" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6686:6692" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6692:6698" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6698:6704" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6704:6710" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6710:6716" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6716:6722" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6722:6728" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6728:6734" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6734:6740" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6740:6746" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6746:6752" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6752:6758" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6758:6764" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6764:6770" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6827:6833" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6833:6839" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6839:6845" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6845:6851" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6851:6857" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6857:6863" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6863:6869" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6869:6875" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6875:6881" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6881:6887" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6887:6893" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6893:6899" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6899:6905" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6905:6911" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6911:6917" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6917:6923" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6923:6929" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6929:6935" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6935:6941" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6941:6947" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6947:6953" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6953:6959" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6959:6965" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6965:6971" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6971:6977" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6977:6983" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6983:6989" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6989:6995" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="6995:7001" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="7001:7007" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="7007:7013" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="7085:7091" ph=" " />
+            <marker date="1602692517170" expanded="false" signature="7091:7097" ph=" " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="100" column="18" lean-forward="false" selection-start-line="100" selection-start-column="18" selection-end-line="100" selection-end-column="18" />
+          <caret line="101" column="19" lean-forward="false" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
           <folding />
         </state>
       </provider>
