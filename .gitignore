@@ -1,5 +1,7 @@
 /.web-server-pid
 /build/
+.idea/*
+/vendor/
 /phpunit.xml
 /var/*
 !/var/cache
@@ -13,5 +15,5 @@
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/*
-
+.gitignore
 
