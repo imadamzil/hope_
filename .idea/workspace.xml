@@ -7,8 +7,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b403dbfe-33ca-4176-b4ff-6dc92a4d89fa" name="Default" comment="add project &amp; virement ok;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/facture/print.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/facture/print.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css" afterPath="$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,7 +33,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="print.html.twig" pinned="false" current-in-tab="false">
+      <file leaf-file-name="print.html.twig" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/print.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="96">
@@ -102,7 +100,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Style_Page_Mission_Imprimer.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Style_Page_Mission_Imprimer.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="281">
@@ -714,7 +712,7 @@
       <workItem from="1601042324730" duration="4406000" />
       <workItem from="1601049706404" duration="1732000" />
       <workItem from="1602073717375" duration="1850000" />
-      <workItem from="1602497410582" duration="35548000" />
+      <workItem from="1602497410582" duration="36864000" />
     </task>
     <task id="LOCAL-00001" summary="adding entities">
       <created>1596628606866</created>
@@ -958,7 +956,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="442141000" />
+    <option name="totallyTimeSpent" value="443457000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -971,9 +969,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="2" width="1612" height="865" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2757732" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2757732" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1481,6 +1478,15 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="100" column="18" lean-forward="false" selection-start-line="100" selection-start-column="18" selection-end-line="100" selection-end-column="18" />
+          <caret line="101" column="19" lean-forward="false" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/print.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
@@ -1543,15 +1549,6 @@
             <marker date="1602692517170" expanded="false" signature="7085:7091" ph=" " />
             <marker date="1602692517170" expanded="false" signature="7091:7097" ph=" " />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="100" column="18" lean-forward="false" selection-start-line="100" selection-start-column="18" selection-end-line="100" selection-end-column="18" />
-          <caret line="101" column="19" lean-forward="false" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
