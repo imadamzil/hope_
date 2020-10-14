@@ -6,297 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b403dbfe-33ca-4176-b4ff-6dc92a4d89fa" name="Default" comment="add project &amp; virement ok;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/CHANGELOG.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/CONTRIBUTING.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Command/DumpCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Command/RouterDebugExposedCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Controller/Controller.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/DependencyInjection/Configuration.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/DependencyInjection/FOSJsRoutingExtension.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Extractor/ExposedRoutesExtractor.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Extractor/ExposedRoutesExtractorInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/FOSJsRoutingBundle.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/config/controllers.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/config/plovr/compile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/config/routing/routing-sf4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/config/routing/routing.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/config/serializer.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/config/services.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/doc/commands.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/doc/index.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/doc/installation.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/doc/usage.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/gulpfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/js/router.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/js/router.template.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/js/router.test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/js/router_test.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/js/run_jsunit.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/meta/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Resources/ts/router.d.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Response/RoutesResponse.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Serializer/Denormalizer/RouteCollectionDenormalizer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Serializer/Normalizer/RouteCollectionNormalizer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Serializer/Normalizer/RoutesResponseNormalizer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Tests/Command/DumpCommandTest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Tests/Command/RouterDebugExposedCommandTest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Tests/Controller/ControllerTest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Tests/DependencyInjection/FOSJsRoutingExtensionTest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Tests/Extractor/ExposedRoutesExtractorTest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Tests/Serializer/Normalizer/RouteCollectionNormalizerTest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Tests/Serializer/Normalizer/RoutesResponseNormalizerTest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/Util/CacheControlConfig.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/composer.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/phpunit" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle/phpunit.xml.dist" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Command/ActivateUserCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Command/ChangePasswordCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Command/CreateUserCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Command/DeactivateUserCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Command/DemoteUserCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Command/PromoteUserCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Command/RoleCommand.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Controller/ChangePasswordController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Controller/GroupController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Controller/ProfileController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Controller/RegistrationController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Controller/ResettingController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Controller/SecurityController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/DependencyInjection/Compiler/CheckForMailerPass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/DependencyInjection/Compiler/CheckForSessionPass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/DependencyInjection/Compiler/InjectRememberMeServicesPass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/DependencyInjection/Compiler/InjectUserCheckerPass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/DependencyInjection/Compiler/ValidationPass.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/DependencyInjection/Configuration.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/DependencyInjection/FOSUserExtension.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Doctrine/CouchDB/UserListener.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Doctrine/GroupManager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Doctrine/UserListener.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Doctrine/UserManager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Event/FilterGroupResponseEvent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Event/FilterUserResponseEvent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Event/FormEvent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Event/GetResponseGroupEvent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Event/GetResponseNullableUserEvent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Event/GetResponseUserEvent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Event/GroupEvent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Event/UserEvent.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/EventListener/AuthenticationListener.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/EventListener/EmailConfirmationListener.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/EventListener/FlashListener.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/EventListener/LastLoginListener.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/EventListener/ResettingListener.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOSUserBundle.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOSUserEvents.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Form/DataTransformer/UserToUsernameTransformer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Form/Factory/FactoryInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Form/Factory/FormFactory.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Form/Type/ChangePasswordFormType.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Form/Type/GroupFormType.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Form/Type/ProfileFormType.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Form/Type/RegistrationFormType.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Form/Type/ResettingFormType.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Form/Type/UsernameFormType.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Mailer/Mailer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Mailer/MailerInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Mailer/NoopMailer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Mailer/TwigSwiftMailer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Model/Group.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Model/GroupInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Model/GroupManager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Model/GroupManagerInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Model/GroupableInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Model/User.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Model/UserInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Model/UserManager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Model/UserManagerInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/change_password.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/commands.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/doctrine-mapping/Group.couchdb.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/doctrine-mapping/Group.mongodb.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/doctrine-mapping/Group.orm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/doctrine-mapping/User.couchdb.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/doctrine-mapping/User.mongodb.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/doctrine-mapping/User.orm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/doctrine.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/doctrine_group.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/email_confirmation.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/flash_notifications.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/group.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/listeners.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/mailer.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/profile.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/registration.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/resetting.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/routing/all.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/routing/change_password.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/routing/group.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/routing/profile.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/routing/registration.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/routing/resetting.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/routing/security.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/security.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/storage-validation/couchdb.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/storage-validation/mongodb.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/storage-validation/orm.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/username_form_type.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/util.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/validation.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/config/validator.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/adding_invitation_registration.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/canonicalizer.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/command_line_tools.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/configuration_reference.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/controller_events.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/custom_storage_layer.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/doctrine.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/emails.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/form_type.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/groups.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/index.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/logging_by_username_or_email.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/overriding_forms.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/overriding_templates.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/overriding_validation.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/routing.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/doc/user_manager.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.af.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.ar.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.bg.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.bn.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.bn_BD.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.ca.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.cs.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.da.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.de.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.el.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.en.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.eo.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.es.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.et.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.eu.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.fa.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.fi.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.fr.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.gl.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.he.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.hr.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.hu.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.id.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.it.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.ja.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.ky.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.lb.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.lt.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.lv.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.nb.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.nl.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.pl.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.pt.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.pt_BR.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.ro.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.ru.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.sk.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.sl.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.sr_Latn.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.sv.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.th.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.tr.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.uk.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.vi.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.zh_CN.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.ar.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.bg.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.bn.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.bn_BD.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.ca.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.cs.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.da.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.de.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.el.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.en.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.eo.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.es.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.eu.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.fa.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.fi.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.fr.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.he.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.hr.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.hu.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.id.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.it.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.ja.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.ky.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.lt.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.lv.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.nb.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.nl.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.pl.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.pt.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.pt_BR.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.ro.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.ru.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.sk.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.sl.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.sr_Latn.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.sv.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.th.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.tr.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.uk.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.vi.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.zh_CN.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/ChangePassword/change_password.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/ChangePassword/change_password_content.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Group/edit.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Group/edit_content.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Group/list.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Group/list_content.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Group/new.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Group/new_content.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Group/show.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Group/show_content.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Profile/edit.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Profile/edit_content.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Profile/show.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Profile/show_content.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Registration/check_email.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Registration/confirmed.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Registration/email.txt.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Registration/register.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Registration/register_content.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Resetting/check_email.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Resetting/email.txt.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Resetting/request.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Resetting/request_content.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Resetting/reset.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Resetting/reset_content.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Security/login.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/Security/login_content.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Resources/views/layout.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Security/EmailUserProvider.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Security/LoginManager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Security/LoginManagerInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Security/UserProvider.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Util/CanonicalFieldsUpdater.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Util/Canonicalizer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Util/CanonicalizerInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Util/PasswordUpdater.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Util/PasswordUpdaterInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Util/TokenGenerator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Util/TokenGeneratorInterface.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Util/UserManipulator.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/Validator/Initializer.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/composer.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/facture/print.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/facture/print.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/facture/show.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/facture/show.html.twig" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -323,7 +35,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="dev.log" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dev.log" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/var/logs/dev.log">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -333,11 +45,70 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="prod.log" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/var/logs/prod.log">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="440">
+              <caret line="104" column="87" lean-forward="false" selection-start-line="104" selection-start-column="87" selection-end-line="104" selection-end-column="87" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SymfonyRequirements.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/var/SymfonyRequirements.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-561">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bootstrap.php.cache" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/var/bootstrap.php.cache">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-629">
+              <caret line="17" column="1" lean-forward="false" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="print.html.twig" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/print.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="123" column="43" lean-forward="false" selection-start-line="123" selection-start-column="43" selection-end-line="123" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ace.min.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/assets/css/ace.min.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-107">
+              <caret line="377" column="1" lean-forward="false" selection-start-line="377" selection-start-column="1" selection-end-line="377" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="show.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/show.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="49" column="32" lean-forward="false" selection-start-line="49" selection-start-column="32" selection-end-line="49" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>{% block c %}</find>
       <find>{% block co %}</find>
       <find>{% block con %}</find>
       <find>{% block cont %}</find>
@@ -367,9 +138,9 @@
       <find>{% block body %}</find>
       <find>get</find>
       <find>contratF</find>
+      <find>is defined</find>
     </findStrings>
     <replaceStrings>
-      <replace>client</replace>
       <replace>BC fournisseur</replace>
       <replace>BC Client</replace>
       <replace>bcclient</replace>
@@ -399,6 +170,7 @@
       <replace>projetconsultant_</replace>
       <replace>{% block content %}</replace>
       <replace>cv</replace>
+      <replace>is not null</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\wamp64\www\hope3k\app\Resources\views\facture</dir>
@@ -419,7 +191,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/VirementfController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Form/VirementfType.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/virementf/print.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/virementf/show.html.twig" />
@@ -463,13 +234,14 @@
         <option value="$PROJECT_DIR$/app/Resources/views/mission/new.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/facture/index.html.twig" />
         <option value="$PROJECT_DIR$/web/assets/css/Style_Page_Mission_Imprimer.css" />
-        <option value="$PROJECT_DIR$/app/Resources/views/facture/print.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/FactureController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Consultant.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Form/ConsultantType.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/facture/show.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mission/show.html.twig" />
         <option value="$PROJECT_DIR$/var/logs/dev.log" />
+        <option value="$PROJECT_DIR$/var/logs/prod.log" />
+        <option value="$PROJECT_DIR$/app/Resources/views/facture/show.html.twig" />
+        <option value="$PROJECT_DIR$/app/Resources/views/facture/print.html.twig" />
       </list>
     </option>
   </component>
@@ -608,7 +380,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -622,11 +394,15 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="AppBundle" />
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -640,15 +416,19 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="AppBundle" />
+              <option name="myItemId" value="Resources" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Entity" />
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="facture" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -810,6 +590,7 @@
       <workItem from="1602073717375" duration="1850000" />
       <workItem from="1602497410582" duration="27800000" />
       <workItem from="1602671832894" duration="1173000" />
+      <workItem from="1602673451063" duration="2956000" />
     </task>
     <task id="LOCAL-00001" summary="adding entities">
       <created>1596628606866</created>
@@ -1053,7 +834,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="435566000" />
+    <option name="totallyTimeSpent" value="438522000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1066,15 +847,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27956298" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.283419" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32839838" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32839838" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32839838" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1174,34 +956,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/virementf/show.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2074">
-          <caret line="122" column="47" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="122" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Projet.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="58" column="19" lean-forward="false" selection-start-line="58" selection-start-column="19" selection-end-line="58" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Projetconsultant.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="33" column="7" lean-forward="false" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Fournisseur.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="86" column="93" lean-forward="false" selection-start-line="86" selection-start-column="93" selection-end-line="86" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/ProjetconsultantType.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
@@ -1220,7 +974,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1921">
           <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1228,7 +981,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1054">
           <caret line="64" column="11" lean-forward="false" selection-start-line="64" selection-start-column="11" selection-end-line="64" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1236,7 +988,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
           <caret line="35" column="40" lean-forward="false" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1279,7 +1030,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="123" column="8" lean-forward="false" selection-start-line="123" selection-start-column="8" selection-end-line="123" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1371,7 +1121,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="372">
           <caret line="67" column="6" lean-forward="false" selection-start-line="67" selection-start-column="6" selection-end-line="67" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1393,7 +1142,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="73" column="3" lean-forward="false" selection-start-line="73" selection-start-column="3" selection-end-line="76" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1408,7 +1156,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
           <caret line="46" column="6" lean-forward="false" selection-start-line="46" selection-start-column="6" selection-end-line="46" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1416,7 +1163,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="338">
           <caret line="36" column="76" lean-forward="false" selection-start-line="36" selection-start-column="76" selection-end-line="36" selection-end-column="76" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1438,7 +1184,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="309" column="21" lean-forward="false" selection-start-line="309" selection-start-column="21" selection-end-line="309" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1475,9 +1220,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1513">
           <caret line="89" column="28" lean-forward="false" selection-start-line="89" selection-start-column="28" selection-end-line="89" selection-end-column="28" />
-          <folding>
-            <element signature="e#7411#10500#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1485,7 +1227,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1493,7 +1234,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
           <caret line="34" column="18" lean-forward="false" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1501,7 +1241,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1509,9 +1248,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2278">
           <caret line="134" column="16" lean-forward="false" selection-start-line="134" selection-start-column="16" selection-end-line="134" selection-end-column="16" />
-          <folding>
-            <element signature="e#36#68#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1519,7 +1255,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2210">
           <caret line="138" column="14" lean-forward="false" selection-start-line="132" selection-start-column="11" selection-end-line="138" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1527,23 +1262,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="31" column="24" lean-forward="false" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/show.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3485">
-          <caret line="205" column="95" lean-forward="false" selection-start-line="205" selection-start-column="95" selection-end-line="205" selection-end-column="95" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/print.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2482">
-          <caret line="146" column="67" lean-forward="false" selection-start-line="146" selection-start-column="67" selection-end-line="146" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1551,7 +1269,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="129" column="58" lean-forward="false" selection-start-line="129" selection-start-column="58" selection-end-line="129" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1559,6 +1276,54 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/var/logs/prod.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="104" column="87" lean-forward="false" selection-start-line="104" selection-start-column="87" selection-end-line="104" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/var/SymfonyRequirements.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-561">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/var/bootstrap.php.cache">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-629">
+          <caret line="17" column="1" lean-forward="false" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/show.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="49" column="32" lean-forward="false" selection-start-line="49" selection-start-column="32" selection-end-line="49" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/assets/css/ace.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-107">
+          <caret line="377" column="1" lean-forward="false" selection-start-line="377" selection-start-column="1" selection-end-line="377" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/facture/print.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="123" column="43" lean-forward="false" selection-start-line="123" selection-start-column="43" selection-end-line="123" selection-end-column="43" />
           <folding />
         </state>
       </provider>

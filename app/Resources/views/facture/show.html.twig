@@ -47,7 +47,7 @@
 
                                     <div>
 
-                                        {% if fiche is defined %}
+                                        {% if fiche is not null %}
                                             <ul class="list-unstyled spaced">
                                                 <li>
                                                     <i class="ace-icon fa fa-map-marker blue"></i>{{ fiche.adresse }}
@@ -323,7 +323,7 @@
                             <div class="space-6"></div>
                             <div class="well">
 
-                                {% if fiche is defined %}
+                                {% if fiche is not null %}
                                     <p class="RRR text-center">
                                         SOCIETE <span class="WII">&nbsp; <b>{{ fiche.nom }}</b></span>, &nbsp;au capital
                                         de {{ fiche.capital }} DH -
