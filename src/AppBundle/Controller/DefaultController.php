@@ -2,6 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\AreaChart;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Histogram;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,27 +38,55 @@ class DefaultController extends Controller
 
 
         );
-        //dump($factures);
+        //statistiques
+
+        $query_production = $em->createQuery('
+        SELECT f.mois,avg(f.totalHT) as total  FROM AppBundle:Facture f 
+        WHERE f.etat = :etat
+                
+        GROUP BY f.mois
+        ')->setParameter(':etat','payé')->execute();
+
+        dump($query_production);
+
+        $arr=[];
+        foreach ($query_production as $item){
 
 
-        $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('aaaimad@gmail.com')
-            ->setTo('aaaimad@gmail.com')
-            ->setBody(
-                $this->renderView(
-                // app/Resources/views/Emails/registration.html.twig
-                    'default/mail.html.twig'
+            $arr[]= [$item['mois'],$item['total']];
 
-                ),
-                'text/html'
-            )
+        }
+dump($arr);
+        $histogram = new Histogram();
+        $histogram->getData()->setArrayToDataTable([
+            ['Population'],
+            [12000000],
+            [13000000],
+            [100000000],
+            [1000000000],
+            [25000000],
+            [600000],
 
-            // you can remove the following code if you don't define a text version for your emails
-
-        ;
-
-        $mailer->send($message);
-
+        ]);
+        $histogram->getOptions()->setTitle('Country Populations');
+        $histogram->getOptions()->setWidth(900);
+        $histogram->getOptions()->setHeight(500);
+        $histogram->getOptions()->getLegend()->setPosition('none');
+        $histogram->getOptions()->setColors(['#e7711c']);
+        $histogram->getOptions()->getHistogram()->setLastBucketPercentile(10);
+        $histogram->getOptions()->getHistogram()->setBucketSize(10000000);
+        $area = new AreaChart();
+        $area->getData()->setArrayToDataTable([
+            ['Year', 'Sales', 'Expenses'],
+            ['2013',  1000,      400],
+            ['2014',  1170,      460],
+            ['2015',  660,       1120],
+            ['2016',  1030,      540]
+        ]);
+        $area->getOptions()->setTitle('Production Test');
+        $area->getOptions()->getHAxis()->setTitle('Year');
+        $area->getOptions()->getHAxis()->getTitleTextStyle()->setColor('#333');
+        $area->getOptions()->getVAxis()->setMinValue(0);
         return $this->render('default/index.html.twig', [
             'nb_client'=>count($clients),
             'virements'=>$virements_att,
@@ -64,6 +95,8 @@ class DefaultController extends Controller
             'nb_mission'=>count($missions),
          //   'virements'=>$virements,
             'factures'=>count($facturess),
+            'histogram' => $histogram,
+            'area'=>$area,
 
 
         ]);

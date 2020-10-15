@@ -378,6 +378,12 @@
         </div><!-- /.widget-box -->
 
     </div>
+
+    <div class="col-md-6">
+
+        <div id="div_chart"></div>
+
+    </div>
 </div>
     </div>
 
@@ -403,9 +409,12 @@
     <script src="{{ asset('') }}assets/js/bootstrap-tag.min.js"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 
     <script type="text/javascript">
+        {{ gc_draw(area, 'div_chart') }}
+
         jQuery(function ($) {
             var rowCount = $('#dynamic-table').length;
             console.log(rowCount);

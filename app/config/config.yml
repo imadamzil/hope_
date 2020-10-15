@@ -84,3 +84,5 @@ vich_uploader:
             uri_prefix:         '%app.path.document_path%'
             upload_destination: '%kernel.root_dir%/../web%app.path.document_path%'
 
+cmen_google_charts:
+    language: "fr"
