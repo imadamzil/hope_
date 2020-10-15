@@ -41,50 +41,46 @@ class DefaultController extends Controller
         //statistiques
 
         $query_production = $em->createQuery('
-        SELECT f.mois,avg(f.totalHT) as total  FROM AppBundle:Facture f 
+        SELECT f.mois,avg(f.totalHT) as total,avg(f.totalTTC) as totalc  FROM AppBundle:Facture f 
         WHERE f.etat = :etat
                 
         GROUP BY f.mois
         ')->setParameter(':etat','payé')->execute();
 
-        dump($query_production);
 
-        $arr=[];
-        foreach ($query_production as $item){
+        $arr[]= ['Mois','TOTAL','TOTALTTC'];$i=1;
+
+        foreach ($query_production as $key=>$item){
+foreach ($item as $k=>$v){
+if ($k=='mois'){
+
+    $arr[$i][]= strval($v)."-2020";
+//    $arr[$i][]=$v;
+
+}else{
+    $arr[$i][]= intval($v);
 
 
-            $arr[]= [$item['mois'],$item['total']];
+}
 
-        }
-dump($arr);
-        $histogram = new Histogram();
-        $histogram->getData()->setArrayToDataTable([
-            ['Population'],
-            [12000000],
-            [13000000],
-            [100000000],
-            [1000000000],
-            [25000000],
-            [600000],
+//    $arr[$i][]=$v;
+}$i++;
+    }
 
-        ]);
-        $histogram->getOptions()->setTitle('Country Populations');
-        $histogram->getOptions()->setWidth(900);
-        $histogram->getOptions()->setHeight(500);
-        $histogram->getOptions()->getLegend()->setPosition('none');
-        $histogram->getOptions()->setColors(['#e7711c']);
-        $histogram->getOptions()->getHistogram()->setLastBucketPercentile(10);
-        $histogram->getOptions()->getHistogram()->setBucketSize(10000000);
+dump($query_production,$arr,[
+        ['Year', 'Sales', 'Expenses'],
+
+        ['2013',  1000,      400],
+        ['2014',  1170,      460],
+        ['2015',  660,       1120],
+        ['2016',  1030,      540]
+    ]);
+
+
         $area = new AreaChart();
-        $area->getData()->setArrayToDataTable([
-            ['Year', 'Sales', 'Expenses'],
-            ['2013',  1000,      400],
-            ['2014',  1170,      460],
-            ['2015',  660,       1120],
-            ['2016',  1030,      540]
-        ]);
-        $area->getOptions()->setTitle('Production Test');
-        $area->getOptions()->getHAxis()->setTitle('Year');
+        $area->getData()->setArrayToDataTable($arr);
+        $area->getOptions()->setTitle('Production Performance');
+        $area->getOptions()->getHAxis()->setTitle('Mois');
         $area->getOptions()->getHAxis()->getTitleTextStyle()->setColor('#333');
         $area->getOptions()->getVAxis()->setMinValue(0);
         return $this->render('default/index.html.twig', [
@@ -95,7 +91,7 @@ dump($arr);
             'nb_mission'=>count($missions),
          //   'virements'=>$virements,
             'factures'=>count($facturess),
-            'histogram' => $histogram,
+
             'area'=>$area,
 
 

@@ -6,14 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b403dbfe-33ca-4176-b4ff-6dc92a4d89fa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/hope3k.iml" afterPath="$PROJECT_DIR$/.idea/hope3k.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/AppKernel.php" afterPath="$PROJECT_DIR$/app/AppKernel.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/default/index.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/config.yml" afterPath="$PROJECT_DIR$/app/config/config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/parameters.yml" afterPath="$PROJECT_DIR$/app/config/parameters.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,13 +38,14 @@
       <file leaf-file-name="DefaultController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="85" column="54" lean-forward="false" selection-start-line="85" selection-start-column="54" selection-end-line="85" selection-end-column="54" />
+            <state relative-caret-position="321">
+              <caret line="56" column="29" lean-forward="false" selection-start-line="56" selection-start-column="29" selection-end-line="56" selection-end-column="29" />
               <folding>
                 <element signature="e#40#98#0#PHP" expanded="true" />
-                <marker date="1602771861579" expanded="true" signature="1563:1650" ph="SELECT p,avg... AppBundle" />
-                <marker date="1602771861579" expanded="true" signature="1563:1693" ph="SELECT p,avg... AppBundle" />
-                <marker date="1602771861579" expanded="true" signature="1563:1697" ph="SELECT avg(f... AppBundle" />
+                <element signature="e#2088#2275#0#PHP" expanded="false" />
+                <marker date="1602779929232" expanded="true" signature="1563:1676" ph="SELECT p,avg... AppBundle" />
+                <marker date="1602779929232" expanded="true" signature="1563:1719" ph="SELECT p,avg... AppBundle" />
+                <marker date="1602779929232" expanded="true" signature="1563:1723" ph="SELECT avg(f... AppBundle" />
               </folding>
             </state>
           </provider>
@@ -71,9 +66,10 @@
       <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="415" column="23" lean-forward="false" selection-start-line="415" selection-start-column="23" selection-end-line="415" selection-end-column="23" />
+            <state relative-caret-position="227">
+              <caret line="386" column="29" lean-forward="false" selection-start-line="386" selection-start-column="29" selection-end-line="386" selection-end-column="29" />
               <folding>
+                <element signature="n#div#8;n#div#1;n#!!top" expanded="false" />
                 <element signature="n#div#0;n#div#8;n#div#1;n#!!top" expanded="false" />
               </folding>
             </state>
@@ -630,7 +626,7 @@
       <workItem from="1601042324730" duration="4406000" />
       <workItem from="1601049706404" duration="1732000" />
       <workItem from="1602073717375" duration="1850000" />
-      <workItem from="1602497410582" duration="49429000" />
+      <workItem from="1602497410582" duration="56490000" />
     </task>
     <task id="LOCAL-00001" summary="adding entities">
       <created>1596628606866</created>
@@ -888,7 +884,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="456022000" />
+    <option name="totallyTimeSpent" value="463083000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1479,9 +1475,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/default/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="415" column="23" lean-forward="false" selection-start-line="415" selection-start-column="23" selection-end-line="415" selection-end-column="23" />
+        <state relative-caret-position="227">
+          <caret line="386" column="29" lean-forward="false" selection-start-line="386" selection-start-column="29" selection-end-line="386" selection-end-column="29" />
           <folding>
+            <element signature="n#div#8;n#div#1;n#!!top" expanded="false" />
             <element signature="n#div#0;n#div#8;n#div#1;n#!!top" expanded="false" />
           </folding>
         </state>
@@ -1489,13 +1486,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="85" column="54" lean-forward="false" selection-start-line="85" selection-start-column="54" selection-end-line="85" selection-end-column="54" />
+        <state relative-caret-position="321">
+          <caret line="56" column="29" lean-forward="false" selection-start-line="56" selection-start-column="29" selection-end-line="56" selection-end-column="29" />
           <folding>
             <element signature="e#40#98#0#PHP" expanded="true" />
-            <marker date="1602771861579" expanded="true" signature="1563:1650" ph="SELECT p,avg... AppBundle" />
-            <marker date="1602771861579" expanded="true" signature="1563:1693" ph="SELECT p,avg... AppBundle" />
-            <marker date="1602771861579" expanded="true" signature="1563:1697" ph="SELECT avg(f... AppBundle" />
+            <element signature="e#2088#2275#0#PHP" expanded="false" />
+            <marker date="1602779929232" expanded="true" signature="1563:1676" ph="SELECT p,avg... AppBundle" />
+            <marker date="1602779929232" expanded="true" signature="1563:1719" ph="SELECT p,avg... AppBundle" />
+            <marker date="1602779929232" expanded="true" signature="1563:1723" ph="SELECT avg(f... AppBundle" />
           </folding>
         </state>
       </provider>
