@@ -6,34 +6,37 @@
 .B
 {
 	margin-left: 30px;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 .C
 {
 	margin-right: 30px;
-	margin-top: 25px;
+	margin-top: 10px;
 }
 .F
 {
 	color: #666666;
 }
-.GA
-{
-	font-size: 9px;
-	margin-top: 5px;
-	
-	color: #561164;
-}
+
 .G
 {
-	font-size: 9px;
-	margin-left: 4px;
+	font-size: 11px;
+right: 45px;
 	color: #561164;
+	position: absolute;
 }
+.GA
+ {
+	 font-size: 11px;
+
+	 position: relative;
+	 top: 5px;
+	 color: #561164;
+ }
 .DF
 {
 	margin-left: 780px;
-	margin-top: 30px;
+	margin-top: 20px;
 }
 .SQ
 {
@@ -55,7 +58,7 @@
 }*/
 .QWF
 {
-	margin-top: 60px;
+	margin-top: 40px;
 
 }
 .ZES
@@ -104,11 +107,19 @@ table
 
 
 }
-td,th
+td
 {
 	border:1px solid black;
 	color: rgb(0,31,95);
 	font-size: 20px;
+
+
+}
+th
+{
+	border:1px solid black;
+	color: rgb(0,31,95);
+	font-size: 17px;
 
 
 }
@@ -178,7 +189,7 @@ td,th
 {
 	color: rgb(0,31,95);
 	margin-left: 750px;
-	margin-top: 30px;
+	margin-top: 40px;
 	font-size: 18px;
 }
 .XXX
@@ -206,15 +217,15 @@ td,th
 .RRR
 {
 	color: rgb(0,31,95);
-	font-size: 11px;
-	margin-top: 60px;
+	font-size: 14px;
+	margin-top: 160px;
 	margin-left: 100px;
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 }
 .WII
 {
   
-  font-size: 11px;
+  font-size: 14px;
   color: #000080;
   font-weight: bold;
 
@@ -230,7 +241,7 @@ td,th
 	color: #000080;
   font-weight: bolder;
   font-style: normal;
-	font-size: 18px;
+	font-size: 16px;
   margin-left: 10px;
   text-transform: capitalize;
 }.AZE
