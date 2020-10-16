@@ -23,7 +23,7 @@ class DefaultController extends Controller
         $consultants = $em->getRepository('AppBundle:Consultant')->findAll();
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
         $virements = $em->getRepository('AppBundle:Virement')->findAll();
-        $virements_att = $em->getRepository('AppBundle:Virement')->findBy(['etat'=>'en attente']);
+        $virements_att = $em->getRepository('AppBundle:Virement')->findBy(['etat' => 'en attente']);
         $facturess = $em->getRepository('AppBundle:Facture')->findAll();
         $Id = 6;
         $year = 2020;
@@ -45,36 +45,38 @@ class DefaultController extends Controller
         WHERE f.etat = :etat
                 
         GROUP BY f.mois
-        ')->setParameter(':etat','payé')->execute();
+        ')->setParameter(':etat', 'payé')->execute();
 
 
-        $arr[]= ['Mois','TOTAL','TOTALTTC'];$i=1;
+        $arr[] = ['Mois', 'TOTAL', 'TOTALTTC'];
+        $i = 1;
 
-        foreach ($query_production as $key=>$item){
-foreach ($item as $k=>$v){
-if ($k=='mois'){
+        foreach ($query_production as $key => $item) {
+            foreach ($item as $k => $v) {
+                if ($k == 'mois') {
 
-    $arr[$i][]= strval($v)."-2020";
+                    $arr[$i][] = strval($v) . "-2020";
 //    $arr[$i][]=$v;
 
-}else{
-    $arr[$i][]= intval($v);
+                } else {
+                    $arr[$i][] = intval($v);
 
 
-}
+                }
 
 //    $arr[$i][]=$v;
-}$i++;
-    }
+            }
+            $i++;
+        }
 
-dump($query_production,$arr,[
-        ['Year', 'Sales', 'Expenses'],
+        /*dump($query_production,$arr,[
+                ['Year', 'Sales', 'Expenses'],
 
-        ['2013',  1000,      400],
-        ['2014',  1170,      460],
-        ['2015',  660,       1120],
-        ['2016',  1030,      540]
-    ]);
+                ['2013',  1000,      400],
+                ['2014',  1170,      460],
+                ['2015',  660,       1120],
+                ['2016',  1030,      540]
+            ]);*/
 
 
         $area = new AreaChart();
@@ -84,15 +86,15 @@ dump($query_production,$arr,[
         $area->getOptions()->getHAxis()->getTitleTextStyle()->setColor('#333');
         $area->getOptions()->getVAxis()->setMinValue(0);
         return $this->render('default/index.html.twig', [
-            'nb_client'=>count($clients),
-            'virements'=>$virements_att,
-            'nb_fournisseur'=>count($fournisseurs),
-            'nb_consultant'=>count($consultants),
-            'nb_mission'=>count($missions),
-         //   'virements'=>$virements,
-            'factures'=>count($facturess),
+            'nb_client' => count($clients),
+            'virements' => $virements_att,
+            'nb_fournisseur' => count($fournisseurs),
+            'nb_consultant' => count($consultants),
+            'nb_mission' => count($missions),
+            //   'virements'=>$virements,
+            'factures' => count($facturess),
 
-            'area'=>$area,
+            'area' => $area,
 
 
         ]);
