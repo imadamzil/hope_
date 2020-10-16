@@ -41,11 +41,12 @@ class DefaultController extends Controller
         //statistiques
 
         $query_production = $em->createQuery('
-        SELECT f.mois,avg(f.totalHT) as total,avg(f.totalTTC) as totalc  FROM AppBundle:Facture f 
+        SELECT CONCAT(f.mois, \' -\',f.year) as mois,avg(f.totalHT) as total,avg(f.totalTTC) as totalc  FROM AppBundle:Facture f 
         WHERE f.etat = :etat
-                
-        GROUP BY f.mois
+              
+        GROUP BY f.mois  ORDER BY mois ASC  
         ')->setParameter(':etat','payé')->execute();
+
 
 
         $arr[]= ['Mois','TOTAL','TOTALTTC'];$i=1;
@@ -54,7 +55,7 @@ class DefaultController extends Controller
 foreach ($item as $k=>$v){
 if ($k=='mois'){
 
-    $arr[$i][]= strval($v)."-2020";
+    $arr[$i][]= strval($v);
 //    $arr[$i][]=$v;
 
 }else{
