@@ -70,7 +70,7 @@ right: 45px;
 	padding-top: 17px;
 	padding-right: 17px;
 	padding-left: 17px;
-	padding-bottom: 8px;
+	padding-bottom: 2px;
 
 }
 .RTY
@@ -87,6 +87,7 @@ right: 45px;
 	color: rgb(0,31,95);
 	margin-left: 10px;
 	font-size: 20px;
+
 }
 .ERZ
 {
@@ -218,7 +219,7 @@ th
 {
 	color: rgb(0,31,95);
 	font-size: 14px;
-	margin-top: 160px;
+	margin-top: 10%;
 	margin-left: 100px;
 	margin-bottom: 5px;
 }
@@ -254,6 +255,7 @@ th
 	 padding-right: 10px;
 	padding-top: 10px;
 	padding-bottom: 1px;
+
  }
 @media print
 {
