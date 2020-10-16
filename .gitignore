@@ -4,6 +4,7 @@
 /vendor/
 /phpunit.xml
 /var/*
+/.idea/*
 !/var/cache
 /var/cache/*
 !var/cache/.gitkeep

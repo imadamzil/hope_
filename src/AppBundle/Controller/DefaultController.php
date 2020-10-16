@@ -2,6 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\AreaChart;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Histogram;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,27 +38,51 @@ class DefaultController extends Controller
 
 
         );
-        //dump($factures);
+        //statistiques
+
+        $query_production = $em->createQuery('
+        SELECT f.mois,avg(f.totalHT) as total,avg(f.totalTTC) as totalc  FROM AppBundle:Facture f 
+        WHERE f.etat = :etat
+                
+        GROUP BY f.mois
+        ')->setParameter(':etat','payé')->execute();
 
 
-        $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('aaaimad@gmail.com')
-            ->setTo('aaaimad@gmail.com')
-            ->setBody(
-                $this->renderView(
-                // app/Resources/views/Emails/registration.html.twig
-                    'default/mail.html.twig'
+        $arr[]= ['Mois','TOTAL','TOTALTTC'];$i=1;
 
-                ),
-                'text/html'
-            )
+        foreach ($query_production as $key=>$item){
+foreach ($item as $k=>$v){
+if ($k=='mois'){
 
-            // you can remove the following code if you don't define a text version for your emails
+    $arr[$i][]= strval($v)."-2020";
+//    $arr[$i][]=$v;
 
-        ;
+}else{
+    $arr[$i][]= intval($v);
 
-        $mailer->send($message);
 
+}
+
+//    $arr[$i][]=$v;
+}$i++;
+    }
+
+dump($query_production,$arr,[
+        ['Year', 'Sales', 'Expenses'],
+
+        ['2013',  1000,      400],
+        ['2014',  1170,      460],
+        ['2015',  660,       1120],
+        ['2016',  1030,      540]
+    ]);
+
+
+        $area = new AreaChart();
+        $area->getData()->setArrayToDataTable($arr);
+        $area->getOptions()->setTitle('Production Performance');
+        $area->getOptions()->getHAxis()->setTitle('Mois');
+        $area->getOptions()->getHAxis()->getTitleTextStyle()->setColor('#333');
+        $area->getOptions()->getVAxis()->setMinValue(0);
         return $this->render('default/index.html.twig', [
             'nb_client'=>count($clients),
             'virements'=>$virements_att,
@@ -64,6 +91,8 @@ class DefaultController extends Controller
             'nb_mission'=>count($missions),
          //   'virements'=>$virements,
             'factures'=>count($facturess),
+
+            'area'=>$area,
 
 
         ]);

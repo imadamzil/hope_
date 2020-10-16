@@ -37,7 +37,7 @@
 
 <div class="row QWF ">
 
-    {% if fiche is not null %}
+    {% if fiche is defined %}
         <div class="col-md-5 10 AZE">
 
             <h4 class="RTY">{{ fiche.nom }}</h4>
@@ -112,16 +112,14 @@
 
 
                     </span>
-                    </p>
-                {% endif %}
-                <p>
-
-
-                    <span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
                 </p>
-                <p>
+            {% endif %}
+            <p>
+                <span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
+            </p>
+            <p>
 
-                    <span class="OLL bolder">
+                    <span class="OLL">
 
                                                     {% if facture.mission.job is not null %}
 
@@ -252,7 +250,7 @@
 
     <div class="col-md-10 col-md-offset-1">
         <footer>
-            {% if fiche is not null %}
+            {% if fiche is defined %}
                 <p class="RRR text-center">
                     SOCIETE <span class="WII">&nbsp; <b>{{ fiche.nom }}</b></span>, &nbsp;au capital
                     de {{ fiche.capital }} DH -

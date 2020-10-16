@@ -32,8 +32,8 @@
 }
 .DF
 {
-	margin-left: 825px;
-	margin-top: 40px;
+	margin-left: 780px;
+	margin-top: 30px;
 }
 .SQ
 {
@@ -64,12 +64,15 @@
 	border:solid 1px black;
 	/*padding-top: 15px;*/
 	width: 100%;
-	padding: 17px;
+	padding-top: 17px;
+	padding-right: 17px;
+	padding-left: 17px;
+	padding-bottom: 8px;
 
 }
 .RTY
 {
-	font-size: 16px;
+	font-size: 20px;
 	color: rgb(0,31,95);
 }
 .ZEF
@@ -78,8 +81,9 @@
 }
 .WXV
 {
-	color: #454545;
+	color: rgb(0,31,95);
 	margin-left: 10px;
+	font-size: 20px;
 }
 .ERZ
 {
@@ -88,12 +92,14 @@
 .XLJ
 {
 	color: rgb(0,31,95);
+	font-size: 20px;
 }
 table
 {
    /*border-collapse: collapse;*/
    margin-top: 40px;
-   margin-left: 10px;
+   margin-left: 50px;
+   margin-right: 50px;
 
 
 
@@ -101,31 +107,38 @@ table
 td,th
 {
 	border:1px solid black;
+	color: rgb(0,31,95);
+	font-size: 20px;
 
 
 }
 .NB
 {
-	padding: 20px 20px 10px 10px;
-	padding-right: 100px;
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 10px;
+	padding-bottom: 10px;
 	text-align: center;
 	color: rgb(0,31,95);
 }
 .NBV
 {
 	padding: 10px 15px 10px 10px;
-	padding-right: 100px;
     text-align: center;
 	color: rgb(0,31,95);
 }
 .lmk
 {
-	padding: 15px 10px 8px 40px;
-	padding-right: 100px;
+	padding-top: 5px;
+	padding-right: 20px;
+	padding-left: 10px;
+	padding-bottom: 8px;
+	font-size: 18px !important;
+
 }
 .lmks
 {
-	padding: 8px 10px 8px 40px;
+	padding: 5px 10px 8px 40px;
 	padding-right: 103px;
 }
 .NBt
@@ -135,6 +148,7 @@ td,th
 .PPP
 {
 	color: rgb(0,31,95);
+
 }
 .YYY
 {
@@ -143,8 +157,8 @@ td,th
 }
 .OLL
 {
-	color: #808080 ;
-	font-weight: bold;
+	color: rgb(0,31,95);
+	font-weight: bolder;
 }
 .AZX
 {
@@ -156,30 +170,34 @@ td,th
 .VVV
 {
 	color: rgb(0,31,95);
-	margin-left: 140px;
-	margin-top: 40px;
+	margin-left: 60px;
+	margin-top: 30px;
+	font-size: 20px;
 }
 .ljj
 {
 	color: rgb(0,31,95);
 	margin-left: 750px;
-	margin-top: 66px;
+	margin-top: 30px;
+	font-size: 18px;
 }
 .XXX
 {
 	color: rgb(0,31,95);
 	text-decoration: underline;
+	font-size: 20px;
 }
 .EEE
 {
 	color: #000080;
 	font-weight: bold;
 	font-style: italic;
+	font-size: 19px;
 }
 .WWM
 {
-	margin-top: 65px;
-	margin-left: 160px;
+	margin-top: 30px;
+	margin-left: 100px;
 }
 .CCC
 {
@@ -210,9 +228,9 @@ td,th
 .XWWO
 {
 	color: #000080;
-  font-weight: bold;
+  font-weight: bolder;
   font-style: normal;
-	font-size: 16px;
+	font-size: 18px;
   margin-left: 10px;
   text-transform: capitalize;
 }.AZE
@@ -231,5 +249,22 @@ td,th
 	#vusz{
 		display: none;
 	}
+
+}
+
+.jjj {
+	margin-left: 430px;
+	/*border-color: #ffffff !important;*/
+	border:solid 1px white;
+
+}
+.trr{
+
+	padding-top: 3px;
+	padding-right: 20px;
+	padding-left: 10px;
+	padding-bottom: 3px;
+/*font-size: 22px;*/
+	border:solid 1px white;
 
 }
