@@ -285,6 +285,11 @@ th
 }
 
 .vir {
-margin-top: 55% !important;
+margin-top: 75% !important;
 
+}
+#footer {
+	position: fixed;
+	bottom: 0;
+	/*width: 100%;*/
 }
