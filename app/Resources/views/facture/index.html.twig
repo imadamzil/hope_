@@ -323,15 +323,18 @@
                                                                 <div class="modal-body">
 
 
-                                                                    <input type="text" id=""
+                                                                    <input type="hidden" id="id_val{{ facture.id }}"
+                                                                           value="{{ facture.id }}"
+                                                                           class="form-control">
+                                                                    <input type="text" id="montant{{ facture.id }}"
                                                                            placeholder="Total en DH"
                                                                            class="form-control">
 
                                                                 </div>
 
                                                                 <div class="modal-footer">
-                                                                    <button class="btn btn-sm btn-success pull-right"
-                                                                            id="ok">
+                                                                    <button class="btn btn-sm btn-success ok pull-right"
+                                                                            id="{{ facture.id }}">
                                                                         <i class="ace-icon fa fa-check"></i>
                                                                         Enregistrer
                                                                     </button>
@@ -359,7 +362,7 @@
                                                     </a>
 
                                                 {% endif %}
-                                </div>
+
 
                                 <div class="hidden-md hidden-lg">
                                     <div class="inline pos-rel">
@@ -441,7 +444,43 @@
     <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
     <script type="text/javascript">
         jQuery(function ($) {
-            var rowCount = $('#dynamic-table').length;
+
+            $('.ok').click(function () {
+                var idd=this.id;
+                var Id = $('#id_val'+idd).val();
+                var montant = $('#montant'+idd).val();
+
+                var url = Routing.generate('route_to_convert_devise');
+
+                $.ajax({
+                    type: "POST",
+                    data: {
+
+                        id: Id,
+                        montant: montant
+                    },
+                    url:url,
+                    dataType:"json",
+                    success: function (response) {
+
+                        console.log(response);
+                        $('#my-moda'+Id).modal('hide');
+                        location.href = Routing.generate('facture_index');
+                    },
+                    error:function (error) {
+
+                        console.log(error);
+
+                    }
+
+
+                });
+            });
+
+
+
+            var
+                rowCount = $('#dynamic-table').length;
             console.log(rowCount);
 
             //initiate dataTables plugin
@@ -450,7 +489,7 @@
                     .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                     .DataTable({
                         initComplete: function () {
-                            this.api().columns([3, 7]).every(function () {
+                            this.api().columns([3, 7,8]).every(function () {
                                 var column = this;
                                 var select = $('<select><option value="">--</option></select>')
                                     .appendTo($(column.header()))

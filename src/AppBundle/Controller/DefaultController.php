@@ -41,23 +41,21 @@ class DefaultController extends Controller
         //statistiques
 
         $query_production = $em->createQuery('
-        SELECT CONCAT(f.mois, \' -\',f.year) as mois,avg(f.totalHT) as total,avg(f.totalTTC) as totalc  FROM AppBundle:Facture f 
+        SELECT CONCAT(f.mois, \'-\',f.year) as mois,avg(f.totalHT) as total,avg(f.totalTTC) as totalc  FROM AppBundle:Facture f 
         WHERE f.etat = :etat
-
               
-        GROUP BY f.mois  ORDER BY mois ASC  
-        ')->setParameter(':etat','payé')->execute();
+        GROUP BY f.mois  ORDER BY f.mois ASC  
+        ')->setParameter(':etat', 'payé')->execute();
 
 
-
-        $arr[]= ['Mois','TOTAL','TOTALTTC'];$i=1;
-
+        $arr[] = ['Mois', 'Total', 'TotalTTC'];
+        $i = 1;
 
         foreach ($query_production as $key => $item) {
             foreach ($item as $k => $v) {
                 if ($k == 'mois') {
 
-
+                    $arr[$i][] = strval($v);
 //    $arr[$i][]=$v;
 
                 } else {
@@ -71,19 +69,10 @@ class DefaultController extends Controller
             $i++;
         }
 
-        /*dump($query_production,$arr,[
-                ['Year', 'Sales', 'Expenses'],
-
-                ['2013',  1000,      400],
-                ['2014',  1170,      460],
-                ['2015',  660,       1120],
-                ['2016',  1030,      540]
-            ]);*/
-
 
         $area = new AreaChart();
         $area->getData()->setArrayToDataTable($arr);
-        $area->getOptions()->setTitle('Production Performance');
+        $area->getOptions()->setTitle('');
         $area->getOptions()->getHAxis()->setTitle('Mois');
         $area->getOptions()->getHAxis()->getTitleTextStyle()->setColor('#333');
         $area->getOptions()->getVAxis()->setMinValue(0);
