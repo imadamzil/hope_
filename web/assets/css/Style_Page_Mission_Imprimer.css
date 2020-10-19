@@ -292,4 +292,8 @@ margin-top: 75% !important;
 	position: fixed;
 	bottom: 0;
 	/*width: 100%;*/
+}#footer1 {
+	position: fixed;
+	bottom: -85px;
+	/*width: 100%;*/
 }
