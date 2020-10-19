@@ -23,7 +23,7 @@ class FactureController extends Controller
     /**
      * Lists all facture entities.
      *
-     * @Route("/", name="facture_index")
+     * @Route("/", name="facture_index",options={"expose"=true})
      * @Method("GET")
      */
     public function indexAction()
@@ -64,7 +64,7 @@ class FactureController extends Controller
             }
 
 
-          //  dump($diff, $missions, $missions_factured, count($diff));
+            //  dump($diff, $missions, $missions_factured, count($diff));
 
             // $nb_non_factured_missions = count($diff);
         } else {
@@ -72,7 +72,7 @@ class FactureController extends Controller
             $nb_non_factured_missions = null;
             //$diff = array_diff_assoc($missions, $missions_factured);
         }
-       // $nb_non_factured_missions = null;
+        // $nb_non_factured_missions = null;
         //dump($factures);
         return $this->render('facture/index.html.twig', array(
             'factures' => $factures,
@@ -795,7 +795,7 @@ class FactureController extends Controller
             'delete_form' => $deleteForm->createView(),
             'total' => int2str($facture->getTotalTTC()),
             'mois' => mois_convert($facture->getMois()),
-            'fiche'=>$fiche
+            'fiche' => $fiche
 
         ));
     }
@@ -1125,7 +1125,7 @@ class FactureController extends Controller
             'facture' => $facture,
             'total' => int2str($facture->getTotalTTC()),
             'mois' => mois_convert($facture->getMois()),
-            'fiche'=>$fiche
+            'fiche' => $fiche
             // 'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -1236,5 +1236,29 @@ class FactureController extends Controller
             'Content-Type' => 'application/json'
         ));
 
+    }
+
+    /**
+     *
+     * @Route("/convert_devise", name="route_to_convert_devise", options={"expose"=true})
+     ** @Method({"GET","POST"})
+     */
+    public function convertDevise(Request $request)
+    {
+        $id = $request->get('id');
+        $montant = $request->get('montant');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $facture = $em->getRepository('AppBundle:Facture')->find($id);
+        $facture->setTotalDH($montant);
+        $facture->setEtat('payé');
+        $em->persist($facture);
+        $em->flush();
+        $response = json_encode(array('data'=>'ok'));
+
+        return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
     }
 }

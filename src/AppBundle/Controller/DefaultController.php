@@ -23,7 +23,7 @@ class DefaultController extends Controller
         $consultants = $em->getRepository('AppBundle:Consultant')->findAll();
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
         $virements = $em->getRepository('AppBundle:Virement')->findAll();
-        $virements_att = $em->getRepository('AppBundle:Virement')->findBy(['etat'=>'en attente']);
+        $virements_att = $em->getRepository('AppBundle:Virement')->findBy(['etat' => 'en attente']);
         $facturess = $em->getRepository('AppBundle:Facture')->findAll();
         $Id = 6;
         $year = 2020;
@@ -41,59 +41,51 @@ class DefaultController extends Controller
         //statistiques
 
         $query_production = $em->createQuery('
-        SELECT CONCAT(f.mois, \' -\',f.year) as mois,avg(f.totalHT) as total,avg(f.totalTTC) as totalc  FROM AppBundle:Facture f 
+        SELECT CONCAT(f.mois, \'-\',f.year) as mois,avg(f.totalHT) as total,avg(f.totalTTC) as totalc  FROM AppBundle:Facture f 
         WHERE f.etat = :etat
               
-        GROUP BY f.mois  ORDER BY mois ASC  
-        ')->setParameter(':etat','payé')->execute();
+        GROUP BY f.mois  ORDER BY f.mois ASC  
+        ')->setParameter(':etat', 'payé')->execute();
 
 
+        $arr[] = ['Mois', 'Total', 'TotalTTC'];
+        $i = 1;
 
-        $arr[]= ['Mois','TOTAL','TOTALTTC'];$i=1;
+        foreach ($query_production as $key => $item) {
+            foreach ($item as $k => $v) {
+                if ($k == 'mois') {
 
-        foreach ($query_production as $key=>$item){
-foreach ($item as $k=>$v){
-if ($k=='mois'){
-
-    $arr[$i][]= strval($v);
+                    $arr[$i][] = strval($v);
 //    $arr[$i][]=$v;
 
-}else{
-    $arr[$i][]= intval($v);
+                } else {
+                    $arr[$i][] = intval($v);
 
 
-}
+                }
 
 //    $arr[$i][]=$v;
-}$i++;
-    }
-
-dump($query_production,$arr,[
-        ['Year', 'Sales', 'Expenses'],
-
-        ['2013',  1000,      400],
-        ['2014',  1170,      460],
-        ['2015',  660,       1120],
-        ['2016',  1030,      540]
-    ]);
+            }
+            $i++;
+        }
 
 
         $area = new AreaChart();
         $area->getData()->setArrayToDataTable($arr);
-        $area->getOptions()->setTitle('Production Performance');
+        $area->getOptions()->setTitle('');
         $area->getOptions()->getHAxis()->setTitle('Mois');
         $area->getOptions()->getHAxis()->getTitleTextStyle()->setColor('#333');
         $area->getOptions()->getVAxis()->setMinValue(0);
         return $this->render('default/index.html.twig', [
-            'nb_client'=>count($clients),
-            'virements'=>$virements_att,
-            'nb_fournisseur'=>count($fournisseurs),
-            'nb_consultant'=>count($consultants),
-            'nb_mission'=>count($missions),
-         //   'virements'=>$virements,
-            'factures'=>count($facturess),
+            'nb_client' => count($clients),
+            'virements' => $virements_att,
+            'nb_fournisseur' => count($fournisseurs),
+            'nb_consultant' => count($consultants),
+            'nb_mission' => count($missions),
+            //   'virements'=>$virements,
+            'factures' => count($facturess),
 
-            'area'=>$area,
+            'area' => $area,
 
 
         ]);

@@ -179,6 +179,8 @@ WHERE p.virementf = :id
     {
         $deleteForm = $this->createDeleteForm($virementf);
         $em = $this->getDoctrine()->getManager();
+
+        $fiche = $em->getRepository('AppBundle:Fiche')->find(1);
         $arr = [];
 
         /* $virements = $virementf->getVirements();
@@ -211,6 +213,7 @@ WHERE p.virementf = :id
             'virementf' => $virementf,
             'details' => $details,
             'total' => $query,
+            'fiche' => $fiche,
             'delete_form' => $deleteForm->createView(),
         ));
     }

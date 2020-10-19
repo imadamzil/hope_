@@ -45,6 +45,7 @@ right: 45px;
 }
 .QW
 {
+
 	color: rgb(0,31,95);
 }
 /*.AZE
@@ -145,6 +146,7 @@ th
 	padding-left: 10px;
 	padding-bottom: 8px;
 	font-size: 18px !important;
+	font-weight: bolder;
 
 }
 .lmks
@@ -241,7 +243,7 @@ th
 	color: #000080;
   font-weight: bolder;
   font-style: normal;
-	font-size: 16px;
+	font-size: 22px;
   margin-left: 10px;
   text-transform: capitalize;
 }.AZE
@@ -277,5 +279,10 @@ th
 	padding-bottom: 3px;
 /*font-size: 22px;*/
 	border:solid 1px white;
+
+}
+
+.vir {
+margin-top: 55% !important;
 
 }
