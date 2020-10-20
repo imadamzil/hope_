@@ -142,6 +142,12 @@ class Mission
      */
     private $createdAt;
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_cloture", type="datetime", nullable=true)
+     */
+    private $closedAt;
+    /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="document_path", fileNameProperty="contratFName")

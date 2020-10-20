@@ -213,6 +213,8 @@ WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null
     public function terminerAction(Mission $mission)
     {
         $mission->setStatut('Terminé');
+        $mission->setClosedAt(new \DateTime('now'));
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($mission);
         $em->flush();

@@ -649,4 +649,52 @@ class Consultant
     {
         return $this->createdAt;
     }
+
+    /**
+     * Set tjm
+     *
+     * @param string $tjm
+     *
+     * @return Consultant
+     */
+    public function setTjm($tjm)
+    {
+        $this->tjm = $tjm;
+
+        return $this;
+    }
+
+    /**
+     * Get tjm
+     *
+     * @return string
+     */
+    public function getTjm()
+    {
+        return $this->tjm;
+    }
+
+    /**
+     * Set cin
+     *
+     * @param string $cin
+     *
+     * @return Consultant
+     */
+    public function setCin($cin)
+    {
+        $this->cin = $cin;
+
+        return $this;
+    }
+
+    /**
+     * Get cin
+     *
+     * @return string
+     */
+    public function getCin()
+    {
+        return $this->cin;
+    }
 }

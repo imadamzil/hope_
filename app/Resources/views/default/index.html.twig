@@ -143,6 +143,34 @@
 
             </div>
 
+        </div>   <div class="hr hr32 hr-dotted"></div>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+
+                <div class="widget-box transparent">
+                    <div class="widget-header widget-header-flat">
+                        <h4 class="widget-title lighter">
+                            <i class="ace-icon fa fa-bar-chart red"></i>
+                            Evolution Missions
+                        </h4>
+
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="widget-body" style="display: block;">
+                        <div class="widget-main no-padding">
+                            <div id="div_chart2"></div>
+
+                        </div><!-- /.widget-main -->
+                    </div><!-- /.widget-body -->
+                </div><!-- /.widget-box -->
+
+            </div>
+
         </div>
 
         <div class="hr hr32 hr-dotted"></div>
@@ -446,6 +474,7 @@
 
     <script type="text/javascript">
         {{ gc_draw(area, 'div_chart') }}
+        {{ gc_draw(sarea, 'div_chart2') }}
 
         jQuery(function ($) {
             var rowCount = $('#dynamic-table').length;

@@ -142,6 +142,12 @@ class Mission
      */
     private $createdAt;
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_cloture", type="datetime", nullable=true)
+     */
+    private $closedAt;
+    /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="document_path", fileNameProperty="contratFName")
@@ -944,5 +950,29 @@ class Mission
     public function getJob()
     {
         return $this->job;
+    }
+
+    /**
+     * Set closedAt
+     *
+     * @param \DateTime $closedAt
+     *
+     * @return Mission
+     */
+    public function setClosedAt($closedAt)
+    {
+        $this->closedAt = $closedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get closedAt
+     *
+     * @return \DateTime
+     */
+    public function getClosedAt()
+    {
+        return $this->closedAt;
     }
 }

@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\AreaChart;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Histogram;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\SteppedAreaChart;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -76,6 +77,74 @@ class DefaultController extends Controller
         $area->getOptions()->getHAxis()->setTitle('Mois');
         $area->getOptions()->getHAxis()->getTitleTextStyle()->setColor('#333');
         $area->getOptions()->getVAxis()->setMinValue(0);
+        $area->getOptions()->setWidth(900);
+        $area->getOptions()->getLegend()->setPosition('top');
+
+        //nbr missions + -
+
+        for ($i = 1; $i <= 5; $i++) {
+            $m = intval(date("m", strtotime(date('Y-m-01') . " -$i months")));
+
+            // depart query
+            $q = $em->createQuery('
+        
+        SELECT count(DISTINCT m) from AppBundle:Mission m 
+        
+        WHERE m.statut =:statut
+        AND MONTH( m.createdAt)= :m
+        
+        ')->setParameters([':statut' => 'En cours',
+                ':m' => $m
+            ])->getOneOrNullResult();
+
+            //end query
+            //   // depart query
+            $q1 = $em->createQuery('
+        
+        SELECT count(DISTINCT m) from AppBundle:Mission m 
+        
+        WHERE m.statut =:statut
+        AND MONTH( m.closedAt)= :m
+        
+        ')->setParameters([':statut' => 'Terminé',
+                ':m' => $m
+            ])->getOneOrNullResult();
+
+            //end query
+              //   // depart query
+            $q2 = $em->createQuery('
+        
+        SELECT count(DISTINCT m) from AppBundle:Mission m 
+        
+        WHERE m.statut =:statut
+    
+        
+        ')->setParameters([':statut' => 'En cours',
+
+            ])->getOneOrNullResult();
+
+            //end query
+
+            $first = strtotime('first day this month');
+
+            $months[0] = ['ttt', 'NEW', 'Terminé'];
+            $months[] = [date('M', strtotime("-$i month", $first)), intval($q[1]), intval($q1[1])];
+
+        }
+
+
+        $sarea = new SteppedAreaChart();
+        $sarea->getData()->setArrayToDataTable(
+            $months
+        );
+        $sarea->getOptions()->setTitle('');
+        $sarea->getOptions()->getVAxis()->setTitle('Nombre');
+        $sarea->getOptions()->setIsStacked(false);
+        $sarea->getOptions()->setWidth(900);
+        $sarea->getOptions()->getLegend()->setPosition('bottom');
+//        $sarea->getOptions()->setColors([\'#4374E0\', \'#53A8FB\', \'#F1CA3A\', \'#E49307\']);
+
+
         return $this->render('default/index.html.twig', [
             'nb_client' => count($clients),
             'virements' => $virements_att,
@@ -86,7 +155,7 @@ class DefaultController extends Controller
             'factures' => count($facturess),
 
             'area' => $area,
-
+            'sarea' => $sarea
 
         ]);
     }
