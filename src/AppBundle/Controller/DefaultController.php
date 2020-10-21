@@ -40,6 +40,70 @@ class DefaultController extends Controller
 
         );
         //statistiques
+//function mois
+        function mois_convert($m)
+        {
+            switch ($m) {
+                case 1:
+                    return "Janvier";
+                    break;
+                case 2:
+                    return "Février";
+                    break;
+                case 3:
+                    return "Mars";
+                    break;
+                case 4:
+                    return "Avril";
+                    break;
+                case 5:
+                    return "Mai";
+                    break;
+                case 6:
+                    return "Juin";
+                    break;
+                case 7:
+                    return "Juillet";
+                    break;
+                case 8:
+                    return "Aout";
+                    break;
+                case 9:
+                    return "Septembre";
+                    break;
+                case 10:
+                    return "Octobre";
+                    break;
+                case 11:
+                    return "Novembre";
+                    break;
+                case 12:
+                    return "Décembre";
+                    break;
+
+            }
+        }
+
+//end function mois
+        // Total last month
+        $date = new \DateTime('now');
+        $mois = intval($date->format('m')) - 1;
+        $mois_string = mois_convert($mois);
+        $year = intval($date->format('yy'));
+        $ttlastmonth = $em->createQuery('
+        
+        SELECT avg(f.totalHT) as total 
+        FROM AppBundle:Facture f
+        WHERE f.mois = :mois and f.year = :year and f.etat = :etat
+        
+        ')->setParameters([
+
+            'mois' => $mois,
+            'year' => $year,
+            'etat' => 'payé'
+        ])->getResult();
+
+//        dump($mois, $year, $ttlastmonth[0]);
 
         $query_production = $em->createQuery('
         SELECT CONCAT(f.mois, \'-\',f.year) as mois,avg(f.totalHT) as total,avg(f.totalTTC) as totalc  FROM AppBundle:Facture f 
@@ -111,7 +175,7 @@ class DefaultController extends Controller
             ])->getOneOrNullResult();
 
             //end query
-              //   // depart query
+            //   // depart query
             $q2 = $em->createQuery('
         
         SELECT count(DISTINCT m) from AppBundle:Mission m 
@@ -155,7 +219,9 @@ class DefaultController extends Controller
             'factures' => count($facturess),
 
             'area' => $area,
-            'sarea' => $sarea
+            'sarea' => $sarea,
+            'mois' => $mois_string,
+            'production_last_month' => $ttlastmonth,
 
         ]);
     }

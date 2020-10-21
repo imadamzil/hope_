@@ -103,8 +103,15 @@
             </div>
 
             <div class="infobox-data">
-                <span class="infobox-data-number">6,251</span>
-                <div class="infobox-content">Production <em>last month</em></div>
+                <span class="infobox-data-number">{% if production_last_month is not null %}
+
+                {{production_last_month[0]['total']  }}
+
+                        {% else %}
+                        --
+                {% endif %}
+                </span>
+                <div class="infobox-content">Production <em class="green">{{ mois }}</em></div>
             </div>
 
             <div class="badge badge-success">
