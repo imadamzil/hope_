@@ -9,6 +9,7 @@ use CMEN\GoogleChartsBundle\GoogleCharts\Charts\SteppedAreaChart;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use CMEN\GoogleChartsBundle\GoogleCharts\Options\PieChart\PieSlice;
 
 class DefaultController extends Controller
 {
@@ -142,6 +143,7 @@ class DefaultController extends Controller
         $area->getOptions()->getHAxis()->getTitleTextStyle()->setColor('#333');
         $area->getOptions()->getVAxis()->setMinValue(0);
         $area->getOptions()->setWidth(900);
+        $area->getOptions()->setColors(array('green', 'blue'));
         $area->getOptions()->getLegend()->setPosition('top');
 
         //nbr missions + -
@@ -201,13 +203,121 @@ class DefaultController extends Controller
         $sarea->getData()->setArrayToDataTable(
             $months
         );
-        $sarea->getOptions()->setTitle('');
+        $sarea->getOptions()->setTitle('nouvelles missions / missions terminées');
         $sarea->getOptions()->getVAxis()->setTitle('Nombre');
         $sarea->getOptions()->setIsStacked(false);
         $sarea->getOptions()->setWidth(900);
         $sarea->getOptions()->getLegend()->setPosition('bottom');
 //        $sarea->getOptions()->setColors([\'#4374E0\', \'#53A8FB\', \'#F1CA3A\', \'#E49307\']);
+        $sarea->getOptions()->setColors(array('green', 'red'));
 
+
+        // consultant stats
+        $production_par_consultant = $em->createQuery('
+        SELECT  c.nom as nom,avg(f.totalHT) as total
+        FROM AppBundle:Facture f 
+        JOIN AppBundle:Consultant c 
+        WHERE f.consultant = c
+        GROUP BY f.consultant
+        ORDER BY total DESC 
+        
+        ')->setParameters([])->execute();
+// array 3
+
+        $arr3[] = ['consultant', 'Total'];
+        $i = 1;
+
+        foreach ($production_par_consultant as $key => $item) {
+            foreach ($item as $k => $v) {
+                if ($k == 'total') {
+
+                    $arr3[$i][] = floatval(number_format((float)$v, 2, '.', ''));
+//    $arr[$i][]=$v;
+
+                } else {
+                    $arr3[$i][] = strval($v);
+
+
+                }
+
+//    $arr[$i][]=$v;
+            }
+            $i++;
+        }
+
+        //end array 3
+        $pieChart = new PieChart();
+        $pieChart->getData()->setArrayToDataTable(
+            $arr3
+        );
+        $pieChart->getOptions()->setPieSliceText('value-and-percentage');
+        $pieChart->getOptions()->setTitle('Production par Consultant');
+        $pieChart->getOptions()->setPieStartAngle(70);
+        $pieChart->getOptions()->setHeight(600);
+        $pieChart->getOptions()->setWidth(1000);
+        $pieChart->getOptions()->setIs3D(true);
+
+        $pieChart->getOptions()->getLegend()->setPosition('bottom');
+
+
+        // end consultant stats
+
+
+        //client stats
+        $production_par_client = $em->createQuery('
+       SELECT  c.nom as nom,avg(f.totalHT) as total
+        FROM AppBundle:Facture f 
+        JOIN AppBundle:Client c 
+        WHERE f.client = c
+        GROUP BY f.client
+        ORDER BY total DESC 
+        
+        ')->setParameters([])->execute();
+
+// array 4
+
+        $arr4[] = ['client', 'Total'];
+        $i = 1;
+
+        foreach ($production_par_client as $key => $item) {
+            foreach ($item as $k => $v) {
+                if ($k == 'total') {
+
+                    $arr4[$i][] = floatval(number_format((float)$v, 2, '.', ''));
+//    $arr[$i][]=$v;
+
+                } else {
+                    $arr4[$i][] = strval($v);
+
+
+                }
+
+//    $arr[$i][]=$v;
+            }
+            $i++;
+        }
+
+        //end array 4
+
+        $pieChartClient = new PieChart();
+        $pieChartClient->getData()->setArrayToDataTable(
+            $arr4
+        );
+        $pieChartClient->getOptions()->setPieSliceText('value-and-percentage');
+        $pieChartClient->getOptions()->setTitle('Production par Client');
+        $pieChartClient->getOptions()->setPieStartAngle(70);
+        $pieChartClient->getOptions()->setHeight(600);
+        $pieChartClient->getOptions()->setWidth(1000);
+        $pieChartClient->getOptions()->setIs3D(true);
+
+        $pieChartClient->getOptions()->getLegend()->setPosition('bottom');
+
+        //end client stats
+
+
+        //fournisseur
+
+        //end fournisseur
 
         return $this->render('default/index.html.twig', [
             'nb_client' => count($clients),
@@ -222,6 +332,8 @@ class DefaultController extends Controller
             'sarea' => $sarea,
             'mois' => $mois_string,
             'production_last_month' => $ttlastmonth,
+            'pieChart' => $pieChart ,
+            'pieChartClient' => $pieChartClient
 
         ]);
     }
