@@ -30,6 +30,12 @@ class Bcfournisseur
      */
     private $achatHT;
     /**
+     * @var float
+     *
+     * @ORM\Column(name="venteHT", type="float", nullable=true)
+     */
+    private $venteHT;
+    /**
      * @var integer
      *
      * @ORM\Column(name="nb_jours", type="integer", nullable=true)
@@ -66,6 +72,12 @@ class Bcfournisseur
      * @ORM\Column(name="factureFournisseur", type="string", length=255, nullable=true)
      */
     private $factureFournisseur;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=255, nullable=true)
+     */
+    private $code;
 
 
 
@@ -631,5 +643,53 @@ class Bcfournisseur
     public function getFacturefournisseurs()
     {
         return $this->facturefournisseurs;
+    }
+
+    /**
+     * Set venteHT
+     *
+     * @param float $venteHT
+     *
+     * @return Bcfournisseur
+     */
+    public function setVenteHT($venteHT)
+    {
+        $this->venteHT = $venteHT;
+
+        return $this;
+    }
+
+    /**
+     * Get venteHT
+     *
+     * @return float
+     */
+    public function getVenteHT()
+    {
+        return $this->venteHT;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return Bcfournisseur
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }

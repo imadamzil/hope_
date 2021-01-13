@@ -24,38 +24,38 @@ class Bcclient
     /**
      * @var string
      *
-     * @ORM\Column(name="code", type="string", length=255)
+     * @ORM\Column(name="code", type="string", length=255,nullable=true)
      */
     private $code;
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="type", type="string", length=255,nullable=true)
      */
     private $type;
     /**
      * @var string
      *
-     * @ORM\Column(name="n_contrat", type="string", length=255)
+     * @ORM\Column(name="n_contrat", type="string", length=255,nullable=true)
      */
     private $ncontrat;
     /**
      * @var string
      *
-     * @ORM\Column(name="application", type="string", length=255)
+     * @ORM\Column(name="application", type="string", length=255,nullable=true)
      */
     private $application;
     /**
      * @var string
      *
-     * @ORM\Column(name="avenant", type="string", length=255)
+     * @ORM\Column(name="avenant", type="string", length=255,nullable=true)
      */
     private $avenant;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="date",nullable=true)
      */
     private $date;
 

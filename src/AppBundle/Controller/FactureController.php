@@ -214,6 +214,7 @@ class FactureController extends Controller
                     $bcfournisseur->setTaxe($TVA_Achat);
                     $facturefournisseur->setTaxe($TVA_Achat);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $bcfournisseur->setVenteHT($totalHT);
                     $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);
                     $facture->setTotalHT($totalHT);
                     $facture->setTaxe($TVA);
@@ -235,6 +236,7 @@ class FactureController extends Controller
                     $bcfournisseur->setTaxe($TVA_Achat);
                     $facturefournisseur->setTaxe($TVA_Achat);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $bcfournisseur->setVenteHT($totalHT);
                     $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);
                     $TVA = ($prixVenteHT) * 0.2;
                     $facture->setTaxe($TVA);
@@ -257,6 +259,7 @@ class FactureController extends Controller
                     $bcfournisseur->setTaxe($TVA_Achat);
                     $facturefournisseur->setTaxe($TVA_Achat);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $bcfournisseur->setVenteHT($totalHT);
                     $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);
                     $facture->setTotalHT($totalHT);
                     $facture->setTaxe($TVA);
@@ -278,6 +281,7 @@ class FactureController extends Controller
                     $bcfournisseur->setTaxe($TVA_Achat);
                     $facturefournisseur->setTaxe($TVA_Achat);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $bcfournisseur->setVenteHT($totalHT);
                     $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);
                     $facturefournisseur->setBcfournisseur($bcfournisseur);
                     $TVA = 0;
@@ -384,6 +388,7 @@ class FactureController extends Controller
                     $bcfournisseur->setAchatHT($achatHT);
                     $bcfournisseur->setTaxe($TVA_Achat);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $bcfournisseur->setVenteHT($totalHT);
                     $facturefournisseur->setAchatHT($achatHT);
                     $facturefournisseur->setTaxe($TVA_Achat);
                     $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);
@@ -407,6 +412,7 @@ class FactureController extends Controller
                     $bcfournisseur->setAchatHT($achatHT);
                     $bcfournisseur->setTaxe($TVA_Achat);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $bcfournisseur->setVenteHT($totalHT);
                     $facturefournisseur->setAchatHT($achatHT);
                     $facturefournisseur->setTaxe($TVA_Achat);
                     $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);
@@ -429,6 +435,7 @@ class FactureController extends Controller
                     $bcfournisseur->setAchatHT($achatHT);
                     $bcfournisseur->setTaxe($TVA_Achat);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $bcfournisseur->setVenteHT($totalHT);
                     $facturefournisseur->setAchatHT($achatHT);
                     $facturefournisseur->setTaxe($TVA_Achat);
                     $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);
@@ -452,6 +459,7 @@ class FactureController extends Controller
                     $bcfournisseur->setAchatHT($achatHT);
                     $bcfournisseur->setTaxe($TVA_Achat);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    $bcfournisseur->setVenteHT($totalHT);
                     $facturefournisseur->setAchatHT($achatHT);
                     $facturefournisseur->setTaxe($TVA_Achat);
                     $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);

@@ -20,7 +20,8 @@
         {#<span class="F">H O P E &nbsp;A N D &nbsp;W E &nbsp;P E R F O R M</span>#}
     </p>
     <p class="C text-center">
-        <img src="https://www.ecoenergiesolutions.com/uploads/labels/20121120-1548-afaq-9001.jpg" alt="AFAQA" width="100"
+        <img src="https://www.ecoenergiesolutions.com/uploads/labels/20121120-1548-afaq-9001.jpg" alt="AFAQA"
+             width="100"
              height="100"/><br>
         <span class="G text-center">ISO 9001 : 2015</span>
         <span class="GA text-center">ID : 121497101356</span>
@@ -89,9 +90,9 @@
 
 
                 Unité <br>{% if facture.mission.type == 'mensuel' %}
-                    (Nbr mois)
-                {% else %}
-                    (Nbr jrs)
+                (Nbr mois)
+            {% else %}
+                (Nbr jrs)
 
                 {% endif %}
             </strong></th>
@@ -153,7 +154,7 @@
                                 class="OLL">{{ facture.mission.bcclient.ncontrat }}
 
                             </span>
-
+                        <br>
                     {% else %}
                     {% endif %}
                     {% if facture.mission.bcclient.code != "" %}
@@ -163,6 +164,29 @@
 
                         <span
                                 class="OLL">{{ facture.mission.bcclient.code }}</span>
+                        <br>
+                    {% else %}
+
+                    {% endif %}
+                    {% if facture.mission.bcclient.application != "" %}
+
+                        <span class="YYY">Application </span><br>
+
+
+                        <span
+                                class="OLL">{{ facture.mission.bcclient.application }}</span>
+                        <br>
+
+                    {% else %}
+
+                    {% endif %}
+                    {% if facture.mission.bcclient.avenant!= "" %}
+
+                        <span class="YYY">Avenant</span><br>
+
+
+                        <span
+                                class="OLL">{{ facture.mission.bcclient.avenant}}</span>
 
                     {% else %}
 
@@ -189,31 +213,33 @@
 </table>
 
 
-    <table class="jjj " cellspacing="0" cellpadding="0">
-        <tbody>
-        <tr class="">
-            <th class="trr AZX">Montant des sommes dues</th>
-            <td class="trr AZX">:</td>
-            <td class="trr AZX" >{{ facture.totalHT }}.00
-                DH</td>
+<table class="jjj " cellspacing="0" cellpadding="0">
+    <tbody>
+    <tr class="">
+        <th class="trr AZX">Montant des sommes dues</th>
+        <td class="trr AZX">:</td>
+        <td class="trr AZX">{{ facture.totalHT }}.00
+            DH
+        </td>
 
-        </tr>
-        <tr class="">
-            <th class="trr AZX">Montant TVA 20%</th>
-            <td class="trr AZX">:</td>
-            <td class="trr AZX" >{{ facture.taxe }}.00
-                DH</td>
+    </tr>
+    <tr class="">
+        <th class="trr AZX">Montant TVA 20%</th>
+        <td class="trr AZX">:</td>
+        <td class="trr AZX">{{ facture.taxe }}.00
+            DH
+        </td>
 
-        </tr>
-        <tr class="">
-            <th class="trr AZX">Montant net à payer au prestataire</th>
-            <td class="trr AZX">:</td>
-            <td class="trr AZX" >{{ facture.totalTTC }}.00 DH</td>
+    </tr>
+    <tr class="">
+        <th class="trr AZX">Montant net à payer au prestataire</th>
+        <td class="trr AZX">:</td>
+        <td class="trr AZX">{{ facture.totalTTC }}.00 DH</td>
 
-        </tr>
+    </tr>
 
-        </tbody>
-    </table>
+    </tbody>
+</table>
 {#<p class="AZX">
 
     Montant des sommes dues &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ facture.totalHT }}
@@ -254,7 +280,7 @@
         RIB N°: {{ facture.comptebancaire.rib }}<br>
         Ouvert à {{ facture.comptebancaire.banque }}
             {% if facture.comptebancaire.agence != '' %}
-            Agence {{ facture.comptebancaire.agence }}
+                Agence {{ facture.comptebancaire.agence }}
             {% endif %}
             - {{ facture.comptebancaire.label }}
 

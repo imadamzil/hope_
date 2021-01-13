@@ -75,6 +75,23 @@ class BcfournisseurController extends Controller
     }
 
     /**
+     * Finds and displays a bcfournisseur entity.
+     *
+     * @Route("/{id}/print", name="bcfournisseur_print")
+     * @Method("GET")
+     */
+    public function printAction(Bcfournisseur $bcfournisseur)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fiche = $em->getRepository('AppBundle:Fiche')->find(1);
+        dump($bcfournisseur);
+        return $this->render('bcfournisseur/print.html.twig', array(
+            'bcfournisseur' => $bcfournisseur,
+            'fiche' => $fiche
+        ));
+    }
+
+    /**
      * Displays a form to edit an existing bcfournisseur entity.
      *
      * @Route("/{id}/edit", name="bcfournisseur_edit")

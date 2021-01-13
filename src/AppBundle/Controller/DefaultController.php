@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\Controller;
-
+use Symfony\Component\HttpFoundation\Response;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\AreaChart;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Histogram;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
@@ -332,9 +332,24 @@ class DefaultController extends Controller
             'sarea' => $sarea,
             'mois' => $mois_string,
             'production_last_month' => $ttlastmonth,
-            'pieChart' => $pieChart ,
+            'pieChart' => $pieChart,
             'pieChartClient' => $pieChartClient
 
         ]);
+    }
+    /**
+     * @Route("/production", name="production")
+     */
+    public function production()
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $bcfournisseurs = $em->getRepository('AppBundle:Bcfournisseur')->findAll();
+        //dump($bcfournisseurs);
+        return $this->render('production.html.twig', array(
+            'bcfournisseurs' => $bcfournisseurs,
+        ));
     }
 }

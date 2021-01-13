@@ -22,12 +22,14 @@ class BcclientType extends AbstractType
 
 
                 'label' => 'N° de bon de commande',
+                'required'=>false,
                 'attr' => array()
             ))
             ->add('ncontrat', TextType::class, array(
 
 
                 'label' => 'N° de Contrat cadre',
+                'required'=>false,
                 'attr' => array()
             ))->add('application')
             ->add('avenant')

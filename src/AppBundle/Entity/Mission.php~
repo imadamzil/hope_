@@ -951,4 +951,28 @@ class Mission
     {
         return $this->job;
     }
+
+    /**
+     * Set closedAt
+     *
+     * @param \DateTime $closedAt
+     *
+     * @return Mission
+     */
+    public function setClosedAt($closedAt)
+    {
+        $this->closedAt = $closedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get closedAt
+     *
+     * @return \DateTime
+     */
+    public function getClosedAt()
+    {
+        return $this->closedAt;
+    }
 }
