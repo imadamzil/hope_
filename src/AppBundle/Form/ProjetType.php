@@ -26,6 +26,7 @@ class ProjetType extends AbstractType
                 'placeholder' => 'Date Début mission',
                 // prevents rendering it as type="date", to avoid HTML5 date pickers
                 'html5' => false,
+                'required'=>false,
 
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'date-timepicker1'],
@@ -35,6 +36,7 @@ class ProjetType extends AbstractType
                 'placeholder' => 'Date Début mission',
                 // prevents rendering it as type="date", to avoid HTML5 date pickers
                 'html5' => false,
+                'required'=>false,
 
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'date-timepicker1'],
@@ -44,21 +46,11 @@ class ProjetType extends AbstractType
                 'class' => 'AppBundle:Client',
                 'multiple' => false,
                 'label' => 'Client',
+                'required'=>false,
+
                 'attr' => array(
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Selectionner',
-                    'multiple' => false
-
-                )
-            ))->add('bcclient', EntityType::class, array(
-                'class' => 'AppBundle:Bcclient',
-                'multiple' => false,
-                'placeholder' => '--',
-                'label' => 'Bon de commande client',
-//                'choice_label' => 'code',
-                'attr' => array(
-                    'class' => 'chosen-select',
-                    'data-placeholder' => 'Selectionner un',
                     'multiple' => false
 
                 )

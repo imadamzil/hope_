@@ -1,6 +1,9 @@
 <?php
 
 namespace AppBundle\Controller;
+
+use AppBundle\Entity\Bcclient;
+use DateTime;
 use Symfony\Component\HttpFoundation\Response;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\AreaChart;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Histogram;
@@ -10,6 +13,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use CMEN\GoogleChartsBundle\GoogleCharts\Options\PieChart\PieSlice;
+
+use PhpOffice\PhpSpreadsheet\IOFactory;
+//use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet as Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
 
 class DefaultController extends Controller
 {
@@ -337,6 +346,7 @@ class DefaultController extends Controller
 
         ]);
     }
+
     /**
      * @Route("/production", name="production")
      */
@@ -351,5 +361,48 @@ class DefaultController extends Controller
         return $this->render('production.html.twig', array(
             'bcfournisseurs' => $bcfournisseurs,
         ));
+    }
+
+    /**
+     * @Route("/migration", name="migration")
+     */
+    public function migration()
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        ini_set('memory_limit', '1024M');
+        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\bcclient.csv';
+        $spreadsheet = IOFactory::load($inputFileName);
+
+        set_time_limit(10000); //
+        ini_set('memory_limit', '1024M');
+
+
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        dump($sheetData);
+
+        foreach ($sheetData as $row) {
+
+            if ($row[0] == 'id') {
+
+
+            } else {
+                $id = intval($row[0]);
+                $code=$row[1];
+//                $date = DateTime::createFromFormat('Y-m-d\TH:i', $row[2]);
+//                $date->format('Y-m-d\TH:i');
+               $date = DateTime::createFromFormat('Y-m-d', $row[2])->format('Y-m-d');
+               dump($date);
+                $bcclient = new Bcclient();
+
+
+
+            }
+
+        }
+
+        return $this->render('production.html.twig', array());
     }
 }

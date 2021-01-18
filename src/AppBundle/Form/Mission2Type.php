@@ -12,75 +12,25 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
-class MissionType extends AbstractType
+class Mission2Type extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('dateDebut', DateTimeType::class, [
-                'widget' => 'single_text',
-                'placeholder' => 'Date Début mission',
-                // prevents rendering it as type="date", to avoid HTML5 date pickers
-                'html5' => false,
+        $builder->add('job', EntityType::class, array(
+            'class' => 'AppBundle:Job',
+            'multiple' => false,
+            'label' => 'Motif',
+            'attr' => array(
+                'class' => 'chosen-select',
+                'data-placeholder' => 'Selectionner',
+                'multiple' => false
 
-                // adds a class that can be selected in JavaScript
-                'attr' => ['class' => 'date-timepicker1'],
-            ])
-            ->add('dateFin', DateTimeType::class, [
-                'widget' => 'single_text',
-                'placeholder' => 'Date Début mission',
-                // prevents rendering it as type="date", to avoid HTML5 date pickers
-                'html5' => false,
-
-                // adds a class that can be selected in JavaScript
-                'attr' => ['class' => 'date-timepicker1'],
-            ])
-            ->add('dateFin', DateTimeType::class, [
-                'widget' => 'single_text',
-
-                // prevents rendering it as type="date", to avoid HTML5 date pickers
-                'html5' => false,
-
-                // adds a class that can be selected in JavaScript
-                'attr' => ['class' => 'date-timepicker1'],
-            ])
+            )))
             ->add('prixVente')
             ->add('prixAchat')
-            ->add('client', EntityType::class, array(
-                'class' => 'AppBundle:Client',
-                'multiple' => false,
-                'label' => 'Client',
-                'attr' => array(
-                    'class' => 'chosen-select',
-                    'data-placeholder' => 'Selectionner',
-                    'multiple' => false
-
-                )
-            )) ->add('job', EntityType::class, array(
-                'class' => 'AppBundle:Job',
-                'multiple' => false,
-                'label' => 'Motif',
-                'attr' => array(
-                    'class' => 'chosen-select',
-                    'data-placeholder' => 'Selectionner',
-                    'multiple' => false
-
-                )
-            )) ->add('departement', EntityType::class, array(
-                'class' => 'AppBundle:Departement',
-                'multiple' => false,
-                'placeholder'=>'--',
-                'label' => 'Département',
-                'attr' => array(
-                    'class' => 'chosen-select',
-                    'data-placeholder' => 'Selectionner un département',
-                    'multiple' => false
-
-                )
-            ))
             ->add('consultant', EntityType::class, array(
                 'class' => 'AppBundle:Consultant',
                 'multiple' => false,
@@ -108,7 +58,7 @@ class MissionType extends AbstractType
             ->add('bcclient', EntityType::class, array(
                 'class' => 'AppBundle:Bcclient',
                 'multiple' => false,
-            //    'placeholder'=>'--',
+                //    'placeholder'=>'--',
                 'label' => 'Bon de commande client',
 //                'choice_label' => 'code',
                 'attr' => array(
@@ -155,8 +105,7 @@ class MissionType extends AbstractType
 
 
                 ),
-            ))
-        ;
+            ));
 
 
     }

@@ -63,6 +63,10 @@ class Projet
      */
     private $projetconsultants;
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="projet",cascade={"persist", "remove"})
+     */
+    private $factures;
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      *
      * @var \DateTime
@@ -343,5 +347,44 @@ class Projet
     public function getClient()
     {
         return $this->client;
+    }
+
+    public function __toString()
+    {
+        return $this->getNom().'';
+    }
+
+    /**
+     * Add facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     *
+     * @return Projet
+     */
+    public function addFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures[] = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Remove facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     */
+    public function removeFacture(\AppBundle\Entity\Facture $facture)
+    {
+        $this->factures->removeElement($facture);
+    }
+
+    /**
+     * Get factures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFactures()
+    {
+        return $this->factures;
     }
 }

@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Lignefacture</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ligneFacture.id }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ ligneFacture.numero }}</td>
+            </tr>
+            <tr>
+                <th>Nbjour</th>
+                <td>{{ ligneFacture.nbjour }}</td>
+            </tr>
+            <tr>
+                <th>Mois</th>
+                <td>{{ ligneFacture.mois }}</td>
+            </tr>
+            <tr>
+                <th>Year</th>
+                <td>{{ ligneFacture.year }}</td>
+            </tr>
+            <tr>
+                <th>Totalht</th>
+                <td>{{ ligneFacture.totalHt }}</td>
+            </tr>
+            <tr>
+                <th>Totalttc</th>
+                <td>{{ ligneFacture.totalTTC }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('lignefacture_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('lignefacture_edit', { 'id': ligneFacture.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

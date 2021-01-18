@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Facture;
+use AppBundle\Entity\LigneFacture;
 use AppBundle\Entity\Projet;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -78,6 +80,68 @@ class ProjetController extends Controller
         return $this->render('projet/show.html.twig', array(
             'projet' => $projet,
             'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a projet entity.
+     *
+     * @Route("/{id}/facturation", name="projet_facturation")
+     * @Method({"GET", "POST"})
+     */
+    public function FacturationAction(Projet $projet, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $facture = new Facture();
+        $facture->setEtat('non payé');
+        $facture->setClient($projet->getClient());
+
+        if ($projet->getProjetconsultants()) {
+
+            foreach ($projet->getProjetconsultants() as $projetconsultant) {
+                $ligne = new LigneFacture();
+                $ligne->setFacture($facture);
+                $ligne->setProjetconsultant($projetconsultant);
+                $em->persist($ligne);
+                $em->flush();
+                $facture->addLigne($ligne);
+
+            }
+        }
+
+        $form = $this->createForm('AppBundle\Form\Facture2Type', $facture);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $totalHt = null;
+            $facture->setProjet($projet);
+
+            foreach ($facture->getLignes() as $ligne) {
+
+                $totalHt += $ligne->getNbjour() * $ligne->getProjetconsultant()->getVente();
+
+            }
+            $taxe = $totalHt * 0.2;
+
+            // num facture
+            $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
+
+                'mois' => $facture->getMois(),
+                'year' => $facture->getYear(),
+            )));
+            $facture->setNumero('H3K-' . substr($facture->getYear(), -2) . '-' . str_pad($facture->getMois(), 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
+
+            dump($facture, $facture->getLignes(), $totalHt);
+
+            
+            die();
+
+        }
+//        dump($projet,$facture);
+
+        return $this->render('projet/facturation.html.twig', array(
+            'projet' => $projet,
+            'form' => $form->createView()
         ));
     }
 

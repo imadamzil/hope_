@@ -351,6 +351,7 @@ class Facturefournisseur
     public function __construct()
     {
         $this->virments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setEtat('non payé');
     }
 
     /**

@@ -84,6 +84,10 @@ class BcclientController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($bcclient);
             $em->flush();
+            $bcclient1 = $em->getRepository('AppBundle:Bcclient')->find($bcclient->getId());
+            $bcclient1->setNbjrsR($bcclient1->getNbJrs());
+            $em->persist($bcclient1);
+            $em->flush();
 
             return $this->redirectToRoute('bcclient_show', array('id' => $bcclient->getId()));
         }

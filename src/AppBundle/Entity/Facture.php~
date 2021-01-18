@@ -95,6 +95,11 @@ class Facture
      */
     private $client;
     /**
+     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="factures")
+     * @ORM\JoinColumn(name="id_projet", referencedColumnName="id")
+     */
+    private $projet;
+    /**
      * @ORM\ManyToOne(targetEntity="Mission", inversedBy="factures")
      * @ORM\JoinColumn(name="id_mission", referencedColumnName="id")
      */
@@ -106,6 +111,18 @@ class Facture
      * @ORM\Column(name="date", type="date", nullable=true)
      */
     private $date;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_debut", type="date", nullable=true)
+     */
+    private $dateDebut;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_fin", type="date", nullable=true)
+     */
+    private $dateFin;
     /**
      * @ORM\ManyToOne(targetEntity="Bcclient", inversedBy="factures")
      * @ORM\JoinColumn(name="id_bcclient", referencedColumnName="id")
@@ -124,7 +141,10 @@ class Facture
      * @ORM\Column(name="date_ceation", type="datetime", nullable=true)
      */
     private $createdAt;
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\LigneFacture", mappedBy="facture",cascade={"persist", "remove"})
+     */
+    private $lignes;
 
     /**
      * Get id
@@ -625,4 +645,95 @@ class Facture
     {
         return $this->comptebancaire;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->lignes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ligne
+     *
+     * @param \AppBundle\Entity\LigneFacture $ligne
+     *
+     * @return Facture
+     */
+    public function addLigne(\AppBundle\Entity\LigneFacture $ligne)
+    {
+        $this->lignes[] = $ligne;
+
+        return $this;
+    }
+
+    /**
+     * Remove ligne
+     *
+     * @param \AppBundle\Entity\LigneFacture $ligne
+     */
+    public function removeLigne(\AppBundle\Entity\LigneFacture $ligne)
+    {
+        $this->lignes->removeElement($ligne);
+    }
+
+    /**
+     * Get lignes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLignes()
+    {
+        return $this->lignes;
+    }
+
+    /**
+     * Set dateDebut
+     *
+     * @param \DateTime $dateDebut
+     *
+     * @return Facture
+     */
+    public function setDateDebut($dateDebut)
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDebut
+     *
+     * @return \DateTime
+     */
+    public function getDateDebut()
+    {
+        return $this->dateDebut;
+    }
+
+    /**
+     * Set dateFin
+     *
+     * @param \DateTime $dateFin
+     *
+     * @return Facture
+     */
+    public function setDateFin($dateFin)
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFin
+     *
+     * @return \DateTime
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
+    }
+
+
 }

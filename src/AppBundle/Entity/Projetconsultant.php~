@@ -45,15 +45,29 @@ class Projetconsultant
      */
     private $consultant;
     /**
+     * @ORM\ManyToOne(targetEntity="Job", inversedBy="projetconsultants")
+     * @ORM\JoinColumn(name="id_job", referencedColumnName="id")
+     */
+    private $job;
+    /**
      * @ORM\ManyToOne(targetEntity="Fournisseur", inversedBy="projetconsultants")
      * @ORM\JoinColumn(name="id_fournisseur", referencedColumnName="id")
      */
     private $fournisseur;
     /**
+     * @ORM\ManyToOne(targetEntity="Bcclient", inversedBy="projetconsultants")
+     * @ORM\JoinColumn(name="id_bcclient", referencedColumnName="id")
+     */
+    private $bcclient;
+    /**
      * @ORM\ManyToOne(targetEntity="Projet", inversedBy="projetconsultants")
      * @ORM\JoinColumn(name="id_projet", referencedColumnName="id")
      */
     private $projet;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\LigneFacture", mappedBy="projetconsultant",cascade={"persist", "remove"})
+     */
+    private $lignes;
 
     /**
      * Get id
@@ -207,5 +221,94 @@ class Projetconsultant
     public function getFournisseur()
     {
         return $this->fournisseur;
+    }
+
+    /**
+     * Set bcclient
+     *
+     * @param \AppBundle\Entity\Bcclient $bcclient
+     *
+     * @return Projetconsultant
+     */
+    public function setBcclient(\AppBundle\Entity\Bcclient $bcclient = null)
+    {
+        $this->bcclient = $bcclient;
+
+        return $this;
+    }
+
+    /**
+     * Get bcclient
+     *
+     * @return \AppBundle\Entity\Bcclient
+     */
+    public function getBcclient()
+    {
+        return $this->bcclient;
+    }
+
+    /**
+     * Set job
+     *
+     * @param \AppBundle\Entity\Job $job
+     *
+     * @return Projetconsultant
+     */
+    public function setJob(\AppBundle\Entity\Job $job = null)
+    {
+        $this->job = $job;
+
+        return $this;
+    }
+
+    /**
+     * Get job
+     *
+     * @return \AppBundle\Entity\Job
+     */
+    public function getJob()
+    {
+        return $this->job;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->lignes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ligne
+     *
+     * @param \AppBundle\Entity\LigneFacture $ligne
+     *
+     * @return Projetconsultant
+     */
+    public function addLigne(\AppBundle\Entity\LigneFacture $ligne)
+    {
+        $this->lignes[] = $ligne;
+
+        return $this;
+    }
+
+    /**
+     * Remove ligne
+     *
+     * @param \AppBundle\Entity\LigneFacture $ligne
+     */
+    public function removeLigne(\AppBundle\Entity\LigneFacture $ligne)
+    {
+        $this->lignes->removeElement($ligne);
+    }
+
+    /**
+     * Get lignes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLignes()
+    {
+        return $this->lignes;
     }
 }

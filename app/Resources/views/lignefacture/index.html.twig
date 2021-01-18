@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Lignefactures list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Nbjour</th>
+                <th>Mois</th>
+                <th>Year</th>
+                <th>Totalht</th>
+                <th>Totalttc</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ligneFacture in ligneFactures %}
+            <tr>
+                <td><a href="{{ path('lignefacture_show', { 'id': ligneFacture.id }) }}">{{ ligneFacture.id }}</a></td>
+                <td>{{ ligneFacture.numero }}</td>
+                <td>{{ ligneFacture.nbjour }}</td>
+                <td>{{ ligneFacture.mois }}</td>
+                <td>{{ ligneFacture.year }}</td>
+                <td>{{ ligneFacture.totalHt }}</td>
+                <td>{{ ligneFacture.totalTTC }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('lignefacture_show', { 'id': ligneFacture.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('lignefacture_edit', { 'id': ligneFacture.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('lignefacture_new') }}">Create a new ligneFacture</a>
+        </li>
+    </ul>
+{% endblock %}

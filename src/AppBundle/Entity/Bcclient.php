@@ -86,7 +86,10 @@ class Bcclient
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="bcclient",cascade={"persist", "remove"})
      */
     private $factures;
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Projetconsultant", mappedBy="bcclient",cascade={"persist", "remove"})
+     */
+    private $projetconsultants;
     /**
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="bcclients")
      * @ORM\JoinColumn(name="id_client", referencedColumnName="id")
@@ -310,7 +313,7 @@ class Bcclient
 
     public function __toString()
     {
-        return $this->getClient()->getNom() . '~' . $this->getCode();
+        return $this->getClient()->getNom() . '~' . $this->getCode().'_'.$this->getNbJrsR();
     }
 
 
@@ -535,5 +538,39 @@ class Bcclient
     public function getAvenant()
     {
         return $this->avenant;
+    }
+
+    /**
+     * Add projetconsultant
+     *
+     * @param \AppBundle\Entity\Projetconsultant $projetconsultant
+     *
+     * @return Bcclient
+     */
+    public function addProjetconsultant(\AppBundle\Entity\Projetconsultant $projetconsultant)
+    {
+        $this->projetconsultants[] = $projetconsultant;
+
+        return $this;
+    }
+
+    /**
+     * Remove projetconsultant
+     *
+     * @param \AppBundle\Entity\Projetconsultant $projetconsultant
+     */
+    public function removeProjetconsultant(\AppBundle\Entity\Projetconsultant $projetconsultant)
+    {
+        $this->projetconsultants->removeElement($projetconsultant);
+    }
+
+    /**
+     * Get projetconsultants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjetconsultants()
+    {
+        return $this->projetconsultants;
     }
 }

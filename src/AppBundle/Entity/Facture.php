@@ -34,7 +34,7 @@ class Facture
      * @ORM\Column(name="numero", type="string", length=255, nullable=true)
      */
     private $numero;
-  /**
+    /**
      * @var integer
      *
      * @ORM\Column(name="nb_jours", type="integer", nullable=true)
@@ -95,6 +95,11 @@ class Facture
      */
     private $client;
     /**
+     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="factures")
+     * @ORM\JoinColumn(name="id_projet", referencedColumnName="id")
+     */
+    private $projet;
+    /**
      * @ORM\ManyToOne(targetEntity="Mission", inversedBy="factures")
      * @ORM\JoinColumn(name="id_mission", referencedColumnName="id")
      */
@@ -106,6 +111,18 @@ class Facture
      * @ORM\Column(name="date", type="date", nullable=true)
      */
     private $date;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_debut", type="date", nullable=true)
+     */
+    private $dateDebut;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_fin", type="date", nullable=true)
+     */
+    private $dateFin;
     /**
      * @ORM\ManyToOne(targetEntity="Bcclient", inversedBy="factures")
      * @ORM\JoinColumn(name="id_bcclient", referencedColumnName="id")
@@ -124,7 +141,10 @@ class Facture
      * @ORM\Column(name="date_ceation", type="datetime", nullable=true)
      */
     private $createdAt;
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\LigneFacture", mappedBy="facture",cascade={"persist", "remove"})
+     */
+    private $lignes;
 
     /**
      * Get id
@@ -426,83 +446,105 @@ class Facture
 
     public function int2str($a)
     {
-        $convert = explode('.',$a);
-        if (isset($convert[1]) && $convert[1]!=''){
-            return int2str($convert[0]).'Dinars'.' et '.int2str($convert[1]).'Centimes' ;
+        $convert = explode('.', $a);
+        if (isset($convert[1]) && $convert[1] != '') {
+            return int2str($convert[0]) . 'Dinars' . ' et ' . int2str($convert[1]) . 'Centimes';
         }
-        if ($a<0) return 'moins '.int2str(-$a);
-        if ($a<17){
-            switch ($a){
-                case 0: return 'zero';
-                case 1: return 'un';
-                case 2: return 'deux';
-                case 3: return 'trois';
-                case 4: return 'quatre';
-                case 5: return 'cinq';
-                case 6: return 'six';
-                case 7: return 'sept';
-                case 8: return 'huit';
-                case 9: return 'neuf';
-                case 10: return 'dix';
-                case 11: return 'onze';
-                case 12: return 'douze';
-                case 13: return 'treize';
-                case 14: return 'quatorze';
-                case 15: return 'quinze';
-                case 16: return 'seize';
+        if ($a < 0) return 'moins ' . int2str(-$a);
+        if ($a < 17) {
+            switch ($a) {
+                case 0:
+                    return 'zero';
+                case 1:
+                    return 'un';
+                case 2:
+                    return 'deux';
+                case 3:
+                    return 'trois';
+                case 4:
+                    return 'quatre';
+                case 5:
+                    return 'cinq';
+                case 6:
+                    return 'six';
+                case 7:
+                    return 'sept';
+                case 8:
+                    return 'huit';
+                case 9:
+                    return 'neuf';
+                case 10:
+                    return 'dix';
+                case 11:
+                    return 'onze';
+                case 12:
+                    return 'douze';
+                case 13:
+                    return 'treize';
+                case 14:
+                    return 'quatorze';
+                case 15:
+                    return 'quinze';
+                case 16:
+                    return 'seize';
             }
-        } else if ($a<20){
-            return 'dix-'.int2str($a-10);
-        } else if ($a<100){
-            if ($a%10==0){
-                switch ($a){
-                    case 20: return 'vingt';
-                    case 30: return 'trente';
-                    case 40: return 'quarante';
-                    case 50: return 'cinquante';
-                    case 60: return 'soixante';
-                    case 70: return 'soixante-dix';
-                    case 80: return 'quatre-vingt';
-                    case 90: return 'quatre-vingt-dix';
+        } else if ($a < 20) {
+            return 'dix-' . int2str($a - 10);
+        } else if ($a < 100) {
+            if ($a % 10 == 0) {
+                switch ($a) {
+                    case 20:
+                        return 'vingt';
+                    case 30:
+                        return 'trente';
+                    case 40:
+                        return 'quarante';
+                    case 50:
+                        return 'cinquante';
+                    case 60:
+                        return 'soixante';
+                    case 70:
+                        return 'soixante-dix';
+                    case 80:
+                        return 'quatre-vingt';
+                    case 90:
+                        return 'quatre-vingt-dix';
                 }
-            } elseif (substr($a, -1)==1){
-                if( ((int)($a/10)*10)<70 ){
-                    return int2str((int)($a/10)*10).'-et-un';
-                } elseif ($a==71) {
+            } elseif (substr($a, -1) == 1) {
+                if (((int)($a / 10) * 10) < 70) {
+                    return int2str((int)($a / 10) * 10) . '-et-un';
+                } elseif ($a == 71) {
                     return 'soixante-et-onze';
-                } elseif ($a==81) {
+                } elseif ($a == 81) {
                     return 'quatre-vingt-un';
-                } elseif ($a==91) {
+                } elseif ($a == 91) {
                     return 'quatre-vingt-onze';
                 }
-            } elseif ($a<70){
-                return int2str($a-$a%10).'-'.int2str($a%10);
-            } elseif ($a<80){
-                return int2str(60).'-'.int2str($a%20);
-            } else{
-                return int2str(80).'-'.int2str($a%20);
+            } elseif ($a < 70) {
+                return int2str($a - $a % 10) . '-' . int2str($a % 10);
+            } elseif ($a < 80) {
+                return int2str(60) . '-' . int2str($a % 20);
+            } else {
+                return int2str(80) . '-' . int2str($a % 20);
             }
-        } else if ($a==100){
+        } else if ($a == 100) {
             return 'cent';
-        } else if ($a<200){
-            return int2str(100).' '.int2str($a%100);
-        } else if ($a<1000){
-            return int2str((int)($a/100)).' '.int2str(100).' '.int2str($a%100);
-        } else if ($a==1000){
+        } else if ($a < 200) {
+            return int2str(100) . ' ' . int2str($a % 100);
+        } else if ($a < 1000) {
+            return int2str((int)($a / 100)) . ' ' . int2str(100) . ' ' . int2str($a % 100);
+        } else if ($a == 1000) {
             return 'mille';
-        } else if ($a<2000){
-            return int2str(1000).' '.int2str($a%1000).' ';
-        } else if ($a<1000000){
-            return int2str((int)($a/1000)).' '.int2str(1000).' '.int2str($a%1000);
-        }
-        else if ($a==1000000){
+        } else if ($a < 2000) {
+            return int2str(1000) . ' ' . int2str($a % 1000) . ' ';
+        } else if ($a < 1000000) {
+            return int2str((int)($a / 1000)) . ' ' . int2str(1000) . ' ' . int2str($a % 1000);
+        } else if ($a == 1000000) {
             return 'millions';
-        }
-        else if ($a<2000000){
-            return int2str(1000000).' '.int2str($a%1000000).' ';
-        }
-        else if ($a<1000000000){
-            return int2str((int)($a/1000000)).' '.int2str(1000000).' '.int2str($a%1000000);
+        } else if ($a < 2000000) {
+            return int2str(1000000) . ' ' . int2str($a % 1000000) . ' ';
+        } else if ($a < 1000000000) {
+            return int2str((int)($a / 1000000)) . ' ' . int2str(1000000) . ' ' . int2str($a % 1000000);
         }
     }
 
@@ -624,5 +666,126 @@ class Facture
     public function getComptebancaire()
     {
         return $this->comptebancaire;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->lignes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add ligne
+     *
+     * @param \AppBundle\Entity\LigneFacture $ligne
+     *
+     * @return Facture
+     */
+    public function addLigne(\AppBundle\Entity\LigneFacture $ligne)
+    {
+        $this->lignes[] = $ligne;
+
+        return $this;
+    }
+
+    /**
+     * Remove ligne
+     *
+     * @param \AppBundle\Entity\LigneFacture $ligne
+     */
+    public function removeLigne(\AppBundle\Entity\LigneFacture $ligne)
+    {
+        $this->lignes->removeElement($ligne);
+    }
+
+    /**
+     * Get lignes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLignes()
+    {
+        return $this->lignes;
+    }
+
+    /**
+     * Set dateDebut
+     *
+     * @param \DateTime $dateDebut
+     *
+     * @return Facture
+     */
+    public function setDateDebut($dateDebut)
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDebut
+     *
+     * @return \DateTime
+     */
+    public function getDateDebut()
+    {
+        return $this->dateDebut;
+    }
+
+    /**
+     * Set dateFin
+     *
+     * @param \DateTime $dateFin
+     *
+     * @return Facture
+     */
+    public function setDateFin($dateFin)
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFin
+     *
+     * @return \DateTime
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
+    }
+
+
+    /**
+     * Set projet
+     *
+     * @param \AppBundle\Entity\Projet $projet
+     *
+     * @return Facture
+     */
+    public function setProjet(\AppBundle\Entity\Projet $projet = null)
+    {
+        $this->projet = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Get projet
+     *
+     * @return \AppBundle\Entity\Projet
+     */
+    public function getProjet()
+    {
+        return $this->projet;
+    }
+
+    public function __toString()
+    {
+        return 'facture' ;
+
     }
 }

@@ -1,0 +1,7 @@
+"id";"code";"date";"nbJrs";"nbJrsR";"id_client";"id_consultant";"updated_at";"date_ceation";"type";"n_contrat";"application";"avenant"
+"1";"bc-1";"2017-01-01";"80";"57";"2";NULL;NULL;NULL;;;;
+"2";"bc-2";"2020-01-01";"120";NULL;"3";"3";NULL;NULL;;;;
+"3";"bc-3";"2021-01-01";"100";NULL;"3";"3";NULL;NULL;;;;
+"4";"bc-4";"2020-09-14";"120";"111";"4";"5";NULL;NULL;;;"app-123456";"avenant-200"
+"5";"bc-5";"2020-08-31";"130";"108";"5";"6";NULL;NULL;;;;
+"6";"bc-6";"2020-09-28";"90";"77";"7";"6";NULL;NULL;;;;

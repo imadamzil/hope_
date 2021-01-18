@@ -169,6 +169,11 @@
                                                                         aria-controls="dynamic-table" rowspan="1"
                                                                         colspan="1" style="color: #707070;"
                                                                         aria-label="Domain: activate to sort column ascending">
+                                                                        Poste
+                                                                    </th><th class="sorting" tabindex="0"
+                                                                        aria-controls="dynamic-table" rowspan="1"
+                                                                        colspan="1" style="color: #707070;"
+                                                                        aria-label="Domain: activate to sort column ascending">
                                                                         Consultant
                                                                     </th>
                                                                     <th class="sorting" tabindex="0"
@@ -229,7 +234,15 @@
                                                                         <td>
 
 
-                                                                            {{ item.consultant.nom }}
+                                                                            {{ item.job }}
+
+
+                                                                        </td>
+
+                                                                        <td>
+
+
+                                                                            {{ item.consultant }}
 
 
                                                                         </td>
@@ -272,7 +285,7 @@
 
                                                                         </td>
                                                                         <td class="hidden-480">
-                                                                            {% if item.consultant.type is null %}
+                                                                            {% if item.consultant is null %}
                                                                                 --
                                                                             {% else %}
                                                                                 {{ item.consultant.type }}
@@ -282,7 +295,7 @@
 
                                                                         </td>
                                                                         <td>
-                                                                            {% if item.consultant.salaire is null %}
+                                                                            {% if item.consultant is null %}
                                                                                 --
 
                                                                             {% else %}
@@ -293,7 +306,7 @@
                                                                             {% endif %}
                                                                         </td>
                                                                         <td>
-                                                                            {% if item.consultant.rib is null %}
+                                                                            {% if item.consultant is null %}
                                                                                 --
 
                                                                             {% else %}

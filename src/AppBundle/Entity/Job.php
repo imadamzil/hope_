@@ -37,6 +37,10 @@ class Job
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="job",cascade={"persist", "remove"})
      */
     private $missions;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Projetconsultant", mappedBy="job",cascade={"persist", "remove"})
+     */
+    private $projetconsultants;
 
     /**
      * Get id
@@ -140,5 +144,39 @@ class Job
     public function getMissions()
     {
         return $this->missions;
+    }
+
+    /**
+     * Add projetconsultant
+     *
+     * @param \AppBundle\Entity\Projetconsultant $projetconsultant
+     *
+     * @return Job
+     */
+    public function addProjetconsultant(\AppBundle\Entity\Projetconsultant $projetconsultant)
+    {
+        $this->projetconsultants[] = $projetconsultant;
+
+        return $this;
+    }
+
+    /**
+     * Remove projetconsultant
+     *
+     * @param \AppBundle\Entity\Projetconsultant $projetconsultant
+     */
+    public function removeProjetconsultant(\AppBundle\Entity\Projetconsultant $projetconsultant)
+    {
+        $this->projetconsultants->removeElement($projetconsultant);
+    }
+
+    /**
+     * Get projetconsultants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjetconsultants()
+    {
+        return $this->projetconsultants;
     }
 }

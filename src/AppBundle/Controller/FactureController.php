@@ -29,12 +29,61 @@ class FactureController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        function mois_convert($m)
+        {
+
+            switch ($m) {
+                case 1:
+                    return "Janvier";
+                    break;
+                case 2:
+                    return "Février";
+                    break;
+                case 3:
+                    return "Mars";
+                    break;
+                case 4:
+                    return "Avril";
+                    break;
+                case 5:
+                    return "Mai";
+                    break;
+                case 6:
+                    return "Juin";
+                    break;
+                case 7:
+                    return "Juillet";
+                    break;
+                case 8:
+                    return "Aout";
+                    break;
+                case 9:
+                    return "Septembre";
+                    break;
+                case 10:
+                    return "Octobre";
+                    break;
+                case 11:
+                    return "Novembre";
+                    break;
+                case 12:
+                    return "Décembre";
+                    break;
+                case 0:
+                    return "Décembre";
+                    break;
+
+            }
+        }
 
         $factures = $em->getRepository('AppBundle:Facture')->findAll();
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
 
         $date = new \DateTime('now');
         $mois = intval($date->format('m')) - 1;
+        if ($mois == 0) {
+            $mois = 12;
+        }
         $day = intval($date->format('d'));
         if ($day >= 10) {
 
@@ -77,7 +126,7 @@ class FactureController extends Controller
         return $this->render('facture/index.html.twig', array(
             'factures' => $factures,
             'nb_non_factured_missions' => $nb_non_factured_missions,
-            'mois' => $mois
+            'mois' => mois_convert($mois)
         ,
         ));
     }
@@ -91,12 +140,61 @@ class FactureController extends Controller
     public function missionsSansFactureAction()
     {
         $em = $this->getDoctrine()->getManager();
+        function mois_convert($m)
+        {
+
+            switch ($m) {
+                case 1:
+                    return "Janvier";
+                    break;
+                case 2:
+                    return "Février";
+                    break;
+                case 3:
+                    return "Mars";
+                    break;
+                case 4:
+                    return "Avril";
+                    break;
+                case 5:
+                    return "Mai";
+                    break;
+                case 6:
+                    return "Juin";
+                    break;
+                case 7:
+                    return "Juillet";
+                    break;
+                case 8:
+                    return "Aout";
+                    break;
+                case 9:
+                    return "Septembre";
+                    break;
+                case 10:
+                    return "Octobre";
+                    break;
+                case 11:
+                    return "Novembre";
+                    break;
+                case 12:
+                    return "Décembre";
+                    break;
+                case 0:
+                    return "Décembre";
+                    break;
+
+            }
+        }
 
         $factures = $em->getRepository('AppBundle:Facture')->findAll();
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
         //dump($factures);
         $date = new \DateTime('now');
         $mois = intval($date->format('m')) - 1;
+        if ($mois == 0) {
+            $mois = 12;
+        }
         $day = intval($date->format('d'));
         if ($day >= 10) {
 
@@ -138,7 +236,7 @@ class FactureController extends Controller
 
         return $this->render('facture/missionsansfacture.html.twig', array(
             'factures' => $factures,
-            'mois' => $mois,
+            'mois' => mois_convert($mois),
             'missions' => $diff
         ));
     }
@@ -223,7 +321,7 @@ class FactureController extends Controller
                     //dump($bcclient);
                     if ($bcclient != null) {
 
-                        $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
+                        $bcclient->setNbJrsR($bcclient->getNbJrsR() - $facture->getNbjour());
                         $em->persist($bcclient);
                         $em->flush();
                     }
@@ -268,7 +366,7 @@ class FactureController extends Controller
                     //dump($bcclient);
                     if ($bcclient != null) {
 
-                        $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
+                        $bcclient->setNbJrsR($bcclient->getNbJrsR() - $facture->getNbjour());
                         $em->persist($bcclient);
                         $em->flush();
                     }
@@ -400,8 +498,7 @@ class FactureController extends Controller
                     $facture->setClient($mission->getClient());
                     //dump($bcclient);
                     if ($bcclient != null) {
-
-                        $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
+                        $bcclient->setNbJrsR($bcclient->getNbJrsR() - $facture->getNbjour());
                         $em->persist($bcclient);
                         $em->flush();
                     }
@@ -447,7 +544,7 @@ class FactureController extends Controller
                     //dump($bcclient);
                     if ($bcclient != null) {
 
-                        $bcclient->setNbJrsR($bcclient->getNbJrs() - $facture->getNbjour());
+                        $bcclient->setNbJrsR($bcclient->getNbJrsR() - $facture->getNbjour());
                         $em->persist($bcclient);
                         $em->flush();
 
@@ -1263,7 +1360,7 @@ class FactureController extends Controller
         $facture->setEtat('payé');
         $em->persist($facture);
         $em->flush();
-        $response = json_encode(array('data'=>'ok'));
+        $response = json_encode(array('data' => 'ok'));
 
         return new Response($response, 200, array(
             'Content-Type' => 'application/json'

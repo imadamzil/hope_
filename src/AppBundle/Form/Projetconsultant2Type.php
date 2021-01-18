@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjetconsultantType extends AbstractType
+class Projetconsultant2Type extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,7 +22,7 @@ class ProjetconsultantType extends AbstractType
                 'required'=>false,
                 'label' => 'Mission motif',
                 'attr' => array(
-                    'class' => 'chosen-select',
+                    'class' => 'chosen-select3',
                     'data-placeholder' => 'Selectionner',
                     'multiple' => false
 
@@ -36,39 +36,13 @@ class ProjetconsultantType extends AbstractType
 
                 'label' => 'Consultant',
                 'attr' => array(
-                    'class' => 'chosen-select',
+                    'class' => 'chosen-select3',
                     'data-placeholder' => 'Selectionner',
                     'multiple' => false
 
                 )
             ))
-            ->add('fournisseur', EntityType::class, array(
-                'class' => 'AppBundle:Fournisseur',
-                'multiple' => false,
-                'required'=>false,
 
-                'label' => 'Fournisseur',
-                'attr' => array(
-                    'class' => 'chosen-select',
-                    'data-placeholder' => 'Selectionner',
-                    'multiple' => false
-
-                )
-            ))
-            ->add('bcclient', EntityType::class, array(
-                'class' => 'AppBundle:Bcclient',
-                'multiple' => false,
-                'label' => 'BC client',
-                'required'=>false,
-
-                'attr' => array(
-                    'class' => 'chosen-select',
-                    'data-placeholder' => 'Selectionner',
-                    'multiple' => false
-
-                )
-            ))
-            ->add('achat')
             ->add('vente');
     }
 
