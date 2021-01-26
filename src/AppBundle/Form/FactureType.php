@@ -2,9 +2,11 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\FactureHsup;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +20,7 @@ class FactureType extends AbstractType
     {
         $builder
             ->add('etat', ChoiceType::class, array(
+
                 'choices' => array(
                     'Payé' => 'payé',
                     'Payé avec devise' => 'payé avec devise',
@@ -80,7 +83,7 @@ class FactureType extends AbstractType
             ->add('bcclient', EntityType::class, array(
                 'class' => 'AppBundle:Bcclient',
                 'multiple' => false,
-                'placeholder'=>'--',
+                'placeholder' => '--',
                 'label' => 'Bon de commande client',
 //                'choice_label' => 'code',
                 'attr' => array(
@@ -113,9 +116,20 @@ class FactureType extends AbstractType
 
                 )
             ))
+            ->add('facturehsups', CollectionType::class, [
+                'entry_type' => FactureHsupType::class,
+                'entry_options' => ['label' => false],
+                'attr' => array(
+                    'class' => 'my-selectors inl ',
+                    'label' => 'consultants list :',
+                ),
+                'prototype' => true,
+                'allow_add' => true,
+                'allow_delete' => true,
 
+                'by_reference' => false,
 
-        ;
+            ]);
     }
 
     /**

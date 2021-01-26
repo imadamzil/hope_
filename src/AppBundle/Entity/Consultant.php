@@ -105,7 +105,18 @@ class Consultant
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcclient", mappedBy="consultant",cascade={"persist", "remove"})
      */
     private $bcclients;
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcfournisseur", mappedBy="consultant",cascade={"persist", "remove"})
+     */
+    private $bcfournisseurs;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facturefournisseur", mappedBy="consultant",cascade={"persist", "remove"})
+     */
+    private $facturefournisseurs;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Production", mappedBy="consultant",cascade={"persist", "remove"})
+     */
+    private $productions;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Projetconsultant", mappedBy="consultant",cascade={"persist", "remove"})
@@ -696,5 +707,141 @@ class Consultant
     public function getCin()
     {
         return $this->cin;
+    }
+
+    /**
+     * Add bcfournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $bcfournisseur
+     *
+     * @return Consultant
+     */
+    public function addBcfournisseur(\AppBundle\Entity\Bcfournisseur $bcfournisseur)
+    {
+        $this->bcfournisseurs[] = $bcfournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove bcfournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $bcfournisseur
+     */
+    public function removeBcfournisseur(\AppBundle\Entity\Bcfournisseur $bcfournisseur)
+    {
+        $this->bcfournisseurs->removeElement($bcfournisseur);
+    }
+
+    /**
+     * Get bcfournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBcfournisseurs()
+    {
+        return $this->bcfournisseurs;
+    }
+
+    /**
+     * Add facturesfournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $facturesfournisseur
+     *
+     * @return Consultant
+     */
+    public function addFacturesfournisseur(\AppBundle\Entity\Bcfournisseur $facturesfournisseur)
+    {
+        $this->facturesfournisseurs[] = $facturesfournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove facturesfournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $facturesfournisseur
+     */
+    public function removeFacturesfournisseur(\AppBundle\Entity\Bcfournisseur $facturesfournisseur)
+    {
+        $this->facturesfournisseurs->removeElement($facturesfournisseur);
+    }
+
+    /**
+     * Get facturesfournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFacturesfournisseurs()
+    {
+        return $this->facturesfournisseurs;
+    }
+
+    /**
+     * Add facturefournisseur
+     *
+     * @param \AppBundle\Entity\Facturefournisseur $facturefournisseur
+     *
+     * @return Consultant
+     */
+    public function addFacturefournisseur(\AppBundle\Entity\Facturefournisseur $facturefournisseur)
+    {
+        $this->facturefournisseurs[] = $facturefournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove facturefournisseur
+     *
+     * @param \AppBundle\Entity\Facturefournisseur $facturefournisseur
+     */
+    public function removeFacturefournisseur(\AppBundle\Entity\Facturefournisseur $facturefournisseur)
+    {
+        $this->facturefournisseurs->removeElement($facturefournisseur);
+    }
+
+    /**
+     * Get facturefournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFacturefournisseurs()
+    {
+        return $this->facturefournisseurs;
+    }
+
+    /**
+     * Add production
+     *
+     * @param \AppBundle\Entity\Production $production
+     *
+     * @return Consultant
+     */
+    public function addProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions[] = $production;
+
+        return $this;
+    }
+
+    /**
+     * Remove production
+     *
+     * @param \AppBundle\Entity\Production $production
+     */
+    public function removeProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions->removeElement($production);
+    }
+
+    /**
+     * Get productions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductions()
+    {
+        return $this->productions;
     }
 }

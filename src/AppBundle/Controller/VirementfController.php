@@ -109,7 +109,7 @@ GROUP BY c.fournisseur
 SELECT sum(p.total) as total FROM AppBundle:Detailvirement p 
 WHERE p.virementf = :id
         ')->setParameter('id', $virementf->getId())->getSingleResult();
-        //dump($details, $query);
+        dump($details, $query);
         return $this->render('virementf/show.html.twig', array(
             'virementf' => $virementf,
             'details' => $details,

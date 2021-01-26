@@ -93,7 +93,10 @@ class Fournisseur
      * @ORM\Column(name="rib", type="string", length=255, nullable=true)
      */
     private $rib;
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Production", mappedBy="fournisseur",cascade={"persist", "remove"})
+     */
+    private $productions;
 
     /**
      * Get id
@@ -522,5 +525,39 @@ class Fournisseur
     public function getProjetconsultants()
     {
         return $this->projetconsultants;
+    }
+
+    /**
+     * Add production
+     *
+     * @param \AppBundle\Entity\Production $production
+     *
+     * @return Fournisseur
+     */
+    public function addProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions[] = $production;
+
+        return $this;
+    }
+
+    /**
+     * Remove production
+     *
+     * @param \AppBundle\Entity\Production $production
+     */
+    public function removeProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions->removeElement($production);
+    }
+
+    /**
+     * Get productions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductions()
+    {
+        return $this->productions;
     }
 }

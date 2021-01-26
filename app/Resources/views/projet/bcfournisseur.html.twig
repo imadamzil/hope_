@@ -1,0 +1,202 @@
+{% extends 'base.html.twig' %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/jquery-ui.custom.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/chosen.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datepicker3.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-timepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/daterangepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-datetimepicker.min.css"/>
+        <link rel="stylesheet" href="{{ asset('') }}assets/css/bootstrap-colorpicker.min.css"/>
+        <style type="text/css">
+
+            fieldset fieldset {
+
+                background: rgba(255, 255, 255, 1);
+                background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+                background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+                background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+                background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+                background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+                background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=1);
+
+            }
+
+            fieldset div fieldset div div {
+                border-right: 1px solid black;
+
+            }
+
+            .nbjours {
+                /*border: 1px solid black;*/
+                margin-top: 57px;
+            }
+
+            .inl .form-group.form-group {
+
+                float: left;
+                display: inline;
+                padding: 5px;
+
+            }
+        </style>
+    {% endblock %}
+
+{% block title %} Hope3k | Projet {% endblock %}{% block menu %}  <a
+        href="{{ path('projet_index') }}">Projet</a>   {% endblock %}   {% block menu_active %}    BC fournisseur {% endblock %}
+{% block content %}
+
+
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Facturation projet : {{ facture.projet }}</h5>
+
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="#" data-action="settings" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">
+                            <li>
+                                <a data-toggle="tab" href="#dropdown1">Option#1</a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#dropdown2">Option#2</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+                    <a href="#" data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+
+
+                <hr>
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-2">
+                        {{ form_row(form.mois) }}
+                    </div>
+                    <div class="col-md-4 ">
+                        {{ form_row(form.year) }}
+                    </div>
+                </div>
+                <div class="row" id="adminbundle_quantitecommande_bon">
+
+                    <div class="col-md-10 col-md-offset-1">
+
+                        {% form_theme form '::jquery.collection.html.twig' %}
+                        {#{% for toto in form.commandes %}
+                            {{ form_row(toto, {'label': 'mon label' } ) }}
+                        {% endfor %}#}
+                        {{ form_row(form.lignes) }}
+
+                    </div>
+
+                </div>
+                <div class="col-md-4 col-md-offset-4">
+                    <input type="submit" class="btn btn-white btn-success btn-block" value="Enregistrer"/>
+
+                </div>
+                <br>
+                <div></div>
+
+                {{ form_widget(form._token) }}
+
+                {{ form_end(form , {'render_rest': false}) }}
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('assets/js/jquery.collection.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('[id*=_nbjour]').parent().addClass('nbjours');
+
+            $('.my-selector').collection({
+
+
+                up: '<a href="#" class="btn btn-white btn-purple pull-right"><span class="glyphicon glyphicon-arrow-up"></span></a>',
+                down: '<a href="#" class="btn btn-white btn-primary pull-right"><span class="glyphicon glyphicon-arrow-down"></span></a>',
+                add: '<a href="#" class="btn btn-white btn-info pull-right imad"><span class="glyphicon glyphicon-plus-sign"></span></a>',
+                remove: '<a href="#" class="btn btn-white btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span></a>'
+            });
+
+            if (!ace.vars['old_ie']) $('.date-timepicker1').datetimepicker(
+                {
+                    locale: moment.locale('pt'),
+                    format: 'YYYY-MM-DD HH:mm',
+//                    mDate: moment(),
+                    widgetPositioning: {
+                        horizontal: 'left',
+                        vertical: 'bottom'
+                    },
+                    icons: {
+                        time: 'fa fa-clock-o',
+                        date: 'fa fa-calendar',
+                        up: 'fa fa-chevron-up',
+                        down: 'fa fa-chevron-down',
+                        previous: 'fa fa-chevron-left',
+                        next: 'fa fa-chevron-right',
+                        today: 'fa fa-arrows ',
+                        clear: 'fa fa-trash',
+                        close: 'fa fa-times'
+                    }
+                }).next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+            $('.spinner1').ace_spinner({
+                value: 0,
+                min: 0,
+                max: 200,
+                step: 10,
+                btn_up_class: 'btn-info',
+                btn_down_class: 'btn-info'
+            })
+                .closest('.ace-spinner')
+            ;
+
+            $('.imad').click(function () {
+                $(".chosen-select").chosen();
+            });
+            $(".chosen-select").chosen();
+            $(".chosen-selects").chosen();
+
+        });
+    </script>
+{% endblock %}

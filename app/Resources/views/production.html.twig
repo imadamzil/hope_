@@ -126,7 +126,12 @@
                                                 <td>
 
                                                     {% if bcfournisseur.mission is null %}
-                                                        --
+                                                        {% if bcfournisseur.projet is null %}
+                                                            --
+                                                        {% else %}
+
+                                                            {{ bcfournisseur.projet.client }}
+                                                        {% endif %}
 
                                                     {% else %}
 
@@ -151,7 +156,7 @@
                                                 <td>
 
                                                     {% if bcfournisseur.mission is null %}
-                                                        --
+                                                        {{ bcfournisseur.consultant }}
 
                                                     {% else %}
 
@@ -163,7 +168,7 @@
                                                 <td>
 
                                                     {% if bcfournisseur.mission is null %}
-                                                        --
+                                                        {{ bcfournisseur.achatHT / bcfournisseur.nbjours }}
 
                                                     {% else %}
 
@@ -177,7 +182,12 @@
                                                 <td>
 
                                                     {% if bcfournisseur.mission is null %}
-                                                        --
+                                                        {% if bcfournisseur.venteHT is not null and bcfournisseur.nbjours is not null %}
+
+                                                            {{ bcfournisseur.venteHT / bcfournisseur.nbjours }}
+                                                        {% else %}
+                                                            --
+                                                        {% endif %}
 
                                                     {% else %}
 
@@ -327,7 +337,7 @@
                         bAutoWidth: true,
                         "aoColumns": [
                             {"bSortable": true},
-                            null, null, null, null, null, null,null,null,
+                            null, null, null, null, null, null, null, null,
                             {"bSortable": false}
                         ],
                         "aaSorting": [],

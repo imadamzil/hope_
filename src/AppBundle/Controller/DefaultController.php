@@ -356,8 +356,8 @@ class DefaultController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $bcfournisseurs = $em->getRepository('AppBundle:Bcfournisseur')->findAll();
-        //dump($bcfournisseurs);
+        $bcfournisseurs = array_reverse($em->getRepository('AppBundle:Bcfournisseur')->findAll());
+        dump($bcfournisseurs);
         return $this->render('production.html.twig', array(
             'bcfournisseurs' => $bcfournisseurs,
         ));

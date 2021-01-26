@@ -2,13 +2,23 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Bcfournisseur;
 use AppBundle\Entity\Facture;
+use AppBundle\Entity\Facturefournisseur;
 use AppBundle\Entity\LigneFacture;
+use AppBundle\Entity\Production;
 use AppBundle\Entity\Projet;
+use AppBundle\Form\LignebcfournisseurType;
+use AppBundle\Form\LigneFactureType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\Query;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+
 
 /**
  * Projet controller.
@@ -48,6 +58,8 @@ class ProjetController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            dump($projet);
+            die();
             $em->persist($projet);
 
 
@@ -103,8 +115,8 @@ class ProjetController extends Controller
                 $ligne = new LigneFacture();
                 $ligne->setFacture($facture);
                 $ligne->setProjetconsultant($projetconsultant);
-                $em->persist($ligne);
-                $em->flush();
+//                $em->persist($ligne);
+//                $em->flush();
                 $facture->addLigne($ligne);
 
             }
@@ -126,15 +138,20 @@ class ProjetController extends Controller
             // num facture
             $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
 
-                'mois' => $facture->getMois(),
-                'year' => $facture->getYear(),
-            )));
+                    'mois' => $facture->getMois(),
+                    'year' => $facture->getYear(),
+                ))) + 1;
             $facture->setNumero('H3K-' . substr($facture->getYear(), -2) . '-' . str_pad($facture->getMois(), 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
 
-            dump($facture, $facture->getLignes(), $totalHt);
 
-            
-            die();
+            $facture->setTotalHT($totalHt);
+            $facture->setTaxe($taxe);
+            $facture->setTotalTTC($taxe + $totalHt);
+            $em->persist($facture);
+            $em->flush();
+
+            return $this->redirectToRoute('projet_bcfournisseur', array('id' => $facture->getId()));
+
 
         }
 //        dump($projet,$facture);
@@ -221,5 +238,200 @@ class ProjetController extends Controller
             ->setAction($this->generateUrl('projet_delete', array('id' => $projet->getId())))
             ->setMethod('DELETE')
             ->getForm();
+    }
+
+    /**
+     * Finds and displays a projetconsultant entity.
+     *
+     * @Route("/{id}/bcfournisseur", name="projet_bcfournisseur")
+     * @Method({"GET", "POST"})
+     */
+    public function bcfournisseurAction(Facture $facture, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $query = $em->createQuery('
+             SELECT l  FROM AppBundle:LigneFacture l
+             JOIN AppBundle:Projetconsultant p
+
+             WHERE l.facture = :id and l.projetconsultant = p.id AND p.consultant IS NOT NULL 
+
+                     ')->setParameter('id', $facture)->getResult();
+
+//collection of lignes
+        $lignes_collection = new \Doctrine\Common\Collections\ArrayCollection();
+        foreach ($query as $item) {
+            $item->setNbjour(null);
+            $lignes_collection[] = $item;
+
+        }
+
+        $defaultData = [
+            'lignes' => $lignes_collection,
+            'mois' => $facture->getMois(),
+            'year' => $facture->getYear()
+
+        ];
+
+        // dump($lignes_collection->count(), $defaultData, $query);
+        $form = $this->createFormBuilder($defaultData)
+            ->add('mois', ChoiceType::class, array(
+                'attr' => ['class' => 'form-control'],
+                'required' => true,
+                'choices' => array(
+                    'Janvier' => 1,
+                    'Fevrier' => 2,
+                    'Mars' => 3,
+                    'Avril' => 4,
+                    'Mai' => 5,
+                    'Juin' => 6,
+                    'Juillet' => 7,
+                    'Aout' => 8,
+                    'Septembre' => 9,
+                    'Octobre' => 10,
+                    'Novembre' => 11,
+                    'Décembre' => 12,
+
+
+                ),
+            ))
+            ->add('year')
+            ->add('lignes', CollectionType::class, [
+                'entry_type' => LignebcfournisseurType::class,
+                'entry_options' => ['label' => false],
+                'attr' => array(
+                    'class' => 'my-selector inl ',
+                    'label' => 'consultants list :',
+                ),
+                'prototype' => true,
+                'allow_add' => true,
+                'allow_delete' => false,
+
+                'by_reference' => true,
+
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $lignes = $form->get('lignes')->getData();
+            $mois = $form->get('mois')->getData();
+            $year = $form->get('year')->getData();
+
+            foreach ($lignes as $ligne) {
+
+                $bcclient = $ligne->getProjetconsultant()->getBcclient();
+                if ($bcclient) {
+
+                    $bcclient->setNbJrsR($bcclient->getNbJrsR() - $ligne->getNbjour());
+                    $em->persist($bcclient);
+                    $em->flush();
+                }
+                $bc = new Bcfournisseur();
+                $factureFournisseur = new Facturefournisseur();
+                $achatht = $ligne->getNbjour() * $ligne->getProjetconsultant()->getAchat();
+                $venteht = $ligne->getNbjour() * $ligne->getProjetconsultant()->getVente();
+                $taxe = 0.2 * $achatht;
+                $bc->setAchatHT($achatht);
+                $factureFournisseur->setAchatHT($achatht);
+                $bc->setVenteHT($venteht);
+                $bc->setTaxe($taxe);
+                $factureFournisseur->setTaxe($taxe);
+                $bc->setNbjours($ligne->getNbjour());
+                $factureFournisseur->setNbjours($ligne->getNbjour());
+                $bc->setMois($mois);
+                $factureFournisseur->setMois($mois);
+                $bc->setYear($year);
+                $factureFournisseur->setYear($year);
+                $bc->setConsultant($ligne->getProjetconsultant()->getConsultant());
+                $factureFournisseur->setConsultant($ligne->getProjetconsultant()->getConsultant());
+                $bc->setAchatTTC($achatht + $taxe);
+                $factureFournisseur->setAchatTTC($achatht + $taxe);
+                if ($mois != null and $year != null) {
+                    $nb = count($em->getRepository('AppBundle:Bcfournisseur')->findBy([
+
+                            'mois' => $mois,
+                            'year' => $year
+                        ])) + 1;
+                    $nb1 = count($em->getRepository('AppBundle:Facturefournisseur')->findBy([
+
+                            'mois' => $mois,
+                            'year' => $year
+                        ])) + 1;
+                    $bc->setCode('H3K-BC-F-' . substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
+                    $factureFournisseur->setNumero('H3K-' . substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb1, 3, '0', STR_PAD_LEFT));
+
+                }
+                $bc->setFournisseur($ligne->getProjetconsultant()->getFournisseur());
+                $factureFournisseur->setFournisseur($ligne->getProjetconsultant()->getFournisseur());
+                $bc->setDate(new \DateTime());
+                $factureFournisseur->setDate(new \DateTime());
+                $factureFournisseur->setProjet($facture->getProjet());
+                $bc->setProjet($facture->getProjet());
+
+                $em->persist($bc);
+                $em->flush();
+                $factureFournisseur->setBcfournisseur($bc);
+
+                $em->persist($factureFournisseur);
+                $em->flush();
+                // add new production
+
+                // if is orange project
+                if ($facture->getProjet()->getClient() == 'Orange') {
+
+                    $production = new Production();
+                    $production->setConsultant(($ligne->getProjetconsultant()->getConsultant()));
+                    $production->setProjet($facture->getProjet());
+                    $production->setFournisseur($ligne->getProjetconsultant()->getFournisseur());
+                    $production->setYear($year);
+                    $production->setMois($mois);
+                    $production->setClient($facture->getClient());
+                    $production->setTjmAchat($ligne->getProjetconsultant()->getAchat());
+                    $production->setTjmVente($ligne->getProjetconsultant()->getVente());
+                    $production->setNbjour($ligne->getNbjour());
+                    $production->setAchatHT($achatht);
+                    $production->setAchatTTC($achatht + $taxe);
+                    $production->setVenteHT($venteht);
+                    $production->setVenteTTC($venteht * 1.2);
+                    $em->persist($production);
+                    $em->flush();
+                } else {
+                    // normal project
+
+                    $production = new Production();
+                    $production->setConsultant(($ligne->getProjetconsultant()->getConsultant()));
+                    $production->setProjet($facture->getProjet());
+                    $production->setFournisseur($ligne->getProjetconsultant()->getFournisseur());
+                    $production->setYear($year);
+                    $production->setMois($mois);
+                    $production->setClient($facture->getClient());
+                    $production->setTjmAchat($ligne->getProjetconsultant()->getAchat());
+                    $production->setTjmVente($ligne->getProjetconsultant()->getVente());
+                    $production->setNbjour($ligne->getNbjour());
+                    $production->setAchatHT($achatht);
+                    $production->setAchatTTC($achatht + $taxe);
+                    $production->setVenteHT($venteht);
+                    $production->setVenteTTC($venteht * 1.2);
+                    $em->persist($production);
+                    $em->flush();
+                }
+
+
+                //end add production
+
+            }
+            dump($bc, $facture, $factureFournisseur);
+            die();
+
+        }
+
+        return $this->render('projet/bcfournisseur.html.twig', array(
+            'facture' => $facture,
+            'form' => $form->createView(),
+        ));
     }
 }

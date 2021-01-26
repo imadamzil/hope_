@@ -168,7 +168,14 @@ class VirementController extends Controller
 
             $virement->setBcfournisseur($bc->getBcfournisseur());
             $virement->setFacturefournisseur($bc);
-            $virement->setConsultant($bc->getMission()->getConsultant());
+            if ($bc->getProjet()) {
+                $virement->setConsultant($bc->getConsultant());
+
+            } else {
+
+                $virement->setConsultant($bc->getMission()->getConsultant());
+
+            }
             $virement->setAchat($bc->getAchatTTC());
             $virement->setDate(new \DateTime('now'));
             $em->persist($virement);
@@ -213,7 +220,6 @@ class VirementController extends Controller
         foreach ($virements as $virement) {
 
             $virement->setEtat('validé');
-
 
 
             $em->persist($virement);
@@ -282,9 +288,6 @@ class VirementController extends Controller
                     
             GROUP BY c.fournisseur
                     ')->setParameter('ids', $Ids)->getResult(Query::HYDRATE_OBJECT);
-
-//        var_dump($query);
-
 
         foreach ($query as $item) {
             $detail = new Detailvirement();

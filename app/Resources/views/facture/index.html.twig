@@ -301,7 +301,7 @@
                                                        onclick="return confirm('vous êtes sûr que vous voulez le supprimé?');">
                                                         <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                                     </a>
-                                                    {% if facture.mission.devise !='DH' and facture.mission.devise is not null and facture.totalDH is null %}
+                                                    {% if facture.mission is not null and facture.mission.devise !='DH' and facture.mission.devise is not null and facture.totalDH is null %}
 
                                                     <a href="#my-moda{{ facture.id }}" role="button" class=""
                                                        data-toggle="modal">

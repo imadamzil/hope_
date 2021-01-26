@@ -92,7 +92,10 @@ class Client
      */
     private $bcclients;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Production", mappedBy="client",cascade={"persist", "remove"})
+     */
+    private $productions;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -595,5 +598,39 @@ class Client
     public function getEcheance()
     {
         return $this->echeance;
+    }
+
+    /**
+     * Add production
+     *
+     * @param \AppBundle\Entity\Production $production
+     *
+     * @return Client
+     */
+    public function addProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions[] = $production;
+
+        return $this;
+    }
+
+    /**
+     * Remove production
+     *
+     * @param \AppBundle\Entity\Production $production
+     */
+    public function removeProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions->removeElement($production);
+    }
+
+    /**
+     * Get productions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductions()
+    {
+        return $this->productions;
     }
 }

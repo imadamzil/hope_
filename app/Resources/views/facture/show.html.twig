@@ -199,6 +199,20 @@
                                             <p>
                                                 &nbsp;&nbsp;<span class="YYY"><u>Mois :</u></span><br><span
                                                         class="OLL">&nbsp;&nbsp;&nbsp;&nbsp;{{ mois }} {{ facture.year }}</span>
+                                                {% if facture.facturehsups | length != 0 %}
+
+
+                                                    {% for heure in facture.facturehsups %}
+                                                        <br>  <span class="OLL">
+                                                            {% if heure.bcfournisseur is null %}
+                                                                ({{ heure.nbheure }}H) - {{ heure.heuresup }} / {{ heure.totalHT }}DH
+                                                            {% endif %}
+                                                        </span>
+
+                                                    {% endfor %}
+
+                                                {% endif %}
+
                                             </p>
 
                                             {% if facture.mission.bcclient is not null %}
@@ -240,9 +254,25 @@
                                                 {{ facture.nbjour }}
 
                                             {% endif %}
+                                            {% if facture.facturehsups | length != 0 %}
+                                                <br> <br> <br> 1
+                                            {% endif %}
                                         </td>
-                                        <td class=" center  align-middle"> {{ facture.mission.prixVente }}</td>
-                                        <td class="center  align-middle">{{ facture.totalHt }}</td>
+                                        <td class=" center  align-middle">
+                                            {{ facture.mission.prixVente }}
+                                            {% if facture.facturehsups | length != 0 %}
+                                                <br><br> <br>
+                                                {{ facture.totalHT - facture.mission.prixVente*facture.nbjour }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="center  align-middle">
+                                            {{ facture.mission.prixVente*facture.nbjour }}
+                                            {% if facture.facturehsups | length != 0 %}
+                                                <br><br><br>
+                                                {{ facture.totalHT - facture.mission.prixVente*facture.nbjour }}
+                                            {% endif %}
+
+                                        </td>
                                     </tr>
 
 
@@ -269,7 +299,7 @@
 
                                     <h4 class="">
                                         Taxe :
-                                        <span class="red">{{ facture.taxe }}  {% if facture.mission.devise is not null %}
+                                        <span class="red">{{ facture.totalHT*0.2 }}  {% if facture.mission.devise is not null %}
 
 
                                                 {{ facture.mission.devise }}

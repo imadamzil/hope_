@@ -97,30 +97,32 @@
     </div>
 
 </div>
+<div class="row">
 
-<table class="table table-bordered" style="width: 80%">
-    <thead>
-    <tr>
-        <th class="NB" width="40%"><strong>DESCRIPTION</strong></th>
-        <th class="NBV"><strong>
+    <div class="col-md-10 col-md-1-offset-1">
+        <table class="table table-bordered" style="width: 100%">
+            <thead>
+            <tr>
+                <th class="NB" width="40%"><strong>DESCRIPTION</strong></th>
+                <th class="NBV"><strong>
 
-                QTE
-
-
-            </strong></th>
-        <th class="NBV" width="20%">TVA 20%</th>
-        <th class="NBV" width="20%"><strong>Prix Unitaire</strong></th>
-        <th class="NBV" width="20%"><strong>Prix NET</strong></th>
-
-    </tr>
+                        QTE
 
 
-    </thead>
-<tbody>
-<tr>
-    <td class="lmk">
-        {% if bcfournisseur.fournisseur.nom == "ATOS" %}
-            <p>
+                    </strong></th>
+                <th class="NBV" width="20%">TVA 20%</th>
+                <th class="NBV" width="20%"><strong>Prix Unitaire</strong></th>
+                <th class="NBV" width="20%"><strong>Prix NET</strong></th>
+
+            </tr>
+
+
+            </thead>
+            <tbody>
+            <tr>
+                <td class="lmk">
+                    {% if bcfournisseur.fournisseur.nom == "ATOS" %}
+                        <p>
 
 
                         <span class="PPP">Type de mission :
@@ -129,16 +131,16 @@
 
 
                     </span>
-            </p>
-        {% endif %}
-        <p>
-            <span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
-        </p>
-        <p>
+                        </p>
+                    {% endif %}
+                    <p>
+                        <span class="PPP">Assurer une prestation de régie dans le cadre de : </span>
+                    </p>
+                    <p>
 
                     <span class="OLL">
 
-                                                    {% if bcfournisseur.mission.job is not null %}
+                                                    {% if bcfournisseur.mission is not null %}
 
                                                         {{ bcfournisseur.mission.job.nom }}
 
@@ -148,58 +150,103 @@
                                                     {% endif %}
 
                                                 </span>
-        </p>
-        <p>
-            <span class="YYY">Mois :</span><br><span
-                    class="OLL">{{ bcfournisseur.mois }}-{{ bcfournisseur.year }}</span>
-        </p>
-        <p>
-            <span class="YYY">Consultant :</span><br>
-            <span class="NBt OLL">{{ bcfournisseur.mission.consultant.nom }}
-                &nbsp;</span>
+                    </p>
+                    <p>
+                        <span class="YYY">Mois :</span><br><span
+                                class="OLL">{{ mois }}-{{ bcfournisseur.year }}</span>
+                        {% if bcfournisseur.heures | length != 0 %}
 
-        </p>
-    </td>
-    <td class="text-center align-middle"><strong>{% if bcfournisseur.mission.type == 'mensuel' %}
-                1
-            {% else %}
-                {{ bcfournisseur.nbjours }}
+                            <br>
+                            <span class="OLL bolder">
 
-            {% endif %}</strong>
-    </td>
-    <td class="text-center  align-middle"><strong>
-            20%
-        </strong></td>
-    <td class=" text-center  align-middle"><strong>{{ bcfournisseur.mission.prixVente }}</strong></td>
-    <td class="text-center align-middle"><strong>{{ bcfournisseur.nbjours *bcfournisseur.mission.prixVente }}
-        </strong></td>
-</tr>
+                    {% for heure in bcfournisseur.heures %}
+                        {% if heure.bcfournisseur is not null %}
 
-</tbody>
+                            {{ heure.heuresup }} ({{ heure.nbheure }}H) majoration {{ heure.heuresup.pourcentage }}%({{ heure.totalHT }}DH/HT)
+                            <br>
+                        {% endif %}
+
+                    {% endfor %}
+                    </span>
+
+                        {% endif %}
+
+                    </p>
+                    <p>
+                        <span class="YYY">Consultant :</span><br>
+                        <span class="NBt OLL">  {% if bcfournisseur.mission is not null %}
+
+                                {{ bcfournisseur.mission.consultant }}
+
+                            {% else %}
+
+                                {{ bcfournisseur.consultant }}
+
+                            {% endif %}
+                            &nbsp;</span>
+
+                    </p>
+                </td>
+                <td class="text-center align-middle"><strong>
+
+                        {{ bcfournisseur.nbjours }}
+                        {% if bcfournisseur.heures | length != 0 %}
+                            <br> 1
+                        {% endif %}
+
+                    </strong>
+                </td>
+                <td class="text-center  align-middle"><strong>
+                        20%
+                    </strong></td>
+                <td class=" text-center  align-middle">
+                    <strong>
+                        {{ bcfournisseur.mission.prixAchat  }}
+                        {% if bcfournisseur.heures | length != 0 %}
+                            <br>
+                            {{ bcfournisseur.achatHT - bcfournisseur.mission.prixAchat*bcfournisseur.nbjours | number_format(2, ',', ' ') }}
+                        {% endif %}
+                    </strong>
+                </td>
+                <td class="text-center align-middle">
+                    <strong>
+                        {{ bcfournisseur.achatHt }}
+                        {% if bcfournisseur.heures | length != 0 %}
+                            <br>
+                            {{ bcfournisseur.achatHT - bcfournisseur.mission.prixAchat*bcfournisseur.nbjours | number_format(2, ',', ' ') }}
+                        {% endif %}
+                    </strong>
+                </td>
+            </tr>
+
+            </tbody>
 
 
-</table>
+        </table>
+
+    </div>
+</div>
 
 
 <table class="table table-bordered text-center" style="width: 30%;margin-left: 700px">
     <tbody>
     <tr class="">
         <th class=" AZX">TOTAL HT/DH</th>
-        <td class=" AZX">.00
+        <td class=" AZX">{{ bcfournisseur.achatHT }}.00
 
         </td>
 
     </tr>
     <tr class="">
         <th class=" AZX">TVA 20%</th>
-        <td class=" AZX">.00
+        <td class=" AZX">{{ bcfournisseur.taxe }}.00
 
         </td>
 
     </tr>
     <tr class="">
         <th class=" AZX">TOTAL TTC/DH</th>
-        <td class=" AZX">.00</td>
+        <td class=" AZX">{{ bcfournisseur.achatTTC }}.00</td>
 
     </tr>
 

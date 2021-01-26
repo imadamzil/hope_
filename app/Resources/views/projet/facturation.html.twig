@@ -96,14 +96,15 @@
 
                 <div class="row">
 
-                    <div class="col-md-5 col-md-offset-1">{{ form_row(form.dateDebut) }}</div>
-                    <div class="col-md-5">{{ form_row(form.dateFin) }}</div>
+                    <div class="col-md-3 col-md-offset-1">{{ form_row(form.dateDebut) }}</div>
+                    <div class="col-md-4">{{ form_row(form.dateFin) }}</div>
+                    <div class="col-md-4">{{ form_row(form.date) }}</div>
 
                 </div>
 
                 <div class="row">
 
-                    <div class="col-md-4 col-md-offset-2">
+                    <div class="col-md-3 col-md-offset-2">
                         {{ form_row(form.client) }}
                         {{ form_row(form.comptebancaire) }}
 
@@ -181,7 +182,7 @@
                 {
                     locale: moment.locale('pt'),
                     format: 'YYYY-MM-DD HH:mm',
-                    maxDate: moment(),
+//                    mDate: moment(),
                     widgetPositioning: {
                         horizontal: 'left',
                         vertical: 'bottom'

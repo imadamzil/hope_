@@ -67,6 +67,18 @@ class Projet
      */
     private $factures;
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facturefournisseur", mappedBy="projet",cascade={"persist", "remove"})
+     */
+    private $facturefournisseurs;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcfournisseur", mappedBy="projet",cascade={"persist", "remove"})
+     */
+    private $bcfournisseurs;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Production", mappedBy="projet",cascade={"persist", "remove"})
+     */
+    private $productions;
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      *
      * @var \DateTime
@@ -144,7 +156,7 @@ class Projet
         $this->projetconsultants = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime('now');
         $this->updatedAt = new \DateTime('now');
-        $this->statut= 'En cours';
+        $this->setStatut('Actif');
     }
 
     /**
@@ -386,5 +398,107 @@ class Projet
     public function getFactures()
     {
         return $this->factures;
+    }
+
+    /**
+     * Add facturefournisseur
+     *
+     * @param \AppBundle\Entity\Facturefournisseur $facturefournisseur
+     *
+     * @return Projet
+     */
+    public function addFacturefournisseur(\AppBundle\Entity\Facturefournisseur $facturefournisseur)
+    {
+        $this->facturefournisseurs[] = $facturefournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove facturefournisseur
+     *
+     * @param \AppBundle\Entity\Facturefournisseur $facturefournisseur
+     */
+    public function removeFacturefournisseur(\AppBundle\Entity\Facturefournisseur $facturefournisseur)
+    {
+        $this->facturefournisseurs->removeElement($facturefournisseur);
+    }
+
+    /**
+     * Get facturefournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFacturefournisseurs()
+    {
+        return $this->facturefournisseurs;
+    }
+
+    /**
+     * Add bcfournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $bcfournisseur
+     *
+     * @return Projet
+     */
+    public function addBcfournisseur(\AppBundle\Entity\Bcfournisseur $bcfournisseur)
+    {
+        $this->bcfournisseurs[] = $bcfournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove bcfournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $bcfournisseur
+     */
+    public function removeBcfournisseur(\AppBundle\Entity\Bcfournisseur $bcfournisseur)
+    {
+        $this->bcfournisseurs->removeElement($bcfournisseur);
+    }
+
+    /**
+     * Get bcfournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBcfournisseurs()
+    {
+        return $this->bcfournisseurs;
+    }
+
+    /**
+     * Add production
+     *
+     * @param \AppBundle\Entity\Production $production
+     *
+     * @return Projet
+     */
+    public function addProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions[] = $production;
+
+        return $this;
+    }
+
+    /**
+     * Remove production
+     *
+     * @param \AppBundle\Entity\Production $production
+     */
+    public function removeProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions->removeElement($production);
+    }
+
+    /**
+     * Get productions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductions()
+    {
+        return $this->productions;
     }
 }

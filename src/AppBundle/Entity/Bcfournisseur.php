@@ -94,10 +94,20 @@ class Bcfournisseur
      */
     private $fournisseur;
     /**
+     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="bcfournisseurs")
+     * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
+     */
+    private $consultant;
+    /**
      * @ORM\ManyToOne(targetEntity="Mission", inversedBy="bcfournisseurs")
      * @ORM\JoinColumn(name="id_mission", referencedColumnName="id")
      */
     private $mission;
+    /**
+     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="bcfournisseurs")
+     * @ORM\JoinColumn(name="id_projet", referencedColumnName="id")
+     */
+    private $projet;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="bcfournisseur",cascade={"persist", "remove"})
@@ -107,7 +117,10 @@ class Bcfournisseur
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facturefournisseur", mappedBy="bcfournisseur",cascade={"persist", "remove"})
      */
     private $facturefournisseurs;
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\FactureHsup", mappedBy="bcfournisseur",cascade={"persist", "remove"})
+     */
+    private $heures;
     /**
      * Get id
      *
@@ -357,6 +370,8 @@ class Bcfournisseur
     public function __construct()
     {
         $this->virments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->heures = new \Doctrine\Common\Collections\ArrayCollection();
+
         $this->createdAt = new \DateTime('now');
     }
 
@@ -396,7 +411,16 @@ class Bcfournisseur
 
     public function __toString()
     {
-        return $this->getFournisseur()->getNom().'--'.$this->getMois().'/'.$this->getYear();
+        if($this->getFournisseur()){
+
+            return $this->getFournisseur()->getNom().'--'.$this->getMois().'/'.$this->getYear();
+
+        }else{
+
+            return 'BC_F_'.'--'.$this->getMois().'/'.$this->getYear();
+
+        }
+
     }
 
     /**
@@ -691,5 +715,87 @@ class Bcfournisseur
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \AppBundle\Entity\Consultant $consultant
+     *
+     * @return Bcfournisseur
+     */
+    public function setConsultant(\AppBundle\Entity\Consultant $consultant = null)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \AppBundle\Entity\Consultant
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
+    }
+
+    /**
+     * Set projet
+     *
+     * @param \AppBundle\Entity\Projet $projet
+     *
+     * @return Bcfournisseur
+     */
+    public function setProjet(\AppBundle\Entity\Projet $projet = null)
+    {
+        $this->projet = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Get projet
+     *
+     * @return \AppBundle\Entity\Projet
+     */
+    public function getProjet()
+    {
+        return $this->projet;
+    }
+
+    /**
+     * Add heure
+     *
+     * @param \AppBundle\Entity\FactureHsup $heure
+     *
+     * @return Bcfournisseur
+     */
+    public function addHeure(\AppBundle\Entity\FactureHsup $heure)
+    {
+        $this->heures[] = $heure;
+
+        return $this;
+    }
+
+    /**
+     * Remove heure
+     *
+     * @param \AppBundle\Entity\FactureHsup $heure
+     */
+    public function removeHeure(\AppBundle\Entity\FactureHsup $heure)
+    {
+        $this->heures->removeElement($heure);
+    }
+
+    /**
+     * Get heures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHeures()
+    {
+        return $this->heures;
     }
 }

@@ -145,6 +145,11 @@ class Facture
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\LigneFacture", mappedBy="facture",cascade={"persist", "remove"})
      */
     private $lignes;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\FactureHsup", mappedBy="facture",cascade={"persist", "remove"})
+     */
+    private $facturehsups;
+
 
     /**
      * Get id
@@ -673,6 +678,8 @@ class Facture
      */
     public function __construct()
     {
+        $this->facturehsups = new \Doctrine\Common\Collections\ArrayCollection();
+
         $this->lignes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -787,5 +794,41 @@ class Facture
     {
         return 'facture' ;
 
+    }
+
+
+
+    /**
+     * Add facturehsup
+     *
+     * @param \AppBundle\Entity\FactureHsup $facturehsup
+     *
+     * @return Facture
+     */
+    public function addFacturehsup(\AppBundle\Entity\FactureHsup $facturehsup)
+    {
+        $this->facturehsups[] = $facturehsup;
+
+        return $this;
+    }
+
+    /**
+     * Remove facturehsup
+     *
+     * @param \AppBundle\Entity\FactureHsup $facturehsup
+     */
+    public function removeFacturehsup(\AppBundle\Entity\FactureHsup $facturehsup)
+    {
+        $this->facturehsups->removeElement($facturehsup);
+    }
+
+    /**
+     * Get facturehsups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFacturehsups()
+    {
+        return $this->facturehsups;
     }
 }

@@ -76,6 +76,15 @@ class Facture2Type extends AbstractType
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'date-timepicker1'],
             ])
+            ->add('date', DateTimeType::class, [
+                'widget' => 'single_text',
+                'placeholder' => 'Date Facture',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+
+                // adds a class that can be selected in JavaScript
+                'attr' => ['class' => 'date-timepicker1'],
+            ])
             ->add('dateFin', DateTimeType::class, [
                 'widget' => 'single_text',
                 'placeholder' => 'Date Fin',
@@ -105,9 +114,9 @@ class Facture2Type extends AbstractType
                 ),
                 'prototype' => true,
                 'allow_add' => false,
-                'allow_delete' => false,
+                'allow_delete' => true,
 
-                'by_reference' => true,
+                'by_reference' => false,
 
             ]);
     }

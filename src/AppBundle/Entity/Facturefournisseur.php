@@ -74,6 +74,12 @@ class Facturefournisseur
      * @ORM\Column(name="etat", type="string", length=255, nullable=true)
      */
     private $etat;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero", type="string", length=255, nullable=true)
+     */
+    private $numero;
 
     /**
      * @var \DateTime
@@ -97,11 +103,26 @@ class Facturefournisseur
      * @ORM\JoinColumn(name="id_mission", referencedColumnName="id")
      */
     private $mission;
-
+    /**
+     * @ORM\ManyToOne(targetEntity="Projet", inversedBy="facturefournisseurs")
+     * @ORM\JoinColumn(name="id_projet", referencedColumnName="id")
+     */
+    private $projet;
+    /**
+     * @ORM\ManyToOne(targetEntity="Consultant", inversedBy="facturefournisseurs")
+     * @ORM\JoinColumn(name="id_consultant", referencedColumnName="id")
+     */
+    private $consultant;
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="facturefournisseur",cascade={"persist", "remove"})
      */
     private $virements;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\FactureHsup", mappedBy="facturefournisseur",cascade={"persist", "remove"})
+     */
+    private $heures;
+
     /**
      * Get id
      *
@@ -231,6 +252,7 @@ class Facturefournisseur
      * @var \DateTime
      */
     private $updatedAt;
+
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
@@ -345,12 +367,14 @@ class Facturefournisseur
     {
         return $this->fournisseur;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->virments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->heures = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setEtat('non payé');
     }
 
@@ -390,7 +414,14 @@ class Facturefournisseur
 
     public function __toString()
     {
-        return $this->getFournisseur()->getNom().'--'.$this->getMois().'/'.$this->getYear();
+        if ($this->getFournisseur()) {
+            return $this->getFournisseur()->getNom() . '--' . $this->getMois() . '/' . $this->getYear();
+
+
+        } else {
+            return 'Facture_F_'.'--'.$this->getMois().'/'.$this->getYear();
+
+        }
     }
 
     /**
@@ -561,49 +592,7 @@ class Facturefournisseur
         return $this->mission;
     }
 
-    /**
-     * Add virement
-     *
-     * @param \AppBundle\Entity\Virement $virement
-     *
-     * @return Bcfournisseur
-     */
-    public function addVirement(\AppBundle\Entity\Virement $virement)
-    {
-        $this->virements[] = $virement;
 
-        return $this;
-    }
-
-    /**
-     * Remove virement
-     *
-     * @param \AppBundle\Entity\Virement $virement
-     */
-    public function removeVirement(\AppBundle\Entity\Virement $virement)
-    {
-        $this->virements->removeElement($virement);
-    }
-
-    /**
-     * Get virements
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getVirements()
-    {
-        return $this->virements;
-    }
-
-    /**
-     * Get virement
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getVirement()
-    {
-        return $this->virement;
-    }
 
     /**
      * Set bcfournisseur
@@ -627,5 +616,111 @@ class Facturefournisseur
     public function getBcfournisseur()
     {
         return $this->bcfournisseur;
+    }
+
+    /**
+     * Set numero
+     *
+     * @param string $numero
+     *
+     * @return Facturefournisseur
+     */
+    public function setNumero($numero)
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * Get numero
+     *
+     * @return string
+     */
+    public function getNumero()
+    {
+        return $this->numero;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \AppBundle\Entity\Consultant $consultant
+     *
+     * @return Facturefournisseur
+     */
+    public function setConsultant(\AppBundle\Entity\Consultant $consultant = null)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \AppBundle\Entity\Consultant
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
+    }
+
+    /**
+     * Set projet
+     *
+     * @param \AppBundle\Entity\Projet $projet
+     *
+     * @return Facturefournisseur
+     */
+    public function setProjet(\AppBundle\Entity\Projet $projet = null)
+    {
+        $this->projet = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Get projet
+     *
+     * @return \AppBundle\Entity\Projet
+     */
+    public function getProjet()
+    {
+        return $this->projet;
+    }
+
+    /**
+     * Add heure
+     *
+     * @param \AppBundle\Entity\FactureHsup $heure
+     *
+     * @return Facturefournisseur
+     */
+    public function addHeure(\AppBundle\Entity\FactureHsup $heure)
+    {
+        $this->heures[] = $heure;
+
+        return $this;
+    }
+
+    /**
+     * Remove heure
+     *
+     * @param \AppBundle\Entity\FactureHsup $heure
+     */
+    public function removeHeure(\AppBundle\Entity\FactureHsup $heure)
+    {
+        $this->heures->removeElement($heure);
+    }
+
+    /**
+     * Get heures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHeures()
+    {
+        return $this->heures;
     }
 }

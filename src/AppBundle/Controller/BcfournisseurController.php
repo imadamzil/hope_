@@ -84,10 +84,58 @@ class BcfournisseurController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $fiche = $em->getRepository('AppBundle:Fiche')->find(1);
+        function mois_convert($m)
+        {
+
+            switch ($m) {
+                case 1:
+                    return "Janvier";
+                    break;
+                case 2:
+                    return "Février";
+                    break;
+                case 3:
+                    return "Mars";
+                    break;
+                case 4:
+                    return "Avril";
+                    break;
+                case 5:
+                    return "Mai";
+                    break;
+                case 6:
+                    return "Juin";
+                    break;
+                case 7:
+                    return "Juillet";
+                    break;
+                case 8:
+                    return "Aout";
+                    break;
+                case 9:
+                    return "Septembre";
+                    break;
+                case 10:
+                    return "Octobre";
+                    break;
+                case 11:
+                    return "Novembre";
+                    break;
+                case 12:
+                    return "Décembre";
+                    break;
+                case 0:
+                    return "Décembre";
+                    break;
+
+            }
+        }
+
         dump($bcfournisseur);
         return $this->render('bcfournisseur/print.html.twig', array(
             'bcfournisseur' => $bcfournisseur,
-            'fiche' => $fiche
+            'fiche' => $fiche,
+            'mois' => mois_convert($bcfournisseur->getMois()),
         ));
     }
 

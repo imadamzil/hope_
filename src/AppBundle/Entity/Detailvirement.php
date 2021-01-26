@@ -237,4 +237,9 @@ class Detailvirement
     {
         return $this->createdAt;
     }
+    public function __construct()
+    {
+
+        $this->setCreatedAt(new \DateTime());
+    }
 }

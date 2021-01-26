@@ -21,6 +21,8 @@
             <th>#</th>
             <th>Code</th>
             <th>Date</th>
+            <th>Consultant</th>
+            <th>Client</th>
             <th>Nbjrs</th>
             <th>Nbjrsr</th>
             <th>N° Contrat</th>
@@ -35,6 +37,8 @@
                 <td><a href="{{ path('bcclient_show', { 'id': bcclient.id }) }}">{{ bcclient.id }}</a></td>
                 <td>{{ bcclient.code }}</td>
                 <td>{% if bcclient.date %}{{ bcclient.date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ bcclient.consultant }}</td>
+                <td>{{ bcclient.client }}</td>
                 <td>{{ bcclient.nbJrs }}</td>
                 <td>{{ bcclient.nbJrsR }}</td>
                 <td>{{ bcclient.ncontrat }}</td>

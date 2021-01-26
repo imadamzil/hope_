@@ -127,7 +127,10 @@ class Mission
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="mission",cascade={"persist", "remove"})
      */
     private $factures;
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Production", mappedBy="mission",cascade={"persist", "remove"})
+     */
+    private $productions;
     /**
      * @ORM\Column(type="datetime", nullable=true)
      *

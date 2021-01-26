@@ -36,7 +36,7 @@ class Mission
     /**
      * @var string
      *
-     * @ORM\Column(name="prixAchat", type="string", length=255, nullable=true)
+     * @ORM\Column(name="prixAchat", type="float", length=255, nullable=true)
      */
     private $prixAchat;
     /**
@@ -127,7 +127,10 @@ class Mission
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="mission",cascade={"persist", "remove"})
      */
     private $factures;
-
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Production", mappedBy="mission",cascade={"persist", "remove"})
+     */
+    private $productions;
     /**
      * @ORM\Column(type="datetime", nullable=true)
      *
@@ -389,7 +392,7 @@ class Mission
     /**
      * Set prixAchat
      *
-     * @param string $prixAchat
+     * @param float $prixAchat
      *
      * @return Mission
      */
@@ -403,7 +406,7 @@ class Mission
     /**
      * Get prixAchat
      *
-     * @return string
+     * @return float
      */
     public function getPrixAchat()
     {
@@ -974,5 +977,39 @@ class Mission
     public function getClosedAt()
     {
         return $this->closedAt;
+    }
+
+    /**
+     * Add production
+     *
+     * @param \AppBundle\Entity\Production $production
+     *
+     * @return Mission
+     */
+    public function addProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions[] = $production;
+
+        return $this;
+    }
+
+    /**
+     * Remove production
+     *
+     * @param \AppBundle\Entity\Production $production
+     */
+    public function removeProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions->removeElement($production);
+    }
+
+    /**
+     * Get productions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductions()
+    {
+        return $this->productions;
     }
 }
