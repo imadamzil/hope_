@@ -164,7 +164,7 @@ class DefaultController extends Controller
 
         for ($i = 1; $i <= 5; $i++) {
             $m = intval(date("m", strtotime(date('Y-m-01') . " -$i months")));
-            dump($m);
+//            dump($m);
             // depart query
             $q = $em->createQuery('
         
@@ -362,7 +362,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $bcfournisseurs = array_reverse($em->getRepository('AppBundle:Bcfournisseur')->findAll());
-        dump($bcfournisseurs);
+//        dump($bcfournisseurs);
         return $this->render('production.html.twig', array(
             'bcfournisseurs' => $bcfournisseurs,
         ));
@@ -386,7 +386,7 @@ class DefaultController extends Controller
 
 
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
-        dump($sheetData);
+//        dump($sheetData);
 
 
         foreach ($sheetData as $row) {
@@ -448,7 +448,7 @@ class DefaultController extends Controller
                 $bcclient->setNcontrat($ncontrat);
                 $bcclient->setApplication($application);
                 $bcclient->setAvenant($avenant);
-                dump($date);
+//                dump($date);
 
                 $em->persist($bcclient);
                 $em->flush();
@@ -479,7 +479,7 @@ class DefaultController extends Controller
 
 
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
-        dump($sheetData);
+//        dump($sheetData);
 
         foreach ($sheetData as $row) {
 
@@ -617,7 +617,7 @@ class DefaultController extends Controller
 
 
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
-        dump($sheetData);
+//        dump($sheetData);
 
         foreach ($sheetData as $row) {
 
@@ -672,7 +672,7 @@ class DefaultController extends Controller
 
 
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
-        dump($sheetData);
+//        dump($sheetData);
 
         foreach ($sheetData as $row) {
 
@@ -729,7 +729,7 @@ class DefaultController extends Controller
 
 
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
-        dump($sheetData);
+//        dump($sheetData);
 //        die();
 
         foreach ($sheetData as $row) {

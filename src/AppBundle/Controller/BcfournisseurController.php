@@ -131,7 +131,7 @@ class BcfournisseurController extends Controller
             }
         }
 
-        dump($bcfournisseur);
+//        dump($bcfournisseur);
         return $this->render('bcfournisseur/print.html.twig', array(
             'bcfournisseur' => $bcfournisseur,
             'fiche' => $fiche,

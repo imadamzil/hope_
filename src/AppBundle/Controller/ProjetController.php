@@ -275,7 +275,7 @@ class ProjetController extends Controller
 
         ];
 
-         dump($lignes_collection, $defaultData, $query);
+//         dump($lignes_collection, $defaultData, $query);
         $form = $this->createFormBuilder($defaultData)
             ->add('mois', ChoiceType::class, array(
                 'attr' => ['class' => 'form-control'],
