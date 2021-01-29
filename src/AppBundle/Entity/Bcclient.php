@@ -62,14 +62,14 @@ class Bcclient
     /**
      * @var string
      *
-     * @ORM\Column(name="nbJrs", type="integer", nullable=true)
+     * @ORM\Column(name="nbJrs", type="float", nullable=true)
      */
     private $nbJrs;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="nbJrsR", type="integer", nullable=true)
+     * @ORM\Column(name="nbJrsR", type="float", nullable=true)
      */
     private $nbJrsR;
 
@@ -115,6 +115,7 @@ class Bcclient
      * @ORM\Column(name="date_ceation", type="datetime", nullable=true)
      */
     private $createdAt;
+
     /**
      * Get id
      *
@@ -176,7 +177,7 @@ class Bcclient
     /**
      * Set nbJrs
      *
-     * @param string $nbJrs
+     * @param float $nbJrs
      *
      * @return Bcclient
      */
@@ -190,7 +191,7 @@ class Bcclient
     /**
      * Get nbJrs
      *
-     * @return string
+     * @return float
      */
     public function getNbJrs()
     {
@@ -200,7 +201,7 @@ class Bcclient
     /**
      * Set nbJrsR
      *
-     * @param integer $nbJrsR
+     * @param float $nbJrsR
      *
      * @return Bcclient
      */
@@ -214,7 +215,7 @@ class Bcclient
     /**
      * Get nbJrsR
      *
-     * @return int
+     * @return float
      */
     public function getNbJrsR()
     {
@@ -226,7 +227,8 @@ class Bcclient
      */
     public function __construct()
     {
-        $this->mission =  new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mission = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime('now');
     }
 
     /**
@@ -313,9 +315,14 @@ class Bcclient
 
     public function __toString()
     {
-        return $this->getClient()->getNom() . '~' . $this->getCode().'_'.$this->getNbJrsR();
-    }
+        if ($this->getClient()) {
+            return $this->getClient()->getNom() . '~' . $this->getCode() . '_' . $this->getNbJrsR();
 
+        }else{
+            return $this->getCode() . '_' . $this->getNbJrsR();
+
+        }
+    }
 
 
     /**

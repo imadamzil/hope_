@@ -681,6 +681,7 @@ class Facture
         $this->facturehsups = new \Doctrine\Common\Collections\ArrayCollection();
 
         $this->lignes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->etat = 'non payé';
     }
 
     /**

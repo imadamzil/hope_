@@ -124,6 +124,7 @@ class BcclientController extends Controller
     {
         $deleteForm = $this->createDeleteForm($bcclient);
         $editForm = $this->createForm('AppBundle\Form\BcclientType', $bcclient);
+        $bcclient->setUpdatedAt(new \DateTime());
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

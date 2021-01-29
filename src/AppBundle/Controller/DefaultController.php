@@ -3,6 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Bcclient;
+use AppBundle\Entity\Client;
+use AppBundle\Entity\Consultant;
+use AppBundle\Entity\Fournisseur;
+use AppBundle\Entity\Job;
+use AppBundle\Entity\Mission;
 use DateTime;
 use Symfony\Component\HttpFoundation\Response;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\AreaChart;
@@ -119,7 +124,7 @@ class DefaultController extends Controller
         SELECT CONCAT(f.mois, \'-\',f.year) as mois,avg(f.totalHT) as total,avg(f.totalTTC) as totalc  FROM AppBundle:Facture f 
         WHERE f.etat = :etat
               
-        GROUP BY f.mois  ORDER BY f.mois ASC  
+        GROUP BY f.mois  ORDER BY f.year,f.mois ASC  
         ')->setParameter(':etat', 'payé')->execute();
 
 
@@ -159,7 +164,7 @@ class DefaultController extends Controller
 
         for ($i = 1; $i <= 5; $i++) {
             $m = intval(date("m", strtotime(date('Y-m-01') . " -$i months")));
-
+            dump($m);
             // depart query
             $q = $em->createQuery('
         
@@ -180,7 +185,7 @@ class DefaultController extends Controller
         
         WHERE m.statut =:statut
         AND MONTH( m.closedAt)= :m
-        
+
         ')->setParameters([':statut' => 'Terminé',
                 ':m' => $m
             ])->getOneOrNullResult();
@@ -364,16 +369,109 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/migration", name="migration")
+     * @Route("/migration/bcclient", name="migration_bcclient")
      */
-    public function migration()
+    public function migrationBcclient()
     {
 
 
         $em = $this->getDoctrine()->getManager();
 
         ini_set('memory_limit', '1024M');
-        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\bcclient.csv';
+        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\bcclient.xlsx';
+        $spreadsheet = IOFactory::load($inputFileName);
+
+        set_time_limit(10000); //
+        ini_set('memory_limit', '1024M');
+
+
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        dump($sheetData);
+
+
+        foreach ($sheetData as $row) {
+
+            if ($row[0] == 'id') {
+
+
+            } else {
+                $id = intval($row[0]);
+                $code = $row[1];
+                if ($row[2]) {
+                    $datef = DateTime::createFromFormat('d/m/Y', $row[2])->format('Y-m-d');
+                    $date = new \DateTime($datef);
+                } else {
+                    $date = null;
+                }
+                $nbJrs = $row[3];
+                $nbJrsR = $row[4];
+                if ($row[5]) {
+                    $client_arr = $em->getRepository('AppBundle:Client')->findBy([
+                        'nom' => $row[5]
+                    ]);
+                    if (!empty($client_arr)) {
+                        $client = $client_arr[0];
+                    } else {
+                        $client = null;
+                    }
+
+                } else {
+
+                    $client = null;
+                }
+                if ($row[6]) {
+                    $consultant_arr = $em->getRepository('AppBundle:Consultant')->findBy([
+                        'nom' => $row[6]
+                    ]);
+                    if (!empty($consultant_arr)) {
+                        $consultant = $consultant_arr[0];
+                    } else {
+                        $consultant = null;
+                    }
+                } else {
+
+                    $consultant = null;
+                }
+                $type = $row[9];
+                $ncontrat = $row[10];
+                $application = $row[11];
+                $avenant = $row[12];
+
+                $bcclient = new Bcclient();
+                $bcclient->setCode($code);
+                $bcclient->setDate($date);
+                $bcclient->setNbJrs($nbJrs);
+                $bcclient->setNbJrs($nbJrsR);
+                $bcclient->setClient($client);
+                $bcclient->setConsultant($consultant);
+                $bcclient->setType($type);
+                $bcclient->setNcontrat($ncontrat);
+                $bcclient->setApplication($application);
+                $bcclient->setAvenant($avenant);
+                dump($date);
+
+                $em->persist($bcclient);
+                $em->flush();
+
+
+            }
+
+        }
+
+        return $this->render('production.html.twig', array());
+    }
+
+    /**
+     * @Route("/migration/mission", name="migration_mission")
+     */
+    public function migrationMission()
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        ini_set('memory_limit', '1024M');
+        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\mission.xlsx';
         $spreadsheet = IOFactory::load($inputFileName);
 
         set_time_limit(10000); //
@@ -390,13 +488,281 @@ class DefaultController extends Controller
 
             } else {
                 $id = intval($row[0]);
-                $code=$row[1];
+//                $code = $row[1];
 //                $date = DateTime::createFromFormat('Y-m-d\TH:i', $row[2]);
 //                $date->format('Y-m-d\TH:i');
-               $date = DateTime::createFromFormat('Y-m-d', $row[2])->format('Y-m-d');
-               dump($date);
-                $bcclient = new Bcclient();
+//                $date = DateTime::createFromFormat('Y-m-d', $row[2])->format('Y-m-d');
 
+
+                if ($row[1]) {
+                    $bcclient_arr = $em->createQuery('
+                                SELECT  b
+                                FROM AppBundle:Bcclient b 
+                                WHERE b.code = :valeur OR b.ncontrat= :valeur
+        ')->setParameter('valeur', $row[1])->execute();
+                    if (!empty($client_arr)) {
+                        $bcclient = $bcclient_arr[0];
+                    } else {
+                        $bcclient = null;
+                    }
+
+                } else {
+
+                    $bcclient = null;
+                }
+                if ($row[2]) {
+                    $client_arr = $em->getRepository('AppBundle:Client')->findBy([
+                        'nom' => $row[2]
+                    ]);
+                    if (!empty($client_arr)) {
+                        $client = $client_arr[0];
+                    } else {
+                        $client = null;
+                    }
+
+                } else {
+
+                    $client = null;
+                }
+                $prixVente = $row[3];
+                $prixAchat = $row[4];
+                // $date = DateTime::createFromFormat('Y-m-d', $row[2])->format('Y-m-d');
+                if ($row[7]) {
+                    $consultant_arr = $em->getRepository('AppBundle:Consultant')->findBy([
+                        'nom' => $row[7]
+                    ]);
+                    if (!empty($consultant_arr)) {
+                        $consultant = $consultant_arr[0];
+                    } else {
+                        $consultant = null;
+                    }
+
+                } else {
+
+                    $consultant = null;
+                }
+                if ($row[8]) {
+                    $fournisseur_arr = $em->getRepository('AppBundle:Fournisseur')->findBy([
+                        'nom' => $row[8]
+                    ]);
+                    if (!empty($fournisseur_arr)) {
+                        $fournisseur = $fournisseur_arr[0];
+                    } else {
+                        $fournisseur = null;
+                    }
+
+                } else {
+
+                    $fournisseur = null;
+                }
+
+                $type = $row[15];
+                $devise = $row[16];
+                $motif = $row[17];
+                $description = $row[18];
+                if ($row[21]) {
+                    $job_arr = $em->getRepository('AppBundle:Job')->findBy([
+                        'nom' => $row[21]
+                    ]);
+                    if (!empty($job_arr)) {
+                        $job = $job_arr[0];
+                    } else {
+                        $job = new Job();
+                        $job->setNom($row[21]);
+                        $em->persist($job);
+                        $em->flush();
+                    }
+
+                } else {
+
+                    $job = null;
+                }
+                $mission = new Mission();
+                $mission->setBcclient($bcclient);
+                $mission->setClient($client);
+                $mission->setPrixVente($prixVente);
+                $mission->setPrixAchat($prixAchat);
+                $mission->setConsultant($consultant);
+                $mission->setFournisseur($fournisseur);
+                $mission->setType($type);
+                $mission->setDevise($devise);
+                $mission->setMotif($motif);
+                $mission->setDescription($description);
+                $mission->setJob($job);
+                $em->persist($mission);
+                $em->flush();
+
+            }
+
+        }
+
+        return $this->render('production.html.twig', array());
+    }
+
+    /**
+     * @Route("/migration/fournisseur", name="migration_fournisseur")
+     */
+    public function migrationFournisseur()
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        ini_set('memory_limit', '1024M');
+        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\fournisseur.xlsx';
+        $spreadsheet = IOFactory::load($inputFileName);
+
+        set_time_limit(10000); //
+        ini_set('memory_limit', '1024M');
+
+
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        dump($sheetData);
+
+        foreach ($sheetData as $row) {
+
+            if ($row[0] == 'id') {
+
+
+            } else {
+                $id = intval($row[0]);
+                $nom = $row[1];
+                $tel = $row[2];
+                $fax = $row[3];
+                $adresse = $row[4];
+                $rib = $row[5];
+                $rc = $row[6];
+
+                $ice = $row[7];
+
+                $iif = $row[8];
+                $fournisseur = new Fournisseur();
+                $fournisseur->setNom($nom);
+                $fournisseur->setTel($tel);
+                $fournisseur->setFax($fax);
+                $fournisseur->setAdresse($adresse);
+                $fournisseur->setRib($rib);
+                $fournisseur->setRc($rc);
+                $fournisseur->setIce($ice);
+                $fournisseur->setIif($iif);
+                $em->persist($fournisseur);
+                $em->flush();
+            }
+
+        }
+
+        return $this->render('production.html.twig', array());
+    }
+
+    /**
+     * @Route("/migration/client", name="migration_client")
+     */
+    public function migrationClient()
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        ini_set('memory_limit', '1024M');
+        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\client.xlsx';
+        $spreadsheet = IOFactory::load($inputFileName);
+
+        set_time_limit(10000); //
+        ini_set('memory_limit', '1024M');
+
+
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        dump($sheetData);
+
+        foreach ($sheetData as $row) {
+
+            if ($row[0] == 'id') {
+
+
+            } else {
+                $id = intval($row[0]);
+                $nom = $row[1];
+                $tel = $row[2];
+                $fax = $row[3];
+                $email = $row[4];
+                $adresse = $row[5];
+                $contrat_cadre = $row[6];
+
+                $ice = $row[9];
+
+                $echeance = $row[10];
+                $client = new Client();
+                $client->setNom($nom);
+                $client->setTel($tel);
+                $client->setFax($fax);
+                $client->setEmail($email);
+                $client->setAdresse($adresse);
+                $client->setContratCadre($contrat_cadre);
+                $client->setIce($ice);
+                $client->setEcheance($echeance);
+                $em->persist($client);
+                $em->flush();
+
+
+            }
+
+        }
+
+        return $this->render('production.html.twig', array());
+    }
+
+    /**
+     * @Route("/migration/consultant", name="migration_consultant")
+     */
+    public function migrationConsultant()
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        ini_set('memory_limit', '1024M');
+        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\consultant.xlsx';
+        $spreadsheet = IOFactory::load($inputFileName);
+
+        set_time_limit(10000); //
+        ini_set('memory_limit', '1024M');
+
+
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        dump($sheetData);
+//        die();
+
+        foreach ($sheetData as $row) {
+
+            if ($row[0] == 'id') {
+
+
+            } else {
+                $id = intval($row[0]);
+                $nom = $row[1];
+                $type = $row[2];
+                $salaire = $row[3];
+                $rib = $row[4];
+                $tel = $row[5];
+                $email = $row[6];
+                $adresse = $row[7];
+                $tjm = $row[10];
+
+                $cin = $row[11];
+
+                $consultant = new Consultant();
+                $consultant->setNom($nom);
+                $consultant->setTel($tel);
+                $consultant->setType($type);
+                $consultant->setEmail($email);
+                $consultant->setRib($rib);
+                $consultant->setAdresse($adresse);
+                $consultant->setSalaire($salaire);
+                $consultant->setTjm($tjm);
+                $consultant->setCin($cin);
+
+                $em->persist($consultant);
+                $em->flush();
 
 
             }

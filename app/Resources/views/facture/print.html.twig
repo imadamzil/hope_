@@ -132,19 +132,24 @@
 
                                                 </span>
             </p>
-            <p>
-                <span class="YYY">Consultant :</span><br>
-                <span class="NBt OLL">{{ facture.consultant.nom }}
-                    &nbsp;</span>
+            {% if facture.mission.consultant is not null %}
 
-            </p>
-            <p>
-                &nbsp;&nbsp;<span class="YYY"><u>Mois :</u></span><br><span
-                        class="OLL">&nbsp;&nbsp;&nbsp;&nbsp;{{ mois }} {{ facture.year }}</span>
-                {% if facture.facturehsups | length != 0 %}
+                <p>
+                    <span class="YYY">Consultant :</span><br>
+                    <span class="NBt OLL">{{ facture.consultant }}
+                        &nbsp;</span>
 
-                    <br>
-                    <span class="OLL bolder">
+                </p>
+            {% endif %}
+
+            {% if facture.mois is not null %}
+                <p>
+                    &nbsp;&nbsp;<span class="YYY"><u>Mois :</u></span><br><span
+                            class="OLL">&nbsp;&nbsp;&nbsp;&nbsp;{{ mois }} {{ facture.year }}</span>
+                    {% if facture.facturehsups | length != 0 %}
+
+                        <br>
+                        <span class="OLL bolder">
 
                     {% for heure in facture.facturehsups %}
                         {% if heure.bcfournisseur is null %}
@@ -156,9 +161,9 @@
                     {% endfor %}
                     </span>
 
-                {% endif %}
-            </p>
-
+                    {% endif %}
+                </p>
+            {% endif %}
             {% if facture.client.nom == 'Société Générale – African Business Services' %}
                 {% if facture.mission.bcclient is not null %}
                     <p>
@@ -252,16 +257,19 @@
             {% endif %}
 
         </td>
-        <td class="text-center align-middle">
-            {% if facture.mission.type == 'mensuel' %}
-                1
-            {% else %}
-                {{ facture.nbjour }}
+        <td class="text-center align-middle ">
+            <strong>
+                {% if facture.mission.type == 'mensuel' %}
+                    1
+                {% else %}
+                    {{ facture.nbjour }}
 
-            {% endif %}
-            {% if facture.facturehsups | length != 0 %}
-                <br> 1
-            {% endif %}
+                {% endif %}
+                {% if facture.facturehsups | length != 0 %}
+                    <br> 1
+                {% endif %}
+            </strong>
+
         </td>
 
         <td class=" text-center"><strong>

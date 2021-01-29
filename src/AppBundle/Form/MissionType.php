@@ -25,7 +25,7 @@ class MissionType extends AbstractType
                 'placeholder' => 'Date Début mission',
                 // prevents rendering it as type="date", to avoid HTML5 date pickers
                 'html5' => false,
-
+                'required'=>false,
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'date-timepicker1'],
             ])
@@ -34,13 +34,13 @@ class MissionType extends AbstractType
                 'placeholder' => 'Date Début mission',
                 // prevents rendering it as type="date", to avoid HTML5 date pickers
                 'html5' => false,
-
+                'required'=>false,
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'date-timepicker1'],
             ])
             ->add('dateFin', DateTimeType::class, [
                 'widget' => 'single_text',
-
+                'required'=>false,
                 // prevents rendering it as type="date", to avoid HTML5 date pickers
                 'html5' => false,
 
@@ -53,6 +53,8 @@ class MissionType extends AbstractType
                 'class' => 'AppBundle:Client',
                 'multiple' => false,
                 'label' => 'Client',
+                'required'=>false,
+                'placeholder' => '--',
                 'attr' => array(
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Selectionner',
@@ -63,6 +65,8 @@ class MissionType extends AbstractType
                 'class' => 'AppBundle:Job',
                 'multiple' => false,
                 'label' => 'Motif',
+                'required'=>false,
+                'placeholder' => '--',
                 'attr' => array(
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Selectionner',
@@ -72,6 +76,7 @@ class MissionType extends AbstractType
             )) ->add('departement', EntityType::class, array(
                 'class' => 'AppBundle:Departement',
                 'multiple' => false,
+                'required'=>false,
                 'placeholder'=>'--',
                 'label' => 'Département',
                 'attr' => array(
@@ -85,7 +90,7 @@ class MissionType extends AbstractType
                 'class' => 'AppBundle:Consultant',
                 'multiple' => false,
                 'placeholder' => '--',
-
+'required'=>false,
                 'label' => 'Consultant',
                 'attr' => array(
                     'class' => 'chosen-select',
@@ -98,6 +103,7 @@ class MissionType extends AbstractType
                 'class' => 'AppBundle:Fournisseur',
                 'multiple' => false,
                 'label' => 'Fournisseur',
+                'placeholder' => '--',
                 'attr' => array(
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Selectionner',
@@ -108,7 +114,7 @@ class MissionType extends AbstractType
             ->add('bcclient', EntityType::class, array(
                 'class' => 'AppBundle:Bcclient',
                 'multiple' => false,
-            //    'placeholder'=>'--',
+                'placeholder'=>'--',
                 'label' => 'Bon de commande client',
 //                'choice_label' => 'code',
                 'attr' => array(

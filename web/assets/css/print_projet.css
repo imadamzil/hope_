@@ -1,0 +1,314 @@
+.A
+{
+    display: flex;
+    justify-content: space-between;
+}
+.B
+{
+    margin-left: 30px;
+    margin-top: 10px;
+}
+.C
+{
+    margin-right: 30px;
+    margin-top: 10px;
+}
+.F
+{
+    color: #666666;
+}
+
+.G
+{
+    font-size: 11px;
+    right: 45px;
+    color: #561164;
+    position: absolute;
+}
+.GA
+{
+    font-size: 11px;
+
+    position: relative;
+    top: 5px;
+    color: #561164;
+}
+.DF2
+{
+    margin-left: 100px;
+    margin-top: 40px;
+}.DF
+ {
+     margin-left: 780px;
+     margin-top: 20px;
+ }
+.SQ
+{
+    color: rgb(0,31,95);
+    font-size: 26px;
+}
+.QW
+{
+
+    color: rgb(0,31,95);
+}
+/*.AZE
+{
+	margin-left: 90px;
+	background-color: #C0C0C0;
+	opacity: 1;
+	padding-right:9px;
+	padding-top: 15px;
+	padding-left: 5px;
+}*/
+.QWF
+{
+    margin-top: 40px;
+
+}
+.ZES
+{
+    margin-left: 100px;
+    border:solid 1px black;
+    /*padding-top: 15px;*/
+    width: 100%;
+    padding-top: 17px;
+    padding-right: 17px;
+    padding-left: 17px;
+    padding-bottom: 2px;
+
+}
+.RTY
+{
+    font-size: 20px;
+    color: rgb(0,31,95);
+}
+.ZEF
+{
+    color: rgb(0,31,95);
+}
+.WXV
+{
+    color: rgb(0,31,95);
+    margin-left: 10px;
+    font-size: 20px;
+
+}
+.ERZ
+{
+    color: rgb(0,31,95);
+}
+.XLJ
+{
+    color: rgb(0,31,95);
+    font-size: 20px;
+}
+table, td, th {
+    border: 1px solid black;
+}
+table
+{
+    border-collapse: collapse;
+    margin-top: 60px;
+    margin-left: 30px;
+    margin-right: 50px;
+    /*width:90%;*/
+    border:2px solid black;
+
+
+
+
+}
+tr{
+
+}
+td
+{
+    padding: 10px;
+    /*border:2px solid black;*/
+    color: rgb(0,31,95);
+    font-size: 20px;
+    vertical-align: top;
+
+
+}
+th
+{
+    /*border:2px solid black;*/
+    color: rgb(0,31,95);
+    font-size: 17px;
+
+
+}
+.NB
+{
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    color: rgb(0,31,95);
+}
+.NBV
+{
+    padding: 10px 15px 10px 10px;
+    text-align: center;
+    color: rgb(0,31,95);
+}
+.lmk
+{
+    padding-top: 5px;
+    padding-right: 20px;
+    padding-left: 10px;
+    padding-bottom: 8px;
+    font-size: 18px !important;
+    font-weight: bolder;
+
+}
+.lmks
+{
+    padding: 5px 10px 8px 40px;
+    padding-right: 103px;
+}
+.NBt
+{
+    text-transform: uppercase;
+}
+.PPP
+{
+    color: rgb(0,31,95);
+
+}
+.YYY
+{
+    text-decoration: underline;
+    color: rgb(0,31,95);
+}
+.OLL
+{
+    color: rgb(0,31,95);
+    font-weight: bolder;
+}
+.AZX
+{
+    margin-top: 30px;
+    margin-left: 600px;
+    color: #000080;
+    font-weight: bold;
+}
+.VVV
+{
+    color: rgb(0,31,95);
+    margin-left: 60px;
+    margin-top: 30px;
+    font-size: 20px;
+}
+.ljj
+{
+    color: rgb(0,31,95);
+    margin-left: 750px;
+    margin-top: 40px;
+    font-size: 18px;
+}
+.XXX
+{
+    color: rgb(0,31,95);
+    text-decoration: underline;
+    font-size: 20px;
+}
+.EEE
+{
+    color: #000080;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 19px;
+}
+.WWM
+{
+    margin-top: 30px;
+    margin-left: 100px;
+}
+.CCC
+{
+    color: rgb(0,31,95);
+}
+.RRR
+{
+    color: rgb(0,31,95);
+    font-size: 14px;
+    margin-top: 10%;
+    margin-left: 100px;
+    margin-bottom: 5px;
+}
+.WII
+{
+
+    font-size: 14px;
+    color: #000080;
+    font-weight: bold;
+
+}
+.TTT
+{
+    margin-top: 100px;
+    margin-left: 600px;
+    margin-bottom: 20px;
+}
+.XWWO
+{
+    color: #000080;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 18px;
+    margin-left: 10px;
+    text-transform: capitalize;
+}.AZE
+ {
+     margin-left: 10px;
+     background: rgb(167,167,167);
+     background: linear-gradient(90deg, rgba(167,167,167,1) 0%, rgba(241,248,250,0.8127626050420168) 93%);
+     opacity: 1;
+     padding-left: 10px;
+     padding-right: 10px;
+     padding-top: 10px;
+     padding-bottom: 1px;
+
+ }
+@media print
+{
+    #vusz{
+        display: none;
+    }
+
+}
+
+.jjj {
+    margin-left: 430px;
+    /*border-color: #ffffff !important;*/
+    border:solid 1px white;
+
+}
+.trr{
+
+    padding-top: 3px;
+    padding-right: 20px;
+    padding-left: 10px;
+    padding-bottom: 3px;
+    /*font-size: 22px;*/
+    border:solid 1px white;
+
+}
+
+.vir {
+    margin-top: 75% !important;
+
+}
+#footer {
+    position: fixed;
+    bottom: 0;
+    /*width: 100%;*/
+}#footer1 {
+     position: fixed;
+     bottom: -85px;
+     /*width: 100%;*/
+ }

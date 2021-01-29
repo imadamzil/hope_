@@ -723,4 +723,38 @@ class Facturefournisseur
     {
         return $this->heures;
     }
+
+    /**
+     * Add virement
+     *
+     * @param \AppBundle\Entity\Virement $virement
+     *
+     * @return Facturefournisseur
+     */
+    public function addVirement(\AppBundle\Entity\Virement $virement)
+    {
+        $this->virements[] = $virement;
+
+        return $this;
+    }
+
+    /**
+     * Remove virement
+     *
+     * @param \AppBundle\Entity\Virement $virement
+     */
+    public function removeVirement(\AppBundle\Entity\Virement $virement)
+    {
+        $this->virements->removeElement($virement);
+    }
+
+    /**
+     * Get virements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVirements()
+    {
+        return $this->virements;
+    }
 }

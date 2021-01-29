@@ -60,19 +60,36 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <!-- page specific plugin scripts -->
     <script src="{{ asset('') }}assets/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('') }}assets/js/jquery.dataTables.bootstrap.min.js"></script>
 
     <script src="{{ asset('') }}assets/js/dataTables.buttons.min.js"></script>
     <script src="{{ asset('') }}assets/js/buttons.flash.min.js"></script>
-    <script src="{{ asset('') }}assets/js/buttons.html5.min.js"></script>
+    {#<script src="{{ asset('') }}assets/js/buttons.html5.min.js"></script>#}
+    <script src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.html5.min.js"></script>
+
     <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
     <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
     <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
     <script type="text/javascript">
         jQuery(function ($) {
-            $('.dataTable').DataTable();
+            $('.dataTable').DataTable(
+                {
+
+                    dom: 'lBfrtip',
+                    pageLength:20,
+                    bLengthChange: true,
+                    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    buttons: [
+                        'copyHtml5', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
+                    ]
+                }
+
+
+            );
 
         });
     </script>

@@ -430,4 +430,28 @@ class Production
     {
         return $this->fournisseur;
     }
+
+    /**
+     * Set mission
+     *
+     * @param \AppBundle\Entity\Mission $mission
+     *
+     * @return Production
+     */
+    public function setMission(\AppBundle\Entity\Mission $mission = null)
+    {
+        $this->mission = $mission;
+
+        return $this;
+    }
+
+    /**
+     * Get mission
+     *
+     * @return \AppBundle\Entity\Mission
+     */
+    public function getMission()
+    {
+        return $this->mission;
+    }
 }

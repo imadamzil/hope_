@@ -36,7 +36,7 @@ class Mission
     /**
      * @var string
      *
-     * @ORM\Column(name="prixAchat", type="string", length=255, nullable=true)
+     * @ORM\Column(name="prixAchat", type="float", length=255, nullable=true)
      */
     private $prixAchat;
     /**
@@ -392,7 +392,7 @@ class Mission
     /**
      * Set prixAchat
      *
-     * @param string $prixAchat
+     * @param float $prixAchat
      *
      * @return Mission
      */
@@ -406,7 +406,7 @@ class Mission
     /**
      * Get prixAchat
      *
-     * @return string
+     * @return float
      */
     public function getPrixAchat()
     {
@@ -666,11 +666,15 @@ class Mission
 
     public function __toString()
     {
-        if ($this->getConsultant() != null) {
+        if ($this->getJob() != null) {
 
-            return 'Mission-' . $this->getClient()->getNom() . '-' . $this->getConsultant()->getNom();
+            return $this->getJob()->getNom();
+        }else{
+
+            return 'Mission-' . $this->getConsultant()->getNom();
+
+
         }
-        return 'Mission-' . $this->getClient()->getNom();
 
     }
 
@@ -977,5 +981,39 @@ class Mission
     public function getClosedAt()
     {
         return $this->closedAt;
+    }
+
+    /**
+     * Add production
+     *
+     * @param \AppBundle\Entity\Production $production
+     *
+     * @return Mission
+     */
+    public function addProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions[] = $production;
+
+        return $this;
+    }
+
+    /**
+     * Remove production
+     *
+     * @param \AppBundle\Entity\Production $production
+     */
+    public function removeProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions->removeElement($production);
+    }
+
+    /**
+     * Get productions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductions()
+    {
+        return $this->productions;
     }
 }

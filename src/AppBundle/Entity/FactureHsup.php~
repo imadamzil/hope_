@@ -50,7 +50,7 @@ class FactureHsup
     private $totalTTC;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Facture", inversedBy="facturehsups")
+     * @ORM\ManyToOne(targetEntity="Facture", inversedBy="facturehsups",cascade={"persist"})
      * @ORM\JoinColumn(name="id_facture", referencedColumnName="id")
      */
     private $facture;

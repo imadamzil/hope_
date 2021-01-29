@@ -58,8 +58,7 @@ class ProjetController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            dump($projet);
-            die();
+
             $em->persist($projet);
 
 
@@ -131,6 +130,8 @@ class ProjetController extends Controller
             foreach ($facture->getLignes() as $ligne) {
 
                 $totalHt += $ligne->getNbjour() * $ligne->getProjetconsultant()->getVente();
+                $ligne->setTotalHT($ligne->getNbjour() * $ligne->getProjetconsultant()->getVente());
+                $ligne->setTotalTTC($ligne->getNbjour() * $ligne->getProjetconsultant()->getVente()*1.2);
 
             }
             $taxe = $totalHt * 0.2;
@@ -274,7 +275,7 @@ class ProjetController extends Controller
 
         ];
 
-        // dump($lignes_collection->count(), $defaultData, $query);
+         dump($lignes_collection, $defaultData, $query);
         $form = $this->createFormBuilder($defaultData)
             ->add('mois', ChoiceType::class, array(
                 'attr' => ['class' => 'form-control'],
@@ -381,7 +382,7 @@ class ProjetController extends Controller
                 // add new production
 
                 // if is orange project
-                if ($facture->getProjet()->getClient() == 'Orange') {
+                if ($facture->getProjet()->getClient() == 'MEDI TELECOM') {
 
                     $production = new Production();
                     $production->setConsultant(($ligne->getProjetconsultant()->getConsultant()));
@@ -395,8 +396,8 @@ class ProjetController extends Controller
                     $production->setNbjour($ligne->getNbjour());
                     $production->setAchatHT($achatht);
                     $production->setAchatTTC($achatht + $taxe);
-                    $production->setVenteHT($venteht);
-                    $production->setVenteTTC($venteht * 1.2);
+//                    $production->setVenteHT($venteht);
+//                    $production->setVenteTTC($venteht * 1.2);
                     $em->persist($production);
                     $em->flush();
                 } else {
@@ -424,8 +425,9 @@ class ProjetController extends Controller
                 //end add production
 
             }
-            dump($bc, $facture, $factureFournisseur);
-            die();
+//            dump($bc, $facture, $factureFournisseur,$production);
+            return $this->redirectToRoute('projet_show', array('id' => $facture->getProjet()->getId()));
+
 
         }
 

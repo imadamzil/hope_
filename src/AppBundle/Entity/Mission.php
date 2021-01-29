@@ -666,11 +666,15 @@ class Mission
 
     public function __toString()
     {
-        if ($this->getConsultant() != null) {
+        if ($this->getJob() != null) {
 
-            return 'Mission-' . $this->getClient()->getNom() . '-' . $this->getConsultant()->getNom();
+            return $this->getJob()->getNom();
+        }else{
+
+            return 'Mission-' . $this->getConsultant()->getNom();
+
+
         }
-        return 'Mission-' . $this->getClient()->getNom();
 
     }
 

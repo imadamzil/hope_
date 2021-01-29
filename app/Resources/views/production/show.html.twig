@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Production</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ production.id }}</td>
+            </tr>
+            <tr>
+                <th>Tjmvente</th>
+                <td>{{ production.tjmVente }}</td>
+            </tr>
+            <tr>
+                <th>Tjmachat</th>
+                <td>{{ production.tjmAchat }}</td>
+            </tr>
+            <tr>
+                <th>Mois</th>
+                <td>{{ production.mois }}</td>
+            </tr>
+            <tr>
+                <th>Year</th>
+                <td>{{ production.year }}</td>
+            </tr>
+            <tr>
+                <th>Nbjour</th>
+                <td>{{ production.nbjour }}</td>
+            </tr>
+            <tr>
+                <th>Venteht</th>
+                <td>{{ production.venteHT }}</td>
+            </tr>
+            <tr>
+                <th>Ventettc</th>
+                <td>{{ production.venteTTC }}</td>
+            </tr>
+            <tr>
+                <th>Achatht</th>
+                <td>{{ production.achatHT }}</td>
+            </tr>
+            <tr>
+                <th>Achatttc</th>
+                <td>{{ production.achatTTC }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('production_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('production_edit', { 'id': production.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

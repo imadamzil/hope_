@@ -62,6 +62,7 @@ class FactureType extends AbstractType
                 'class' => 'AppBundle:Client',
                 'multiple' => false,
                 'label' => 'Client',
+                'placeholder' => '--',
                 'attr' => array(
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Selectionner',
@@ -73,6 +74,7 @@ class FactureType extends AbstractType
                 'class' => 'AppBundle:Consultant',
                 'multiple' => false,
                 'label' => 'Consultant',
+                'placeholder' => '--',
                 'attr' => array(
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Selectionner',

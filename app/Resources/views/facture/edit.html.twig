@@ -5,17 +5,26 @@
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+       <center>
+           <input type="submit" value="Modifier"  class="btn btn-white btn-warning"/>
+       </center>
     {{ form_end(edit_form) }}
+    <hr>
+   <div class="row">
 
-    <ul>
-        <li>
-            <a href="{{ path('facture_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+       <div class="col-md-4">
+           <a href="{{ path('facture_index') }}" class="btn btn-white btn-info btn-block">Back to the list</a>
+
+       </div>
+       <div class="col-md-4">
+
+       </div>
+       <div class="col-md-4">
+           {{ form_start(delete_form) }}
+           <input type="submit" value="Supprimer" class="btn btn-block">
+           {{ form_end(delete_form) }}
+
+       </div>
+   </div>
+
 {% endblock %}

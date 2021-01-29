@@ -158,12 +158,12 @@
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
-                                                dateDebut
+                                                Vente
                                             </th>
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
-                                                dateFin
+                                                Achat
                                             </th>
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
@@ -208,7 +208,7 @@
 
                                                     {% else %}
 
-                                                        {{ mission.consultant.nom }}
+                                                        {{ mission.consultant }}
 
 
                                                     {% endif %}
@@ -231,20 +231,20 @@
                                                 </td>
 
                                                 <td class="hidden-480">
-                                                    {% if mission.dateDebut is null %}
+                                                    {% if mission.prixVente is null %}
                                                         --
                                                     {% else %}
-                                                        {{ mission.dateDebut|date('Y-m-d') }}
+                                                        {{ mission.prixVente }}
 
                                                     {% endif %}
 
 
                                                 </td>
                                                 <td class="hidden-480">
-                                                    {% if mission.dateFin is null %}
+                                                    {% if mission.prixAchat is null %}
                                                         --
                                                     {% else %}
-                                                        {{ mission.dateFin|date('Y-m-d') }}
+                                                        {{ mission.prixAchat }}
 
                                                     {% endif %}
 
@@ -364,10 +364,15 @@
 
     <script src="{{ asset('') }}assets/js/dataTables.buttons.min.js"></script>
     <script src="{{ asset('') }}assets/js/buttons.flash.min.js"></script>
-    <script src="{{ asset('') }}assets/js/buttons.html5.min.js"></script>
+    {#<script src="{{ asset('') }}assets/js/buttons.html5.min.js"></script>#}
+    <script src="https://cdn.datatables.net/buttons/1.4.0/js/buttons.html5.min.js"></script>
+
     <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
     <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
     <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
     <script type="text/javascript">
         jQuery(function ($) {
             var rowCount = $('#dynamic-table').length;
@@ -450,22 +455,37 @@
                     {
                         "extend": "copy",
                         "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
-                        "className": "btn btn-white btn-primary btn-bold"
+                        "className": "btn btn-white btn-primary btn-bold",
+                        exportOptions: {
+                            columns: [ 0, 1, 2,3,4,5,6,7,8,9,10 ]
+                        }
                     },
                     {
-                        "extend": "csv",
-                        "text": "<i class='fa fa-database bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
-                        "className": "btn btn-white btn-primary btn-bold"
+                        "extend": "excel",
+                        "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+                        "className": "btn btn-white btn-primary btn-bold",
+                        exportOptions: {
+                            columns: [ 0, 1, 2,3,4,5,6 ]
+                        }
+                    },
+                    {
+                        "extend": "pdf",
+                        "text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
+                        "className": "btn btn-white btn-primary btn-bold",
+                        exportOptions: {
+                            columns: [ 0, 1, 2,3,4,5,6,7,8,9,10 ]
+                        }
                     },
 
                     {
                         "extend": "print",
                         "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
                         "className": "btn btn-white btn-primary btn-bold",
-                        autoPrint: false,
+                        autoPrint: true,
                         message: ''
                     }
                 ]
+
             });
             myTable.buttons().container().appendTo($('.tableTools-container'));
 

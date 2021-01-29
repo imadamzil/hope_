@@ -83,7 +83,7 @@ class Consultant
     /**
      * @var string
      *
-     * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
+     * @ORM\Column(name="adresse", type="text",nullable=true)
      */
     private $adresse;
 
@@ -372,6 +372,7 @@ class Consultant
     public function __construct()
     {
         $this->mission = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     /**

@@ -69,6 +69,7 @@ class Facture2Type extends AbstractType
             ))
             ->add('dateDebut', DateTimeType::class, [
                 'widget' => 'single_text',
+                'required'=>false,
                 'placeholder' => 'Date Début',
                 // prevents rendering it as type="date", to avoid HTML5 date pickers
                 'html5' => false,
@@ -87,6 +88,7 @@ class Facture2Type extends AbstractType
             ])
             ->add('dateFin', DateTimeType::class, [
                 'widget' => 'single_text',
+                'required'=>false,
                 'placeholder' => 'Date Fin',
                 // prevents rendering it as type="date", to avoid HTML5 date pickers
                 'html5' => false,

@@ -283,8 +283,8 @@ class FactureController extends Controller
 
             $em->persist($facture);
             $em->flush();
-            dump($facture);
-            die();
+//            dump($facture);
+//            die();
             $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
             $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
 
@@ -438,8 +438,8 @@ class FactureController extends Controller
                     $em->flush();
                 }
             }
-            dump($facture);
-            die();
+//            dump($facture);
+//            die();
             return $this->redirectToRoute('facture_show', array('id' => $facture->getId()));
         }
 
@@ -465,7 +465,7 @@ class FactureController extends Controller
         $mois = intval($date->format('m')) - 1;
         $year = intval($date->format('y')) - 1;
         $facturefournisseur->setEtat('non payé');
-        $facture->setEtat('non payé');
+//        $facture->setEtat('non payé');
         $facture->setBcclient($mission->getBcclient());
         $facture->setClient($mission->getClient());
         $facture->setMission($mission);
@@ -631,7 +631,7 @@ class FactureController extends Controller
                     $heure_bc = new FactureHsup();
                     $heure_bc->setBcfournisseur($bcfournisseur);
                     $heure_bc->setFacturefournisseur($facturefournisseur);
-                   $heure_bc->setFacture($facture);
+                    $heure_bc->setFacture($facture);
                     $heure_bc->setNbjour($nb_jour_sup);
                     $heure_bc->setHeuresup($heure->getHeuresup());
                     $heure_bc->setTotalHT($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat());
@@ -705,8 +705,8 @@ class FactureController extends Controller
             $em->flush();
             $em->persist($facture);
             $em->flush();
-            dump($facture, $bcfournisseur, $facturefournisseur, $production);
-            die();
+//            dump($facture, $bcfournisseur, $facturefournisseur, $production);
+
             return $this->redirectToRoute('facture_show', array('id' => $facture->getId()));
         }
 
@@ -770,7 +770,7 @@ class FactureController extends Controller
             }
         }
 
-        dump($facture);
+//        dump($facture);
         /*function int2str($a)
         {
             $convert = explode('.', $a);
@@ -1344,6 +1344,254 @@ class FactureController extends Controller
     }
 
     /**
+     * Finds and displays a facture entity.
+     *
+     * @Route("/{id}/print_projet", name="facture_print_projet")
+     * @Method("GET")
+     */
+    public function printFactureProjetAction(Facture $facture)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fiche = $em->getRepository('AppBundle:Fiche')->find(1);
+        function mois_convert($m)
+        {
+
+            switch ($m) {
+                case 1:
+                    return "Janvier";
+                    break;
+                case 2:
+                    return "Février";
+                    break;
+                case 3:
+                    return "Mars";
+                    break;
+                case 4:
+                    return "Avril";
+                    break;
+                case 5:
+                    return "Mai";
+                    break;
+                case 6:
+                    return "Juin";
+                    break;
+                case 7:
+                    return "Juillet";
+                    break;
+                case 8:
+                    return "Aout";
+                    break;
+                case 9:
+                    return "Septembre";
+                    break;
+                case 10:
+                    return "Octobre";
+                    break;
+                case 11:
+                    return "Novembre";
+                    break;
+                case 12:
+                    return "Décembre";
+                    break;
+
+            }
+        }
+
+
+        function int2str($a)
+        {
+            if ($a < 17) {
+                switch ($a) {
+                    case 1:
+                        return 'UN';
+                    case 2:
+                        return 'DEUX';
+                    case 3:
+                        return 'TROIS';
+                    case 4:
+                        return 'QUATRE';
+                    case 5:
+                        return 'CINQ';
+                    case 6:
+                        return 'SIX';
+                    case 7:
+                        return 'SEPT';
+                    case 8:
+                        return 'HUIT';
+                    case 9:
+                        return 'NEUF';
+                    case 10:
+                        return 'DIX';
+                    case 11:
+                        return 'ONZE';
+                    case 12:
+                        return 'DOUZE';
+                    case 13:
+                        return 'TREIZE';
+                    case 14:
+                        return 'QUATORZE';
+                    case 15:
+                        return 'QUINZE';
+                    case 16:
+                        return 'SEIZE';
+                }
+            } else {
+                if ($a < 20) {
+                    return 'DIX-' . int2str($a - 10);
+                } else {
+                    if ($a < 100) {
+                        if ($a % 10 == 0) {
+                            switch ($a) {
+                                case 20:
+                                    return 'VINGT';
+                                case 30:
+                                    return 'TRENTE';
+                                case 40:
+                                    return 'QUARANTE';
+                                case 50:
+                                    return 'CINQUANTE';
+                                case 60:
+                                    return 'SOIXANTE';
+                                case 70:
+                                    return 'SOINXANTE-DIX';
+                                case 80:
+                                    return 'QUATRE-VINGT';
+                                case 90:
+                                    return 'QUATRE-VINGT-DIX';
+                            }
+                        } elseif (substr($a, -1) == 1) {
+                            if ((int)($a / 10) * 10 < 70) {
+                                return int2str((int)($a / 10) * 10) . '-ET-UN';
+                            } elseif ($a == 71) {
+                                return 'SOIXANTE ET ONZE';
+                            } elseif ($a == 81) {
+                                return 'QUATRE VINGT UN';
+                            } elseif ($a == 91) {
+                                return 'QUATRE VINGT ONZE';
+                            }
+                        } elseif ($a < 70) {
+                            return int2str($a - $a % 10) . '-' . int2str($a % 10);
+                        } elseif ($a < 80) {
+                            return int2str(60) . '-' . int2str($a % 20);
+                        } else {
+                            return int2str(80) . '-' . int2str($a % 20);
+                        }
+                    } else {
+                        if ($a == 100) {
+                            return 'CENT';
+                        } else {
+                            if ($a < 200) {
+                                return int2str(100) . ' ' . int2str($a % 100);
+                            } else {
+                                if ($a < 1000) {
+                                    return int2str((int)($a / 100)) . ' ' . int2str(100) . ' ' . int2str($a % 100);
+                                } else {
+                                    if ($a == 1000) {
+                                        return 'MILLE';
+                                    } else {
+                                        if ($a < 2000) {
+                                            return int2str(1000) . ' ' . int2str($a % 1000) . ' ';
+                                        } else {
+                                            if ($a < 1000000) {
+                                                return int2str((int)($a / 1000)) . ' ' . int2str(1000) . ' ' . int2str($a % 1000);
+                                            } else {
+                                                if ($a == 1000000) {
+                                                    return 'MILLION';
+                                                } else {
+                                                    if ($a < 2000000) {
+                                                        return int2str(1000000) . ' ' . int2str($a % 1000000) . ' ';
+                                                    } else {
+                                                        if ($a < 1000000000) {
+                                                            return int2str((int)($a / 1000000)) . ' ' . int2str(1000000) . ' ' . int2str($a % 1000000);
+                                                        } else {
+                                                            if ($a == 1000000000) {
+                                                                return 'MILLIARD';
+                                                            } else {
+                                                                if ($a < 2000000000) {
+                                                                    return int2str(1000000000) . ' ' . int2str($a % 1000000000) . ' ';
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // orange
+        if ($facture->getProjet()->getClient()->getNom() == 'MEDI TELECOM') {
+            $items = $em->createQuery('
+          SELECT p as ligne,SUM (l.nbjour) AS nbjours, SUM(l.totalHt) as total,SUM(l.totalTTC) as totalTTC   From AppBundle:LigneFacture l
+          JOIN AppBundle:Projetconsultant p
+          WHERE l.facture = :facture
+          AND l.projetconsultant = p.id
+          GROUP BY p.job
+          
+          ')->setParameter('facture', $facture)->execute();
+
+//            dump($items);
+//            die();
+            return $this->render('facture/print_orange.html.twig', array(
+                'facture' => $facture,
+                'total' => int2str($facture->getTotalTTC()),
+                'mois' => mois_convert($facture->getMois()),
+                'fiche' => $fiche,
+                'items' => $items
+
+            ));
+        }
+
+        if ($facture->getProjet()->getClient()->getId() == 14) {
+            //Pcs
+            $items = $em->createQuery('
+          SELECT p as ligne,l.nbjour as nbjours, l.totalHt as total,l.totalTTC as totalTTC   From AppBundle:LigneFacture l
+          JOIN AppBundle:Projetconsultant p
+          WHERE l.facture = :facture
+          AND l.projetconsultant = p.id
+                    
+          ')->setParameter('facture', $facture)->execute();
+//            dump($items);
+            return $this->render('facture/print_pcs.html.twig', array(
+                'facture' => $facture,
+                'total' => int2str($facture->getTotalTTC()),
+                'mois' => mois_convert($facture->getMois()),
+                'fiche' => $fiche,
+                'items' => $items
+
+            ));
+
+        } else {
+
+            //Other clients
+            $items = $em->createQuery('
+          SELECT p as ligne,l.nbjour as nbjours, l.totalHt as total,l.totalTTC as totalTTC   From AppBundle:LigneFacture l
+          JOIN AppBundle:Projetconsultant p
+          WHERE l.facture = :facture
+          AND l.projetconsultant = p.id
+                    
+          ')->setParameter('facture', $facture)->execute();
+//            dump($items);
+            return $this->render('facture/print_projet.html.twig', array(
+                'facture' => $facture,
+                'total' => int2str($facture->getTotalTTC()),
+                'mois' => mois_convert($facture->getMois()),
+                'fiche' => $fiche,
+                'items' => $items
+
+            ));
+        }
+
+
+    }
+
+    /**
      * Displays a form to edit an existing facture entity.
      *
      * @Route("/{id}/edit", name="facture_edit")
@@ -1352,7 +1600,7 @@ class FactureController extends Controller
     public function editAction(Request $request, Facture $facture)
     {
         $deleteForm = $this->createDeleteForm($facture);
-        $editForm = $this->createForm('AppBundle\Form\FactureType', $facture);
+        $editForm = $this->createForm('AppBundle\Form\FactureEditType', $facture);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

@@ -679,8 +679,10 @@ class Facture
     public function __construct()
     {
         $this->facturehsups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime();
 
         $this->lignes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->etat = 'non payé';
     }
 
     /**

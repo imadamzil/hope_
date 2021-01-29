@@ -73,7 +73,8 @@ class BcclientType extends AbstractType
 
                 )
             ))
-            ->add('nbJrs')//->add('nbJrsR')
+            ->add('nbJrs')
+            ->add('nbJrsR')
 
         ;
     }

@@ -159,12 +159,12 @@
                                                 </td>
                                                 <td>
 
-                                                    {% if facturefournisseur.mission is null %}
+                                                    {% if facturefournisseur.consultant is null %}
                                                         --
 
                                                     {% else %}
 
-                                                        {{ facturefournisseur.mission.consultant.nom }}
+                                                        {{ facturefournisseur.consultant }}
 
 
                                                     {% endif %}
