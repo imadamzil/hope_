@@ -103,7 +103,7 @@
 
     <tr>
         <td class="lmk">
-            {% if facture.client.nom == "ATOS" %}
+            {% if facture.client.nom == "Atos ITS Nearshore Center Maroc" or facture.client.nom == "Atos IT SERVICES SARL" %}
                 <p>
 
 
@@ -276,14 +276,15 @@
                 {{ facture.mission.prixVente | number_format(2, ',', ' ') }}
                 {% if facture.facturehsups | length != 0 %}
                     <br>
-                    {{ facture.totalHT - facture.mission.prixVente*facture.nbjour | number_format(2, ',', ' ') }}
+                    {{ facture.totalHT - facture.mission.prixVente*facture.nbjour  }}
                 {% endif %}
-            </strong></td>
+            </strong>
+        </td>
         <td class="text-center"><strong>
-                {{ facture.totalHT | number_format(2, '.', ' ') }}
+                {{ facture.mission.prixVente*facture.nbjour | number_format(2, '.', ' ') }}
                 {% if facture.facturehsups | length != 0 %}
                     <br>
-                    {{ facture.totalHT - facture.mission.prixVente*facture.nbjour | number_format(2, ',', ' ') }}
+                    {{ facture.totalHT - facture.mission.prixVente*facture.nbjour  }}
                 {% endif %}
 
             </strong></td>

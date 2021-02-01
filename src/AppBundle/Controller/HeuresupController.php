@@ -48,7 +48,7 @@ class HeuresupController extends Controller
             $em->persist($heuresup);
             $em->flush();
 
-            return $this->redirectToRoute('heuresup_show', array('id' => $heuresup->getId()));
+            return $this->redirectToRoute('heuresup_index');
         }
 
         return $this->render('heuresup/new.html.twig', array(

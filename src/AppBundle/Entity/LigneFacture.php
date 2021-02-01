@@ -31,6 +31,12 @@ class LigneFacture
     /**
      * @var float
      *
+     * @ORM\Column(name="nbjourVente", type="float", nullable=true)
+     */
+    private $nbjourVente;
+    /**
+     * @var float
+     *
      * @ORM\Column(name="nbjour", type="float", nullable=true)
      */
     private $nbjour;
@@ -273,5 +279,29 @@ class LigneFacture
     public function getProjetconsultant()
     {
         return $this->projetconsultant;
+    }
+
+    /**
+     * Set nbjourVente
+     *
+     * @param float $nbjourVente
+     *
+     * @return LigneFacture
+     */
+    public function setNbjourVente($nbjourVente)
+    {
+        $this->nbjourVente = $nbjourVente;
+
+        return $this;
+    }
+
+    /**
+     * Get nbjourVente
+     *
+     * @return float
+     */
+    public function getNbjourVente()
+    {
+        return $this->nbjourVente;
     }
 }

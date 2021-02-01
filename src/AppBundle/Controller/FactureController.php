@@ -619,6 +619,7 @@ class FactureController extends Controller
                     $nb_jour_sup = $heure->getNbheure() / 10;
                     $heure->setNbjour($nb_jour_sup);
                     $heure->setFacture($facture);
+                    $heure->setBcfournisseur(null);
 //                    $facture->addFacturehsup($heure);
                     $heuresup = $heure->getHeuresup();
                     $heure->setTotalHT($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixVente());
@@ -628,10 +629,11 @@ class FactureController extends Controller
                     $totalHT_hs_fournisseur += ($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat());
                     $totalTTC_hs_fournisseur += $nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat() * 1.2;
                     $nb_total_jrs += $heure->getNbheure() / 10;
+
                     $heure_bc = new FactureHsup();
                     $heure_bc->setBcfournisseur($bcfournisseur);
                     $heure_bc->setFacturefournisseur($facturefournisseur);
-                    $heure_bc->setFacture($facture);
+//                    $heure_bc->setFacture($facture);
                     $heure_bc->setNbjour($nb_jour_sup);
                     $heure_bc->setHeuresup($heure->getHeuresup());
                     $heure_bc->setTotalHT($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat());
@@ -651,6 +653,7 @@ class FactureController extends Controller
                 $nb_total_jrs = null;
 
             }
+
 
             $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
             $facture->setTotalHT($facture->getTotalHT() + $totalHT_hs);
@@ -677,9 +680,10 @@ class FactureController extends Controller
             $em->flush();
             $bcfournisseur->setVenteHT($facture->getTotalHT());
 //            $facturefournisseur->setVenteHT($facture->getTotalHT());
-            $bcfournisseur->setAchatHT($bcfournisseur->getAchatHT() + $totalTTC_hs_fournisseur);
-            $facturefournisseur->setAchatHT($facturefournisseur->getAchatHT() + $totalTTC_hs_fournisseur);
-            $bcfournisseur->setAchatTTC(($bcfournisseur->getAchatHT() + $totalTTC_hs_fournisseur) * 1.2);
+            $bcfournisseur->setAchatHT($bcfournisseur->getAchatHT() + $totalHT_hs_fournisseur);
+            $bcfournisseur->setAchatTTC($bcfournisseur->getAchatTTC() + $totalTTC_hs_fournisseur);
+            $facturefournisseur->setAchatHT($facturefournisseur->getAchatHT() + $totalHT_hs_fournisseur);
+            $bcfournisseur->setAchatTTC($facturefournisseur->getAchatTTC() + $totalTTC_hs_fournisseur);
             $facturefournisseur->setAchatTTC(($facturefournisseur->getAchatHT() + $totalTTC_hs_fournisseur) * 1.2);
             $bcfournisseur->setTaxe($bcfournisseur->getAchatTTC() - $bcfournisseur->getAchatHT());
             $facturefournisseur->setTaxe($facturefournisseur->getAchatTTC() - $facturefournisseur->getAchatHT());
@@ -1528,7 +1532,7 @@ class FactureController extends Controller
         // orange
         if ($facture->getProjet()->getClient()->getNom() == 'MEDI TELECOM') {
             $items = $em->createQuery('
-          SELECT p as ligne,SUM (l.nbjour) AS nbjours, SUM(l.totalHt) as total,SUM(l.totalTTC) as totalTTC   From AppBundle:LigneFacture l
+          SELECT p as ligne,SUM (l.nbjourVente) AS nbjours, SUM(l.totalHt) as total,SUM(l.totalTTC) as totalTTC   From AppBundle:LigneFacture l
           JOIN AppBundle:Projetconsultant p
           WHERE l.facture = :facture
           AND l.projetconsultant = p.id

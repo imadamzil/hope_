@@ -115,6 +115,7 @@ class Bcclient
      * @ORM\Column(name="date_ceation", type="datetime", nullable=true)
      */
     private $createdAt;
+
     /**
      * Get id
      *
@@ -226,8 +227,8 @@ class Bcclient
      */
     public function __construct()
     {
-        $this->mission =  new \Doctrine\Common\Collections\ArrayCollection();
-        $this->createdAt= new \DateTime('now');
+        $this->mission = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createdAt = new \DateTime('now');
     }
 
     /**
@@ -314,9 +315,14 @@ class Bcclient
 
     public function __toString()
     {
-        return $this->getClient()->getNom() . '~' . $this->getCode().'_'.$this->getNbJrsR();
-    }
+        if ($this->getClient()) {
+            return $this->getClient()->getNom() . '~' . $this->getCode() . '_' . $this->getNbJrsR();
 
+        }else{
+            return $this->getCode() . '_' . $this->getNbJrsR();
+
+        }
+    }
 
 
     /**

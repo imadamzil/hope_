@@ -189,24 +189,9 @@
                 </td>
                 <td class="text-center align-middle"><strong>
 
-                        {#{{ dump(bcfournisseur.heures) }}#}
+                        {{ bcfournisseur.nbjours }}
                         {% if bcfournisseur.heures | length != 0 %}
-                            {{ bcfournisseur.nbjours-nb }}
-
-                            <br>
-                            <span class="OLL bolder">
-
-                    {% for heure in bcfournisseur.heures %}
-                        {% if heure.bcfournisseur is not null %}
-
-                            {{ heure.nbjour }}
-                            <br>
-                        {% endif %}
-
-                    {% endfor %}
-                    </span>
-                        {% else %}
-                            {{ bcfournisseur.nbjours }}
+                            <br> 1
                         {% endif %}
 
                     </strong>
@@ -216,50 +201,13 @@
                     </strong></td>
                 <td class=" text-center  align-middle">
                     <strong>
-
-                        {% if bcfournisseur.heures | length != 0 %}
-                            {{ bcfournisseur.mission.prixAchat }}
-
-                            <br>
-                            <span class="OLL bolder">
-
-                    {% for heure in bcfournisseur.heures %}
-                        {% if heure.bcfournisseur is not null %}
-
-                            {{ heure.totalHT / heure.nbjour }}
-                            <br>
-                        {% endif %}
-
-                    {% endfor %}
-                    </span>
-                        {% else %}
-                            {{ bcfournisseur.mission.prixAchat }}
-                        {% endif %}
+                        {{ bcfournisseur.achatHt/bcfournisseur.nbjours  }}
 
                     </strong>
                 </td>
                 <td class="text-center align-middle">
                     <strong>
-                        {% if bcfournisseur.heures | length != 0 %}
-                            {{ bcfournisseur.mission.prixAchat *(bcfournisseur.nbjours-nb) }}
-
-                            <br>
-                            <span class="OLL bolder">
-
-                    {% for heure in bcfournisseur.heures %}
-                        {% if heure.bcfournisseur is not null %}
-
-                            {{ heure.totalHT }}
-                            <br>
-                        {% endif %}
-
-                    {% endfor %}
-                    </span>
-                        {% else %}
-                            {{ bcfournisseur.mission.prixAchat *bcfournisseur.nbjours }}
-
-                        {% endif %}
-
+                        {{ bcfournisseur.achatHt }}
 
                     </strong>
                 </td>
@@ -285,7 +233,7 @@
     </tr>
     <tr class="">
         <th class=" AZX">TVA 20%</th>
-        <td class=" AZX">{{ bcfournisseur.achatHT*0.2 }}.00
+        <td class=" AZX">{{ bcfournisseur.taxe }}.00
 
         </td>
 
@@ -298,6 +246,7 @@
 
     </tbody>
 </table>
+
 
 
 <p class="WWM">

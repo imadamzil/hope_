@@ -84,6 +84,16 @@ class BcfournisseurController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $fiche = $em->getRepository('AppBundle:Fiche')->find(1);
+        dump($bcfournisseur);
+
+        if (!empty($bcfournisseur->getHeures())) {
+            $nb = null;
+            foreach ($bcfournisseur->getHeures() as $heure)
+                $nb += $heure->getNbjour();
+        } else {
+            $nb = 0;
+
+        }
         function mois_convert($m)
         {
 
@@ -131,12 +141,24 @@ class BcfournisseurController extends Controller
             }
         }
 
-//        dump($bcfournisseur);
-        return $this->render('bcfournisseur/print.html.twig', array(
-            'bcfournisseur' => $bcfournisseur,
-            'fiche' => $fiche,
-            'mois' => mois_convert($bcfournisseur->getMois()),
-        ));
+        if ($bcfournisseur->getMission()) {
+
+            return $this->render('bcfournisseur/print.html.twig', array(
+                'bcfournisseur' => $bcfournisseur,
+                'fiche' => $fiche,
+                'mois' => mois_convert($bcfournisseur->getMois()),
+                'nb' => $nb,
+            ));
+        } else {
+            return $this->render('bcfournisseur/print_projet.html.twig', array(
+                'bcfournisseur' => $bcfournisseur,
+                'fiche' => $fiche,
+                'mois' => mois_convert($bcfournisseur->getMois()),
+                'nb' => $nb,
+            ));
+
+        }
+
     }
 
     /**
