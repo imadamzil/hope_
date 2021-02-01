@@ -84,7 +84,7 @@ class BcfournisseurController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $fiche = $em->getRepository('AppBundle:Fiche')->find(1);
-        dump($bcfournisseur);
+//        dump($bcfournisseur);
 
         if (!empty($bcfournisseur->getHeures())) {
             $nb = null;
