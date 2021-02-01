@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 
-class Facture2Type extends AbstractType
+class LigneFactureType2 extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -108,8 +108,7 @@ class Facture2Type extends AbstractType
                 )
             ))
             ->add('lignes', CollectionType::class, [
-                'entry_type' => LigneFactureType::class,
-
+                'entry_type' => LigneFacture2Type::class,
                 'entry_options' => ['label' => false],
                 'attr' => array(
                     'class' => 'my-selector inl ',

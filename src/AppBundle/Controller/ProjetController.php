@@ -130,8 +130,11 @@ class ProjetController extends Controller
             foreach ($facture->getLignes() as $ligne) {
 
                 $totalHt += $ligne->getNbjour() * $ligne->getProjetconsultant()->getVente();
+//
+                $ligne->setNbjourVente($ligne->getNbjour());
+
                 $ligne->setTotalHT($ligne->getNbjour() * $ligne->getProjetconsultant()->getVente());
-                $ligne->setTotalTTC($ligne->getNbjour() * $ligne->getProjetconsultant()->getVente()*1.2);
+                $ligne->setTotalTTC($ligne->getNbjour() * $ligne->getProjetconsultant()->getVente() * 1.2);
 
             }
             $taxe = $totalHt * 0.2;
@@ -262,9 +265,13 @@ class ProjetController extends Controller
 
 //collection of lignes
         $lignes_collection = new \Doctrine\Common\Collections\ArrayCollection();
+//        $nbjours = [];
         foreach ($query as $item) {
-            $item->setNbjour(null);
+//            $nbjours[] = $item->getNbjour();
+
             $lignes_collection[] = $item;
+
+            $item->setNbjour(null);
 
         }
 
@@ -319,6 +326,7 @@ class ProjetController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $lignes = $form->get('lignes')->getData();
+//            dump($lignes);die();
             $mois = $form->get('mois')->getData();
             $year = $form->get('year')->getData();
 
@@ -423,6 +431,11 @@ class ProjetController extends Controller
 
 
                 //end add production
+
+                // return nb jours
+
+
+
 
             }
 //            dump($bc, $facture, $factureFournisseur,$production);
