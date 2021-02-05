@@ -1790,8 +1790,7 @@ class FactureController extends Controller
                 'annee' => $year,
             ])->getResult();
 
-        dump($mois, $year, (int)$nbb[0]['total']);
-        die();
+
 
     }
 }
