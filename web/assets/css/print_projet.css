@@ -44,13 +44,13 @@
  }
 .SQ
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
     font-size: 26px;
 }
 .QW
 {
 
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
 }
 /*.AZE
 {
@@ -78,29 +78,41 @@
     padding-bottom: 2px;
 
 }
+.ZES2
+{
+    margin-left: 20px;
+    border:solid 1px black;
+    /*padding-top: 15px;*/
+    width: 100%;
+    padding-top: 17px;
+    padding-right: 17px;
+    padding-left: 17px;
+    padding-bottom: 2px;
+
+}
 .RTY
 {
     font-size: 20px;
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
 }
 .ZEF
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
 }
 .WXV
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
     margin-left: 10px;
     font-size: 20px;
 
 }
 .ERZ
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
 }
 .XLJ
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
     font-size: 20px;
 }
 table, td, th {
@@ -126,7 +138,7 @@ td
 {
     padding: 10px;
     /*border:2px solid black;*/
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
     font-size: 20px;
     vertical-align: top;
 
@@ -135,7 +147,7 @@ td
 th
 {
     /*border:2px solid black;*/
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
     font-size: 17px;
 
 
@@ -147,13 +159,13 @@ th
     padding-left: 10px;
     padding-bottom: 10px;
     text-align: center;
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
 }
 .NBV
 {
     padding: 10px 15px 10px 10px;
     text-align: center;
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
 }
 .lmk
 {
@@ -176,49 +188,49 @@ th
 }
 .PPP
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
 
 }
 .YYY
 {
     text-decoration: underline;
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
 }
 .OLL
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
     font-weight: bolder;
 }
 .AZX
 {
     margin-top: 30px;
     margin-left: 600px;
-    color: #000080;
+    color: #000000;
     font-weight: bold;
 }
 .VVV
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
     margin-left: 60px;
     margin-top: 30px;
     font-size: 20px;
 }
 .ljj
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
     margin-left: 750px;
     margin-top: 40px;
     font-size: 18px;
 }
 .XXX
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
     text-decoration: underline;
     font-size: 20px;
 }
 .EEE
 {
-    color: #000080;
+    color: #000000;
     font-weight: bold;
     font-style: italic;
     font-size: 19px;
@@ -230,11 +242,11 @@ th
 }
 .CCC
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
 }
 .RRR
 {
-    color: rgb(0,31,95);
+    color: rgb(0, 0, 0);
     font-size: 14px;
     margin-top: 10%;
     margin-left: 100px;
@@ -244,7 +256,7 @@ th
 {
 
     font-size: 14px;
-    color: #000080;
+    color: #000000;
     font-weight: bold;
 
 }
@@ -256,7 +268,7 @@ th
 }
 .XWWO
 {
-    color: #000080;
+    color: #000000;
     font-weight: bold;
     font-style: normal;
     font-size: 18px;

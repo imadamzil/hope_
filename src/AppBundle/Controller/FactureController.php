@@ -258,8 +258,7 @@ class FactureController extends Controller
         $facturefournisseur = new Facturefournisseur();
 
         $date = new \DateTime('now');
-        $mois = intval($date->format('m')) - 1;
-        $year = intval($date->format('y'));
+
         $em = $this->getDoctrine()->getManager();
 
         /* $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
@@ -285,16 +284,20 @@ class FactureController extends Controller
             $em->flush();
 //            dump($facture);
 //            die();
+
+            $mois = intval($facture->getDate()->format('m'));
+            $year = intval($facture->getDate()->format('y'));
             $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
             $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
 
-                'mois' => $facture->getMois(),
-                'year' => $facture->getYear(),
+                'mois' => $mois,
+                'year' => $year,
             )));
+
             $mission = $facture->getMission();
             //dump($mission, $nb);
             $nb_facture = $nb + 1;
-            $facture->setNumero('H3K-' . substr($facture->getYear(), -2) . '-' . str_pad($facture->getMois(), 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
+            $facture->setNumero('H3K-' . substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
             $facture->setBcclient($mission->getBcclient());
             $facture->setBcclient($mission->getBcclient());
 
@@ -486,11 +489,30 @@ class FactureController extends Controller
             $em->flush();
 
             $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
-            $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
+
+            $mois = intval($facture->getDate()->format('m'));
+            $year = intval($facture->getDate()->format('Y'));
+            $yearmini = intval($facture->getDate()->format('y'));
+
+            $nb = count($em->getRepository('AppBundle:Bcfournisseur')->findBy(array(
 
                 'mois' => $facture->getMois(),
                 'year' => $facture->getYear(),
             )));
+
+            $nbb = $em->createQuery('
+            
+            SELECT COUNT(f) as total FROM AppBundle:Facture f 
+            WHERE MONTH(f.date) = :moi AND YEAR(f.date) = :annee
+            ')
+                ->setParameters([
+
+                    'moi' => $mois,
+                    'annee' => $year,
+                ])->getResult();
+
+
+            $count_factures = (int)$nbb[0]['total'];
             $mission = $facture->getMission();
             $bcfournisseur->setMission($mission);
             $facturefournisseur->setMission($mission);
@@ -498,8 +520,8 @@ class FactureController extends Controller
             $facturefournisseur->setConsultant($mission->getConsultant());
             //dump($mission, $nb);
             $nb_facture = $nb + 1;
-            $facture->setNumero('H3K-' . substr($facture->getYear(), -2) . '-' . str_pad($facture->getMois(), 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
-
+            $facture->setNumero('H3K-' . substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad($count_factures, 3, '0', STR_PAD_LEFT));
+            $bcfournisseur->setCode('BC-' . substr($facture->getYear(), -2) . '-' . str_pad($facture->getMois(), 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb + 1, 3, '0', STR_PAD_LEFT));
             if ($mission->getDevise() == 'DH') {
 
                 if ($mission->getType() == 'journaliere') {
@@ -1725,5 +1747,51 @@ class FactureController extends Controller
         return new Response($response, 200, array(
             'Content-Type' => 'application/json'
         ));
+    }
+
+    /**
+     *
+     * @Route("/test/{id}", name="route_test")
+     ** @Method({"GET"})
+     */
+    public function Test(Facture $facture)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $mois = intval($facture->getDate()->format('m'));
+        $year = intval($facture->getDate()->format('Y'));
+        $yearmini = intval($facture->getDate()->format('y'));
+
+
+        $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
+
+            'mois' => $mois,
+            'year' => $year,
+        )));
+
+        $nbb = $em->createQuery('
+            
+            SELECT COUNT(f) as total FROM AppBundle:Facture f 
+            WHERE MONTH(f.date) = :moi AND YEAR(f.date) = :annee
+            ')
+            ->setParameters([
+
+                'moi' => $mois,
+                'annee' => $year,
+            ])->getResult();
+        $nbb2 = $em->createQuery('
+            
+            SELECT COUNT(f) as total FROM AppBundle:Facture f 
+            WHERE MONTH(f.date) = :moi AND YEAR(f.date) = :annee
+            ')
+            ->setParameters([
+
+                'moi' => $mois,
+                'annee' => $year,
+            ])->getResult();
+
+        dump($mois, $year, (int)$nbb[0]['total']);
+        die();
+
     }
 }

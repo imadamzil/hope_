@@ -140,12 +140,24 @@ class ProjetController extends Controller
             $taxe = $totalHt * 0.2;
 
             // num facture
-            $nb = count($em->getRepository('AppBundle:Facture')->findBy(array(
+            $mois = intval($facture->getDate()->format('m'));
+            $year = intval($facture->getDate()->format('Y'));
+            $yearmini = intval($facture->getDate()->format('y'));
+            $nbb = $em->createQuery('
+            
+            SELECT COUNT(f) as total FROM AppBundle:Facture f 
+            WHERE MONTH(f.date) = :moi AND YEAR(f.date) = :annee
+            ')
+                ->setParameters([
 
-                    'mois' => $facture->getMois(),
-                    'year' => $facture->getYear(),
-                ))) + 1;
-            $facture->setNumero('H3K-' . substr($facture->getYear(), -2) . '-' . str_pad($facture->getMois(), 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
+                    'moi' => $mois,
+                    'annee' => $year,
+                ])->getResult();
+
+
+
+            $count_factures = (int)$nbb[0]['total']+1;
+            $facture->setNumero('H3K-' . substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad($count_factures, 3, '0', STR_PAD_LEFT));
 
 
             $facture->setTotalHT($totalHt);
@@ -370,8 +382,8 @@ class ProjetController extends Controller
                             'mois' => $mois,
                             'year' => $year
                         ])) + 1;
-                    $bc->setCode('H3K-BC-F-' . substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
-                    $factureFournisseur->setNumero('H3K-' . substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb1, 3, '0', STR_PAD_LEFT));
+                    $bc->setCode('BC-' . substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb, 3, '0', STR_PAD_LEFT));
+                    $factureFournisseur->setNumero('F-' . substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb1, 3, '0', STR_PAD_LEFT));
 
                 }
                 $bc->setFournisseur($ligne->getProjetconsultant()->getFournisseur());

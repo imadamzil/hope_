@@ -40,7 +40,7 @@
 <div class="row QWF ">
 
     {% if fiche is not null %}
-        <div class="col-md-5 10 AZE">
+        <div class="col-md-5 10 ZES2">
 
             <h4 class="RTY">{{ fiche.nom }}</h4>
             <p class="WXV">
@@ -52,7 +52,7 @@
 
         </div>
     {% else %}
-        <div class="col-md-5 10 AZE">
+        <div class="col-md-5 10 ZES2">
 
             <h4 class="RTY">HOP3K SERVICES</h4>
             <p class="WXV">
@@ -76,7 +76,10 @@
         </p>
         </p>
         <p>
-            <span class="XLJ">ICE</span> : <span class="ERZ">{{ facture.client.ice }}</span>
+            <span class="XLJ">ICE</span> : <span class="ERZ"><b>
+
+                    {{ facture.client.ice }}
+                </b></span>
         </p>
     </div>
 
