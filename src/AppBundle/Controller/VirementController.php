@@ -156,6 +156,7 @@ class VirementController extends Controller
 
 
         $Ids = $request->get('idfacturefournisseur');
+//        $Ids = [3,2];
         $em = $this->getDoctrine()->getManager();
 
         $facturefournisseurs = $em->getRepository('AppBundle:Facturefournisseur')->findBy(array('id' => $Ids));

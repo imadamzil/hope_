@@ -77,6 +77,29 @@
                                                     </span>
                                                 </div>
                                             </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> BC client</div>
+
+                                                <div class="profile-info-value">
+                                                    <span>
+
+                                                    {% if mission.bcclient is null %}
+                                                        --
+
+                                                    {% else %}
+                                                        {% if mission.bcclient.code is null %}
+                                                            {{ mission.bcclient.ncontrat }}
+                                                        {% else %}
+                                                            {{ mission.bcclient.code }}
+
+                                                        {% endif %}
+
+
+                                                    {% endif %}
+
+                                                    </span>
+                                                </div>
+                                            </div>
 
                                             <div class="profile-info-row">
                                                 <div class="profile-info-name"> Prix Achat</div>
@@ -116,17 +139,17 @@
                                                 <div class="profile-info-name"> Fournisseur</div>
 
                                                 <div class="profile-info-value">
-                                                    <span>{{ mission.fournisseur.nom }}</span>
+                                                    <span>{{ mission.fournisseur }}</span>
                                                 </div>
                                             </div>
 
                                             <div class="profile-info-row">
-                                                <div class="profile-info-name"> Motif</div>
+                                                <div class="profile-info-name"> Mission</div>
 
                                                 <div class="profile-info-value">
                                                     {% if mission.job %}
-                                                    <span>{{ mission.job.nom }}</span>
-                                                        {% else %}
+                                                        <span>{{ mission.job.nom }}</span>
+                                                    {% else %}
                                                         --
                                                     {% endif %}
                                                 </div>
@@ -574,7 +597,7 @@
 
                                                                             {% else %}
 
-                                                                                {{ bcfournisseur.fournisseur.nom }}
+                                                                                {{ bcfournisseur.fournisseur }}
 
 
                                                                             {% endif %}
@@ -839,7 +862,7 @@
 
                                                                             {% else %}
 
-                                                                                {{ facturefournisseur.fournisseur.nom }}
+                                                                                {{ facturefournisseur.fournisseur }}
 
 
                                                                             {% endif %}
