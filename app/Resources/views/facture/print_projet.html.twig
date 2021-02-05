@@ -305,7 +305,7 @@
                 <br>
                 {% for item in items %}
                     <p>
-                        {{ item['total']| number_format(2, ',', ' ') }}
+                        {{ item['total']/item['nbjours'] }}
                     </p>
 
                 {% endfor %}
@@ -316,7 +316,7 @@
                 <br>
                 {% for item in items %}
                     <p>
-                        {{ item['totalTTC']| number_format(2, ',', ' ') }}
+                        {{ item['total']| number_format(2, ',', ' ') }}
                     </p>
 
                 {% endfor %}
