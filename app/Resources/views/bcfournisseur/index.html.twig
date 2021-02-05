@@ -194,7 +194,7 @@
                                                     {% if bcfournisseur.mission is null %}
 
                                                         {% if bcfournisseur.projet %}
-                                                            {{ bcfournisseur.fournisseur.projetconsultants[0].achat }}
+                                                            {{ bcfournisseur.achatHT/bcfournisseur.nbjours }}
                                                         {% else %}
 
                                                             --
