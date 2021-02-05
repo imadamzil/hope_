@@ -315,8 +315,8 @@ class Bcclient
 
     public function __toString()
     {
-        if ($this->getClient()) {
-            return $this->getClient()->getNom() . '~' . $this->getCode() . '_' . $this->getNbJrsR();
+        if ($this->getClient() && $this->getConsultant()) {
+            return $this->getConsultant()->getNom() . ' ' . $this->getCode() . ' ' . $this->getNbJrsR().' '.$this->getClient()->getNom();
 
         }else{
             return $this->getCode() . '_' . $this->getNbJrsR();
