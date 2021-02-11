@@ -138,7 +138,7 @@ class ProjetController extends Controller
 
             }
             $taxe = $totalHt * 0.2;
-
+//            dump($form->getData(),$totalHt);die();
             // num facture
             $mois = intval($facture->getDate()->format('m'));
             $year = intval($facture->getDate()->format('Y'));
@@ -338,7 +338,7 @@ class ProjetController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $lignes = $form->get('lignes')->getData();
-//            dump($lignes);die();
+
             $mois = $form->get('mois')->getData();
             $year = $form->get('year')->getData();
 
