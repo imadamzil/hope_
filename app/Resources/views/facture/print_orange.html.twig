@@ -369,12 +369,26 @@
 <p class="VVV">
     Arrêté la présente facture à la somme de :<br>
     <strong>
-        <span class="XWWO">
-           {{ total }}
-            Dirhams
+        <span class="XWWO" id="montant">
+          <span class="total" id="total1">{{ total }}</span>
 
+                    <span class="total" id="dh">Dirhams</span>
+
+
+
+            <span class="total" id="centimes"> </span>
         </span></strong>
-</p>
+<div class="row hid">
+    <div class="col-md-6">
+        <input type="text" class="form-control" id="total">
+        <button class="btn btn-primary hid" onclick="window.print()">Print</button>
+    </div>
+    <div class="col-md-6">
+        <input type="text" class="form-control" id="total2">
+
+    </div>
+</div>
+
 <p class="ljj">
     Signature et Cachet
 </p>
@@ -439,10 +453,31 @@
 <script type="application/javascript">
 
     $(document).ready(function () {
-
+        var text = $("#total1").text();
+        var text2 = $("#dh").text();
         $('#print').click();
-        // $('body').hide();
+//        var text3 = $("#total").text();
+
+        $('#total').val(text);
+        $('#total2').val(text2);
+        $("#total").blur(function () {
+            var textt = $("#total").val();
+
+            $("#total1").text(textt);
+
+//
+        });
+        $("#total2").blur(function () {
+            var texttt = $("#total2").val();
+            $("#dh").text(texttt);
+//            window.print();
+
+//            $('#print').click();
+        });
+
+
     });
+
 
 </script>
 </body>

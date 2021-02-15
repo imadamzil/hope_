@@ -32,6 +32,7 @@ class FactureController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+
         function mois_convert($m)
         {
 
@@ -80,6 +81,7 @@ class FactureController extends Controller
         }
 
         $factures = $em->getRepository('AppBundle:Facture')->findAll();
+//        dump($factures);
         $missions = $em->getRepository('AppBundle:Mission')->findAll();
 
         $date = new \DateTime('now');
