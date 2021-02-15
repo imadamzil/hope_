@@ -110,7 +110,10 @@
 
 
                         <span class="PPP">Type de mission :
-                            {{ facture.mission.type }}
+                            {% if facture.bcclient %}
+                                {{ facture.bcclient.type }}
+                            {% else %}
+                            {% endif %}
                             <br>
 
 
@@ -278,7 +281,7 @@
                 {{ facture.mission.prixVente | number_format(2, ',', ' ') }}
                 {% if facture.facturehsups | length != 0 %}
                     <br>
-                    {{ facture.totalHT - facture.mission.prixVente*facture.nbjour  }}
+                    {{ facture.totalHT - facture.mission.prixVente*facture.nbjour }}
                 {% endif %}
             </strong>
         </td>
@@ -286,7 +289,7 @@
                 {{ facture.mission.prixVente*facture.nbjour | number_format(2, '.', ' ') }}
                 {% if facture.facturehsups | length != 0 %}
                     <br>
-                    {{ facture.totalHT - facture.mission.prixVente*facture.nbjour  }}
+                    {{ facture.totalHT - facture.mission.prixVente*facture.nbjour }}
                 {% endif %}
 
             </strong></td>

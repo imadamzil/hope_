@@ -682,7 +682,7 @@ class Facture
         $this->createdAt = new \DateTime();
 
         $this->lignes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->etat = 'non payé';
+        $this->setEtat('non payé') ;
     }
 
     /**
