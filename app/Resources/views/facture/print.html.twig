@@ -4,6 +4,8 @@
     <link rel="stylesheet" type="text/css" href="web/assets/css/Style_Page_Mission_Imprimer.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <link rel="stylesheet" type="text/css"
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -336,25 +338,38 @@
 <p class="VVV">
     Arrêté la présente facture à la somme de :<br>
     <strong>
-        <span class="XWWO">
-           {{ total }}
+        <span class="XWWO" id="montant">
+          <span class="total" id="total1">{{ total }}</span>
             {% if facture.mission.devise is not null %}
 
                 {% if facture.mission.devise =='DH' %}
-                    Dirhams
+                    <span class="total" id="dh">Dirhams</span>
                 {% else %}
-                    {{ facture.mission.devise }}
+                    <span class="total" id="devise">{{ facture.mission.devise }}</span>
                 {% endif %}
 
             {% else %}
 
             {% endif %}
-
+            <span class="total" id="centimes"> </span>
         </span></strong>
+<div class="row hid">
+    <div class="col-md-6">
+        <input type="text" class="form-control" id="total">
+<button class="btn btn-primary hid" onclick="window.print()">Print</button>
+    </div>
+    <div class="col-md-6">
+        <input type="text" class="form-control" id="total2">
+
+    </div>
+</div>
+
 </p>
 <p class="ljj">
     Signature et Cachet
 </p>
+
+<!-- Modal -->
 <p class="WWM">
     <span class="XXX">Mode de paiement</span> <span class="CCC">:</span><br><span
             class="EEE">Virement au compte bancaire</span><br>
@@ -416,9 +431,29 @@
 <script type="application/javascript">
 
     $(document).ready(function () {
-
+        var text = $("#total1").text();
+        var text2 = $("#dh").text();
         $('#print').click();
-        // $('body').hide();
+//        var text3 = $("#total").text();
+
+        $('#total').val(text);
+        $('#total2').val(text2);
+        $("#total").blur(function () {
+            var textt = $("#total").val();
+
+            $("#total1").text(textt);
+
+//
+        });
+        $("#total2").blur(function () {
+            var texttt = $("#total2").val();
+            $("#dh").text(texttt);
+//            window.print();
+
+//            $('#print').click();
+        });
+
+
     });
 
 </script>

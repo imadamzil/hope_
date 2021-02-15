@@ -286,9 +286,16 @@ th
      padding-bottom: 1px;
 
  }
-@media print
-{
-    #vusz{
+@media print {
+    #vusz {
+        display: none;
+    }
+
+    .hid {
+        display: none;
+    }
+
+    .form-control {
         display: none;
     }
 
