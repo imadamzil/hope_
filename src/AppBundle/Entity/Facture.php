@@ -37,7 +37,7 @@ class Facture
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_jours", type="integer", nullable=true)
+     * @ORM\Column(name="nb_jours", type="float", nullable=true)
      */
     private $nbjour;
 
@@ -353,29 +353,7 @@ class Facture
         return $this->totalTTC;
     }
 
-    /**
-     * Set nbjour
-     *
-     * @param integer $nbjour
-     *
-     * @return Facture
-     */
-    public function setNbjour($nbjour)
-    {
-        $this->nbjour = $nbjour;
 
-        return $this;
-    }
-
-    /**
-     * Get nbjour
-     *
-     * @return integer
-     */
-    public function getNbjour()
-    {
-        return $this->nbjour;
-    }
 
     /**
      * Set mission
@@ -832,5 +810,29 @@ class Facture
     public function getFacturehsups()
     {
         return $this->facturehsups;
+    }
+
+    /**
+     * Set nbjour
+     *
+     * @param float $nbjour
+     *
+     * @return Facture
+     */
+    public function setNbjour($nbjour)
+    {
+        $this->nbjour = $nbjour;
+
+        return $this;
+    }
+
+    /**
+     * Get nbjour
+     *
+     * @return float
+     */
+    public function getNbjour()
+    {
+        return $this->nbjour;
     }
 }

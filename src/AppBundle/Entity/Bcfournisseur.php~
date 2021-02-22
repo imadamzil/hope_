@@ -38,7 +38,7 @@ class Bcfournisseur
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_jours", type="integer", nullable=true)
+     * @ORM\Column(name="nb_jours", type="float", nullable=true)
      */
     private $nbjours;
     /**
@@ -498,7 +498,7 @@ class Bcfournisseur
     /**
      * Set nbjours
      *
-     * @param integer $nbjours
+     * @param float $nbjours
      *
      * @return Bcfournisseur
      */
@@ -512,7 +512,7 @@ class Bcfournisseur
     /**
      * Get nbjours
      *
-     * @return integer
+     * @return float
      */
     public function getNbjours()
     {

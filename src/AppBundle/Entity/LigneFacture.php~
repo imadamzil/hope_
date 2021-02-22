@@ -280,4 +280,28 @@ class LigneFacture
     {
         return $this->projetconsultant;
     }
+
+    /**
+     * Set nbjourVente
+     *
+     * @param float $nbjourVente
+     *
+     * @return LigneFacture
+     */
+    public function setNbjourVente($nbjourVente)
+    {
+        $this->nbjourVente = $nbjourVente;
+
+        return $this;
+    }
+
+    /**
+     * Get nbjourVente
+     *
+     * @return float
+     */
+    public function getNbjourVente()
+    {
+        return $this->nbjourVente;
+    }
 }
