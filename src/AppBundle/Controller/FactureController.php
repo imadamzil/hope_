@@ -1627,6 +1627,7 @@ class FactureController extends Controller
      */
     public function editAction(Request $request, Facture $facture)
     {
+//        dump($facture);
         $deleteForm = $this->createDeleteForm($facture);
         $editForm = $this->createForm('AppBundle\Form\FactureEditType', $facture);
         $editForm->handleRequest($request);
