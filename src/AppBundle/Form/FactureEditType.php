@@ -32,6 +32,9 @@ class FactureEditType extends AbstractType
             ))
             ->add('year')
             ->add('nbjour')
+            ->add('totalHT')
+            ->add('taxe')
+            ->add('totalTTC')
             ->add('mois', ChoiceType::class, array(
                 'choices' => array(
                     'Janvier' => 1,
