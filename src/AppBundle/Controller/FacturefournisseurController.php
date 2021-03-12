@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Facturefournisseur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Facturefournisseur controller.
@@ -25,9 +26,36 @@ class FacturefournisseurController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $facturefournisseurs = $em->getRepository('AppBundle:Facturefournisseur')->findAll();
+        $facturefournisseurs_sans_facture = $em->getRepository('AppBundle:Facturefournisseur')->findBy([
+
+            'documentName' => null
+        ]);
 
         return $this->render('facturefournisseur/index.html.twig', array(
             'facturefournisseurs' => $facturefournisseurs,
+            'facturefournisseurs_sans_facture' => $facturefournisseurs_sans_facture,
+        ));
+    }
+
+    /**
+     * Lists all facturefournisseur entities.
+     *
+     * @Route("/sans_facture", name="facturefournisseur_sans")
+     * @Method("GET")
+     */
+    public function sansfactureAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $facturefournisseurs = $em->getRepository('AppBundle:Facturefournisseur')->findBy([
+
+            'documentName' => null
+        ]);
+
+        return $this->render('facturefournisseur/sans_facture.html.twig', array(
+            'facturefournisseurs' => $facturefournisseurs,
+
         ));
     }
 
@@ -99,6 +127,31 @@ class FacturefournisseurController extends Controller
     }
 
     /**
+     * Displays a form to edit an existing facturefournisseur entity.
+     *
+     * @Route("/{id}/add_facture", name="facturefournisseur_update")
+     * @Method({"GET", "POST"})
+     */
+    public function updateAction(Request $request, Facturefournisseur $facturefournisseur)
+    {
+        $deleteForm = $this->createDeleteForm($facturefournisseur);
+        $editForm = $this->createForm('AppBundle\Form\Facturefournisseur1Type', $facturefournisseur);
+        $editForm->handleRequest($request);
+        $facturefournisseur->setEtat('Payé');
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('facturefournisseur_index');
+        }
+
+        return $this->render('facturefournisseur/edit.html.twig', array(
+            'facturefournisseur' => $facturefournisseur,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
      * Deletes a facturefournisseur entity.
      *
      * @Route("/{id}", name="facturefournisseur_delete")
@@ -130,7 +183,6 @@ class FacturefournisseurController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('facturefournisseur_delete', array('id' => $facturefournisseur->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

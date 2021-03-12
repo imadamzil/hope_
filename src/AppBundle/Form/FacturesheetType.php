@@ -2,32 +2,41 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\FactureHsup;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
-class FacturefournisseurType extends AbstractType
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class FacturesheetType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('achatHT')->add('nbjours')->add('mois')->add('year')->add('achatTTC')->add('taxe')->add('factureFournisseur')->add('etat')->add('date')
+        $builder
+
             ->add('documentFile', VichFileType::class, [
                 'required' => false,
                 'allow_delete' => true,
-                'label' => 'Facture Fournisseur'
+                'label' => 'Timesheet'
                 //   'delete_label' => 'form.label.delete',
 
-            ])->add('updatedAt')->add('createdAt')->add('fournisseur')->add('mission');
-    }/**
+            ]);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Facturefournisseur'
+            'data_class' => 'AppBundle\Entity\Facture'
         ));
     }
 
@@ -36,7 +45,7 @@ class FacturefournisseurType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_facturefournisseur';
+        return 'appbundle_facture';
     }
 
 

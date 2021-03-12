@@ -18,10 +18,89 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="addedby",cascade={"persist", "remove"})
+     */
+    protected $facturesajoutes;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="editedby",cascade={"persist", "remove"})
+     */
+    protected $facturesmodifies;
 
     public function __construct()
     {
         parent::__construct();
         // your own logic
+    }
+
+
+
+
+    /**
+     * Add facturesajoute
+     *
+     * @param \AppBundle\Entity\Facture $facturesajoute
+     *
+     * @return User
+     */
+    public function addFacturesajoute(\AppBundle\Entity\Facture $facturesajoute)
+    {
+        $this->facturesajoutes[] = $facturesajoute;
+
+        return $this;
+    }
+
+    /**
+     * Remove facturesajoute
+     *
+     * @param \AppBundle\Entity\Facture $facturesajoute
+     */
+    public function removeFacturesajoute(\AppBundle\Entity\Facture $facturesajoute)
+    {
+        $this->facturesajoutes->removeElement($facturesajoute);
+    }
+
+    /**
+     * Get facturesajoutes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFacturesajoutes()
+    {
+        return $this->facturesajoutes;
+    }
+
+    /**
+     * Add facturesmodify
+     *
+     * @param \AppBundle\Entity\Facture $facturesmodify
+     *
+     * @return User
+     */
+    public function addFacturesmodify(\AppBundle\Entity\Facture $facturesmodify)
+    {
+        $this->facturesmodifies[] = $facturesmodify;
+
+        return $this;
+    }
+
+    /**
+     * Remove facturesmodify
+     *
+     * @param \AppBundle\Entity\Facture $facturesmodify
+     */
+    public function removeFacturesmodify(\AppBundle\Entity\Facture $facturesmodify)
+    {
+        $this->facturesmodifies->removeElement($facturesmodify);
+    }
+
+    /**
+     * Get facturesmodifies
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFacturesmodifies()
+    {
+        return $this->facturesmodifies;
     }
 }

@@ -105,6 +105,7 @@ class ProjetController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $facture = new Facture();
+        $facture->setAddedby($this->getUser());
         $facture->setEtat('non payé');
         $facture->setClient($projet->getClient());
 
@@ -155,8 +156,7 @@ class ProjetController extends Controller
                 ])->getResult();
 
 
-
-            $count_factures = (int)$nbb[0]['total']+1;
+            $count_factures = (int)$nbb[0]['total'] + 1;
             $facture->setNumero('H3K-' . substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad($count_factures, 3, '0', STR_PAD_LEFT));
 
 
@@ -207,16 +207,22 @@ class ProjetController extends Controller
         $deleteForm = $this->createDeleteForm($projet);
         $editForm = $this->createForm('AppBundle\Form\ProjetType', $projet);
         $editForm->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            foreach ($projet->getProjetconsultants() as $bloc) {
 
-            return $this->redirectToRoute('projet_edit', array('id' => $projet->getId()));
+                $bloc->setProjet($projet);
+            }
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('projet_show', array('id' => $projet->getId()));
         }
 
         return $this->render('projet/edit.html.twig', array(
             'projet' => $projet,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -271,7 +277,7 @@ class ProjetController extends Controller
              SELECT l  FROM AppBundle:LigneFacture l
              JOIN AppBundle:Projetconsultant p
 
-             WHERE l.facture = :id and l.projetconsultant = p.id AND p.consultant IS NOT NULL 
+             WHERE l.facture = :id and l.projetconsultant = p.id AND p.consultant IS NOT NULL GROUP BY p.consultant
 
                      ')->setParameter('id', $facture)->getResult();
 
@@ -312,8 +318,6 @@ class ProjetController extends Controller
                     'Octobre' => 10,
                     'Novembre' => 11,
                     'Décembre' => 12,
-
-
                 ),
             ))
             ->add('year')
@@ -352,7 +356,9 @@ class ProjetController extends Controller
                     $em->flush();
                 }
                 $bc = new Bcfournisseur();
+                $bc->setFacture($facture);
                 $factureFournisseur = new Facturefournisseur();
+                $factureFournisseur->setFacture($facture);
                 $achatht = $ligne->getNbjour() * $ligne->getProjetconsultant()->getAchat();
                 $venteht = $ligne->getNbjour() * $ligne->getProjetconsultant()->getVente();
                 $taxe = 0.2 * $achatht;
@@ -399,9 +405,22 @@ class ProjetController extends Controller
 
                 $em->persist($factureFournisseur);
                 $em->flush();
+//                $production
                 // add new production
 
                 // if is orange project
+
+
+                //end add production
+
+                // return nb jours
+
+
+            }
+            foreach ($facture->getLignes() as $ligne) {
+                $achatht = $ligne->getNbjour() * $ligne->getProjetconsultant()->getAchat();
+                $venteht = $ligne->getNbjourVente() * $ligne->getProjetconsultant()->getVente();
+                $taxe = 0.2 * $achatht;
                 if ($facture->getProjet()->getClient() == 'MEDI TELECOM') {
 
                     $production = new Production();
@@ -410,15 +429,21 @@ class ProjetController extends Controller
                     $production->setFournisseur($ligne->getProjetconsultant()->getFournisseur());
                     $production->setYear($year);
                     $production->setMois($mois);
+                    $production->setFacture($facture);
+
                     $production->setClient($facture->getClient());
                     $production->setTjmAchat($ligne->getProjetconsultant()->getAchat());
                     $production->setTjmVente($ligne->getProjetconsultant()->getVente());
-                    $production->setNbjour($ligne->getNbjour());
+                    $production->setNbjour($ligne->getNbjourVente());
                     $production->setAchatHT($achatht);
+                    $production->setLigne($ligne);
+
                     $production->setAchatTTC($achatht + $taxe);
-//                    $production->setVenteHT($venteht);
-//                    $production->setVenteTTC($venteht * 1.2);
+                    $production->setVenteHT($venteht);
+                    $production->setVenteTTC($venteht * 1.2);
                     $em->persist($production);
+
+                    dump($production, $ligne);
                     $em->flush();
                 } else {
                     // normal project
@@ -428,7 +453,9 @@ class ProjetController extends Controller
                     $production->setProjet($facture->getProjet());
                     $production->setFournisseur($ligne->getProjetconsultant()->getFournisseur());
                     $production->setYear($year);
+                    $production->setLigne($ligne);
                     $production->setMois($mois);
+                    $production->setFacture($facture);
                     $production->setClient($facture->getClient());
                     $production->setTjmAchat($ligne->getProjetconsultant()->getAchat());
                     $production->setTjmVente($ligne->getProjetconsultant()->getVente());
@@ -441,15 +468,10 @@ class ProjetController extends Controller
                     $em->flush();
                 }
 
-
-                //end add production
-
-                // return nb jours
-
-
-
-
             }
+
+
+            die();
 //            dump($bc, $facture, $factureFournisseur,$production);
             return $this->redirectToRoute('projet_show', array('id' => $facture->getProjet()->getId()));
 

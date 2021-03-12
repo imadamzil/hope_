@@ -289,23 +289,24 @@
                                         </tbody>
 
                                     </table>
+                                    {% if is_granted('ROLE_MANAGER') %}
+                                        <div class="row">
+                                            <div class="col-md-4"></div>
+                                            <div class="col-md-4">
 
-                                    <div class="row">
-                                        <div class="col-md-4"></div>
-                                        <div class="col-md-4">
+                                                <a href="#" data-action="settings" id="vir"
+                                                   class=" btn btn-success text-center btn-block ">
+                                                    <i class="ace-icon fa fa-check-circle"></i> Valider
+                                                </a>
+                                                <a href="#" data-action="settings" id="virement"
+                                                   class=" btn btn-primary text-center btn-block ">
+                                                    <i class="ace-icon fa fa-exchange "></i> Virements
+                                                </a>
 
-                                            <a href="#" data-action="settings" id="vir"
-                                               class=" btn btn-success text-center btn-block ">
-                                                <i class="ace-icon fa fa-check-circle"></i> Valider
-                                            </a>
-                                            <a href="#" data-action="settings" id="virement"
-                                               class=" btn btn-primary text-center btn-block ">
-                                                <i class="ace-icon fa fa-exchange "></i> Virements
-                                            </a>
+                                            </div>
 
                                         </div>
-
-                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
 

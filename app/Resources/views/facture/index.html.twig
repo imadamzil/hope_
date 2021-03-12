@@ -92,6 +92,24 @@
                             </div>
 
                             <!-- div.table-responsive -->
+                            <div class="alert alert-block alert-danger text-center">
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <i class="ace-icon fa fa-times"></i>
+                                </button>
+
+                                <p>
+                                    <strong>
+                                        <i class="ace-icon fa fa-warning"></i>
+                                        {{ facture_sans_timesheet | length }} Facture(s) </strong>
+                                    sans Timesheet merci de les uploader !
+                                </p>
+
+                                <p>
+                                    <a class="btn btn-danger" href="{{ path('facture_sans_timesheet') }}">
+                                        <i class="fa fa-list-alt"></i> Liste
+                                    </a>
+                                </p>
+                            </div>
 
                             <!-- div.dataTables_borderWrap -->
                             <div>
@@ -301,12 +319,19 @@
                                                            title="voir">
                                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                         </a>
+                                                        {% if facture.documentName is null %}
+                                                            <a class="red"
+                                                               href="{{ path('facture_sheet', { 'id': facture.id }) }}"
+                                                               title="Uploader le timesheet">
+                                                                <i class="ace-icon fa fa-cloud-upload bigger-130"></i>
+                                                            </a>
+                                                        {% else %}
+                                                            <a title="Télécharger le Timesheet" class="purple"
+                                                               href="{{ asset('uploads/documents/')~facture.documentName }}">
+                                                                <i class="ace-icon fa fa-download bigger-130"></i>
+                                                            </a>
+                                                        {% endif %}
 
-                                                        <a class="orange"
-                                                           href="{{ path('facture_edit', { 'id': facture.id }) }}"
-                                                           title="modifier">
-                                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                        </a>
                                                         {% if facture.mission is not null %}
                                                             <a class="grey"
                                                                href="{{ path('facture_print', { 'id': facture.id }) }}"
@@ -321,8 +346,32 @@
                                                             </a>
                                                         {% endif %}
 
+                                                        {% if is_granted('ROLE_USER') == false %}
+                                                        {% if facture.projet is null and facture.etat != 'payé' %}
+                                                            <a class="orange"
+                                                               href="{{ path('facture_edit', { 'id': facture.id }) }}"
+                                                               title="modifier">
+                                                                <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                            </a>
+                                                        {% else %}
+                                                            {% if facture.client =='MEDI TELECOM' and facture.etat != 'payé' %}
+                                                                <a class="orange"
+                                                                   href="{{ path('facture_edit_projet', { 'id': facture.id }) }}"
+                                                                   title="modifier">
+                                                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                                </a>
 
+                                                            {% endif %}
+                                                            {% if facture.client =='PCS invest' and facture.etat != 'payé' %}
+                                                                <a class="orange"
+                                                                   href="{{ path('facture_edit_projet', { 'id': facture.id }) }}"
+                                                                   title="modifier">
+                                                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                                </a>
 
+                                                            {% endif %}
+
+                                                        {% endif %}
                                                         {% if facture.mission is not null and facture.mission.devise !='DH' and facture.mission.devise is not null and facture.totalDH is null %}
 
                                                         <a href="#my-moda{{ facture.id }}" role="button" class=""
@@ -376,6 +425,7 @@
                                                     {% if facture.etat !='payé' %}
 
                                                         <a href="{{ path('facture_payer', { 'id': facture.id }) }}"
+                                                           onclick="return confirm('Etes Vous sur que cette Facture est payée ?');"
                                                            class="tooltip-error" data-rel="tooltip"
                                                            title="" id=""
                                                            data-original-title="-> DH">
@@ -385,7 +435,7 @@
                                                         </a>
 
                                                     {% endif %}
-
+                                                    {% endif %}
 
                                                     <div class="hidden-md hidden-lg">
                                                         <div class="inline pos-rel">
@@ -415,18 +465,19 @@
 																				</span>
                                                                     </a>
                                                                 </li>
-
-                                                                <li>
-                                                                    <a href="#" class="tooltip-error" data-rel="tooltip"
-                                                                       title=""
-                                                                       data-original-title="Delete">
+                                                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                                                    <li>
+                                                                        <a href="{{ path('facture_remove', { 'id': facture.id }) }}"
+                                                                           class="tooltip-error" data-rel="tooltip"
+                                                                           title=""
+                                                                           data-original-title="Delete">
 																				<span class="red">
 																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																				</span>
-                                                                    </a>
-                                                                </li>
+                                                                        </a>
+                                                                    </li>
 
-
+                                                                {% endif %}
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -453,221 +504,222 @@
 
 
 {% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <!-- page specific plugin scripts -->
-    <script src="{{ asset('') }}assets/js/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('') }}assets/js/jquery.dataTables.bootstrap.min.js"></script>
+    {% block javascripts %}
+        {{ parent() }}
+        <!-- page specific plugin scripts -->
+        <script src="{{ asset('') }}assets/js/jquery.dataTables.min.js"></script>
+        <script src="{{ asset('') }}assets/js/jquery.dataTables.bootstrap.min.js"></script>
 
-    <script src="{{ asset('') }}assets/js/dataTables.buttons.min.js"></script>
-    <script src="{{ asset('') }}assets/js/buttons.flash.min.js"></script>
-    <script src="{{ asset('') }}assets/js/buttons.html5.min.js"></script>
-    <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
-    <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
-    <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
-    <script type="text/javascript">
-        jQuery(function ($) {
+        <script src="{{ asset('') }}assets/js/dataTables.buttons.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.flash.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.html5.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
+        <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
+        <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
+        <script type="text/javascript"
+                src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+        <script type="text/javascript">
+            jQuery(function ($) {
 
-            $('.ok').click(function () {
-                var idd = this.id;
-                var Id = $('#id_val' + idd).val();
-                var montant = $('#montant' + idd).val();
+                $('.ok').click(function () {
+                    var idd = this.id;
+                    var Id = $('#id_val' + idd).val();
+                    var montant = $('#montant' + idd).val();
 
-                var url = Routing.generate('route_to_convert_devise');
+                    var url = Routing.generate('route_to_convert_devise');
 
-                $.ajax({
-                    type: "POST",
-                    data: {
+                    $.ajax({
+                        type: "POST",
+                        data: {
 
-                        id: Id,
-                        montant: montant
-                    },
-                    url: url,
-                    dataType: "json",
-                    success: function (response) {
-
-                        console.log(response);
-                        $('#my-moda' + Id).modal('hide');
-                        location.href = Routing.generate('facture_index');
-                    },
-                    error: function (error) {
-
-                        console.log(error);
-
-                    }
-
-
-                });
-            });
-
-
-            var
-                rowCount = $('#dynamic-table').length;
-            console.log(rowCount);
-
-            //initiate dataTables plugin
-            var myTable =
-                $('#dynamic-table')
-                    .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-                    .DataTable({
-                        initComplete: function () {
-                            this.api().columns([3, 7, 8]).every(function () {
-                                var column = this;
-                                var select = $('<select><option value="">--</option></select>')
-                                    .appendTo($(column.header()))
-                                    .on('change', function () {
-                                        var val = $.fn.dataTable.util.escapeRegex(
-                                            $(this).val()
-                                        );
-
-                                        column
-                                            .search(val ? '^' + val + '$' : '', true, false)
-                                            .draw();
-                                    });
-
-                                column.data().unique().sort().each(function (d, j) {
-                                    var val = $('<div/>').html(d).text();
-                                    select.append('<option value="' + val + '">' + val + '</option>');
-
-                                });
-                            });
+                            id: Id,
+                            montant: montant
                         },
-                        language: {
-                            url: '//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json'
+                        url: url,
+                        dataType: "json",
+                        success: function (response) {
 
+                            console.log(response);
+                            $('#my-moda' + Id).modal('hide');
+                            location.href = Routing.generate('facture_index');
                         },
-                        bAutoWidth: false,
-                        "aoColumns": [
-                            {"bSortable": false},
-                            null, null, null, null, null, null, null, null, null,null,
-                            {"bSortable": false}
-                        ],
-                        "aaSorting": [],
+                        error: function (error) {
 
+                            console.log(error);
 
-                        //"bProcessing": true,
-                        //"bServerSide": true,
-                        //"sAjaxSource": "http://127.0.0.1/table.php"	,
-
-                        //,
-                        //"sScrollY": "200px",
-                        //"bPaginate": false,
-
-                        //"sScrollX": "100%",
-                        //"sScrollXInner": "120%",
-                        "bScrollCollapse": true,
-                        //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
-                        //you may want to wrap the table inside a "div.dataTables_borderWrap" element
-
-                        //"iDisplayLength": 50
-
-
-                        select: {
-                            style: 'multi'
                         }
+
 
                     });
-
-
-            $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
-
-            new $.fn.dataTable.Buttons(myTable, {
-                buttons: [
-                    {
-                        "extend": "colvis",
-                        "text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
-                        "className": "btn btn-white btn-primary btn-bold",
-                        columns: ':not(:first):not(:last)'
-                    },
-                    {
-                        "extend": "copy",
-                        "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
-                        "className": "btn btn-white btn-primary btn-bold"
-                    },
-                    {
-                        "extend": "excel",
-                        "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
-                        "className": "btn btn-white btn-primary btn-bold",
-                        exportOptions: {
-                            columns: [ 0, 1, 2,3,4,5,6 ]
-                        }
-                    },
-
-                    {
-                        "extend": "print",
-                        "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
-                        "className": "btn btn-white btn-primary btn-bold",
-                        autoPrint: false,
-                        message: ''
-                    }
-                ]
-            });
-            myTable.buttons().container().appendTo($('.tableTools-container'));
-
-            //style the message box
-            var defaultCopyAction = myTable.button(1).action();
-            myTable.button(1).action(function (e, dt, button, config) {
-                defaultCopyAction(e, dt, button, config);
-                $('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
-            });
-
-
-            var defaultColvisAction = myTable.button(0).action();
-            myTable.button(0).action(function (e, dt, button, config) {
-
-                defaultColvisAction(e, dt, button, config);
-
-
-                if ($('.dt-button-collection > .dropdown-menu').length == 0) {
-                    $('.dt-button-collection')
-                        .wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
-                        .find('a').attr('href', '#').wrap("<li />")
-                }
-                $('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
-            });
-
-            ////
-
-            setTimeout(function () {
-                $($('.tableTools-container')).find('a.dt-button').each(function () {
-                    var div = $(this).find(' > div').first();
-                    if (div.length == 1) div.tooltip({container: 'body', title: div.parent().text()});
-                    else $(this).tooltip({container: 'body', title: $(this).text()});
                 });
-            }, 500);
 
 
-            $(document).on('click', '#dynamic-table .dropdown-toggle', function (e) {
-                e.stopImmediatePropagation();
-                e.stopPropagation();
-                e.preventDefault();
-            });
+                var
+                    rowCount = $('#dynamic-table').length;
+                console.log(rowCount);
+
+                //initiate dataTables plugin
+                var myTable =
+                    $('#dynamic-table')
+                        .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+                        .DataTable({
+                            initComplete: function () {
+                                this.api().columns([4, 8]).every(function () {
+                                    var column = this;
+                                    var select = $('<select><option value="">--</option></select>')
+                                        .appendTo($(column.header()))
+                                        .on('change', function () {
+                                            var val = $.fn.dataTable.util.escapeRegex(
+                                                $(this).val()
+                                            );
+
+                                            column
+                                                .search(val ? '^' + val + '$' : '', true, false)
+                                                .draw();
+                                        });
+
+                                    column.data().unique().sort().each(function (d, j) {
+                                        var val = $('<div/>').html(d).text();
+                                        select.append('<option value="' + val + '">' + val + '</option>');
+
+                                    });
+                                });
+                            },
+                            language: {
+                                url: '//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json'
+
+                            },
+                            bAutoWidth: false,
+                            "aoColumns": [
+                                {"bSortable": false},
+                                null, null, null, null, null, null, null, null, null, null,
+                                {"bSortable": false}
+                            ],
+                            "aaSorting": [],
 
 
-            /********************************/
-            //add tooltip for small view action buttons in dropdown menu
-            $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+                            //"bProcessing": true,
+                            //"bServerSide": true,
+                            //"sAjaxSource": "http://127.0.0.1/table.php"	,
 
-            //tooltip placement on right or left
-            function tooltip_placement(context, source) {
-                var $source = $(source);
-                var $parent = $source.closest('table');
-                var off1 = $parent.offset();
-                var w1 = $parent.width();
+                            //,
+                            //"sScrollY": "200px",
+                            //"bPaginate": false,
 
-                var off2 = $source.offset();
-                //var w2 = $source.width();
+                            //"sScrollX": "100%",
+                            //"sScrollXInner": "120%",
+                            "bScrollCollapse": true,
+                            //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
+                            //you may want to wrap the table inside a "div.dataTables_borderWrap" element
 
-                if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
-                return 'left';
-            }
+                            //"iDisplayLength": 50
 
 
-        })
-    </script>
+                            select: {
+                                style: 'multi'
+                            }
+
+                        });
 
 
-{% endblock %}
+                $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+
+                new $.fn.dataTable.Buttons(myTable, {
+                    buttons: [
+                        {
+                            "extend": "colvis",
+                            "text": "<i class='fa fa-search bigger-110 blue'></i> <span class='hidden'>Show/hide columns</span>",
+                            "className": "btn btn-white btn-primary btn-bold",
+                            columns: ':not(:first):not(:last)'
+                        },
+                        {
+                            "extend": "copy",
+                            "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
+                            "className": "btn btn-white btn-primary btn-bold"
+                        },
+                        {
+                            "extend": "excel",
+                            "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+                            "className": "btn btn-white btn-primary btn-bold",
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6]
+                            }
+                        },
+
+                        {
+                            "extend": "print",
+                            "text": "<i class='fa fa-print bigger-110 grey'></i> <span class='hidden'>Print</span>",
+                            "className": "btn btn-white btn-primary btn-bold",
+                            autoPrint: false,
+                            message: ''
+                        }
+                    ]
+                });
+                myTable.buttons().container().appendTo($('.tableTools-container'));
+
+                //style the message box
+                var defaultCopyAction = myTable.button(1).action();
+                myTable.button(1).action(function (e, dt, button, config) {
+                    defaultCopyAction(e, dt, button, config);
+                    $('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
+                });
+
+
+                var defaultColvisAction = myTable.button(0).action();
+                myTable.button(0).action(function (e, dt, button, config) {
+
+                    defaultColvisAction(e, dt, button, config);
+
+
+                    if ($('.dt-button-collection > .dropdown-menu').length == 0) {
+                        $('.dt-button-collection')
+                            .wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
+                            .find('a').attr('href', '#').wrap("<li />")
+                    }
+                    $('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
+                });
+
+                ////
+
+                setTimeout(function () {
+                    $($('.tableTools-container')).find('a.dt-button').each(function () {
+                        var div = $(this).find(' > div').first();
+                        if (div.length == 1) div.tooltip({container: 'body', title: div.parent().text()});
+                        else $(this).tooltip({container: 'body', title: $(this).text()});
+                    });
+                }, 500);
+
+
+                $(document).on('click', '#dynamic-table .dropdown-toggle', function (e) {
+                    e.stopImmediatePropagation();
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+
+
+                /********************************/
+                //add tooltip for small view action buttons in dropdown menu
+                $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+
+                //tooltip placement on right or left
+                function tooltip_placement(context, source) {
+                    var $source = $(source);
+                    var $parent = $source.closest('table');
+                    var off1 = $parent.offset();
+                    var w1 = $parent.width();
+
+                    var off2 = $source.offset();
+                    //var w2 = $source.width();
+
+                    if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+                    return 'left';
+                }
+
+
+            })
+        </script>
+
+
+    {% endblock %}

@@ -97,7 +97,7 @@
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
-                                               TJM
+                                                TJM
                                             </th>
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
@@ -194,7 +194,9 @@
                                                     {% if bcfournisseur.mission is null %}
 
                                                         {% if bcfournisseur.projet %}
-                                                            {{ bcfournisseur.achatHT/bcfournisseur.nbjours }}
+                                                            {% if bcfournisseur.nbjours != 0 %}
+                                                                {{ bcfournisseur.achatHT/bcfournisseur.nbjours }}
+                                                            {% endif %}
                                                         {% else %}
 
                                                             --
@@ -372,7 +374,7 @@
                         bAutoWidth: false,
                         "aoColumns": [
                             {"bSortable": true},
-                            null, null, null, null, null, null, null,null,
+                            null, null, null, null, null, null, null, null,
                             {"bSortable": false}
                         ],
                         "aaSorting": [],

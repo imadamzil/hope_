@@ -23,9 +23,22 @@
                 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=1);
 
             }
-            fieldset[id*='_projetconsultants_'] {
-                               border: 1px solid black;
+            fieldset fieldset div  {
+                /*width: 75%;*/
 
+            }
+            fieldset fieldset div div {
+                border-right: 1px solid black;
+
+
+
+            }
+
+
+            .nbjours {
+                /*border: 1px solid black;*/
+                width: 150px;
+                margin-top: 57px;
             }
 
             .inl .form-group.form-group {
@@ -38,14 +51,14 @@
         </style>
     {% endblock %}
 
-{% block title %} Hope3k | Projet {% endblock %}{% block menu %}  <a
-        href="{{ path('projet_index') }}">Projet</a>   {% endblock %}   {% block menu_active %}    Liste {% endblock %}{% block content1 %}
+{% block title %} Hope3k | Facture {% endblock %}{% block menu %}  <a
+        href="{{ path('projet_index') }}">Projet</a>   {% endblock %}   {% block menu_active %}    Facturation {% endblock %}{% block content1 %}
 
 
     <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
         <div class="widget-box ui-sortable-handle" id="widget-box-1">
             <div class="widget-header">
-                <h5 class="widget-title">Nouveau projet :</h5>
+                <h5 class="widget-title">Modifier facture projet : {{ projet }}</h5>
 
                 <div class="widget-toolbar">
                     <div class="widget-menu">
@@ -83,69 +96,64 @@
             </div>
 
             <div class="widget-body">
+
+
                 <hr>
                 {{ form_start(form) }}
 
+                <div class="row">
+
+                    <div class="col-md-3 col-md-offset-1">{{ form_row(form.dateDebut) }}</div>
+                    <div class="col-md-4">{{ form_row(form.dateFin) }}</div>
+                    <div class="col-md-4">{{ form_row(form.date) }}</div>
+
+                </div>
 
                 <div class="row">
 
-                    <div class="col-md-5 col-md-offset-1"><label for=""> Date Début: </label>
-
-                        <div class="input-group">
-
-                            <input type="text" id="appbundle_projet_dateDebut" name="appbundle_projet[dateDebut]"
-                                    class="date-timepicker1 form-control is-invalid">
-                            <span class="input-group-addon">
-                                <i class="fa fa-clock-o bigger-120 blue"></i>
-                            </span>
-                        </div>
-                        <label for=""> Date FIn: </label>
-                        <div class="input-group">
-
-                            <input type="text" id="appbundle_projet_dateFin" name="appbundle_projet[dateFin]"
-                                    class="date-timepicker1 form-control is-invalid">
-                            <span class="input-group-addon">
-                                <i class="fa fa-clock-o bigger-120 blue"></i>
-                            </span>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-5 ">
-                        {{ form_row(form.nom) }}
+                    <div class="col-md-3 col-md-offset-2">
                         {{ form_row(form.client) }}
-
+                        {{ form_row(form.comptebancaire) }}
 
                     </div>
+                    <div class="col-md-4">
+                        {{ form_row(form.mois) }}
+                        {{ form_row(form.year) }}
 
+                    </div>
                 </div>
+
+
+                <hr>
                 <div class="row" id="adminbundle_quantitecommande_bon">
                     <div class="col-md-10 col-md-offset-1">
                         {% form_theme form '::jquery.collection.html.twig' %}
                         {#{% for toto in form.commandes %}
                             {{ form_row(toto, {'label': 'mon label' } ) }}
                         {% endfor %}#}
-                        {{ form_row(form.projetconsultants) }}
+                        {{ form_row(form.lignes) }}
                     </div>
 
                 </div>
-
                 <div class="clearfix form-actions">
-                    <div class="col-md-offset-3 col-md-9">
-                        <button class="btn btn-info" type="submit">
-                            <i class="ace-icon fa fa-check bigger-110"></i>
-                            Submit
-                        </button>
+                    <div class="row">
 
-                        &nbsp; &nbsp; &nbsp;
-                        <button class="btn" type="reset">
-                            <i class="ace-icon fa fa-undo bigger-110"></i>
-                            Reset
-                        </button>
+                        <div class="col-md-offset-3 col-md-9">
+                            <button class="btn btn-info" type="submit">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                Submit
+                            </button>
+
+                            &nbsp; &nbsp; &nbsp;
+                            <button class="btn" type="reset">
+                                <i class="ace-icon fa fa-undo bigger-110"></i>
+                                Reset
+                            </button>
+                        </div>
                     </div>
+
                 </div>
                 <hr>
-
                 {{ form_widget(form._token) }}
 
                 {{ form_end(form , {'render_rest': false}) }}
@@ -166,17 +174,14 @@
 
     <script>
         $(document).ready(function () {
+            $('[id*=_nbjour]').parent().addClass('nbjours');
+
             $('.my-selector').collection({
-                init_with_n_elements: 1,
-                add_at_the_end: true,
-                fade_in: true,
-                fade_out: true,
-                allow_duplicate: true,
+
 
                 up: '<a href="#" class="btn btn-white btn-purple pull-right"><span class="glyphicon glyphicon-arrow-up"></span></a>',
                 down: '<a href="#" class="btn btn-white btn-primary pull-right"><span class="glyphicon glyphicon-arrow-down"></span></a>',
                 add: '<a href="#" class="btn btn-white btn-info pull-right imad"><span class="glyphicon glyphicon-plus-sign"></span></a>',
-                duplicate: '<a href="#" class="btn btn-white btn-info pull-right"><span class="glyphicon glyphicon-clone"></span></a>',
                 remove: '<a href="#" class="btn btn-white btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span></a>'
             });
 
@@ -184,7 +189,7 @@
                 {
                     locale: moment.locale('pt'),
                     format: 'YYYY-MM-DD HH:mm',
-                    maxDate: moment(),
+//                    mDate: moment(),
                     widgetPositioning: {
                         horizontal: 'left',
                         vertical: 'bottom'

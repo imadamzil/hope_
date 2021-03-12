@@ -125,9 +125,9 @@
                                     </div><!-- /.col -->
                                 </div><!-- /.row -->
 
-                                <div class="space-20"></div>
 
-                                <div class="col-md-10 col-sm-offset-1">
+
+                                <div class="col-md-12 ">
                                     <div class="widget-box transparent" id="recent-box">
                                         <div class="widget-header">
                                             <h4 class="widget-title lighter smaller">
@@ -341,7 +341,7 @@
                                                                                 </a>
 
 
-                                                                                <a class="red" href=""
+                                                                                <a class="red" href="{{ path('projetconsultant_remove', { 'id': item.id }) }}"
                                                                                    onclick="return confirm('vous êtes sûr que vous voulez le supprimé?');">
                                                                                     <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                                                                 </a>
@@ -602,29 +602,67 @@
                                                                                            title="voir">
                                                                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                                                         </a>
-                                                                                        <a class="grey"
-                                                                                           href="{{ path('facture_print_projet', { 'id': facture.id }) }}"
-                                                                                           title="Imprimer">
-                                                                                            <i class="ace-icon fa fa-print bigger-130"></i>
-                                                                                        </a>
-                                                                                        <a class="orange"
-                                                                                           href="{{ path('facture_edit', { 'id': facture.id }) }}"
-                                                                                           title="modifier">
-                                                                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                                                        </a>
+                                                                                        {% if facture.documentName is null %}
+                                                                                            <a class="red"
+                                                                                               href="{{ path('facture_sheet', { 'id': facture.id }) }}"
+                                                                                               title="Uploader le timesheet">
+                                                                                                <i class="ace-icon fa fa-cloud-upload bigger-130"></i>
+                                                                                            </a>
+                                                                                        {% else %}
+                                                                                            <a title="Télécharger le Timesheet" class="purple"
+                                                                                               href="{{ asset('uploads/documents/')~facture.documentName }}">
+                                                                                                <i class="ace-icon fa fa-download bigger-130"></i>
+                                                                                            </a>
+                                                                                        {% endif %}
 
+                                                                                        {% if facture.mission is not null %}
+                                                                                            <a class="grey"
+                                                                                               href="{{ path('facture_print', { 'id': facture.id }) }}"
+                                                                                               title="Imprimer">
+                                                                                                <i class="ace-icon fa fa-print bigger-130"></i>
+                                                                                            </a>
+                                                                                        {% else %}
+                                                                                            <a class="grey"
+                                                                                               href="{{ path('facture_print_projet', { 'id': facture.id }) }}"
+                                                                                               title="Imprimer">
+                                                                                                <i class="ace-icon fa fa-print bigger-130"></i>
+                                                                                            </a>
+                                                                                        {% endif %}
 
-                                                                                        <a class="red" href=""
-                                                                                           onclick="return confirm('vous êtes sûr que vous voulez le supprimé?');">
-                                                                                            <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                                                        </a>
+                                                                                        {% if is_granted('ROLE_USER') %}
+                                                                                        {% if facture.projet is null and facture.etat != 'payé' %}
+                                                                                            <a class="orange"
+                                                                                               href="{{ path('facture_edit', { 'id': facture.id }) }}"
+                                                                                               title="modifier">
+                                                                                                <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                                                            </a>
+                                                                                        {% else %}
+                                                                                            {% if facture.client =='MEDI TELECOM' and facture.etat != 'payé' %}
+                                                                                                <a class="orange"
+                                                                                                   href="{{ path('facture_edit_projet', { 'id': facture.id }) }}"
+                                                                                                   title="modifier">
+                                                                                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                                                                </a>
+
+                                                                                            {% endif %}
+                                                                                            {% if facture.client =='PCS invest' and facture.etat != 'payé' %}
+                                                                                                <a class="orange"
+                                                                                                   href="{{ path('facture_edit_projet', { 'id': facture.id }) }}"
+                                                                                                   title="modifier">
+                                                                                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                                                                </a>
+
+                                                                                            {% endif %}
+
+                                                                                        {% endif %}
                                                                                         {% if facture.mission is not null and facture.mission.devise !='DH' and facture.mission.devise is not null and facture.totalDH is null %}
 
                                                                                         <a href="#my-moda{{ facture.id }}" role="button" class=""
                                                                                            data-toggle="modal">
                                                                                             <i class="ace-icon fa fa-exchange bigger-100 purple"></i>
                                                                                         </a>
-                                                                                        <div id="my-moda{{ facture.id }}" class="modal fade" tabindex="-1">
+                                                                                        <div id="my-moda{{ facture.id }}" class="modal fade"
+                                                                                             tabindex="-1">
                                                                                             <div class="modal-dialog">
                                                                                                 <div class="modal-content">
                                                                                                     <div class="modal-header">
@@ -670,6 +708,7 @@
                                                                                     {% if facture.etat !='payé' %}
 
                                                                                         <a href="{{ path('facture_payer', { 'id': facture.id }) }}"
+                                                                                           onclick="return confirm('Etes Vous sur que cette Facture est payée ?');"
                                                                                            class="tooltip-error" data-rel="tooltip"
                                                                                            title="" id=""
                                                                                            data-original-title="-> DH">
@@ -679,7 +718,7 @@
                                                                                         </a>
 
                                                                                     {% endif %}
-
+                                                                                    {% endif %}
 
                                                                                     <div class="hidden-md hidden-lg">
                                                                                         <div class="inline pos-rel">

@@ -20,7 +20,7 @@ class FactureEditType extends AbstractType
     {
         $builder
             ->add('numero')
-            ->add('etat', ChoiceType::class, array(
+         /*   ->add('etat', ChoiceType::class, array(
 
                 'choices' => array(
                     'Payé' => 'payé',
@@ -29,12 +29,12 @@ class FactureEditType extends AbstractType
 
 
                 ),
-            ))
+            ))*/
             ->add('year')
             ->add('nbjour')
-            ->add('totalHT')
-            ->add('taxe')
-            ->add('totalTTC')
+//            ->add('totalHT')
+//            ->add('taxe')
+//            ->add('totalTTC')
             ->add('mois', ChoiceType::class, array(
                 'choices' => array(
                     'Janvier' => 1,
@@ -62,7 +62,7 @@ class FactureEditType extends AbstractType
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'date-timepicker1'],
             ])
-            ->add('client', EntityType::class, array(
+          /*  ->add('client', EntityType::class, array(
                 'class' => 'AppBundle:Client',
                 'multiple' => false,
                 'label' => 'Client',
@@ -73,8 +73,8 @@ class FactureEditType extends AbstractType
                     'multiple' => false
 
                 )
-            ))
-            ->add('consultant', EntityType::class, array(
+            ))*/
+          /*  ->add('consultant', EntityType::class, array(
                 'class' => 'AppBundle:Consultant',
                 'multiple' => false,
                 'label' => 'Consultant',
@@ -110,7 +110,7 @@ class FactureEditType extends AbstractType
                     'multiple' => false
 
                 )
-            ))
+            ))*/
             ->add('comptebancaire', EntityType::class, array(
                 'class' => 'AppBundle:Comptebancaire',
                 'multiple' => false,
