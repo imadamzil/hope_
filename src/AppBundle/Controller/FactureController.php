@@ -2181,7 +2181,7 @@ class FactureController extends Controller
      */
     public function supprimerAction(Request $request, Facture $facture)
     {
-        if (in_array('ROLE_SUPER_ADMIN', $this->getUser()->getRoles(), true)) {
+        if (in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true)) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($facture);
             $em->flush();
