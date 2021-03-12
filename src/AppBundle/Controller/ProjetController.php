@@ -443,7 +443,7 @@ class ProjetController extends Controller
                     $production->setVenteTTC($venteht * 1.2);
                     $em->persist($production);
 
-                    dump($production, $ligne);
+//                    dump($production, $ligne);
                     $em->flush();
                 } else {
                     // normal project
@@ -471,7 +471,7 @@ class ProjetController extends Controller
             }
 
 
-            die();
+//            die();
 //            dump($bc, $facture, $factureFournisseur,$production);
             return $this->redirectToRoute('projet_show', array('id' => $facture->getProjet()->getId()));
 

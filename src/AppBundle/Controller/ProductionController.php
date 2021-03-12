@@ -34,7 +34,7 @@ class ProductionController extends Controller
         FROM AppBundle:Production p 
         WHERE p.facture is not NULL 
         GROUP BY p.consultant,p.facture')->getResult();
-        dump($tab);
+//        dump($tab);
 
         if (!empty($tab)) {
 

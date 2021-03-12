@@ -1621,7 +1621,7 @@ class FactureController extends Controller
           GROUP By tjm
                     
           ')->setParameter('facture', $facture)->execute();
-            dump($items);
+//            dump($items);
             return $this->render('facture/print_pcs.html.twig', array(
                 'facture' => $facture,
                 'total' => int2str($facture->getTotalTTC()),
@@ -1664,7 +1664,7 @@ class FactureController extends Controller
      */
     public function editHsupAction(Request $request, Facture $facture)
     {
-        dump($facture->getFacturehsups()->count());
+//        dump($facture->getFacturehsups()->count());
 //        $deleteForm = $this->createDeleteForm($facture);
         $editForm = $this->createForm('AppBundle\Form\FactureType', $facture);
         $editForm->handleRequest($request);
@@ -1986,7 +1986,7 @@ class FactureController extends Controller
 
             $facture->setEditedby($this->getUser());
             $facture->setUpdatedAt(new \DateTime());
-            dump($facture, $bcfournisseur, $facturefournisseur, $mission, $production);
+//            dump($facture, $bcfournisseur, $facturefournisseur, $mission, $production);
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -2011,7 +2011,7 @@ class FactureController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $projet = $facture->getProjet();
-        dump($projet);
+//        dump($projet);
 //        $bcfournisseurs=$projet->getBcfournisseurs();
 //dump($facture);
         $editForm = $this->createForm('AppBundle\Form\Facture2Type', $facture);
@@ -2106,15 +2106,15 @@ class FactureController extends Controller
                 }
 
 
-                dump($bcfournisseur[0], $bc, $facturefournisseur, $tjm_achat, $nb_jours, $totalVente);
+//                dump($bcfournisseur[0], $bc, $facturefournisseur, $tjm_achat, $nb_jours, $totalVente);
             }
             $facture->setEditedby($this->getUser());
             $facture->setUpdatedAt(new \DateTime());
 
             $this->getDoctrine()->getManager()->flush();
 
-            dump($facture, $facture->getLignes(), $totalHt, $bcfournisseurs);
-            die();
+          /*  dump($facture, $facture->getLignes(), $totalHt, $bcfournisseurs);
+            die();*/
 
             return $this->redirectToRoute('facture_edit', array('id' => $facture->getId()));
         }
