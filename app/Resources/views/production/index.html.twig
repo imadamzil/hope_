@@ -122,7 +122,7 @@
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
                                                 N Facture
                                             </th>
-                                           <th></th>
+                                            <th></th>
 
 
                                         </tr>
@@ -155,9 +155,11 @@
                                                 <td>{{ production.facture }}</td>
                                                 <td>
 
-
-                                                            <a href="{{ path('production_edit', { 'id': production.id }) }}" class="btn btn-white btn-warning btn-sm"><i class="fa fa-edit"></i> modifier</a>
-
+                                                    {% if is_granted('ROLE_ADMIN') %}
+                                                        <a href="{{ path('production_edit', { 'id': production.id }) }}"
+                                                           class="btn btn-white btn-warning btn-sm"><i
+                                                                    class="fa fa-edit"></i> modifier</a>
+                                                    {% endif %}
                                                 </td>
                                             </tr>
                                         {% endfor %}
@@ -239,7 +241,7 @@
                         bAutoWidth: true,
                         "aoColumns": [
                             {"bSortable": true},
-                            null, null, null, null, null, null, null, null,null,null,null,
+                            null, null, null, null, null, null, null, null, null, null, null,
                             {"bSortable": false}
                         ],
                         "aaSorting": [],
@@ -284,7 +286,7 @@
                         "text": "<i class='fa fa-copy bigger-110 pink'></i> <span class='hidden'>Copy to clipboard</span>",
                         "className": "btn btn-white btn-primary btn-bold",
                         exportOptions: {
-                            columns: [ 0, 1, 2,3,4,5,6,7,8,9,10 ]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     },
                     {
@@ -292,7 +294,7 @@
                         "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
                         "className": "btn btn-white btn-primary btn-bold",
                         exportOptions: {
-                            columns: [ 0, 1, 2,3,4,5,6,7,8,9,10 ]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     },
                     {
@@ -300,7 +302,7 @@
                         "text": "<i class='fa fa-file-pdf-o bigger-110 red'></i> <span class='hidden'>Export to PDF</span>",
                         "className": "btn btn-white btn-primary btn-bold",
                         exportOptions: {
-                            columns: [ 0, 1, 2,3,4,5,6,7,8,9,10 ]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                         }
                     },
 
