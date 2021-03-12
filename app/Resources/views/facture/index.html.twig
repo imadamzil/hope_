@@ -346,7 +346,7 @@
                                                             </a>
                                                         {% endif %}
 
-                                                        {% if is_granted('ROLE_USER') == false %}
+                                                        {% if is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') %}
                                                         {% if facture.projet is null and facture.etat != 'payé' %}
                                                             <a class="orange"
                                                                href="{{ path('facture_edit', { 'id': facture.id }) }}"
