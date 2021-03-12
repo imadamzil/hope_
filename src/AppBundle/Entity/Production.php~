@@ -41,6 +41,11 @@ class Production
      */
     private $client;
     /**
+     * @ORM\ManyToOne(targetEntity="Facture", inversedBy="productions")
+     * @ORM\JoinColumn(name="id_facture", referencedColumnName="id")
+     */
+    private $facture;
+    /**
      * @ORM\ManyToOne(targetEntity="Fournisseur", inversedBy="productions")
      * @ORM\JoinColumn(name="id_fournisseur", referencedColumnName="id")
      */
@@ -108,7 +113,11 @@ class Production
      */
     private $achatTTC;
 
-
+    /**
+     * @ORM\ManyToOne(targetEntity="LigneFacture", inversedBy="productions")
+     * @ORM\JoinColumn(name="id_ligne", referencedColumnName="id")
+     */
+    private $ligne;
     /**
      * Get id
      *
@@ -453,5 +462,53 @@ class Production
     public function getMission()
     {
         return $this->mission;
+    }
+
+    /**
+     * Set facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     *
+     * @return Production
+     */
+    public function setFacture(\AppBundle\Entity\Facture $facture = null)
+    {
+        $this->facture = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Get facture
+     *
+     * @return \AppBundle\Entity\Facture
+     */
+    public function getFacture()
+    {
+        return $this->facture;
+    }
+
+    /**
+     * Set ligne
+     *
+     * @param \AppBundle\Entity\LigneFacture $ligne
+     *
+     * @return Production
+     */
+    public function setLigne(\AppBundle\Entity\LigneFacture $ligne = null)
+    {
+        $this->ligne = $ligne;
+
+        return $this;
+    }
+
+    /**
+     * Get ligne
+     *
+     * @return \AppBundle\Entity\LigneFacture
+     */
+    public function getLigne()
+    {
+        return $this->ligne;
     }
 }

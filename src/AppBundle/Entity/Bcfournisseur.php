@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 /**
  * Bcfournisseur
  *
@@ -80,7 +81,6 @@ class Bcfournisseur
     private $code;
 
 
-
     /**
      * @var \DateTime
      *
@@ -108,6 +108,11 @@ class Bcfournisseur
      * @ORM\JoinColumn(name="id_projet", referencedColumnName="id")
      */
     private $projet;
+    /**
+     * @ORM\ManyToOne(targetEntity="Facture", inversedBy="bcfournisseurs")
+     * @ORM\JoinColumn(name="id_facture", referencedColumnName="id")
+     */
+    private $facture;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="bcfournisseur",cascade={"persist", "remove"})
@@ -121,6 +126,7 @@ class Bcfournisseur
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\FactureHsup", mappedBy="bcfournisseur",cascade={"persist", "remove"})
      */
     private $heures;
+
     /**
      * Get id
      *
@@ -250,6 +256,7 @@ class Bcfournisseur
      * @var \DateTime
      */
     private $updatedAt;
+
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
@@ -364,6 +371,7 @@ class Bcfournisseur
     {
         return $this->fournisseur;
     }
+
     /**
      * Constructor
      */
@@ -411,13 +419,13 @@ class Bcfournisseur
 
     public function __toString()
     {
-        if($this->getFournisseur()){
+        if ($this->getFournisseur()) {
 
-            return $this->getFournisseur()->getNom().'--'.$this->getMois().'/'.$this->getYear();
+            return $this->getFournisseur()->getNom() . '--' . $this->getMois() . '/' . $this->getYear();
 
-        }else{
+        } else {
 
-            return 'BC_F_'.'--'.$this->getMois().'/'.$this->getYear();
+            return 'BC_F_' . '--' . $this->getMois() . '/' . $this->getYear();
 
         }
 
@@ -797,5 +805,29 @@ class Bcfournisseur
     public function getHeures()
     {
         return $this->heures;
+    }
+
+    /**
+     * Set facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     *
+     * @return Bcfournisseur
+     */
+    public function setFacture(\AppBundle\Entity\Facture $facture = null)
+    {
+        $this->facture = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Get facture
+     *
+     * @return \AppBundle\Entity\Facture
+     */
+    public function getFacture()
+    {
+        return $this->facture;
     }
 }

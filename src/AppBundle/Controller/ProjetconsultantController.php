@@ -88,7 +88,7 @@ class ProjetconsultantController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('projetconsultant_edit', array('id' => $projetconsultant->getId()));
+            return $this->redirectToRoute('projet_show', array('id' => $projetconsultant->getProjet()->getId()));
         }
 
         return $this->render('projetconsultant/edit.html.twig', array(
@@ -116,6 +116,24 @@ class ProjetconsultantController extends Controller
         }
 
         return $this->redirectToRoute('projetconsultant_index');
+    }
+/**
+     * Deletes a projetconsultant entity.
+     *
+     * @Route("/{id}/remove", name="projetconsultant_remove")
+     * @Method("GET")
+     */
+    public function removeAction(Request $request, Projetconsultant $projetconsultant)
+    {
+
+
+
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($projetconsultant);
+            $em->flush();
+
+
+        return $this->redirectToRoute('projet_show', array('id' => $projetconsultant->getProjet()->getId()));
     }
 
     /**

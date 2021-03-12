@@ -1,30 +1,83 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Hope3k | facture {% endblock %}{% block menu %}  <a href="{{ path('facture_index') }}">facture</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
-    <h1>Facture edit</h1>
+{% block title %} Hope3k | facture {% endblock %}{% block menu %}  <a
+        href="{{ path('facture_index') }}">facture</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-       <center>
-           <input type="submit" value="Modifier"  class="btn btn-white btn-warning"/>
-       </center>
-    {{ form_end(edit_form) }}
-    <hr>
-   <div class="row">
 
-       <div class="col-md-4">
-           <a href="{{ path('facture_index') }}" class="btn btn-white btn-info btn-block">Back to the list</a>
+    <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
 
-       </div>
-       <div class="col-md-4">
+        <div class="widget-box ui-sortable-handle" id="widget-box-1">
+            <div class="widget-header">
+                <h5 class="widget-title">Modifier la facture :</h5>
 
-       </div>
-       <div class="col-md-4">
-           {{ form_start(delete_form) }}
-           <input type="submit" value="Supprimer" class="btn btn-block">
-           {{ form_end(delete_form) }}
+                <div class="widget-toolbar">
+                    <div class="widget-menu">
+                        <a href="#" data-action="settings" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bars"></i>
+                        </a>
 
-       </div>
-   </div>
+                        <ul class="dropdown-menu dropdown-menu-right dropdown-light-blue dropdown-caret dropdown-closer">
+                            <li>
+                                <a data-toggle="tab" href="#dropdown1">Option#1</a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#dropdown2">Option#2</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a href="#" data-action="fullscreen" class="orange2">
+                        <i class="ace-icon fa fa-expand"></i>
+                    </a>
+
+                    <a href="#" data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+
+                    <a href="#" data-action="close">
+                        <i class="ace-icon fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            {{ form_start(edit_form) }}
+                            {{ form_widget(edit_form) }}
+                            <div class="row">
+                                <div class="col-md-4"><a href="{{ path('facture_index') }}"
+                                                         class="btn btn-white btn-info btn-block"><i class="fa fa-caret-left"></i> Back to the list</a>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-warning btn-white btn-block" type="submit">
+                                        <i class="fa fa-edit"></i> Modifier
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            {{ form_end(edit_form) }}
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 {% endblock %}

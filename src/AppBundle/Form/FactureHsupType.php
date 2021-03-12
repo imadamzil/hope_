@@ -16,25 +16,19 @@ class FactureHsupType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+        $builder->add('heuresup', EntityType::class, array(
+            'class' => 'AppBundle:Heuresup',
+            'multiple' => false,
+            'label' => 'Heure Sup',
+            'attr' => array(
+                'class' => 'chosen-select',
+                'data-placeholder' => 'Selectionner',
+                'multiple' => false
 
-            ->add('heuresup', EntityType::class, array(
-                'class' => 'AppBundle:Heuresup',
-                'multiple' => false,
-                'label' => 'Heure Sup',
-                'attr' => array(
-                    'class' => 'chosen-select',
-                    'data-placeholder' => 'Selectionner',
-                    'multiple' => false
-
-                )
-            ))
-//            ->add('nbjour')
-            ->add('nbheure')
-//            ->add('totalHT')
-//            ->add('totalTTC')
-        ;
+            )
+        ))->add('nbheure');
     }
+
     /**
      * {@inheritdoc}
      */

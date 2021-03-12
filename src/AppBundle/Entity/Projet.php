@@ -216,6 +216,10 @@ class Projet
     {
         return $this->projetconsultants;
     }
+    public function clearProjectconsultants()
+    {
+        $this->getProjetconsultants()->clear();
+    }
 
     /**
      * Set statut

@@ -93,7 +93,7 @@
         <th class="NB" width="55%"><strong>Libellé des articles</strong></th>
         <th class="NBV" width="15%"><strong>
                 Unité
-                (jours)
+
             </strong></th>
         <th class="NBV" width="15%"><strong>Prix Unitaire HT (DH)</strong></th>
         <th class="NBV" width="15%"><strong>Prix Total HT (DH)</strong></th>
@@ -315,11 +315,10 @@
         <td class="text-center">
             <strong>
                 <br>
-
                 <br>
                 {% for item in items %}
                     <p>
-                        {{ item['total']/item['nbjours'] }}
+                        {{ item['tjm']| number_format(2, ',', ' ') }}
                     </p>
 
                 {% endfor %}

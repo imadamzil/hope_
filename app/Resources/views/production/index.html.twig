@@ -117,6 +117,11 @@
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
                                                 Achat HT
                                             </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                N Facture
+                                            </th>
                                            <th></th>
 
 
@@ -147,6 +152,7 @@
                                                 <td>{{ production.nbjour }}</td>
                                                 <td>{{ production.venteHT }}</td>
                                                 <td>{{ production.achatHT }}</td>
+                                                <td>{{ production.facture }}</td>
                                                 <td>
 
 
@@ -205,7 +211,7 @@
                     .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                     .DataTable({
                         initComplete: function () {
-                            this.api().columns([1,3,7]).every(function () {
+                            this.api().columns([]).every(function () {
                                 var column = this;
                                 var select = $('<select class="form-control" style="width: 100%;"><option value="" class="">-- filtrer --</option></select>')
                                     .appendTo($(column.header()))
@@ -233,7 +239,7 @@
                         bAutoWidth: true,
                         "aoColumns": [
                             {"bSortable": true},
-                            null, null, null, null, null, null, null, null,null,null,
+                            null, null, null, null, null, null, null, null,null,null,null,
                             {"bSortable": false}
                         ],
                         "aaSorting": [],

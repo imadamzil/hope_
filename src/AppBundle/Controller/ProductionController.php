@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Production;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Production controller.
@@ -26,8 +27,38 @@ class ProductionController extends Controller
 
         $productions = $em->getRepository('AppBundle:Production')->findAll();
 
+
+        $tab = $em->createQuery('
+        SELECT p , SUM (p.nbjour) , SUM (p.venteHT), SUM (p.venteTTC)  
+        
+        FROM AppBundle:Production p 
+        WHERE p.facture is not NULL 
+        GROUP BY p.consultant,p.facture')->getResult();
+//        dump($tab);
+
+        if (!empty($tab)) {
+
+            foreach ($tab as $item) {
+                $production = $item[0];
+                $nb = $item[1];
+                $total = $item[2];
+
+                $ttc = $item[3];
+                $production->setVenteHT($total);
+                $production->setNbjour($nb);
+                $production->setVenteTTC($ttc);
+
+                $productions_list [] = $production;
+                $production=null;
+            }
+
+
+        }else{
+            $productions_list = $productions;
+        }
+
         return $this->render('production/index.html.twig', array(
-            'productions' => array_reverse($productions),
+            'productions' => $productions_list,
         ));
     }
 
@@ -130,7 +161,6 @@ class ProductionController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('production_delete', array('id' => $production->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

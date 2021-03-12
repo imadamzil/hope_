@@ -11,6 +11,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Table(name="facture_fournisseur")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FacturefournisseurRepository")
+ * @Vich\Uploadable
  */
 class Facturefournisseur
 {
@@ -93,6 +94,11 @@ class Facturefournisseur
      * @ORM\JoinColumn(name="id_fournisseur", referencedColumnName="id")
      */
     private $fournisseur;
+    /**
+     * @ORM\ManyToOne(targetEntity="Facture", inversedBy="facturefournisseurs")
+     * @ORM\JoinColumn(name="id_facture", referencedColumnName="id")
+     */
+    private $facture;
     /**
      * @ORM\ManyToOne(targetEntity="Bcfournisseur", inversedBy="facturefournisseurs")
      * @ORM\JoinColumn(name="id_bcfournisseur", referencedColumnName="id")
@@ -376,6 +382,7 @@ class Facturefournisseur
         $this->virments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->heures = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setEtat('non payé');
+        $this->setCreatedAt(new \DateTime());
     }
 
     /**
@@ -419,7 +426,7 @@ class Facturefournisseur
 
 
         } else {
-            return 'Facture_F_'.'--'.$this->getMois().'/'.$this->getYear();
+            return 'Facture_F_' . '--' . $this->getMois() . '/' . $this->getYear();
 
         }
     }
@@ -593,7 +600,6 @@ class Facturefournisseur
     }
 
 
-
     /**
      * Set bcfournisseur
      *
@@ -756,5 +762,29 @@ class Facturefournisseur
     public function getVirements()
     {
         return $this->virements;
+    }
+
+    /**
+     * Set facture
+     *
+     * @param \AppBundle\Entity\Facture $facture
+     *
+     * @return Facturefournisseur
+     */
+    public function setFacture(\AppBundle\Entity\Facture $facture = null)
+    {
+        $this->facture = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Get facture
+     *
+     * @return \AppBundle\Entity\Facture
+     */
+    public function getFacture()
+    {
+        return $this->facture;
     }
 }

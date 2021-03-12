@@ -6,21 +6,22 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
-class FacturefournisseurType extends AbstractType
+class Facturefournisseur1Type extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('achatHT')->add('nbjours')->add('mois')->add('year')->add('achatTTC')->add('taxe')->add('factureFournisseur')->add('etat')->add('date')
+        $builder
+            ->add('numero')
             ->add('documentFile', VichFileType::class, [
                 'required' => false,
                 'allow_delete' => true,
                 'label' => 'Facture Fournisseur'
                 //   'delete_label' => 'form.label.delete',
 
-            ])->add('updatedAt')->add('createdAt')->add('fournisseur')->add('mission');
+            ]);
     }/**
      * {@inheritdoc}
      */

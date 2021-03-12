@@ -79,6 +79,11 @@ class LigneFacture
      * @ORM\JoinColumn(name="id_projetconsultant", referencedColumnName="id")
      */
     private $projetconsultant;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Production", mappedBy="ligne",cascade={"persist", "remove"})
+     */
+    private $productions;
     /**
      * Get id
      *
@@ -303,5 +308,46 @@ class LigneFacture
     public function getNbjourVente()
     {
         return $this->nbjourVente;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->productions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add production
+     *
+     * @param \AppBundle\Entity\Production $production
+     *
+     * @return LigneFacture
+     */
+    public function addProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions[] = $production;
+
+        return $this;
+    }
+
+    /**
+     * Remove production
+     *
+     * @param \AppBundle\Entity\Production $production
+     */
+    public function removeProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions->removeElement($production);
+    }
+
+    /**
+     * Get productions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductions()
+    {
+        return $this->productions;
     }
 }

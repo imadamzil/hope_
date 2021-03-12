@@ -8,7 +8,7 @@
 
         <div class="widget-box ui-sortable-handle" id="widget-box-1">
             <div class="widget-header">
-                <h5 class="widget-title">Liste des facture fournisseur :</h5>
+                <h5 class="widget-title">Liste des facture sans facture fournisseur:</h5>
 
                 <div class="widget-toolbar">
                     <div class="widget-menu">
@@ -51,24 +51,7 @@
                             </div>
 
                             <!-- div.table-responsive -->
-                            <div class="alert alert-block alert-danger text-center">
-                                <button type="button" class="close" data-dismiss="alert">
-                                    <i class="ace-icon fa fa-times"></i>
-                                </button>
 
-                                <p>
-                                    <strong>
-                                        <i class="ace-icon fa fa-warning"></i>
-                                        {{ facturefournisseurs_sans_facture | length }} Facture(s) </strong>
-                                    sans facture fournisseur merci de les uploader !
-                                </p>
-
-                                <p>
-                                    <a class="btn btn-danger" href="{{ path('facturefournisseur_sans') }}">
-                                        <i class="fa fa-list-alt"></i> Liste
-                                    </a>
-                                </p>
-                            </div>
                             <!-- div.dataTables_borderWrap -->
                             <div>
                                 <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline ">
@@ -77,17 +60,7 @@
                                            role="grid" aria-describedby="dynamic-table_info">
                                         <thead style="font-weight: bold;">
                                         <tr role="row">
-                                            <th class="center sorting_disabled" rowspan="1" colspan="1" aria-label="
 
-
-
-
-														">
-                                                <label class="pos-rel">
-                                                    <input type="checkbox" class="ace">
-                                                    <span class="lbl"></span>
-                                                </label>
-                                            </th>
                                             <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1"
                                                 colspan="1" style="color: #707070;"
                                                 aria-label="Domain: activate to sort column ascending">
@@ -149,17 +122,11 @@
 
                                             <tr role="row" class="odd">
 
-                                                <td class="center">
-                                                    <label class="pos-rel">
-                                                        <input type="checkbox" class="ace"
-                                                               value="{{ facturefournisseur.id }}">
-                                                        <span class="lbl"></span>
-                                                    </label>
-                                                </td>
+
                                                 <td>
 
 
-                                                    {{ facturefournisseur.numero }}
+                                                    #H3K_Facture_F_ {{ facturefournisseur.id }}
 
 
                                                 </td>
@@ -258,22 +225,17 @@
                                                            title="voir">
                                                             <i class="ace-icon fa fa-search-plus bigger-160"></i>
                                                         </a>
-                                                        {% if is_granted('ROLE_MANAGER') %}
-                                                            <a class="orange"
-                                                               href="{{ path('facturefournisseur_edit', { 'id': facturefournisseur.id }) }}"
-                                                               title="modifier">
-                                                                <i class="ace-icon fa fa-pencil bigger-160"></i>
-                                                            </a>
-                                                        {% endif %}
+
+                                                        <a class="orange"
+                                                           href="{{ path('facturefournisseur_edit', { 'id': facturefournisseur.id }) }}"
+                                                           title="modifier">
+                                                            <i class="ace-icon fa fa-pencil bigger-160"></i>
+                                                        </a>
+
                                                         {% if facturefournisseur.documentName is null %}
                                                             <a title="Uploader Facture fournisseur" class="red"
                                                                href="{{ path('facturefournisseur_update', { 'id': facturefournisseur.id }) }}">
                                                                 <i class="ace-icon fa fa-cloud-upload bigger-160"></i>
-                                                            </a>
-                                                        {% else %}
-                                                            <a title="Télécharger Facture fournisseur" class="purple"
-                                                               href="{{ asset('uploads/documents/')~facturefournisseur.documentName }}">
-                                                                <i class="ace-icon fa fa-download bigger-160"></i>
                                                             </a>
                                                         {% endif %}
                                                     </div>
@@ -327,15 +289,7 @@
 
                                     </table>
 
-                                    <div class="row">
-                                        <div class="col-md-4"></div>
-                                        <div class="col-md-4">
-                                            <a href="#" id="vir" class=" btn btn-primary text-center btn-block ">
-                                                <i class="ace-icon fa fa-exchange"></i> Régler Virement
-                                            </a>
-                                        </div>
 
-                                    </div>
 
                                 </div>
                             </div>
@@ -404,7 +358,7 @@
                         bAutoWidth: false,
                         "aoColumns": [
                             {"bSortable": true},
-                            null, null, null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null,
                             {"bSortable": false}
                         ],
                         "aaSorting": [],

@@ -4,12 +4,14 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * Facture
  *
  * @ORM\Table(name="facture")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FactureRepository")
+ * @Vich\Uploadable
  */
 class Facture
 {
@@ -129,6 +131,16 @@ class Facture
      */
     private $bcclient;
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="facturesajoutes")
+     * @ORM\JoinColumn(name="id_added_by", referencedColumnName="id")
+     */
+    private $addedby;
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="facturesmodifies")
+     * @ORM\JoinColumn(name="id_edited_by", referencedColumnName="id")
+     */
+    private $editedby;
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      *
      * @var \DateTime
@@ -146,10 +158,73 @@ class Facture
      */
     private $lignes;
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Production", mappedBy="facture",cascade={"persist", "remove"})
+     */
+    private $productions;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcfournisseur", mappedBy="facture",cascade={"persist", "remove"})
+     */
+    private $bcfournisseurs;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facturefournisseur", mappedBy="facture",cascade={"persist", "remove"})
+     */
+    private $facturefournisseurs;
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\FactureHsup", mappedBy="facture",cascade={"persist", "remove"})
      */
     private $facturehsups;
 
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="document_path", fileNameProperty="documentName")
+     *
+     * @var File
+     */
+    private $documentFile;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $documentName;
+
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $document
+     */
+    public function setDocumentFile(?File $document = null): void
+    {
+        $this->documentFile = $document;
+
+        if (null !== $document) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getDocumentFile(): ?File
+    {
+        return $this->documentFile;
+    }
+
+    public function setDocumentName(?string $documentName): void
+    {
+        $this->documentName = $documentName;
+    }
+
+    public function getDocumentName(): ?string
+    {
+        return $this->documentName;
+    }
 
     /**
      * Get id
@@ -352,7 +427,6 @@ class Facture
     {
         return $this->totalTTC;
     }
-
 
 
     /**
@@ -660,7 +734,7 @@ class Facture
         $this->createdAt = new \DateTime();
 
         $this->lignes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->setEtat('non payé') ;
+        $this->setEtat('non payé');
     }
 
     /**
@@ -772,10 +846,9 @@ class Facture
 
     public function __toString()
     {
-        return 'facture' ;
+        return '' . $this->getNumero();
 
     }
-
 
 
     /**
@@ -834,5 +907,157 @@ class Facture
     public function getNbjour()
     {
         return $this->nbjour;
+    }
+
+    /**
+     * Add production
+     *
+     * @param \AppBundle\Entity\Production $production
+     *
+     * @return Facture
+     */
+    public function addProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions[] = $production;
+
+        return $this;
+    }
+
+    /**
+     * Remove production
+     *
+     * @param \AppBundle\Entity\Production $production
+     */
+    public function removeProduction(\AppBundle\Entity\Production $production)
+    {
+        $this->productions->removeElement($production);
+    }
+
+    /**
+     * Get productions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductions()
+    {
+        return $this->productions;
+    }
+
+    /**
+     * Add bcfournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $bcfournisseur
+     *
+     * @return Facture
+     */
+    public function addBcfournisseur(\AppBundle\Entity\Bcfournisseur $bcfournisseur)
+    {
+        $this->bcfournisseurs[] = $bcfournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove bcfournisseur
+     *
+     * @param \AppBundle\Entity\Bcfournisseur $bcfournisseur
+     */
+    public function removeBcfournisseur(\AppBundle\Entity\Bcfournisseur $bcfournisseur)
+    {
+        $this->bcfournisseurs->removeElement($bcfournisseur);
+    }
+
+    /**
+     * Get bcfournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBcfournisseurs()
+    {
+        return $this->bcfournisseurs;
+    }
+
+    /**
+     * Add facturefournisseur
+     *
+     * @param \AppBundle\Entity\Facturefournisseur $facturefournisseur
+     *
+     * @return Facture
+     */
+    public function addFacturefournisseur(\AppBundle\Entity\Facturefournisseur $facturefournisseur)
+    {
+        $this->facturefournisseurs[] = $facturefournisseur;
+
+        return $this;
+    }
+
+    /**
+     * Remove facturefournisseur
+     *
+     * @param \AppBundle\Entity\Facturefournisseur $facturefournisseur
+     */
+    public function removeFacturefournisseur(\AppBundle\Entity\Facturefournisseur $facturefournisseur)
+    {
+        $this->facturefournisseurs->removeElement($facturefournisseur);
+    }
+
+    /**
+     * Get facturefournisseurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFacturefournisseurs()
+    {
+        return $this->facturefournisseurs;
+    }
+
+
+
+    /**
+     * Set addedby
+     *
+     * @param \AppBundle\Entity\User $addedby
+     *
+     * @return Facture
+     */
+    public function setAddedby(\AppBundle\Entity\User $addedby = null)
+    {
+        $this->addedby = $addedby;
+
+        return $this;
+    }
+
+    /**
+     * Get addedby
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getAddedby()
+    {
+        return $this->addedby;
+    }
+
+    /**
+     * Set editedby
+     *
+     * @param \AppBundle\Entity\User $editedby
+     *
+     * @return Facture
+     */
+    public function setEditedby(\AppBundle\Entity\User $editedby = null)
+    {
+        $this->editedby = $editedby;
+
+        return $this;
+    }
+
+    /**
+     * Get editedby
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getEditedby()
+    {
+        return $this->editedby;
     }
 }

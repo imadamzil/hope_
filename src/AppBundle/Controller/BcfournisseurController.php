@@ -25,10 +25,16 @@ class BcfournisseurController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+
         $bcfournisseurs = $em->getRepository('AppBundle:Bcfournisseur')->findAll();
+
+        if(empty($bcfournisseurs)){
+
+            $bcfournisseurs = [];
+        }
         //dump($bcfournisseurs);
         return $this->render('bcfournisseur/index.html.twig', array(
-            'bcfournisseurs' => $bcfournisseurs,
+            'bcfournisseurs' => array_reverse($bcfournisseurs),
         ));
     }
 

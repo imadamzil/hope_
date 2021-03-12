@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Job;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Job controller.
@@ -66,7 +67,8 @@ class JobController extends Controller
     public function showAction(Job $job)
     {
         $deleteForm = $this->createDeleteForm($job);
-
+        $newJob = clone $job;
+       // dump($job,$newJob);
         return $this->render('job/show.html.twig', array(
             'job' => $job,
             'delete_form' => $deleteForm->createView(),
@@ -130,7 +132,6 @@ class JobController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('job_delete', array('id' => $job->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }
