@@ -348,11 +348,20 @@
 
                                                         {% if is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') %}
                                                         {% if facture.projet is null and facture.etat != 'payé' %}
-                                                            <a class="orange"
-                                                               href="{{ path('facture_edit', { 'id': facture.id }) }}"
-                                                               title="modifier">
-                                                                <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                            </a>
+
+                                                            {% if facture.facturehsups | length != 0 %}
+                                                                <a class="orange"
+                                                                   href="{{ path('facture_edit_hs', { 'id': facture.id }) }}"
+                                                                   title="modifier">
+                                                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                                </a>
+                                                                {% else %}
+                                                                    <a class="orange"
+                                                                       href="{{ path('facture_edit', { 'id': facture.id }) }}"
+                                                                       title="modifier">
+                                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                                    </a>
+                                                            {% endif %}
                                                         {% else %}
                                                             {% if facture.client =='MEDI TELECOM' and facture.etat != 'payé' %}
                                                                 <a class="orange"

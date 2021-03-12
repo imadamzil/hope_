@@ -1664,6 +1664,10 @@ class FactureController extends Controller
      */
     public function editHsupAction(Request $request, Facture $facture)
     {
+        if ($facture->getId() << 140){
+
+            return $this->redirectToRoute('facture_index');
+        }
 //        dump($facture->getFacturehsups()->count());
 //        $deleteForm = $this->createDeleteForm($facture);
         $editForm = $this->createForm('AppBundle\Form\FactureType', $facture);
@@ -1827,6 +1831,10 @@ class FactureController extends Controller
      */
     public function editAction(Request $request, Facture $facture)
     {
+        if ($facture->getId() << 140){
+
+            return $this->redirectToRoute('facture_index');
+        }
 //        dump($facture);
 //        $deleteForm = $this->createDeleteForm($facture);
         $editForm = $this->createForm('AppBundle\Form\FactureEditType', $facture);
@@ -2009,6 +2017,10 @@ class FactureController extends Controller
      */
     public function editProjetOrangeAction(Request $request, Facture $facture)
     {
+        if ($facture->getId() << 140){
+
+            return $this->redirectToRoute('facture_index');
+        }
         $em = $this->getDoctrine()->getManager();
         $projet = $facture->getProjet();
 //        dump($projet);
