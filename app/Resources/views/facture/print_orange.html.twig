@@ -295,7 +295,7 @@
                 <br>
                 {% for item in items %}
                     <p>
-                        {{ item['nbjours']  }}
+                        {{ item['nbjours'] |number_format(2, ',', ' ') }}
                     </p>
 
                 {% endfor %}
