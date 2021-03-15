@@ -308,7 +308,7 @@
                 <br>
                 {% for item in items %}
                     <p>
-                        {{ item['total']/item['nbjours'] }}
+                        {{ item['tjm']| number_format(2, ',', ' ') }}
                     </p>
 
                 {% endfor %}
