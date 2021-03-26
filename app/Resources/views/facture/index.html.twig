@@ -332,13 +332,21 @@
                                                             </a>
                                                         {% endif %}
 
-                                                        {% if facture.mission is not null %}
+                                                        {% if facture.mission is not null and facture.nbjour > 0 %}
                                                             <a class="grey"
                                                                href="{{ path('facture_print', { 'id': facture.id }) }}"
                                                                title="Imprimer">
                                                                 <i class="ace-icon fa fa-print bigger-130"></i>
                                                             </a>
-                                                        {% else %}
+                                                        {% endif %}
+                                                        {% if facture.mission is not null and facture.nbjour == 0 %}
+                                                            <a class="grey"
+                                                               href="{{ path('facture_print_hs', { 'id': facture.id }) }}"
+                                                               title="Imprimer">
+                                                                <i class="ace-icon fa fa-print bigger-130"></i>
+                                                            </a>
+                                                        {% endif %}
+                                                        {% if facture.projet is not null %}
                                                             <a class="grey"
                                                                href="{{ path('facture_print_projet', { 'id': facture.id }) }}"
                                                                title="Imprimer">

@@ -1401,6 +1401,299 @@ class FactureController extends Controller
             // 'delete_form' => $deleteForm->createView(),
         ));
     }
+/**
+     * Finds and displays a facture entity.
+     *
+     * @Route("/{id}/print_hs", name="facture_print_hs")
+     * @Method("GET")
+     */
+    public function showhsfactureAction(Facture $facture)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fiche = $em->getRepository('AppBundle:Fiche')->find(1);
+
+        function mois_convert($m)
+        {
+
+            switch ($m) {
+                case 1:
+                    return "Janvier";
+                    break;
+                case 2:
+                    return "Février";
+                    break;
+                case 3:
+                    return "Mars";
+                    break;
+                case 4:
+                    return "Avril";
+                    break;
+                case 5:
+                    return "Mai";
+                    break;
+                case 6:
+                    return "Juin";
+                    break;
+                case 7:
+                    return "Juillet";
+                    break;
+                case 8:
+                    return "Aout";
+                    break;
+                case 9:
+                    return "Septembre";
+                    break;
+                case 10:
+                    return "Octobre";
+                    break;
+                case 11:
+                    return "Novembre";
+                    break;
+                case 12:
+                    return "Décembre";
+                    break;
+
+            }
+        }
+
+        /* function int2str($a)
+         {
+             $convert = explode('.', $a);
+             if (isset($convert[1]) && $convert[1] != '') {
+                 return int2str($convert[0]) . 'Dinars' . ' et ' . int2str($convert[1]) . 'Centimes';
+             }
+             if ($a < 0) return 'moins ' . int2str(-$a);
+             if ($a < 17) {
+                 switch ($a) {
+                     case 0:
+                         return 'zero';
+                     case 1:
+                         return 'un';
+                     case 2:
+                         return 'deux';
+                     case 3:
+                         return 'trois';
+                     case 4:
+                         return 'quatre';
+                     case 5:
+                         return 'cinq';
+                     case 6:
+                         return 'six';
+                     case 7:
+                         return 'sept';
+                     case 8:
+                         return 'huit';
+                     case 9:
+                         return 'neuf';
+                     case 10:
+                         return 'dix';
+                     case 11:
+                         return 'onze';
+                     case 12:
+                         return 'douze';
+                     case 13:
+                         return 'treize';
+                     case 14:
+                         return 'quatorze';
+                     case 15:
+                         return 'quinze';
+                     case 16:
+                         return 'seize';
+                 }
+             } else if ($a < 20) {
+                 return 'dix-' . int2str($a - 10);
+             } else if ($a < 100) {
+                 if ($a % 10 == 0) {
+                     switch ($a) {
+                         case 20:
+                             return 'vingt';
+                         case 30:
+                             return 'trente';
+                         case 40:
+                             return 'quarante';
+                         case 50:
+                             return 'cinquante';
+                         case 60:
+                             return 'soixante';
+                         case 70:
+                             return 'soixante-dix';
+                         case 80:
+                             return 'quatre-vingt';
+                         case 90:
+                             return 'quatre-vingt-dix';
+                     }
+                 } elseif (substr($a, -1) == 1) {
+                     if (((int)($a / 10) * 10) < 70) {
+                         return int2str((int)($a / 10) * 10) . '-et-un';
+                     } elseif ($a == 71) {
+                         return 'soixante-et-onze';
+                     } elseif ($a == 81) {
+                         return 'quatre-vingt-un';
+                     } elseif ($a == 91) {
+                         return 'quatre-vingt-onze';
+                     }
+                 } elseif ($a < 70) {
+                     return int2str($a - $a % 10) . '-' . int2str($a % 10);
+                 } elseif ($a < 80) {
+                     return int2str(60) . '-' . int2str($a % 20);
+                 } else {
+                     return int2str(80) . '-' . int2str($a % 20);
+                 }
+             } else if ($a == 100) {
+                 return 'cent';
+             } else if ($a < 200) {
+                 return int2str(100) . ' ' . int2str($a % 100);
+             } else if ($a < 1000) {
+                 return int2str((int)($a / 100)) . ' ' . int2str(100) . ' ' . int2str($a % 100);
+             } else if ($a == 1000) {
+                 return 'mille';
+             } else if ($a < 2000) {
+                 return int2str(1000) . ' ' . int2str($a % 1000) . ' ';
+             } else if ($a < 1000000) {
+                 return int2str((int)($a / 1000)) . ' ' . int2str(1000) . ' ' . int2str($a % 1000);
+             } else if ($a == 1000000) {
+                 return 'millions';
+             } else if ($a < 2000000) {
+                 return int2str(1000000) . ' ' . int2str($a % 1000000) . ' ';
+             } else if ($a < 1000000000) {
+                 return int2str((int)($a / 1000000)) . ' ' . int2str(1000000) . ' ' . int2str($a % 1000000);
+             }
+         }*/
+        function int2str($a)
+        {
+            if ($a < 17) {
+                switch ($a) {
+                    case 1:
+                        return 'UN';
+                    case 2:
+                        return 'DEUX';
+                    case 3:
+                        return 'TROIS';
+                    case 4:
+                        return 'QUATRE';
+                    case 5:
+                        return 'CINQ';
+                    case 6:
+                        return 'SIX';
+                    case 7:
+                        return 'SEPT';
+                    case 8:
+                        return 'HUIT';
+                    case 9:
+                        return 'NEUF';
+                    case 10:
+                        return 'DIX';
+                    case 11:
+                        return 'ONZE';
+                    case 12:
+                        return 'DOUZE';
+                    case 13:
+                        return 'TREIZE';
+                    case 14:
+                        return 'QUATORZE';
+                    case 15:
+                        return 'QUINZE';
+                    case 16:
+                        return 'SEIZE';
+                }
+            } else {
+                if ($a < 20) {
+                    return 'DIX-' . int2str($a - 10);
+                } else {
+                    if ($a < 100) {
+                        if ($a % 10 == 0) {
+                            switch ($a) {
+                                case 20:
+                                    return 'VINGT';
+                                case 30:
+                                    return 'TRENTE';
+                                case 40:
+                                    return 'QUARANTE';
+                                case 50:
+                                    return 'CINQUANTE';
+                                case 60:
+                                    return 'SOIXANTE';
+                                case 70:
+                                    return 'SOINXANTE-DIX';
+                                case 80:
+                                    return 'QUATRE-VINGT';
+                                case 90:
+                                    return 'QUATRE-VINGT-DIX';
+                            }
+                        } elseif (substr($a, -1) == 1) {
+                            if ((int)($a / 10) * 10 < 70) {
+                                return int2str((int)($a / 10) * 10) . '-ET-UN';
+                            } elseif ($a == 71) {
+                                return 'SOIXANTE ET ONZE';
+                            } elseif ($a == 81) {
+                                return 'QUATRE VINGT UN';
+                            } elseif ($a == 91) {
+                                return 'QUATRE VINGT ONZE';
+                            }
+                        } elseif ($a < 70) {
+                            return int2str($a - $a % 10) . '-' . int2str($a % 10);
+                        } elseif ($a < 80) {
+                            return int2str(60) . '-' . int2str($a % 20);
+                        } else {
+                            return int2str(80) . '-' . int2str($a % 20);
+                        }
+                    } else {
+                        if ($a == 100) {
+                            return 'CENT';
+                        } else {
+                            if ($a < 200) {
+                                return int2str(100) . ' ' . int2str($a % 100);
+                            } else {
+                                if ($a < 1000) {
+                                    return int2str((int)($a / 100)) . ' ' . int2str(100) . ' ' . int2str($a % 100);
+                                } else {
+                                    if ($a == 1000) {
+                                        return 'MILLE';
+                                    } else {
+                                        if ($a < 2000) {
+                                            return int2str(1000) . ' ' . int2str($a % 1000) . ' ';
+                                        } else {
+                                            if ($a < 1000000) {
+                                                return int2str((int)($a / 1000)) . ' ' . int2str(1000) . ' ' . int2str($a % 1000);
+                                            } else {
+                                                if ($a == 1000000) {
+                                                    return 'MILLION';
+                                                } else {
+                                                    if ($a < 2000000) {
+                                                        return int2str(1000000) . ' ' . int2str($a % 1000000) . ' ';
+                                                    } else {
+                                                        if ($a < 1000000000) {
+                                                            return int2str((int)($a / 1000000)) . ' ' . int2str(1000000) . ' ' . int2str($a % 1000000);
+                                                        } else {
+                                                            if ($a == 1000000000) {
+                                                                return 'MILLIARD';
+                                                            } else {
+                                                                if ($a < 2000000000) {
+                                                                    return int2str(1000000000) . ' ' . int2str($a % 1000000000) . ' ';
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $this->render('facture/print_hs.html.twig', array(
+            'facture' => $facture,
+            'total' => int2str($facture->getTotalTTC()),
+            'mois' => mois_convert($facture->getMois()),
+            'fiche' => $fiche
+            // 'delete_form' => $deleteForm->createView(),
+        ));
+    }
 
     /**
      * Finds and displays a facture entity.
