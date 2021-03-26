@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Bcclient;
 use AppBundle\Entity\Client;
 use AppBundle\Entity\Consultant;
+use AppBundle\Entity\Facture;
 use AppBundle\Entity\Fournisseur;
 use AppBundle\Entity\Job;
 use AppBundle\Entity\Mission;
@@ -24,6 +25,8 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet as Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class DefaultController extends Controller
 {
@@ -770,5 +773,44 @@ class DefaultController extends Controller
         }
 
         return $this->render('production.html.twig', array());
+    }
+
+    /**
+     * @Route("/backup", name="bd_backup")
+     */
+    public function executeBackupDbAction()
+    {
+        $db = $this->container->getParameter('database_name');
+        $path = $this->get('kernel')->getRootDir() . '/../web/backup/';
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        $date = new DateTime('now');
+        $date_string = $date->format('d_m_Y_H_i_s');
+        $fileName = $date_string . '.sql';
+
+        $user = $this->container->getParameter('database_user');
+        $command = 'mysqldump --user=' . $user . ' ' . $db . ' >' . $path . $fileName;
+        dump($command);
+//        die();
+        $process = new Process($command);
+        $process->setWorkingDirectory('C:\wamp64\bin\mysql\mysql5.7.21\bin');
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+        echo $process->getOutput();
+
+        return new Response('success');
+    }
+
+    /**
+     * @Route("/commande", name="commande")
+     */
+    public function commandeAction()
+    {
+       $res = 'ok';
+        return new Response($res);
     }
 }

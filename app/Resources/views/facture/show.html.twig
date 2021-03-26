@@ -27,22 +27,34 @@
 
 
                         </div>
-{% if facture.mission is not null %}
-                        <div class="widget-toolbar hidden-480">
-                            <a href="{{ path('facture_print', { 'id': facture.id }) }}" target="_blank">
-                                <i class="ace-icon fa fa-print"></i>
-                            </a>
-                        </div>
-						 {% else %}
-						 
-						  <div class="widget-toolbar hidden-480">
-                            <a href="{{ path('facture_print_projet', { 'id': facture.id }) }}" target="_blank">
-                                <i class="ace-icon fa fa-print"></i>
-                            </a>
-                        </div>
-						 {% endif %}
-                                                           
-                                                       
+
+
+                        {% if facture.mission is not null and facture.nbjour > 0 %}
+                            <div class="widget-toolbar hidden-480">
+                                <a href="{{ path('facture_print', { 'id': facture.id }) }}" target="_blank">
+                                    <i class="ace-icon fa fa-print"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% if facture.mission is not null and facture.nbjour == 0 %}
+                            <div class="widget-toolbar hidden-480">
+                                <a href="{{ path('facture_print_hs', { 'id': facture.id }) }}" target="_blank">
+                                    <i class="ace-icon fa fa-print"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+
+
+                        {% if facture.projet is not null %}
+
+                            <div class="widget-toolbar hidden-480">
+                                <a href="{{ path('facture_print_projet', { 'id': facture.id }) }}" target="_blank">
+                                    <i class="ace-icon fa fa-print"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+
+
                     </div>
 
                     <div class="widget-body">
