@@ -1880,7 +1880,8 @@ class FactureController extends Controller
         // orange
         if ($facture->getProjet()->getClient()->getNom() == 'MEDI TELECOM') {
             $items = $em->createQuery('
-          SELECT p as ligne,SUM (l.nbjourVente) AS nbjours, SUM(l.totalHt) as total,SUM(l.totalTTC) as totalTTC ,p.vente as tjm   From AppBundle:LigneFacture l
+          SELECT p as ligne,SUM (l.nbjourVente) AS nbjours, SUM(l.totalHt) as total,SUM(l.totalTTC) as totalTTC ,p.vente as tjm   
+          From AppBundle:LigneFacture l
           JOIN AppBundle:Projetconsultant p
           WHERE l.facture = :facture
           AND l.projetconsultant = p.id
@@ -1889,7 +1890,7 @@ class FactureController extends Controller
           
           ')->setParameter('facture', $facture)->execute();
 
-//            dump($items);
+  dump($items);
 //            die();
             return $this->render('facture/print_orange.html.twig', array(
                 'facture' => $facture,
