@@ -1890,7 +1890,7 @@ class FactureController extends Controller
           
           ')->setParameter('facture', $facture)->execute();
 
-  dump($items);
+//  dump($items);
 //            die();
             return $this->render('facture/print_orange.html.twig', array(
                 'facture' => $facture,
