@@ -110,8 +110,16 @@ class ProjetController extends Controller
         $facture->setClient($projet->getClient());
 
         if ($projet->getProjetconsultants()) {
+            $projetconsultants = $em->createQuery('
+          SELECT p   
+          From AppBundle:Projetconsultant p
+         
+          WHERE p.projet = :projet
+                  ORDER By p.consultant,p.job
+          ')->setParameter('projet', $projet)->execute();
 
-            foreach ($projet->getProjetconsultants() as $projetconsultant) {
+//dump($projetconsultants);
+            foreach ($projetconsultants as $projetconsultant) {
                 $ligne = new LigneFacture();
                 $ligne->setFacture($facture);
                 $ligne->setProjetconsultant($projetconsultant);
