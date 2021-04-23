@@ -144,16 +144,13 @@ class ProjetController extends Controller
             $mois = intval($facture->getDate()->format('m'));
             $year = intval($facture->getDate()->format('Y'));
             $yearmini = intval($facture->getDate()->format('y'));
-            $nbb = $em->createQuery('
-            
+            $nbb = $em->createQuery('           
             SELECT COUNT(f) as total FROM AppBundle:Facture f 
             WHERE MONTH(f.date) = :moi AND YEAR(f.date) = :annee
-            ')
-                ->setParameters([
-
-                    'moi' => $mois,
-                    'annee' => $year,
-                ])->getResult();
+            ')->setParameters([
+                'moi' => $mois,
+                'annee' => $year,
+            ])->getResult();
 
 
             $count_factures = (int)$nbb[0]['total'] + 1;
@@ -165,7 +162,11 @@ class ProjetController extends Controller
             $facture->setTotalTTC($taxe + $totalHt);
             $em->persist($facture);
             $em->flush();
+            // orange
+            if ($facture->getProjet()->getClient()->getNom() == 'MEDI TELECOM') {
+                $this->arrondFacture($facture);
 
+            }
             return $this->redirectToRoute('projet_bcfournisseur', array('id' => $facture->getId()));
 
 
@@ -482,5 +483,36 @@ class ProjetController extends Controller
             'facture' => $facture,
             'form' => $form->createView(),
         ));
+    }
+
+    private function arrondFacture(Facture $facture)
+    {
+        $em = $this->getDoctrine()->getManager();
+//dump($facture);
+        $items = $em->createQuery('
+          SELECT p as ligne,SUM (l.nbjourVente) AS nbjours, SUM(l.totalHt) as total,SUM(l.totalTTC) as totalTTC ,p.vente as tjm   From AppBundle:LigneFacture l
+          JOIN AppBundle:Projetconsultant p
+          WHERE l.facture = :facture
+          AND l.projetconsultant = p.id
+           AND l.nbjour>0 AND l.totalHt>0
+          GROUP BY p.job
+          
+          ')->setParameter('facture', $facture)->execute();
+        $totalHT = 0;
+        foreach ($items as $item) {
+
+            $totalHT += round(floatval($item['nbjours']), 2) * $item['tjm'];
+
+
+        }
+        $facture->setTotalHT($totalHT);
+        $facture->setTaxe($facture->getTotalHT() * 0.2);
+        $facture->setTotalTTC($facture->getTotalHT() + $facture->getTaxe());
+
+        $em->persist($facture);
+        $em->flush();
+
+//        dump($totalHT, $facture, $items);
+//        die();
     }
 }

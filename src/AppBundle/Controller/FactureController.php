@@ -561,9 +561,12 @@ class FactureController extends Controller
             if ($mission->getDevise() == 'DH') {
 
                 if ($mission->getType() == 'journaliere') {
-
                     $totalHT = $prixVenteHT * $facture->getNbjour();
+
+
                     $achatHT = $prixAchatHT * $facture->getNbjour();
+//                    dump($prixVenteHT,$facture->getNbjour()) ; die();
+
                     $TVA = ($prixVenteHT * $facture->getNbjour()) * 0.2;
                     $TVA_Achat = $achatHT * 0.2;
                     $bcfournisseur->setAchatHT($achatHT);
@@ -1061,7 +1064,7 @@ class FactureController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($facture);
-
+dump($facture);
         return $this->render('facture/show.html.twig', array(
             'facture' => $facture,
             'delete_form' => $deleteForm->createView(),

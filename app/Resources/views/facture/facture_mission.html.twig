@@ -117,6 +117,8 @@
                         <div class="form-group mois">
                             <label class="required" for="appbundle_facture_mois">Mois</label>
                             <select id="appbundle_facture_mois" name="appbundle_facture[mois]" class="form-control">
+                                <option value="">--</option>
+
                                 <option value="1">Janvier</option>
                                 <option value="2">Fevrier</option>
                                 <option value="3">Mars</option>
@@ -305,7 +307,7 @@
 
                         for (i = 0; i < response.mois.length; i++) {
 
-                            $('.mois option[value="' + response.mois[i] + '"]').attr("disabled", "disabled");
+//                            $('.mois option[value="' + response.mois[i] + '"]').attr("disabled", "disabled");
 
                             //
 
@@ -313,7 +315,7 @@
                         //    $('#facture').before('<div class="alert alert-danger text-center" id="alert">Mission déja facture pour ce mois</div>');
                     } else {
 
-                        $(".mois option").prop('disabled', false);
+//                        $(".mois option").prop('disabled', false);
 
                         //  $('#facture').after('<div id="alert">Mission déja facture pour ce mois</div>');
 
@@ -349,7 +351,7 @@
 
                  });
                  */
-                $.ajax({
+               /* $.ajax({
                     type: "POST",
                     data: {
                         idMission: Id, year: year
@@ -384,7 +386,7 @@
                             //  this.removeAttr("disabled");
                         });
                     }
-                });
+                });*/
             });
 
         });

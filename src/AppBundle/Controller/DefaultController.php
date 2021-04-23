@@ -795,7 +795,10 @@ class DefaultController extends Controller
         dump($command);
 //        die();
         $process = new Process($command);
-        $process->setWorkingDirectory('C:\wamp64\bin\mysql\mysql5.7.21\bin');
+        $pathtomysql = 'C:\wamp64\bin\mysql\mysql5.7.21\bin';
+
+        file_exists($pathtomysql) ? true : $pathtomysql = 'C:\wamp\bin\mysql\mysql5.6.17\bin';
+        $process->setWorkingDirectory($pathtomysql);
         $process->run();
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
@@ -810,7 +813,7 @@ class DefaultController extends Controller
      */
     public function commandeAction()
     {
-       $res = 'ok';
+        $res = 'ok';
         return new Response($res);
     }
 }

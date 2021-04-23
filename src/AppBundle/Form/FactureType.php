@@ -32,7 +32,9 @@ class FactureType extends AbstractType
             ->add('year')
             ->add('nbjour')
             ->add('mois', ChoiceType::class, array(
+                'placeholder' => 'Choose an option',
                 'choices' => array(
+                    '--'=>null,
                     'Janvier' => 1,
                     'Fevrier' => 2,
                     'Mars' => 3,

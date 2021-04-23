@@ -54,7 +54,10 @@ class BcclientType extends AbstractType
             ->add('client', EntityType::class, array(
                 'class' => 'AppBundle:Client',
                 'multiple' => false,
+                'placeholder' => '--',
+
                 'label' => 'Client',
+                'required'=>false,
                 'attr' => array(
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Selectionner',
@@ -66,6 +69,9 @@ class BcclientType extends AbstractType
                 'class' => 'AppBundle:Consultant',
                 'multiple' => false,
                 'label' => 'Consultant',
+                'placeholder' => '--',
+
+                'required'=>false,
                 'attr' => array(
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Selectionner',
