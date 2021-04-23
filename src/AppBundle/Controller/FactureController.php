@@ -1064,7 +1064,7 @@ class FactureController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($facture);
-dump($facture);
+//dump($facture);
         return $this->render('facture/show.html.twig', array(
             'facture' => $facture,
             'delete_form' => $deleteForm->createView(),
