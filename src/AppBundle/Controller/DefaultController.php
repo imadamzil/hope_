@@ -465,7 +465,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/migration/mission", name="migration_mission")
+     * @Route("/upgrade/mission", name="migration_mission")
      */
     public function migrationMission()
     {
@@ -474,7 +474,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         ini_set('memory_limit', '1024M');
-        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\mission.xlsx';
+        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\new_mission.xlsx';
         $spreadsheet = IOFactory::load($inputFileName);
 
         set_time_limit(10000); //
@@ -482,7 +482,8 @@ class DefaultController extends Controller
 
 
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
-//        dump($sheetData);
+     dump($sheetData);
+//     die();
 
         foreach ($sheetData as $row) {
 
@@ -490,30 +491,25 @@ class DefaultController extends Controller
 
 
             } else {
+
                 $id = intval($row[0]);
-//                $code = $row[1];
-//                $date = DateTime::createFromFormat('Y-m-d\TH:i', $row[2]);
-//                $date->format('Y-m-d\TH:i');
-//                $date = DateTime::createFromFormat('Y-m-d', $row[2])->format('Y-m-d');
-
-
-                if ($row[1]) {
+                if ($row[2] != null) {
                     $bcclient_arr = $em->createQuery('
                                 SELECT  b
                                 FROM AppBundle:Bcclient b 
                                 WHERE b.code = :valeur OR b.ncontrat= :valeur
-        ')->setParameter('valeur', $row[1])->execute();
-                    if (!empty($client_arr)) {
+        ')->setParameter('valeur', $row[2])->execute();
+                    if (!empty($bcclient_arr)) {
                         $bcclient = $bcclient_arr[0];
                     } else {
+
                         $bcclient = null;
                     }
-
                 } else {
 
                     $bcclient = null;
                 }
-                if ($row[2]) {
+                if ($row[1]) {
                     $client_arr = $em->getRepository('AppBundle:Client')->findBy([
                         'nom' => $row[2]
                     ]);
@@ -527,12 +523,13 @@ class DefaultController extends Controller
 
                     $client = null;
                 }
-                $prixVente = $row[3];
-                $prixAchat = $row[4];
-                // $date = DateTime::createFromFormat('Y-m-d', $row[2])->format('Y-m-d');
-                if ($row[7]) {
+                $prixVente = $row[5];
+
+                $prixAchat = $row[6];
+
+                if ($row[3]) {
                     $consultant_arr = $em->getRepository('AppBundle:Consultant')->findBy([
-                        'nom' => $row[7]
+                        'nom' => $row[3]
                     ]);
                     if (!empty($consultant_arr)) {
                         $consultant = $consultant_arr[0];
@@ -544,9 +541,9 @@ class DefaultController extends Controller
 
                     $consultant = null;
                 }
-                if ($row[8]) {
+                if ($row[4]) {
                     $fournisseur_arr = $em->getRepository('AppBundle:Fournisseur')->findBy([
-                        'nom' => $row[8]
+                        'nom' => $row[4]
                     ]);
                     if (!empty($fournisseur_arr)) {
                         $fournisseur = $fournisseur_arr[0];
@@ -559,40 +556,18 @@ class DefaultController extends Controller
                     $fournisseur = null;
                 }
 
-                $type = $row[15];
-                $devise = $row[16];
-                $motif = $row[17];
-                $description = $row[18];
-                if ($row[21]) {
-                    $job_arr = $em->getRepository('AppBundle:Job')->findBy([
-                        'nom' => $row[21]
-                    ]);
-                    if (!empty($job_arr)) {
-                        $job = $job_arr[0];
-                    } else {
-                        $job = new Job();
-                        $job->setNom($row[21]);
-                        $em->persist($job);
-                        $em->flush();
-                    }
-
-                } else {
-
-                    $job = null;
-                }
-                $mission = new Mission();
+                $mission = $em->getRepository('AppBundle:Mission')->find($id);
+                dump($mission);
                 $mission->setBcclient($bcclient);
                 $mission->setClient($client);
                 $mission->setPrixVente($prixVente);
                 $mission->setPrixAchat($prixAchat);
                 $mission->setConsultant($consultant);
                 $mission->setFournisseur($fournisseur);
-                $mission->setType($type);
-                $mission->setDevise($devise);
-                $mission->setMotif($motif);
-                $mission->setDescription($description);
-                $mission->setJob($job);
+                dump($mission);
+
                 $em->persist($mission);
+                die();
                 $em->flush();
 
             }
