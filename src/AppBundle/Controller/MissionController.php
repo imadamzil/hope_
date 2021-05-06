@@ -26,8 +26,14 @@ class MissionController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT m
+    FROM AppBundle:Mission m
+    WHERE m.statut != :statut'
+        )->setParameter('statut','Terminée');
 
-        $missions = $em->getRepository('AppBundle:Mission')->findAll();
+        $missions = $query->getResult();
+//        $missions = $em->getRepository('AppBundle:Mission')->findAll();
         $missions_sans_contratF = $em->getRepository('AppBundle:Mission')->findBy([
             'contratFName' => null
 
@@ -79,10 +85,29 @@ WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null
             'contratCName' => null
 
         ]);
+    }
+ /**
+     * Lists all mission entities.
+     *
+     * @Route("/mission_termine", name="mission_termine")
+     * @Method("GET")
+     */
+    public function missionstermineAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT m
+    FROM AppBundle:Mission m
+    WHERE m.statut == :statut'
+        )->setParameter('statut','Terminée');
+
+        $missions = $query->getResult();
 
 
         return $this->render('mission/missions_sans_contract_client.html.twig', array(
-            'missions' => $missions_sans_contratC,
+            'missions' => $missions,
 
 
         ));
