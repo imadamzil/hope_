@@ -701,8 +701,8 @@ class DefaultController extends Controller
 
 
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
-//        dump($sheetData);
-//     die();
+//      dump($sheetData);
+//   die();
 
         foreach ($sheetData as $row) {
 
@@ -730,7 +730,7 @@ class DefaultController extends Controller
                 }
                 if ($row[1]) {
                     $client_arr = $em->getRepository('AppBundle:Client')->findBy([
-                        'nom' => $row[2]
+                        'nom' => $row[1]
                     ]);
                     if (!empty($client_arr)) {
                         $client = $client_arr[0];
@@ -854,7 +854,7 @@ class DefaultController extends Controller
 
 
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
-        dump($sheetData);
+//        dump($sheetData);
 //     die();
 
         foreach ($sheetData as $row) {
@@ -1035,8 +1035,9 @@ class DefaultController extends Controller
                 }
 
                 $facturefournisseur = $em->getRepository('AppBundle:Facturefournisseur')->find($id);
+//                $facturefournisseur = new Facturefournisseur();
                 if ($facturefournisseur != null) {
-                    $facturefournisseur->setCode($reference);
+                    $facturefournisseur->setNumero($reference);
                     $facturefournisseur->setFournisseur($fournisseur);
                     $facturefournisseur->setConsultant($consultant);
                     $facturefournisseur->setDate($date);
