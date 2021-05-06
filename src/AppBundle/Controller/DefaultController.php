@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Bcclient;
+use AppBundle\Entity\Bcfournisseur;
 use AppBundle\Entity\Client;
 use AppBundle\Entity\Consultant;
 use AppBundle\Entity\Facture;
+use AppBundle\Entity\Facturefournisseur;
 use AppBundle\Entity\Fournisseur;
 use AppBundle\Entity\Job;
 use AppBundle\Entity\Mission;
@@ -464,118 +466,6 @@ class DefaultController extends Controller
         return $this->render('production.html.twig', array());
     }
 
-    /**
-     * @Route("/upgrade/mission", name="migration_mission")
-     */
-    public function migrationMission()
-    {
-
-
-        $em = $this->getDoctrine()->getManager();
-
-        ini_set('memory_limit', '1024M');
-        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\new_mission.xlsx';
-        $spreadsheet = IOFactory::load($inputFileName);
-
-        set_time_limit(10000); //
-        ini_set('memory_limit', '1024M');
-
-
-        $sheetData = $spreadsheet->getActiveSheet()->toArray();
-     dump($sheetData);
-//     die();
-
-        foreach ($sheetData as $row) {
-
-            if ($row[0] == 'id') {
-
-
-            } else {
-
-                $id = intval($row[0]);
-                if ($row[2] != null) {
-                    $bcclient_arr = $em->createQuery('
-                                SELECT  b
-                                FROM AppBundle:Bcclient b 
-                                WHERE b.code = :valeur OR b.ncontrat= :valeur
-        ')->setParameter('valeur', $row[2])->execute();
-                    if (!empty($bcclient_arr)) {
-                        $bcclient = $bcclient_arr[0];
-                    } else {
-
-                        $bcclient = null;
-                    }
-                } else {
-
-                    $bcclient = null;
-                }
-                if ($row[1]) {
-                    $client_arr = $em->getRepository('AppBundle:Client')->findBy([
-                        'nom' => $row[2]
-                    ]);
-                    if (!empty($client_arr)) {
-                        $client = $client_arr[0];
-                    } else {
-                        $client = null;
-                    }
-
-                } else {
-
-                    $client = null;
-                }
-                $prixVente = $row[5];
-
-                $prixAchat = $row[6];
-
-                if ($row[3]) {
-                    $consultant_arr = $em->getRepository('AppBundle:Consultant')->findBy([
-                        'nom' => $row[3]
-                    ]);
-                    if (!empty($consultant_arr)) {
-                        $consultant = $consultant_arr[0];
-                    } else {
-                        $consultant = null;
-                    }
-
-                } else {
-
-                    $consultant = null;
-                }
-                if ($row[4]) {
-                    $fournisseur_arr = $em->getRepository('AppBundle:Fournisseur')->findBy([
-                        'nom' => $row[4]
-                    ]);
-                    if (!empty($fournisseur_arr)) {
-                        $fournisseur = $fournisseur_arr[0];
-                    } else {
-                        $fournisseur = null;
-                    }
-
-                } else {
-
-                    $fournisseur = null;
-                }
-
-                $mission = $em->getRepository('AppBundle:Mission')->find($id);
-                dump($mission);
-                $mission->setBcclient($bcclient);
-                $mission->setClient($client);
-                $mission->setPrixVente($prixVente);
-                $mission->setPrixAchat($prixAchat);
-                $mission->setConsultant($consultant);
-                $mission->setFournisseur($fournisseur);
-                dump($mission);
-
-                $em->persist($mission);
-                die();
-                $em->flush();
-
-            }
-
-        }
-
-        return $this->render('production.html.twig', array());
-    }
 
     /**
      * @Route("/migration/fournisseur", name="migration_fournisseur")
@@ -756,6 +646,8 @@ class DefaultController extends Controller
     public function executeBackupDbAction()
     {
         $db = $this->container->getParameter('database_name');
+        $user = $this->container->getParameter('database_user');
+
         $path = $this->get('kernel')->getRootDir() . '/../web/backup/';
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
@@ -765,7 +657,6 @@ class DefaultController extends Controller
         $date_string = $date->format('d_m_Y_H_i_s');
         $fileName = $date_string . '.sql';
 
-        $user = $this->container->getParameter('database_user');
         $command = 'mysqldump --user=' . $user . ' ' . $db . ' >' . $path . $fileName;
         dump($command);
 //        die();
@@ -791,4 +682,386 @@ class DefaultController extends Controller
         $res = 'ok';
         return new Response($res);
     }
+
+    /**
+     * @Route("/upgrade/mission", name="migration_mission")
+     */
+    public function migrationMission()
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        ini_set('memory_limit', '1024M');
+        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\new_mission.xlsx';
+        $spreadsheet = IOFactory::load($inputFileName);
+
+        set_time_limit(10000); //
+        ini_set('memory_limit', '1024M');
+
+
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+//        dump($sheetData);
+//     die();
+
+        foreach ($sheetData as $row) {
+
+            if ($row[0] == 'id') {
+
+
+            } else {
+
+                $id = intval($row[0]);
+                if ($row[2] != null) {
+                    $bcclient_arr = $em->createQuery('
+                                SELECT  b
+                                FROM AppBundle:Bcclient b 
+                                WHERE b.code = :valeur OR b.ncontrat= :valeur
+        ')->setParameter('valeur', $row[2])->execute();
+                    if (!empty($bcclient_arr)) {
+                        $bcclient = $bcclient_arr[0];
+                    } else {
+
+                        $bcclient = null;
+                    }
+                } else {
+
+                    $bcclient = null;
+                }
+                if ($row[1]) {
+                    $client_arr = $em->getRepository('AppBundle:Client')->findBy([
+                        'nom' => $row[2]
+                    ]);
+                    if (!empty($client_arr)) {
+                        $client = $client_arr[0];
+                    } else {
+                        $client = null;
+                    }
+
+                } else {
+
+                    $client = null;
+                }
+                $prixVente = floatval($row[5]);
+
+                $prixAchat = floatval($row[6]);
+                $etat = $row[7];
+                if ($row[8] != null) {
+
+                    $date = DateTime::createFromFormat('m/d/Y', $row[8]);
+
+
+                    $date ? $date->format('Y-m-d') : false;
+//                    dump($row[8]);
+                } else {
+
+                    $date = null;
+                }
+
+
+                if ($row[3]) {
+                    $consultant_arr = $em->getRepository('AppBundle:Consultant')->findBy([
+                        'nom' => $row[3]
+                    ]);
+                    if (!empty($consultant_arr)) {
+                        $consultant = $consultant_arr[0];
+                    } else {
+                        $consultant = null;
+                    }
+
+                } else {
+
+                    $consultant = null;
+                }
+                if ($row[4]) {
+                    $fournisseur_arr = $em->getRepository('AppBundle:Fournisseur')->findBy([
+                        'nom' => $row[4]
+                    ]);
+                    if (!empty($fournisseur_arr)) {
+                        $fournisseur = $fournisseur_arr[0];
+                    } else {
+                        $fournisseur = null;
+                    }
+
+                } else {
+
+                    $fournisseur = null;
+                }
+
+                $mission = $em->getRepository('AppBundle:Mission')->find($id);
+                if ($mission != null) {
+
+                    $mission->setBcclient($bcclient);
+                    $mission->setClient($client);
+                    $mission->setPrixVente($prixVente);
+                    $mission->setPrixAchat($prixAchat);
+                    $mission->setConsultant($consultant);
+                    $mission->setFournisseur($fournisseur);
+                    if ($etat == 'SORT') {
+                        $mission->setStatut('Terminée');
+                        $mission->setDateFin($date);
+                        $mission->setClosedAt($date);
+                    }
+//                dump($mission);
+
+                    $em->persist($mission);
+//                die();
+                    $em->flush();
+                }
+                if ($id == null) {
+
+                    $mission = new Mission();
+                    $mission->setBcclient($bcclient);
+                    $mission->setClient($client);
+                    $mission->setPrixVente($prixVente);
+                    $mission->setPrixAchat($prixAchat);
+                    $mission->setConsultant($consultant);
+                    $mission->setFournisseur($fournisseur);
+                    if ($etat == 'SORT') {
+                        $mission->setStatut('Terminée');
+                        $mission->setDateFin($date);
+                    }
+//                dump($mission);
+
+                    $em->persist($mission);
+//                die();
+                    $em->flush();
+                }
+
+
+            }
+
+        }
+
+        return new Response('ok');
+    }
+
+    /**
+     * @Route("/upgrade/bc_fournisseur", name="migration_bc_fournisseur")
+     */
+    public function migrationBCfournisseur()
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        ini_set('memory_limit', '1024M');
+        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\new_bc_fournisseur.xlsx';
+        $spreadsheet = IOFactory::load($inputFileName);
+
+        set_time_limit(10000); //
+        ini_set('memory_limit', '1024M');
+
+
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        dump($sheetData);
+//     die();
+
+        foreach ($sheetData as $row) {
+
+            if ($row[0] == 'id') {
+
+
+            } else {
+
+                $id = intval($row[0]);
+                $reference = $row[1];
+                if ($row[4] != null) {
+
+                    $date = DateTime::createFromFormat('Y-m-d', $row[4]);
+
+
+                    $date ? $date->format('Y-m-d') : false;
+
+                    /* if ($datecommande){
+
+                         dump($datecommande,$row[9]);die();
+                     }*/
+
+
+                } else {
+
+                    $date = null;
+                }
+                $mois = intval($row[5]);
+
+                $nbjours = floatval($row[6]);
+                $tjm = $row[7];
+                $achatHT = floatval($row[8]);
+                $achatTTC = floatval($row[9]);
+
+
+                if ($row[3]) {
+                    $consultant_arr = $em->getRepository('AppBundle:Consultant')->findBy([
+                        'nom' => $row[3]
+                    ]);
+                    if (!empty($consultant_arr)) {
+                        $consultant = $consultant_arr[0];
+                    } else {
+                        $consultant = null;
+                    }
+
+                } else {
+
+                    $consultant = null;
+                }
+                if ($row[2]) {
+                    $fournisseur_arr = $em->getRepository('AppBundle:Fournisseur')->findBy([
+                        'nom' => $row[2]
+                    ]);
+                    if (!empty($fournisseur_arr)) {
+                        $fournisseur = $fournisseur_arr[0];
+                    } else {
+                        $fournisseur = null;
+                    }
+
+                } else {
+
+                    $fournisseur = null;
+                }
+
+                $bcfournisseur = $em->getRepository('AppBundle:Bcfournisseur')->find($id);
+
+                if ($bcfournisseur != null) {
+                    $bcfournisseur->setCode($reference);
+                    $bcfournisseur->setFournisseur($fournisseur);
+                    $bcfournisseur->setConsultant($consultant);
+                    $bcfournisseur->setDate($date);
+
+                    $bcfournisseur->setMois($mois);
+                    $bcfournisseur->setNbjours($nbjours);
+                    $bcfournisseur->setAchatHT($achatHT);
+                    $bcfournisseur->setTaxe($bcfournisseur->getAchatHT() * 0.2);
+                    $bcfournisseur->setAchatTTC($achatTTC);
+//                dump($bcfournisseur);
+
+                    $em->persist($bcfournisseur);
+//                die();
+                    $em->flush();
+
+                }
+
+
+            }
+
+        }
+
+        return new Response('ok');
+    }
+/**
+     * @Route("/upgrade/facture_fournisseur", name="migration_facture_fournisseur")
+     */
+    public function migrationfacturefournisseur()
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        ini_set('memory_limit', '1024M');
+        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\facture_fournisseur.xlsx';
+        $spreadsheet = IOFactory::load($inputFileName);
+
+        set_time_limit(10000); //
+        ini_set('memory_limit', '1024M');
+
+
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        dump($sheetData);
+
+
+        foreach ($sheetData as $row) {
+
+            if ($row[0] == 'id') {
+
+
+            } else {
+
+                $id = intval($row[0]);
+                $reference = $row[1];
+                if ($row[4] != null) {
+
+                    $date = DateTime::createFromFormat('Y-m-d', $row[4]);
+
+
+                    $date ? $date->format('Y-m-d') : false;
+
+                    /* if ($datecommande){
+
+                         dump($datecommande,$row[9]);die();
+                     }*/
+
+
+                } else {
+
+                    $date = null;
+                }
+                $mois = intval($row[5]);
+
+                $nbjours = floatval($row[6]);
+
+                $achatHT = floatval($row[7]);
+                $achatTTC = floatval($row[8]);
+                $etat = $row[9];
+
+
+
+                if ($row[3]) {
+                    $consultant_arr = $em->getRepository('AppBundle:Consultant')->findBy([
+                        'nom' => $row[3]
+                    ]);
+                    if (!empty($consultant_arr)) {
+                        $consultant = $consultant_arr[0];
+                    } else {
+                        $consultant = null;
+                    }
+
+                } else {
+
+                    $consultant = null;
+                }
+                if ($row[2]) {
+                    $fournisseur_arr = $em->getRepository('AppBundle:Fournisseur')->findBy([
+                        'nom' => $row[2]
+                    ]);
+                    if (!empty($fournisseur_arr)) {
+                        $fournisseur = $fournisseur_arr[0];
+                    } else {
+                        $fournisseur = null;
+                    }
+
+                } else {
+
+                    $fournisseur = null;
+                }
+
+                $facturefournisseur = $em->getRepository('AppBundle:Facturefournisseur')->find($id);
+                if ($facturefournisseur != null) {
+                    $facturefournisseur->setCode($reference);
+                    $facturefournisseur->setFournisseur($fournisseur);
+                    $facturefournisseur->setConsultant($consultant);
+                    $facturefournisseur->setDate($date);
+
+                    $facturefournisseur->setMois($mois);
+                    $facturefournisseur->setNbjours($nbjours);
+                    $facturefournisseur->setAchatHT($achatHT);
+                    $facturefournisseur->setTaxe($facturefournisseur->getAchatHT() * 0.2);
+                    $facturefournisseur->setAchatTTC($achatTTC);
+                    $facturefournisseur->setEtat($etat);
+
+//                dump($facturefournisseur);
+
+                    $em->persist($facturefournisseur);
+//                die();
+                    $em->flush();
+
+                }
+
+
+            }
+
+        }
+
+        return new Response('ok');
+    }
+
 }
