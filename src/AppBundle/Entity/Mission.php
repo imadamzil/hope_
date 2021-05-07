@@ -671,7 +671,7 @@ class Mission
             return $this->getJob()->getNom();
         }else{
 
-            return 'Mission-' . $this->getConsultant()->getNom();
+            return 'Mission-' . $this->getConsultant();
 
 
         }
