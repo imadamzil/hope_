@@ -67,7 +67,7 @@ class VirementController extends Controller
                 )
             ))
             ->getForm();
-        dump($virements);
+//        dump($virements);
 
         return $this->render('virement/index.html.twig', array(
             'virements' => $virements,

@@ -34,7 +34,7 @@ class MissionController extends Controller
 
         ]);
 
-        dump($missions);
+//        dump($missions);
         return $this->render('mission/missions_archived.html.twig', [
 
             'missions' => $missions

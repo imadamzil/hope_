@@ -38,7 +38,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request, \Swift_Mailer $mailer)
     {
 
-        dump($this->getUser());
+//        dump($this->getUser());
         $em = $this->getDoctrine()->getManager();
 
         $clients = $em->getRepository('AppBundle:Client')->findAll();
@@ -660,7 +660,7 @@ class DefaultController extends Controller
         $fileName = $date_string . '.sql';
 
         $command = 'mysqldump --user=' . $user . ' ' . $db . ' >' . $path . $fileName;
-        dump($command);
+//        dump($command);
 //        die();
         $process = new Process($command);
         $pathtomysql = 'C:\wamp64\bin\mysql\mysql5.7.21\bin';
@@ -969,7 +969,7 @@ class DefaultController extends Controller
 
 
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
-        dump($sheetData);
+//        dump($sheetData);
 
 
         foreach ($sheetData as $row) {

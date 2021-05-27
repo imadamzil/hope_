@@ -26,7 +26,7 @@ class FacturefournisseurController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $facturefournisseurs = $em->getRepository('AppBundle:Facturefournisseur')->findAll();
-        dump($facturefournisseurs);
+//        dump($facturefournisseurs);
         $facturefournisseurs_sans_facture = $em->getRepository('AppBundle:Facturefournisseur')->findBy([
 
             'documentName' => null
