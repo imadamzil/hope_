@@ -17,6 +17,30 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MissionController extends Controller
 {
+
+    /**
+     *
+     *
+     * @Route("/missions_archived" , name="missions_archived")
+     * @Method("GET")
+     */
+    public function getMissionArchived()
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+        $missions = $em->getRepository('AppBundle:Mission')->findBy([
+            'statut' => 'Terminée'
+
+        ]);
+
+        dump($missions);
+        return $this->render('mission/missions_archived.html.twig', [
+
+            'missions' => $missions
+        ]);
+    }
+
     /**
      * Lists all mission entities.
      *
@@ -30,7 +54,7 @@ class MissionController extends Controller
             'SELECT m
     FROM AppBundle:Mission m
     WHERE m.statut != :statut'
-        )->setParameter('statut','Terminée');
+        )->setParameter('statut', 'Terminée');
 
         $missions = $query->getResult();
 //        $missions = $em->getRepository('AppBundle:Mission')->findAll();
@@ -86,7 +110,8 @@ WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null
 
         ]);
     }
- /**
+
+    /**
      * Lists all mission entities.
      *
      * @Route("/mission_termine", name="mission_termine")
@@ -101,7 +126,7 @@ WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null
             'SELECT m
     FROM AppBundle:Mission m
     WHERE m.statut == :statut'
-        )->setParameter('statut','Terminée');
+        )->setParameter('statut', 'Terminée');
 
         $missions = $query->getResult();
 
@@ -239,6 +264,7 @@ WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null
     {
         $mission->setStatut('Terminé');
         $mission->setClosedAt(new \DateTime('now'));
+        $mission->setUpdatedAt(new \DateTime('now'));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($mission);
@@ -408,5 +434,22 @@ WHERE m.client = c.id AND m.bcName IS NULL AND c.contratCadre IS null
             'Content-Type' => 'application/json'
         ));
 
+    }
+
+    /**
+     *
+     * @Route("{id}/reactivate/missions" ,name="mission_open")
+     * @Method("GET")
+     */
+    public function reactivateMission(Mission $mission)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mission->setStatut('En cours');
+        $mission->setUpdatedAt(new \DateTime('now'));
+
+        $em->persist($mission);
+        $em->flush();
+
+        return $this->redirectToRoute('mission_index');
     }
 }

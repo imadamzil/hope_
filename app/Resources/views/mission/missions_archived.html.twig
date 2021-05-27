@@ -6,65 +6,13 @@
    {% block menu_active %}    Liste {% endblock %}
 {% block content1 %}
 
-    <ul class="list-group text-center col-md-10">
-
-
-        {% if( nb_C is not null and nb_C != 0) %}
-
-
-            <li class="list-group-item list-group-item-danger">
-
-
-                <strong>
-                    <i class="ace-icon fa fa-warning"></i>
-                    {{ nb_C }}
-                </strong>
-                Missions sans contrat clients,
-                <a href="{{ path('mission_sans_contrat_client') }}" class="btn btn-sm btn-danger">
-                    <i class="ace-icon fa fa-list bigger-110"></i>
-                    <span class="bigger-110 no-text-shadow">Liste</span>
-                </a>
-            </li>
-        {% endif %}
-
-        {% if( nb_F is not null and nb_F != 0) %}
-            <li class="list-group-item list-group-item-danger">
-
-
-                <strong>
-                    <i class="ace-icon fa fa-warning"></i>
-                    {{ nb_F }}
-                </strong>
-                Missions sans Contrats Fournisseurs,
-                <a href="{{ path('mission_sans_contrat_fournisseur') }}" class="btn btn-sm btn-danger">
-                    <i class="ace-icon fa fa-list bigger-110"></i>
-                    <span class="bigger-110 no-text-shadow">Liste</span>
-                </a>
-            </li>
-        {% endif %}
-        {% if( nb_BC is not null and nb_BC != 0) %}
-            <li class="list-group-item list-group-item-danger">
-
-
-                <strong>
-                    <i class="ace-icon fa fa-warning"></i>
-                    {{ nb_BC }}
-                </strong>
-                Missions sans Bon de commandes,
-                <a href="{{ path('mission_sans_bc_client') }}" class="btn btn-sm btn-danger align-right">
-                    <i class="ace-icon fa fa-list bigger-110"></i>
-                    <span class="bigger-110 no-text-shadow">Liste</span>
-                </a>
-            </li>
-        {% endif %}
-    </ul>
 
 
     <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
 
         <div class="widget-box ui-sortable-handle" id="widget-box-1">
             <div class="widget-header">
-                <h5 class="widget-title">Liste des Missions :</h5>
+                <h5 class="widget-title">Liste des Missions Archivées :</h5>
 
                 <div class="widget-toolbar">
                     <div class="widget-menu">
@@ -88,6 +36,7 @@
                     </a>
 
 
+
                     <a href="#" data-action="collapse">
                         <i class="ace-icon fa fa-chevron-up"></i>
                     </a>
@@ -100,13 +49,7 @@
 
             <div class="widget-body">
                 <div class="widget-main">
-                    <div class="row">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4">
-                            <a href="{{ path('missions_archived') }}" class="btn btn-block btn-white btn-default ">
-                                <i class="ace-icon fa fa-archive"></i> Missions archivées
-                            </a></div>
-                    </div>
+
                     <div class="row">
                         <div class="col-xs-12">
 
@@ -115,7 +58,7 @@
                                 </div>
                             </div>
                             <div class="table-header">
-                                Missions : <a href="{{ path('mission_new') }}"
+                                Missions archivées : <a href="{{ path('mission_new') }}"
                                               class="btn btn-white btn-default pull-right"
                                               style="margin-top: 2px;margin-right: 3px;">
                                     <i class="fa fa-plus"></i>
@@ -153,13 +96,13 @@
                                                 rowspan="1" colspan="1"
                                                 aria-label="Price: activate to sort column ascending"
                                                 aria-sort="descending">
-                                                Consultant
+                                                consultant
                                             </th>
                                             <th class="sorting_desc" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Price: activate to sort column ascending"
                                                 aria-sort="descending">
-                                                Fournisseur
+                                                fournisseur
                                             </th>
 
 
@@ -176,7 +119,12 @@
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
-                                                Type
+                                                Statut
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Date Fin
                                             </th>
 
 
@@ -274,12 +222,23 @@
 
                                                 </td>
                                                 <td>
-                                                    {% if mission.type is null %}
+                                                    {% if mission.statut is null %}
                                                         --
 
                                                     {% else %}
 
-                                                        {{ mission.type }}
+                                                        {{ mission.statut }}
+
+
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if mission.dateFin is null %}
+                                                        --
+
+                                                    {% else %}
+
+                                                        {{ mission.dateFin | date('d/m/Y') }}
 
 
                                                     {% endif %}
@@ -292,77 +251,16 @@
                                                            title="voir">
                                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                         </a>
-                                                        {% if mission.contratFName is null or mission.contratCName is null or mission.bcName is null %}
-                                                            <a class="red"
-                                                               href="{{ path('mission_upload', { 'id': mission.id }) }}"
-                                                               title="uploader un document">
-                                                                <i class="ace-icon fa fa-cloud-upload bigger-130"></i>
-                                                            </a>
-                                                        {% endif %}
-                                                        <a class="orange"
-                                                           href="{{ path('mission_edit', { 'id': mission.id }) }}"
-                                                           title="modifier">
-                                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                        </a>
-                                                        <a class="success"
-                                                           href="{{ path('facture_mission', { 'id': mission.id }) }}"
-                                                           title="ajouter une facture ">
-                                                            <i class="ace-icon fa fa-money bigger-130"></i>
-                                                        </a>
-                                                        <a class="dark"
-                                                           href="{{ path('mission_end', { 'id': mission.id }) }}"
-                                                           title="Terminer la mission ">
-                                                            <i class="ace-icon fa fa-close bigger-130"></i>
+                                                        <a class="green"
+                                                           href="{{ path('mission_open', { 'id': mission.id }) }}"
+                                                           title="Réactiver cette mission">
+                                                            <i class="ace-icon fa fa-retweet bigger-130"></i>
                                                         </a>
 
-                                                        <a class="red" href=""
-                                                           onclick="return confirm('vous êtes sûr que vous voulez le supprimé?');">
-                                                            <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                        </a>
 
                                                     </div>
 
-                                                    <div class="hidden-md hidden-lg">
-                                                        <div class="inline pos-rel">
-                                                            <button class="btn btn-minier btn-yellow dropdown-toggle"
-                                                                    data-toggle="dropdown"
-                                                                    data-position="auto">
-                                                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-                                                            </button>
 
-                                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                                <li>
-                                                                    <a href="#" class="tooltip-info" data-rel="tooltip"
-                                                                       title=""
-                                                                       data-original-title="View">
-                                                    <span class="blue">
-                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                    </span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="#" class="tooltip-success"
-                                                                       data-rel="tooltip" title=""
-                                                                       data-original-title="Edit">
-																				<span class="green">
-																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																				</span>
-                                                                    </a>
-                                                                </li>
-
-                                                                <li>
-                                                                    <a href="#" class="tooltip-error" data-rel="tooltip"
-                                                                       title=""
-                                                                       data-original-title="Delete">
-																				<span class="red">
-																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																				</span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
                                                 </td>
                                             </tr>
                                         {% endfor %}
@@ -440,7 +338,7 @@
                         bAutoWidth: false,
                         "aoColumns": [
                             {"bSortable": false},
-                            null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null,null,
                             {"bSortable": false}
                         ],
                         "aaSorting": [],

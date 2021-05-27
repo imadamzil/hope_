@@ -45,6 +45,11 @@ class Virementf
      */
     private $detailfournisseurs;
     /**
+     * @ORM\ManyToOne(targetEntity="Comptebancaire", inversedBy="virements")
+     * @ORM\JoinColumn(name="id_compte", referencedColumnName="id")
+     */
+    private $comptebancaire;
+    /**
      * Get id
      *
      * @return int
@@ -77,6 +82,7 @@ class Virementf
     {
         return $this->numero;
     }
+
     /**
      * Constructor
      */
@@ -151,6 +157,29 @@ class Virementf
     public function getDetailfournisseurs()
     {
         return $this->detailfournisseurs;
+    }
+
+    public function getFounisseursList()
+    {
+        $liste = $this->detailfournisseurs;
+
+       foreach ($liste as $item){
+
+           $arr_fournisseurs [] = $item->getFournisseur();
+       }
+
+        return $arr_fournisseurs;
+
+    }
+    public function getTotalVirements( ){
+        $total = null;
+        $liste = $this->detailfournisseurs;
+        foreach ($liste as $item){
+
+            $total += $item->getTotal();
+        }
+
+        return $total;
     }
 
     /**

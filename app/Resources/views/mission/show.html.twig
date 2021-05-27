@@ -27,17 +27,24 @@
                                         <div class="space space-4"></div>
 
                                         <a href="{{ path('facture_mission', { 'id': mission.id }) }}"
-                                           class="btn btn-sm btn-block btn-success">
+                                           class="btn btn-sm btn-block btn-primary btn-white">
                                             <i class="ace-icon fa fa-money bigger-120"></i>
                                             <span class="bigger-110"> Facturer </span>
 
                                         </a>
-                                        {% if mission.statut !='Terminé' %}
+                                        {% if mission.statut != 'Terminée' %}
                                             <a href="{{ path('mission_end', { 'id': mission.id }) }}"
-                                               class="btn btn-sm btn-block btn-warning">
+                                               class="btn btn-sm btn-block btn-danger btn-white">
                                                 <i class="ace-icon fa fa-close bigger-110"></i>
                                                 <span class="bigger-110">Marquer comme terminé</span>
                                             </a>
+                                            {% else %}
+                                                <a href="{{ path('mission_open', { 'id': mission.id }) }}"
+                                                   class="btn btn-sm btn-block btn-success btn-white">
+                                                    <i class="ace-icon fa fa-close bigger-110"></i>
+                                                    <span class="bigger-110">Réactiver la mission</span>
+                                                </a>
+
                                         {% endif %}
                                     </div><!-- /.col -->
 

@@ -1,56 +1,82 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Hope3k | BC Client {% endblock %}{% block menu %}  <a href="{{ path('bcclient_index') }}">BC Client</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
-    <h1>Bcclient</h1>
+{% block title %} Hope3k | BC Client {% endblock %}{% block menu %}  <a href="{{ path('bcclient_index') }}">BC
+    Client</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
 
-    <table class="table table-detail">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ bcclient.id }}</td>
-            </tr>
-            <tr>
-                <th>Code</th>
-                <td>{{ bcclient.code }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{% if bcclient.date %}{{ bcclient.date|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Nbjrs</th>
-                <td>{{ bcclient.nbJrs }}</td>
-            </tr>
-            <tr>
-                <th>Nbjrsr</th>
-                <td>{{ bcclient.nbJrsR }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ bcclient.type }}</td>
-            </tr>
-            <tr>
-                <th>Application</th>
-                <td>{{ bcclient.application }}</td>
-            </tr>
-            <tr>
-                <th>Avenant</th>
-                <td>{{ bcclient.avenant }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="widget-box">
+        <div class="widget-header">
+            <h4 class="widget-title">Bc client détails</h4>
+        </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('bcclient_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('bcclient_edit', { 'id': bcclient.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
+        <div class="widget-body">
+            <div class="widget-main no-padding">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-detail">
+                            <tbody>
+                            <tr>
+                                <th>Id</th>
+                                <td>{{ bcclient.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Code</th>
+                                <td>{{ bcclient.code }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date</th>
+                                <td>{% if bcclient.date %}{{ bcclient.date|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>Nbjrs</th>
+                                <td>{{ bcclient.nbJrs }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nbjrsr</th>
+                                <td>{{ bcclient.nbJrsR }}</td>
+                            </tr>
+                            <tr>
+                                <th>Type</th>
+                                <td>{{ bcclient.type }}</td>
+                            </tr>
+                            <tr>
+                                <th>Application</th>
+                                <td>{{ bcclient.application }}</td>
+                            </tr>
+                            <tr>
+                                <th>Avenant</th>
+                                <td>{{ bcclient.avenant }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
+    <br>
+    <div class="row">
+
+        <div class="col-md-2"><a href="{{ path('bcclient_index') }}"><i class="fa fa-backward"></i> Back to the list</a>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4"><a href="{{ path('bcclient_edit', { 'id': bcclient.id }) }}"
+                                 class="btn btn-block btn-warning"><i class="fa fa-edit"></i>
+                Modifier</a>
+        </div>
+        <div class="col-md-2"></div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="col-md-2 pull-right"> {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                {{ form_end(delete_form) }}</div>
+        {% endif %}
+    </div>
+
+
 {% endblock %}

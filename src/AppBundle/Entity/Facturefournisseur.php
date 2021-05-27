@@ -34,7 +34,7 @@ class Facturefournisseur
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_jours", type="integer", nullable=true)
+     * @ORM\Column(name="nb_jours", type="float", nullable=true)
      */
     private $nbjours;
     /**
@@ -503,29 +503,6 @@ class Facturefournisseur
         return $this->taxe;
     }
 
-    /**
-     * Set nbjours
-     *
-     * @param integer $nbjours
-     *
-     * @return Bcfournisseur
-     */
-    public function setNbjours($nbjours)
-    {
-        $this->nbjours = $nbjours;
-
-        return $this;
-    }
-
-    /**
-     * Get nbjours
-     *
-     * @return integer
-     */
-    public function getNbjours()
-    {
-        return $this->nbjours;
-    }
 
     /**
      * Set mois
@@ -786,5 +763,29 @@ class Facturefournisseur
     public function getFacture()
     {
         return $this->facture;
+    }
+
+    /**
+     * Set nbjours
+     *
+     * @param float $nbjours
+     *
+     * @return Facturefournisseur
+     */
+    public function setNbjours($nbjours)
+    {
+        $this->nbjours = $nbjours;
+
+        return $this;
+    }
+
+    /**
+     * Get nbjours
+     *
+     * @return float
+     */
+    public function getNbjours()
+    {
+        return $this->nbjours;
     }
 }

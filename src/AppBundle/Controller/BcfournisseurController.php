@@ -3,10 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Bcfournisseur;
+use AppBundle\Entity\Facturefournisseur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Bcfournisseur controller.
@@ -15,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BcfournisseurController extends Controller
 {
+
     /**
      * Lists all bcfournisseur entities.
      *
@@ -28,7 +31,7 @@ class BcfournisseurController extends Controller
 
         $bcfournisseurs = $em->getRepository('AppBundle:Bcfournisseur')->findAll();
 
-        if(empty($bcfournisseurs)){
+        if (empty($bcfournisseurs)) {
 
             $bcfournisseurs = [];
         }
@@ -47,13 +50,74 @@ class BcfournisseurController extends Controller
     public function newAction(Request $request)
     {
         $bcfournisseur = new Bcfournisseur();
+        $bcfournisseur->setYear(intval((new \DateTime('now'))->format('Y')));
+        $bcfournisseur->setMois(intval((new \DateTime('now'))->format('m')));
         $form = $this->createForm('AppBundle\Form\BcfournisseurType', $bcfournisseur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $projet = $bcfournisseur->getProjet();
+
+            if ($projet) {
+
+                if ($projet->getProjetconsultants()->count() == 1) {
+                    $projet->getFactures()->count() == 1 ? $facture = $projet->getFactures()->last() : $facture = null;
+                    $projet_consultant = $projet->getProjetconsultants()->first();
+                    $tjm_achat = $projet_consultant->getAchat();
+                    $tjm_vente = $projet_consultant->getVente();
+                    $totalAchat = $bcfournisseur->getNbjours() * $tjm_achat;
+                    $bc_client = $projet_consultant->getBcclient();
+                    $bc_client->setNbJrsR($bc_client->getNbJrsR() - $bcfournisseur->getNbjours());
+                    //bc_fournisseur
+                    $bcfournisseur->setConsultant($projet_consultant->getConsultant());
+                    $bcfournisseur->setFacture($facture);
+                    $bcfournisseur->setAchatHT($totalAchat);
+                    $bcfournisseur->setAchatTTC($bcfournisseur->getAchatHT() * 1.2);
+                    $bcfournisseur->setTaxe($bcfournisseur->getAchatHT() * 0.2);
+                    //set code to bcfournisseur
+                    $nb = count($em->getRepository('AppBundle:Bcfournisseur')->findBy(array(
+
+                        'mois' => $facture->getMois(),
+                        'year' => $facture->getYear(),
+                    )));
+                    $bcfournisseur->setCode('BC-' . substr($facture->getYear(), -2) . '-' . str_pad($facture->getMois(), 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb + 1, 3, '0', STR_PAD_LEFT));
+
+                    //end bc_fournisseur
+
+                    //facture_fournisseur
+                    $facturefournisseur = new Facturefournisseur();
+                    $facturefournisseur->setBcfournisseur($bcfournisseur);
+                    $facturefournisseur->setYear($bcfournisseur->getYear());
+                    $facturefournisseur->setDate($bcfournisseur->getDate());
+                    $facturefournisseur->setTaxe($bcfournisseur->getTaxe());
+                    $facturefournisseur->setAchatTTC($bcfournisseur->getAchatTTC());
+                    $facturefournisseur->setAchatHT($bcfournisseur->getAchatHT());
+                    $facturefournisseur->setNbjours($bcfournisseur->getNbjours());
+                    $facturefournisseur->setMois($bcfournisseur->getMois());
+                    $facturefournisseur->setFacture($facture);
+                    $facturefournisseur->setProjet($projet);
+                    $facturefournisseur->setAchatHT($totalAchat);
+                    $facturefournisseur->setAchatTTC($facturefournisseur->getAchatHT() * 1.2);
+                    $facturefournisseur->setTaxe($facturefournisseur->getAchatHT() * 0.2);
+                    $facturefournisseur->setFournisseur($bcfournisseur->getFournisseur());
+                    $facturefournisseur->setConsultant($projet_consultant->getConsultant());
+
+                    $em->persist($facturefournisseur);
+//                    $em->flush();
+// end facture_fournisseur
+                } else {
+
+                    return $this->redirectToRoute('bcfournisseur_index');
+                }
+
+            }
+
+
             $em->persist($bcfournisseur);
             $em->flush();
+
 
             return $this->redirectToRoute('bcfournisseur_show', array('id' => $bcfournisseur->getId()));
         }
@@ -61,6 +125,60 @@ class BcfournisseurController extends Controller
         return $this->render('bcfournisseur/new.html.twig', array(
             'bcfournisseur' => $bcfournisseur,
             'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     *
+     * @Route("/get_bc_infos", name="route_bc_getinfo",options={"expose"=true})
+     ** @Method({"GET", "POST"})
+     */
+    public function validateAction(Request $request)
+
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $nbjour = $request->get('nbjour');
+
+        $id_mission = $request->get('id_mission');
+        $id_projet = $request->get('id_project');
+//        $id_projet = 5;
+
+        if ($id_projet) {
+
+//            $mission = $em->getRepository('AppBundle:Mission')->find($id_mission);
+            $projet = $em->getRepository('AppBundle:Projet')->find($id_projet);
+
+            $total_consultant = $projet->getProjetconsultants()->count();
+
+            if ($total_consultant == 1) {
+
+                $projet_consultant = $projet->getProjetconsultants()->first();
+                $bc_client = $projet_consultant->getBcclient();
+                $nbjours_r = $bc_client->getNbJrsR();
+                $nbjours_r_maj = $nbjours_r - $nbjour;
+            }
+        } else {
+
+//            $mission = null;
+            $projet = null;
+            $bc_client = null;
+        }
+
+
+        $response = json_encode([
+            'data' => [
+                'nbjour' => $nbjour,
+                'bcclient' => $bc_client->getCode(),
+                'nbjour_r' => $bc_client->getNbJrsR()
+
+                , 'nbjour_r_maj' => $nbjours_r_maj]
+
+
+        ]);
+
+        return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
         ));
     }
 
@@ -226,4 +344,6 @@ class BcfournisseurController extends Controller
             ->setMethod('DELETE')
             ->getForm();
     }
+
+
 }

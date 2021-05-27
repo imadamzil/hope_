@@ -45,6 +45,11 @@ class Virementf
      */
     private $detailfournisseurs;
     /**
+     * @ORM\ManyToOne(targetEntity="Comptebancaire", inversedBy="virements")
+     * @ORM\JoinColumn(name="id_compte", referencedColumnName="id")
+     */
+    private $comptebancaire;
+    /**
      * Get id
      *
      * @return int
@@ -77,6 +82,7 @@ class Virementf
     {
         return $this->numero;
     }
+
     /**
      * Constructor
      */
@@ -153,6 +159,29 @@ class Virementf
         return $this->detailfournisseurs;
     }
 
+    public function getFounisseursList()
+    {
+        $liste = $this->detailfournisseurs;
+
+       foreach ($liste as $item){
+
+           $arr_fournisseurs [] = $item->getFournisseur();
+       }
+
+        return $arr_fournisseurs;
+
+    }
+    public function getTotalVirements( ){
+        $total = null;
+        $liste = $this->detailfournisseurs;
+        foreach ($liste as $item){
+
+            $total += $item->getTotal();
+        }
+
+        return $total;
+    }
+
     /**
      * Set date
      *
@@ -175,5 +204,29 @@ class Virementf
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set comptebancaire
+     *
+     * @param \AppBundle\Entity\Comptebancaire $comptebancaire
+     *
+     * @return Virementf
+     */
+    public function setComptebancaire(\AppBundle\Entity\Comptebancaire $comptebancaire = null)
+    {
+        $this->comptebancaire = $comptebancaire;
+
+        return $this;
+    }
+
+    /**
+     * Get comptebancaire
+     *
+     * @return \AppBundle\Entity\Comptebancaire
+     */
+    public function getComptebancaire()
+    {
+        return $this->comptebancaire;
     }
 }

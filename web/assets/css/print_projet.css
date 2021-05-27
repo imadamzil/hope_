@@ -212,14 +212,15 @@ th
 {
     color: rgb(0, 0, 0);
     margin-left: 60px;
-    margin-top: 30px;
+    margin-top: 10px;
     font-size: 20px;
 }
+
 .ljj
 {
     color: rgb(0, 0, 0);
     margin-left: 750px;
-    margin-top: 40px;
+    margin-top: 15px;
     font-size: 18px;
 }
 .XXX
@@ -303,6 +304,7 @@ th
 
 .jjj {
     margin-left: 430px;
+    margin-top: 20px;
     /*border-color: #ffffff !important;*/
     border:solid 1px white;
 

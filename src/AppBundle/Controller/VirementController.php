@@ -5,24 +5,17 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Detailvirement;
 use AppBundle\Entity\Virement;
 use AppBundle\Entity\Virementf;
+use DateTime;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Query;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Spreadsheet as Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Reader\Xls;
-use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Style\Border;
-//use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 
 /**
@@ -40,80 +33,45 @@ class VirementController extends Controller
      */
     public function indexAction()
     {
-        // export excel
-        $spreadsheet = new Spreadsheet();
-//get current active sheet (first sheet)
-        $sheet = $spreadsheet->getActiveSheet();
-
-//set default font
-        $spreadsheet->getDefaultStyle()
-            ->getFont()
-            ->setName('Calibri')
-            ->setSize(11);
-
 
         $em = $this->getDoctrine()->getManager();
-
         $virements = $em->getRepository('AppBundle:Virement')->findAll();
-        //dump($virements);
-        /* $counter = 1;
 
-         $tableHead = [
-             'font' => [
-                 'color' => [
-                     'rgb' => '000000'
-                 ],
-                 'bold' => true,
-                 'size' => 11
-             ],
-             'fill' => [
-                 'fillType' => Fill::FILL_SOLID,
-                 'startColor' => [
-                     'rgb' => '7b211'
-                 ]
-             ],
-             'borders' => [
-                 'allBorders' => [
-                     'borderStyle' => Border::BORDER_THIN,
-                     'color' => ['argb' => '000000'],
-                 ],
-             ],
-         ];
+        $data = [
 
-         $evenRow = [
-             'fill' => [
-                 'fillType' => Fill::FILL_SOLID,
-                 'startColor' => [
-                     'rgb' => 'f5f3ed'
-                 ],
-             ],
-             'borders' => [
-                 'allBorders' => [
-                     'borderStyle' => Border::BORDER_THIN,
-                     'color' => ['argb' => '000000'],
-                 ],
-             ],
-         ];
-                $sheet->getStyle('A' . $counter . ':R' . $counter)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            'date' => new \DateTime(),
 
+        ];
 
+        $form = $this->createFormBuilder($data)
+            ->add('date', DateTimeType::class, [
+                'widget' => 'single_text',
+                'placeholder' => 'Date Début mission',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+                'required' => false,
+                // adds a class that can be selected in JavaScript
+                'attr' => ['class' => 'date-timepicker1'],
+            ])
+            ->add('client', EntityType::class, array(
+                'class' => 'AppBundle:Comptebancaire',
+                'multiple' => false,
+                'label' => 'Compte bancaire',
+                'required' => false,
+                'placeholder' => '--',
+                'attr' => array(
+                    'class' => 'chosen-select',
+                    'data-placeholder' => 'Selectionner',
+                    'multiple' => false
 
-
-         header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-         header("Content-Disposition: attachment; filename=\"results.xlsx\"");
-         header("Cache-Control: max-age=0");
-
-         // $file = "ALL_Coverage.xlsx";
-         $file = $this->get('kernel')->getRootDir() . '\..\web\H3k_virement.xlsx';
-         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
- //save into php output
-         ob_clean();
-
-         $writer->save('php://output');*/
-
+                )
+            ))
+            ->getForm();
+        dump($virements);
 
         return $this->render('virement/index.html.twig', array(
             'virements' => $virements,
+            'form' => $form->createView()
         ));
     }
 
@@ -216,8 +174,7 @@ class VirementController extends Controller
 
         $virements = $em->getRepository('AppBundle:Virement')->findBy(array('id' => $Ids));
 
-//        $form = $this->createForm('AppBundle\Form\VirementType', $virement);
-//        $form->handleRequest($request);
+
         foreach ($virements as $virement) {
 
             $virement->setEtat('validé');
@@ -256,13 +213,33 @@ class VirementController extends Controller
 
 
         $Ids = $request->get('idVirments');
+        $compte_id = $request->get('compte');
+        $date = $request->get('date');
+        $datego = DateTime::createFromFormat('Y-m-d H:i', $date);
+        $datego ? $datego->format('Y-m-d H:i') : false;
 //        $Ids = [22,24];
+
+        $mois = $datego->format('m');
+        $year = $datego->format('Y');
         $em = $this->getDoctrine()->getManager();
+        $comptebancaire = $em->getRepository('AppBundle:Comptebancaire')->find($compte_id);
 
         $virements = $em->getRepository('AppBundle:Virement')->findBy(array('id' => $Ids));
+        $nb_query = $em->createQuery('
+        SELECT v from AppBundle:Virementf v 
+        WHERE MONTH (v.date) = :mois and YEAR (v.date) = :year
+        ')->setParameters(
+            array(
+                'mois' => $mois,
+                'year' => $year
+            )
 
+
+        )->getResult();
         $virementf = new Virementf();
-        $virementf->setDate(new \DateTime('now'));
+        $comptebancaire ? $virementf->setComptebancaire($comptebancaire) : true;
+        $virementf->setNumero(substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad(count($nb_query) + 1, 3, '0', STR_PAD_LEFT));
+        $virementf->setDate($datego);
 
 
         foreach ($virements as $virement) {

@@ -29,18 +29,8 @@ class VirementfController extends Controller
 
         $virementfs = $em->getRepository('AppBundle:Virementf')->findAll();
 
-        $arr = [];
 
-
-        $query = $em->createQuery('
-SELECT p,sum(p.achat) as total,c FROM AppBundle:Virement p 
-JOIN AppBundle:Bcfournisseur c 
-WHERE p.bcfournisseur = c.id
-        
-GROUP BY c.fournisseur
-        ')->execute();
-
-        //dump($query);
+        dump($virementfs);
         return $this->render('virementf/index.html.twig', array(
             'virementfs' => $virementfs,
         ));
@@ -142,7 +132,7 @@ WHERE p.virementf = :id
 
         if ($details) {
 
-            foreach ($details as $key=>$value) {
+            foreach ($details as $key => $value) {
                 foreach ($Ids as $d) {
 
                     $value->setPriorite($Ids[$key]);

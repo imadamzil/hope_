@@ -54,6 +54,11 @@ class Comptebancaire
      */
     private $factures;
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virementf", mappedBy="comptebancaire",cascade={"persist", "remove"})
+     */
+    private $virements;
+
+    /**
      * Get id
      *
      * @return int
@@ -163,6 +168,7 @@ class Comptebancaire
     {
         return $this->getBanque();
     }
+
     /**
      * Constructor
      */
@@ -203,5 +209,39 @@ class Comptebancaire
     public function getFactures()
     {
         return $this->factures;
+    }
+
+    /**
+     * Add virement
+     *
+     * @param \AppBundle\Entity\Virementf $virement
+     *
+     * @return Comptebancaire
+     */
+    public function addVirement(\AppBundle\Entity\Virementf $virement)
+    {
+        $this->virements[] = $virement;
+
+        return $this;
+    }
+
+    /**
+     * Remove virement
+     *
+     * @param \AppBundle\Entity\Virementf $virement
+     */
+    public function removeVirement(\AppBundle\Entity\Virementf $virement)
+    {
+        $this->virements->removeElement($virement);
+    }
+
+    /**
+     * Get virements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVirements()
+    {
+        return $this->virements;
     }
 }

@@ -1,7 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Hope3k | Virement {% endblock %}{% block menu %}  <a
-        href="{{ path('virement_index') }}">Virement</a>   {% endblock %}   {% block menu_active %}    Liste {% endblock %}{% block content %}
+{% block title %} Hope3k | Virement {% endblock %}
+{% block stylsheets %}
+
+    {{ parent() }}
+
+    <style>
+
+        .chosen-container-single .chosen-single {
+            width: 100px;
+        !important;
+        }
+    </style>
+{% endblock %}
+{% block menu %}
+    <a href="{{ path('virement_index') }}">Virement</a>   {% endblock %}
+
+{% block menu_active %}    Liste {% endblock %}
+
+{% block content %}
     <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
 
         <div class="widget-box ui-sortable-handle" id="widget-box-1">
@@ -101,8 +118,14 @@
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
+                                                Nb jours
+                                            </th>
+                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1" aria-label="Status: activate to sort column ascending">
                                                 AchatTTC
                                             </th>
+
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
@@ -180,8 +203,18 @@
                                                     {% if virement.bcfournisseur is null %}
                                                         --
                                                     {% else %}
-                                                        0{{ virement.bcfournisseur.mois }}-{{ virement.bcfournisseur.year }}
+                                                        {{ "%02d"|format(virement.bcfournisseur.mois) }}/{{ virement.bcfournisseur.year }}
 
+
+                                                    {% endif %}
+
+
+                                                </td>
+                                                <td class="hidden-480">
+                                                    {% if virement.facturefournisseur is null %}
+                                                        --
+                                                    {% else %}
+                                                        {{ virement.facturefournisseur.nbjours }}
 
                                                     {% endif %}
 
@@ -197,6 +230,7 @@
 
 
                                                 </td>
+
                                                 <td>
 
                                                     {% if virement.etat is null %}
@@ -289,7 +323,7 @@
                                         </tbody>
 
                                     </table>
-                                    {% if is_granted('ROLE_MANAGER') %}
+                                    {% if is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') %}
                                         <div class="row">
                                             <div class="col-md-4"></div>
                                             <div class="col-md-4">
@@ -310,7 +344,52 @@
                                 </div>
                             </div>
 
+                            <a href="#my-modal" role="button" class="invisible"
+                               data-toggle="modal" id="compte_button">
+                                <i class="ace-icon fa fa-exchange bigger-100 purple"></i>
+                            </a>
+                            <div id="my-modal" class="modal fade"
+                                 tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close"
+                                                    data-dismiss="modal"
+                                                    aria-hidden="true">&times;
+                                            </button>
+                                            <h3 class="smaller lighter blue no-margin">
+                                                Choisir le compte bancaire </h3>
+                                        </div>
 
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    {{ form_start(form) }}
+                                                    {{ form_widget(form) }}
+                                                    <input type="submit" value="Create"/>
+                                                    {{ form_end(form) }}
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button class="btn btn-sm btn-success ok pull-right"
+                                                    id="id_test" data-dismiss="modal">
+                                                <i class="ace-icon fa fa-check"></i>
+                                                Enregistrer
+                                            </button>
+                                            <button class="btn btn-sm btn-danger pull-left"
+                                                    data-dismiss="modal">
+                                                <i class="ace-icon fa fa-times"></i>
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div>
                         </div>
 
 
@@ -337,6 +416,8 @@
     <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
     <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
     <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script type="text/javascript">
         jQuery(function ($) {
             var rowCount = $('#dynamic-table').length;
@@ -348,7 +429,7 @@
                     .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                     .DataTable({
                         initComplete: function () {
-                            this.api().columns([5, 7]).every(function () {
+                            this.api().columns([5, 8]).every(function () {
                                 var column = this;
                                 var select = $('<select><option value="" class="pull_right">-- filtrer --</option></select>')
                                     .appendTo($(column.header()))
@@ -376,7 +457,7 @@
                         bAutoWidth: false,
                         "aoColumns": [
                             {"bSortable": true},
-                            null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null,
                             {"bSortable": false}
                         ],
                         "aaSorting": [],
@@ -564,22 +645,13 @@
                 event.preventDefault();
                 var searchIDs = $("#dynamic-table input:checkbox:checked").map(function () {
                     return $(this).val();
-                }).get(); // <----
+                }).get();
+
+                console.log(searchIDs);
 
 
                 var url = Routing.generate('route_to_validate_virement');
 
-                /*  $.post(url,
-                 { 'idClass': Id
-                 }, function(data, status){
-                 if(status=='200'){
-                 alert("Data: " + data + "\nStatus: " + status);
-                 }else {
-                 alert("erreur");
-                 }
-
-                 });
-                 */
                 $.ajax({
                     type: "POST",
                     data: {
@@ -631,27 +703,43 @@
                 ////////////////////
 
             });
+            // model compte bancaire form
+            $('#form_client').chosen({width: '100%'});
+            // end modal
             $("#virement").click(function (event) {
+
+                $('#compte_button').click();
+
+            });
+            $("#id_test").click(function (event) {
                 event.preventDefault();
                 var searchIDs = $("#dynamic-table input:checkbox:checked").map(function () {
                     return $(this).val();
-                }).get(); // <----
+                }).get();
 
+                let compte_bancaire = $('#form_client').val();
+                let date_virement = $('#form_date').val();
 
                 var urls = Routing.generate('route_to_add_virement');
+                console.log(searchIDs, urls, 'ok');
 
                 $.ajax({
                     type: "POST",
                     data: {
                         idVirments: searchIDs,
-
-                    }, // no need to stringify the data, jquery does it for you
+                        date: date_virement,
+                        compte: compte_bancaire
+                    },
                     url: urls,
                     dataType: 'json',
                     success: function (response) {
                         console.log(response);
-                        location.href = Routing.generate('virementf_show', {'id': response.id});
 
+
+
+                            location.href = Routing.generate('virementf_show', {'id': response.id});
+
+//
 
                     },
                     error: function (error) {

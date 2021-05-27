@@ -162,7 +162,7 @@
                     {% for heure in bcfournisseur.heures %}
                         {% if heure.bcfournisseur is not null %}
 
-                            {{ heure.heuresup }} ({{ heure.nbheure }}H) majoration {{ heure.heuresup.pourcentage }}%({{ heure.totalHT }}DH/HT)
+                            {{ heure.heuresup }} ({{ heure.nbheure }}H) majoration {{ heure.heuresup.pourcentage }}%({{ heure.totalHT | number_format(2, '.', ' ') }}DH/HT)
                             <br>
                         {% endif %}
 
@@ -191,7 +191,8 @@
 
                         {#{{ dump(bcfournisseur.heures) }}#}
                         {% if bcfournisseur.heures | length != 0 %}
-                            {{ bcfournisseur.nbjours-nb }}
+                            {% set nbjour = bcfournisseur.nbjours-nb %}
+                            {{ nbjour | number_format(2, '.', ' ') }}
 
                             <br>
                             <span class="OLL bolder">
@@ -199,7 +200,7 @@
                     {% for heure in bcfournisseur.heures %}
                         {% if heure.bcfournisseur is not null %}
 
-                            {{ heure.nbjour }}
+                            {{ heure.nbjour  }}
                             <br>
                         {% endif %}
 
@@ -218,22 +219,22 @@
                     <strong>
 
                         {% if bcfournisseur.heures | length != 0 %}
-                            {{ bcfournisseur.mission.prixAchat }}
+                            {{ bcfournisseur.mission.prixAchat | number_format(2, '.', ' ') }}
 
                             <br>
                             <span class="OLL bolder">
 
                     {% for heure in bcfournisseur.heures %}
                         {% if heure.bcfournisseur is not null %}
-
-                            {{ heure.totalHT / heure.nbjour }}
+                            {% set nbjour_hs = heure.totalHT / heure.nbjour %}
+                            {{ nbjour_hs | number_format(2, '.', ' ') }}
                             <br>
                         {% endif %}
 
                     {% endfor %}
                     </span>
                         {% else %}
-                            {{ bcfournisseur.mission.prixAchat }}
+                            {{ bcfournisseur.mission.prixAchat | number_format(2, '.', ' ') }}
                         {% endif %}
 
                     </strong>
@@ -241,7 +242,8 @@
                 <td class="text-center align-middle">
                     <strong>
                         {% if bcfournisseur.heures | length != 0 %}
-                            {{ bcfournisseur.mission.prixAchat *(bcfournisseur.nbjours-nb) }}
+                            {% set nb_achat_hs  = bcfournisseur.mission.prixAchat *(bcfournisseur.nbjours-nb) %}
+                            {{ nb_achat_hs | number_format(2, '.', ' ') }}
 
                             <br>
                             <span class="OLL bolder">
@@ -249,14 +251,15 @@
                     {% for heure in bcfournisseur.heures %}
                         {% if heure.bcfournisseur is not null %}
 
-                            {{ heure.totalHT }}
+                            {{ heure.totalHT | number_format(2, '.', ' ') }}
                             <br>
                         {% endif %}
 
                     {% endfor %}
                     </span>
                         {% else %}
-                            {{ bcfournisseur.mission.prixAchat *bcfournisseur.nbjours }}
+                            {% set prixAchat = bcfournisseur.mission.prixAchat *bcfournisseur.nbjours %}
+                            {{ prixAchat | number_format(2, '.', ' ') }}
 
                         {% endif %}
 
@@ -278,21 +281,24 @@
     <tbody>
     <tr class="">
         <th class=" AZX">TOTAL HT/DH</th>
-        <td class=" AZX">{{ bcfournisseur.achatHT }}.00
+        <td class=" AZX">{{ bcfournisseur.achatHT | number_format(2, '.', ' ')}}
 
         </td>
 
     </tr>
     <tr class="">
         <th class=" AZX">TVA 20%</th>
-        <td class=" AZX">{{ bcfournisseur.achatHT*0.2 }}.00
+        <td class=" AZX">
+            {% set taxe  = (bcfournisseur.achatHT*0.2) %}
+
+            {{ taxe | number_format(2, '.', ' ')}}
 
         </td>
 
     </tr>
     <tr class="">
         <th class=" AZX">TOTAL TTC/DH</th>
-        <td class=" AZX">{{ bcfournisseur.achatTTC }}.00</td>
+        <td class=" AZX">{{ bcfournisseur.achatTTC | number_format(2, '.', ' ')}}</td>
 
     </tr>
 

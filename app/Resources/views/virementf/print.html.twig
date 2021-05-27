@@ -20,14 +20,25 @@
         {#<span class="F">H O P E &nbsp;A N D &nbsp;W E &nbsp;P E R F O R M</span>#}
     </p>
     <p class="C text-center">
-        <img src="https://www.ecoenergiesolutions.com/uploads/labels/20121120-1548-afaq-9001.jpg" alt="AFAQA" width="100"
+        <img src="https://www.ecoenergiesolutions.com/uploads/labels/20121120-1548-afaq-9001.jpg" alt="AFAQA"
+             width="100"
              height="100"/><br>
         <span class="G text-center">ISO 9001 : 2015</span>
         <span class="GA text-center">ID : 121497101356</span>
     </p>
 </header>
-<div class="space-10" style="margin-top: 10%"></div>
 
+
+<div class="space-10" style="margin-top: 10%"></div>
+<div class="row">
+    <div class="col-md-9"></div>
+    <div class="col-md-3">
+        <p>
+            Casablanca , le {% if virementf.date %} {{ virementf.date | date('d/m/y') }}{% endif %}
+        </p>
+    </div>
+</div>
+<br>
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
@@ -35,7 +46,13 @@
 
             <strong class="SQ">Virement </strong><br>
 
-            <span class="QW" style="font-size: 18px;font-weight: bold;">N° 00-50002<br></span>
+            <span class="QW" style="font-size: 18px;font-weight: bold;">
+                {% if virementf.numero is not null %}
+                    N° {{ virementf.numero }}<br>
+                    {% else %}
+                    N° 00-50002<br>
+                {% endif %}
+            </span>
 
 
         </p>
@@ -48,11 +65,15 @@
 
 
 <div class="row">
-<div class="col-md-2"></div>
+    <div class="col-md-2"></div>
     <div class="col-md-8 col-md-offset-4 text-center">
 
         <h4 class="SQ">
-            Compte bancaire : RIB
+            {% if virementf.comptebancaire is not null %}
+                A l’attention de : Le directeur de l’agence {{ virementf.comptebancaire.agence }} <br>
+
+                Compte bancaire : {{ virementf.comptebancaire.rib }}
+            {% endif %}
         </h4>
         <br>
         <p style="font-size: 20px" class="QW">
@@ -83,7 +104,7 @@
             <tbody>
             {% set num = 0 %}
             {% for detail in details %}
-                <tr class="center" style="line-height: 70px;height: 15px" >
+                <tr class="center" style="line-height: 70px;height: 15px">
                     <td class="lmk center">
                         {{ loop.index }}
 
@@ -112,7 +133,7 @@
             TOTAL =
             <strong>
         <span class="">
-           {{ total['total'] }} DH
+           {{ total['total'] | number_format(2, '.', ' ') }} DH
 
 
         </span></strong>
@@ -147,7 +168,7 @@
 <div class="row " id="footer">
 
     <div class="col-md-10 col-md-offset-1">
-        <footer >
+        <footer>
             {% if fiche is not null %}
                 <p class="RRR text-center vir">
                     SOCIETE <span class="WII">{{ fiche.nom }}</span>, &nbsp;au capital

@@ -37,6 +37,8 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request, \Swift_Mailer $mailer)
     {
+
+        dump($this->getUser());
         $em = $this->getDoctrine()->getManager();
 
         $clients = $em->getRepository('AppBundle:Client')->findAll();
@@ -948,7 +950,8 @@ class DefaultController extends Controller
 
         return new Response('ok');
     }
-/**
+
+    /**
      * @Route("/upgrade/facture_fournisseur", name="migration_facture_fournisseur")
      */
     public function migrationfacturefournisseur()
@@ -1002,7 +1005,6 @@ class DefaultController extends Controller
                 $achatHT = floatval($row[7]);
                 $achatTTC = floatval($row[8]);
                 $etat = $row[9];
-
 
 
                 if ($row[3]) {
@@ -1065,4 +1067,25 @@ class DefaultController extends Controller
         return new Response('ok');
     }
 
+    /**
+     * @Route("/commande/execute", name="execute_commande")
+     */
+    public function executeComandes()
+    {
+        $command = 'php bin/console doctrine:schema:update --dump-sql';
+        $process = new Process($command);
+
+        $path = $this->get('kernel')->getRootDir() . '/../';
+
+
+
+        $process->setWorkingDirectory($path);
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+        echo $process->getOutput();
+
+        return new Response('success');
+    }
 }

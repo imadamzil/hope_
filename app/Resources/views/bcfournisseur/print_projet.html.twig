@@ -139,17 +139,31 @@
                     <p>
 
                     <span class="OLL">
+                         {% if bcfournisseur.mission is not null %}
 
-                                                    {% if bcfournisseur.mission is not null %}
+                             {{ bcfournisseur.mission.job }}
 
-                                                        {{ bcfournisseur.mission.job.nom }}
+                         {% else %}
 
-                                                    {% else %}
 
-                                                        --
-                                                    {% endif %}
+                         {% endif %}
+                        {% if bcfournisseur.projet is not null %}
 
-                                                </span>
+                            {% set lignes = bcfournisseur.projet.projetconsultants %}
+                            {% if lignes | length > 0 %}
+                                {% for ligne in lignes %}
+                                    {% if ligne.consultant.nom == bcfournisseur.consultant.nom %}
+                                        {{ ligne.job }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% else %}
+
+
+                        {% endif %}
+
+
+                    </span>
                     </p>
                     <p>
                         <span class="YYY">Mois :</span><br><span
@@ -201,7 +215,7 @@
                     </strong></td>
                 <td class=" text-center  align-middle">
                     <strong>
-                        {{ bcfournisseur.achatHt/bcfournisseur.nbjours  }}
+                        {{ bcfournisseur.achatHt/bcfournisseur.nbjours }}
 
                     </strong>
                 </td>
@@ -246,7 +260,6 @@
 
     </tbody>
 </table>
-
 
 
 <p class="WWM">

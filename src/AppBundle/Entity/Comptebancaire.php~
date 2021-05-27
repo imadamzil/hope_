@@ -54,6 +54,11 @@ class Comptebancaire
      */
     private $factures;
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virementf", mappedBy="comptebancaire",cascade={"persist", "remove"})
+     */
+    private $virements;
+
+    /**
      * Get id
      *
      * @return int
@@ -163,6 +168,7 @@ class Comptebancaire
     {
         return $this->getBanque();
     }
+
     /**
      * Constructor
      */

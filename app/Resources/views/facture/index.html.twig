@@ -146,7 +146,8 @@
                                                 aria-sort="descending">
                                                 mois
                                             </th>
-
+                                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="">Nb jours
+                                            </th>
 
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
@@ -170,11 +171,10 @@
                                             </th>
 
 
+
                                             <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="">devise
                                             </th>
-                                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="">TOTAL
-                                                (DH)
-                                            </th>
+
                                             <th class="sorting_disabled" rowspan="1" colspan="1" aria-label=""></th>
 
                                         </tr>
@@ -183,7 +183,7 @@
                                         <tbody>
                                         {% for facture in factures %}
 
-                                            <tr role="row" class="odd">
+                                            <tr role="row" class="odd text-center">
                                                 <td>
 
 
@@ -240,7 +240,17 @@
                                                     {% endif %}
 
                                                 </td>
+                                                <td>
+                                                    {% if facture.nbjour is null %}
 
+
+                                                    {% else %}
+
+                                                        {{ facture.nbjour }}
+
+
+                                                    {% endif %}
+                                                </td>
                                                 <td class="hidden-480">
                                                     {% if facture.date is null %}
                                                         --
@@ -298,19 +308,8 @@
 
                                                     {% endif %}
                                                 </td>
-                                                <td>
-
-                                                    {% if facture.totalDH is null %}
-                                                        --
-
-                                                    {% else %}
-
-                                                        {{ facture.totalDH }}
 
 
-                                                    {% endif %}
-
-                                                </td>
 
                                                 <td>
                                                     <div class="hidden-sm hidden-xs action-buttons">
