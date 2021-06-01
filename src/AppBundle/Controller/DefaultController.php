@@ -1078,7 +1078,6 @@ class DefaultController extends Controller
         $path = $this->get('kernel')->getRootDir() . '/../';
 
 
-
         $process->setWorkingDirectory($path);
         $process->run();
         if (!$process->isSuccessful()) {
@@ -1087,5 +1086,44 @@ class DefaultController extends Controller
         echo $process->getOutput();
 
         return new Response('success');
+    }
+
+    /**
+     * @Route("/commande/set_commande", name="set_commande")
+     */
+    public function setComandes(Request $request)
+    {
+        $data = ['commande' => 'php bin/console'];
+
+        $form = $this->createFormBuilder($data)
+            ->add('commande')
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $command = $form->get('commande')->getData();
+            $process = new Process($command);
+
+            $path = $this->get('kernel')->getRootDir() . '/../';
+
+
+            $process->setWorkingDirectory($path);
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
+            $output = $process->getOutput();
+        } else {
+
+            $output = 'Entrez la commande';
+        }
+
+
+        return $this->render('default/commande.html.twig', [
+            'form' => $form->createView(),
+            'output' => $output
+
+        ]);
     }
 }

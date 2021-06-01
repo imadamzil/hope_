@@ -140,15 +140,10 @@
 
                     <span class="OLL">
                          {% if bcfournisseur.mission is not null %}
-
                              {{ bcfournisseur.mission.job }}
-
                          {% else %}
-
-
                          {% endif %}
                         {% if bcfournisseur.projet is not null %}
-
                             {% set lignes = bcfournisseur.projet.projetconsultants %}
                             {% if lignes | length > 0 %}
                                 {% for ligne in lignes %}
@@ -158,11 +153,7 @@
                                 {% endfor %}
                             {% endif %}
                         {% else %}
-
-
                         {% endif %}
-
-
                     </span>
                     </p>
                     <p>
