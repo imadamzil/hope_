@@ -416,6 +416,10 @@
     <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
     <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
     <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script type="text/javascript">
@@ -504,8 +508,11 @@
                     },
                     {
                         "extend": "excel",
-                        "text": "<i class='fa fa-file-excel-o bigger-110 orange'></i> <span class='hidden'>Export to CSV</span>",
-                        "className": "btn btn-white btn-primary btn-bold"
+                        "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+                        "className": "btn btn-white btn-primary btn-bold",
+                        exportOptions: {
+                            columns: ':not(:last-child)'
+                        }
                     },
 
                     {
