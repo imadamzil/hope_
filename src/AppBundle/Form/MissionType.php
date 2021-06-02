@@ -103,6 +103,7 @@ class MissionType extends AbstractType
                 'class' => 'AppBundle:Fournisseur',
                 'multiple' => false,
                 'label' => 'Fournisseur',
+                'required'=>false,
                 'placeholder' => '--',
                 'attr' => array(
                     'class' => 'chosen-select',
@@ -115,6 +116,7 @@ class MissionType extends AbstractType
                 'class' => 'AppBundle:Bcclient',
                 'multiple' => false,
                 'placeholder'=>'--',
+                'required'=>false,
                 'label' => 'Bon de commande client',
 //                'choice_label' => 'code',
                 'attr' => array(
@@ -152,6 +154,7 @@ class MissionType extends AbstractType
 
 
                 ),
+                'required'=>false,
             ))
             ->add('devise', ChoiceType::class, array(
                 'choices' => array(
