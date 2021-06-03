@@ -1879,7 +1879,7 @@ class FactureController extends Controller
                 }
             }
         }
-
+       // AND l.nbjour>0 AND l.totalHt>0
         // orange
         if ($facture->getProjet()->getClient()->getNom() == 'MEDI TELECOM') {
             $items = $em->createQuery('
@@ -1888,7 +1888,7 @@ class FactureController extends Controller
           JOIN AppBundle:Projetconsultant p
           WHERE l.facture = :facture
           AND l.projetconsultant = p.id
-           AND l.nbjour>0 AND l.totalHt>0
+         
           GROUP BY p.job
           
           ')->setParameter('facture', $facture)->execute();

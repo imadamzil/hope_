@@ -268,8 +268,8 @@
                                                         </a>
 
 
-                                                        <a class="red" href=""
-                                                           onclick="return confirm('vous êtes sûr que vous voulez le supprimé?');">
+                                                        <a class="red delete-confirm" href="{{ path('virement_remove', { 'id': virement.id }) }}"
+                                                           onclick="return confirm('Vous êtes sûr que vous voulez le supprimé?');">
                                                             <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                                         </a>
 
@@ -782,7 +782,20 @@
                     name: $('#avatar').attr('src')
                 }]);
 
-
+                $('.delete-confirm').on('click', function (event) {
+                    event.preventDefault();
+                    const url = $(this).attr('href');
+                    swal({
+                        title: 'Are you sure?',
+                        text: 'This record and it`s details will be permanantly deleted!',
+                        icon: 'warning',
+                        buttons: ["Cancel", "Yes!"],
+                    }).then(function(value) {
+                        if (value) {
+                            window.location.href = url;
+                        }
+                    });
+                });
                 ////////////////////
 
             });

@@ -49,6 +49,12 @@ class Bcfournisseur
      */
     private $mois;
     /**
+     * @var string
+     *
+     * @ORM\Column(name="etat", type="string", nullable=true)
+     */
+    private $etat;
+    /**
      * @var integer
      *
      * @ORM\Column(name="year", type="integer", nullable=true)

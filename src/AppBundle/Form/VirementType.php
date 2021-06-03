@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,8 +28,17 @@ class VirementType extends AbstractType
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'date-timepicker1'],
             ])
-            ->add('etat')
-            ->add('code')
+            ->add('etat', ChoiceType::class, array(
+                'choices' => array(
+                    'Executé' => 'executé',
+                    'En attente' => 'en attente',
+                    'Validé' => 'validé',
+
+
+                ),
+                'required'=>false,
+            ))
+            ->add('achat')
             ->add('consultant', EntityType::class, array(
                 'class' => 'AppBundle:Consultant',
                 'multiple' => false,
@@ -51,8 +62,8 @@ class VirementType extends AbstractType
                 )
             ))*/
 
-            ->add('bcfournisseur', EntityType::class, [
-                'class' => 'AppBundle:Bcfournisseur',
+        /*    ->add('facturefournisseur', EntityType::class, [
+                'class' => 'AppBundle:Facturefournisseur',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->where('u.etat = :uid')
@@ -62,14 +73,14 @@ class VirementType extends AbstractType
                         ->orderBy('u.date', 'ASC');
                 },
                 'multiple' => false,
-                'label' => 'Bon de commande fournisseur',
+                'label' => 'Facture fournisseur',
                 'attr' => array(
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Selectionner',
                     'multiple' => false
 
                 )
-            ])
+            ])*/
         ;
     }
 

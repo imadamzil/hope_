@@ -309,6 +309,7 @@ class VirementController extends Controller
      */
     public function editAction(Request $request, Virement $virement)
     {
+//        echo ' ok'; die();
         $deleteForm = $this->createDeleteForm($virement);
         $editForm = $this->createForm('AppBundle\Form\VirementType', $virement);
         $editForm->handleRequest($request);
@@ -360,4 +361,22 @@ class VirementController extends Controller
             ->setMethod('DELETE')
             ->getForm();
     }
+
+    /**
+     * Deletes a virement entity.
+     *
+     * @Route("/{id}/remove", name="virement_remove")
+     * @Method("GET")
+     */
+    public function removeAction(Request $request, Virement $virement)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($virement);
+        $em->flush();
+
+        return $this->redirectToRoute('virement_index');
+    }
+
+
 }
