@@ -30,7 +30,7 @@ class VirementfController extends Controller
         $virementfs = $em->getRepository('AppBundle:Virementf')->findAll();
 
 
-        dump($virementfs);
+//        dump($virementfs);
         return $this->render('virementf/index.html.twig', array(
             'virementfs' => $virementfs,
         ));
