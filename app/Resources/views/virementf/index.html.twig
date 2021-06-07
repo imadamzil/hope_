@@ -121,7 +121,10 @@
                                                     {{ total }}
 
                                                 </td>
-                                                <td>{% if virementf.comptebancaire %}{{ virementf.date|date('d/m/Y') }}{% endif %}</td>
+                                                <td>{% if virementf.comptebancaire %}
+                                                        {{ virementf.comptebancaire) }}
+
+                                                    {% endif %}</td>
 
                                                 <td>
 
