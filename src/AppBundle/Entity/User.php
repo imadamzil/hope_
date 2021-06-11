@@ -26,7 +26,10 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="editedby",cascade={"persist", "remove"})
      */
     protected $facturesmodifies;
-
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Consultant", cascade={"persist", "remove"}, inversedBy="user")
+     */
+    protected $consultant;
     public function __construct()
     {
         parent::__construct();
@@ -102,5 +105,29 @@ class User extends BaseUser
     public function getFacturesmodifies()
     {
         return $this->facturesmodifies;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \AppBundle\Entity\Consultant $consultant
+     *
+     * @return User
+     */
+    public function setConsultant(\AppBundle\Entity\Consultant $consultant = null)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \AppBundle\Entity\Consultant
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
     }
 }

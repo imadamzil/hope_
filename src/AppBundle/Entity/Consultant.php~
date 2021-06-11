@@ -137,7 +137,10 @@ class Consultant
      */
     private $createdAt;
 
-
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", mappedBy="consultant")
+     */
+    protected $user;
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *

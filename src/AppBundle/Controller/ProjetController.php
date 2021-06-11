@@ -133,6 +133,7 @@ class ProjetController extends Controller
         $form = $this->createForm('AppBundle\Form\Facture2Type', $facture);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $totalHt = null;
             $facture->setProjet($projet);
 
@@ -286,10 +287,9 @@ class ProjetController extends Controller
              SELECT l  FROM AppBundle:LigneFacture l
              JOIN AppBundle:Projetconsultant p
 
-             WHERE l.facture = :id and l.projetconsultant = p.id AND p.consultant IS NOT NULL GROUP BY p.consultant
-
-                     ')->setParameter('id', $facture)->getResult();
-
+             WHERE l.facture = :id and l.projetconsultant = p.id AND p.consultant IS NOT NULL AND l.nbjour IS NOT NULL 
+            ')->setParameter('id', $facture)->getResult();
+//dump($query);
 //collection of lignes
         $lignes_collection = new \Doctrine\Common\Collections\ArrayCollection();
 //        $nbjours = [];

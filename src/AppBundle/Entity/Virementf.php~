@@ -205,4 +205,28 @@ class Virementf
     {
         return $this->date;
     }
+
+    /**
+     * Set comptebancaire
+     *
+     * @param \AppBundle\Entity\Comptebancaire $comptebancaire
+     *
+     * @return Virementf
+     */
+    public function setComptebancaire(\AppBundle\Entity\Comptebancaire $comptebancaire = null)
+    {
+        $this->comptebancaire = $comptebancaire;
+
+        return $this;
+    }
+
+    /**
+     * Get comptebancaire
+     *
+     * @return \AppBundle\Entity\Comptebancaire
+     */
+    public function getComptebancaire()
+    {
+        return $this->comptebancaire;
+    }
 }

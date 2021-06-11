@@ -589,6 +589,7 @@ class FactureController extends Controller
                         $em->flush();
                     }
                 } else {
+
                     $totalHT = $prixVenteHT;
                     $achatHT = $prixAchatHT;
                     $TVA_Achat = $achatHT * 0.2;
@@ -609,6 +610,7 @@ class FactureController extends Controller
 
 
             } else {
+
                 if ($mission->getType() == 'journaliere') {
                     $totalHT = $prixVenteHT * $facture->getNbjour();
                     $achatHT = $prixAchatHT * $facture->getNbjour();
@@ -649,124 +651,132 @@ class FactureController extends Controller
                     $facture->setTotalHT($totalHT);
                     $facture->setClient($mission->getClient());
                     $facture->setTotalTTC($TVA + $totalHT);
+//                    dump($facture);die();
                 }
             }
             $facture->setClient($mission->getClient());
             $facture->setEtat('non payé');
+
             $em->persist($facture);
             $em->flush();
-            $totalHT_hs = null;
-            $totalTTC_hs = null;
-            $totalHT_hs_fournisseur = null;
-            $totalTTC_hs_fournisseur = null;
-            $nb_total_jrs = null;
 
-            $heures = $form->get('facturehsups')->getData();
-            if (!empty($heures)) {
+            if ($mission->getDevise() == 'DH') {
+
+
                 $totalHT_hs = null;
                 $totalTTC_hs = null;
                 $totalHT_hs_fournisseur = null;
                 $totalTTC_hs_fournisseur = null;
                 $nb_total_jrs = null;
-                foreach ($heures as $heure) {
 
-                    $nb_jour_sup = $heure->getNbheure() / 10;
-                    $heure->setNbjour($nb_jour_sup);
-                    $heure->setFacture($facture);
-                    $heure->setBcfournisseur(null);
+                $heures = $form->get('facturehsups')->getData();
+                if (!empty($heures)) {
+                    $totalHT_hs = null;
+                    $totalTTC_hs = null;
+                    $totalHT_hs_fournisseur = null;
+                    $totalTTC_hs_fournisseur = null;
+                    $nb_total_jrs = null;
+                    foreach ($heures as $heure) {
+
+                        $nb_jour_sup = $heure->getNbheure() / 10;
+                        $heure->setNbjour($nb_jour_sup);
+                        $heure->setFacture($facture);
+                        $heure->setBcfournisseur(null);
 //                    $facture->addFacturehsup($heure);
-                    $heuresup = $heure->getHeuresup();
-                    $heure->setTotalHT($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixVente());
-                    $heure->setTotalTTC(($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixVente()) * 1.2);
-                    $totalHT_hs += ($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixVente());
-                    $totalTTC_hs += $nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixVente() * 1.2;
-                    $totalHT_hs_fournisseur += ($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat());
-                    $totalTTC_hs_fournisseur += $nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat() * 1.2;
-                    $nb_total_jrs += $heure->getNbheure() / 10;
+                        $heuresup = $heure->getHeuresup();
+                        $heure->setTotalHT($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixVente());
+                        $heure->setTotalTTC(($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixVente()) * 1.2);
+                        $totalHT_hs += ($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixVente());
+                        $totalTTC_hs += $nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixVente() * 1.2;
+                        $totalHT_hs_fournisseur += ($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat());
+                        $totalTTC_hs_fournisseur += $nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat() * 1.2;
+                        $nb_total_jrs += $heure->getNbheure() / 10;
 
-                    $heure_bc = new FactureHsup();
-                    $heure_bc->setBcfournisseur($bcfournisseur);
-                    $heure_bc->setFacturefournisseur($facturefournisseur);
+                        $heure_bc = new FactureHsup();
+                        $heure_bc->setBcfournisseur($bcfournisseur);
+                        $heure_bc->setFacturefournisseur($facturefournisseur);
 //                    $heure_bc->setFacture($facture);
-                    $heure_bc->setNbjour($nb_jour_sup);
-                    $heure_bc->setHeuresup($heure->getHeuresup());
-                    $heure_bc->setTotalHT($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat());
-                    $heure_bc->setTotalTTC(($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat()) * 1.2);
-                    $heure_bc->setNbheure($heure->getNbheure());
-                    $bcfournisseur->addHeure($heure_bc);
-                    $facturefournisseur->addHeure($heure_bc);
-                    $em->persist($heure);
-                    $em->flush();
+                        $heure_bc->setNbjour($nb_jour_sup);
+                        $heure_bc->setHeuresup($heure->getHeuresup());
+                        $heure_bc->setTotalHT($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat());
+                        $heure_bc->setTotalTTC(($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $mission->getPrixAchat()) * 1.2);
+                        $heure_bc->setNbheure($heure->getNbheure());
+                        $bcfournisseur->addHeure($heure_bc);
+                        $facturefournisseur->addHeure($heure_bc);
+                        $em->persist($heure);
+                        $em->flush();
+
+                    }
+                } else {
+                    $totalHT_hs = null;
+                    $totalTTC_hs = null;
+                    $totalHT_hs_fournisseur = null;
+                    $totalTTC_hs_fournisseur = null;
+                    $nb_total_jrs = null;
 
                 }
-            } else {
-                $totalHT_hs = null;
-                $totalTTC_hs = null;
-                $totalHT_hs_fournisseur = null;
-                $totalTTC_hs_fournisseur = null;
-                $nb_total_jrs = null;
 
+
+                $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
+                $facture->setTotalHT($facture->getTotalHT() + $totalHT_hs);
+                $facture->setTotalTTC(($facture->getTotalHT()) * 1.2);
+
+                $bcfournisseur->setFournisseur($facture->getMission()->getFournisseur());
+//            $bcfournisseur->setNbjours($facture->getNbjour());
+                $bcfournisseur->setMois($facture->getMois());
+                $bcfournisseur->setYear($facture->getYear());
+                $bcfournisseur->setDate(new \DateTime('now'));
+                $facturefournisseur->setFournisseur($facture->getMission()->getFournisseur());
+                $facturefournisseur->setNbjours($facture->getNbjour() + $nb_total_jrs);
+                $bcfournisseur->setNbjours($facture->getNbjour() + $nb_total_jrs);
+
+                $facturefournisseur->setMois($facture->getMois());
+                $facturefournisseur->setYear($facture->getYear());
+                $facturefournisseur->setDate(new \DateTime('now'));
+                $facturefournisseur->setBcfournisseur($bcfournisseur);
+
+
+                $em->persist($bcfournisseur);
+                $em->flush();
+                $em->persist($facturefournisseur);
+                $em->flush();
+                $bcfournisseur->setVenteHT($facture->getTotalHT());
+//            $facturefournisseur->setVenteHT($facture->getTotalHT());
+                $bcfournisseur->setAchatHT($bcfournisseur->getAchatHT() + $totalHT_hs_fournisseur);
+                $bcfournisseur->setAchatTTC($bcfournisseur->getAchatTTC() + $totalTTC_hs_fournisseur);
+                $facturefournisseur->setAchatHT($facturefournisseur->getAchatHT() + $totalHT_hs_fournisseur);
+                $bcfournisseur->setAchatTTC($facturefournisseur->getAchatTTC() + $totalTTC_hs_fournisseur);
+                $facturefournisseur->setAchatTTC(($facturefournisseur->getAchatHT() + $totalTTC_hs_fournisseur) * 1.2);
+                $bcfournisseur->setTaxe($bcfournisseur->getAchatTTC() - $bcfournisseur->getAchatHT());
+                $facturefournisseur->setTaxe($facturefournisseur->getAchatTTC() - $facturefournisseur->getAchatHT());
+                $em->persist($bcfournisseur);
+                $em->flush();
+                $em->persist($facturefournisseur);
+                $em->flush();
+                $production = new Production();
+                $production->setConsultant($mission->getConsultant());
+                $production->setClient($mission->getClient());
+                $production->setNbjour($facturefournisseur->getNbjours());
+                $production->setAchatHT($bcfournisseur->getAchatHT());
+                $production->setAchatTTC($bcfournisseur->getAchatHT() * 1.2);
+                $production->setFournisseur($bcfournisseur->getFournisseur());
+                $production->setVenteHT($facture->getTotalHT());
+                $production->setVenteTTC($facture->getTotalHT() * 1.2);
+                $production->setMission($mission);
+
+                $production->setMois($facture->getMois());
+                $production->setTjmVente($mission->getPrixVente());
+                $production->setTjmAchat($mission->getPrixAchat());
+                $production->setYear($facture->getYear());
+                $production->setFacture($facture);
+
+                $em->persist($production);
+                $em->flush();
+                $facture->setEtat('non payé');
+                $em->persist($facture);
+                $em->flush();
             }
 
-
-            $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
-            $facture->setTotalHT($facture->getTotalHT() + $totalHT_hs);
-            $facture->setTotalTTC(($facture->getTotalHT()) * 1.2);
-
-            $bcfournisseur->setFournisseur($facture->getMission()->getFournisseur());
-//            $bcfournisseur->setNbjours($facture->getNbjour());
-            $bcfournisseur->setMois($facture->getMois());
-            $bcfournisseur->setYear($facture->getYear());
-            $bcfournisseur->setDate(new \DateTime('now'));
-            $facturefournisseur->setFournisseur($facture->getMission()->getFournisseur());
-            $facturefournisseur->setNbjours($facture->getNbjour() + $nb_total_jrs);
-            $bcfournisseur->setNbjours($facture->getNbjour() + $nb_total_jrs);
-
-            $facturefournisseur->setMois($facture->getMois());
-            $facturefournisseur->setYear($facture->getYear());
-            $facturefournisseur->setDate(new \DateTime('now'));
-            $facturefournisseur->setBcfournisseur($bcfournisseur);
-
-
-            $em->persist($bcfournisseur);
-            $em->flush();
-            $em->persist($facturefournisseur);
-            $em->flush();
-            $bcfournisseur->setVenteHT($facture->getTotalHT());
-//            $facturefournisseur->setVenteHT($facture->getTotalHT());
-            $bcfournisseur->setAchatHT($bcfournisseur->getAchatHT() + $totalHT_hs_fournisseur);
-            $bcfournisseur->setAchatTTC($bcfournisseur->getAchatTTC() + $totalTTC_hs_fournisseur);
-            $facturefournisseur->setAchatHT($facturefournisseur->getAchatHT() + $totalHT_hs_fournisseur);
-            $bcfournisseur->setAchatTTC($facturefournisseur->getAchatTTC() + $totalTTC_hs_fournisseur);
-            $facturefournisseur->setAchatTTC(($facturefournisseur->getAchatHT() + $totalTTC_hs_fournisseur) * 1.2);
-            $bcfournisseur->setTaxe($bcfournisseur->getAchatTTC() - $bcfournisseur->getAchatHT());
-            $facturefournisseur->setTaxe($facturefournisseur->getAchatTTC() - $facturefournisseur->getAchatHT());
-            $em->persist($bcfournisseur);
-            $em->flush();
-            $em->persist($facturefournisseur);
-            $em->flush();
-            $production = new Production();
-            $production->setConsultant($mission->getConsultant());
-            $production->setClient($mission->getClient());
-            $production->setNbjour($facturefournisseur->getNbjours());
-            $production->setAchatHT($bcfournisseur->getAchatHT());
-            $production->setAchatTTC($bcfournisseur->getAchatHT() * 1.2);
-            $production->setFournisseur($bcfournisseur->getFournisseur());
-            $production->setVenteHT($facture->getTotalHT());
-            $production->setVenteTTC($facture->getTotalHT() * 1.2);
-            $production->setMission($mission);
-
-            $production->setMois($facture->getMois());
-            $production->setTjmVente($mission->getPrixVente());
-            $production->setTjmAchat($mission->getPrixAchat());
-            $production->setYear($facture->getYear());
-            $production->setFacture($facture);
-
-            $em->persist($production);
-            $em->flush();
-            $facture->setEtat('non payé');
-            $em->persist($facture);
-            $em->flush();
 //            dump($facture, $bcfournisseur, $facturefournisseur, $production);
 
             return $this->redirectToRoute('facture_show', array('id' => $facture->getId()));
@@ -1404,7 +1414,8 @@ class FactureController extends Controller
             // 'delete_form' => $deleteForm->createView(),
         ));
     }
-/**
+
+    /**
      * Finds and displays a facture entity.
      *
      * @Route("/{id}/print_hs", name="facture_print_hs")
@@ -1706,6 +1717,8 @@ class FactureController extends Controller
      */
     public function printFactureProjetAction(Facture $facture)
     {
+
+//        dump($facture);
         $em = $this->getDoctrine()->getManager();
         $fiche = $em->getRepository('AppBundle:Fiche')->find(1);
         function mois_convert($m)
@@ -1879,7 +1892,8 @@ class FactureController extends Controller
                 }
             }
         }
-       // AND l.nbjour>0 AND l.totalHt>0
+
+        // AND l.nbjour>0 AND l.totalHt>0
         // orange
         if ($facture->getProjet()->getClient()->getNom() == 'MEDI TELECOM') {
             $items = $em->createQuery('
@@ -1890,8 +1904,7 @@ class FactureController extends Controller
           AND l.projetconsultant = p.id
          
           GROUP BY p.job
-          
-          ')->setParameter('facture', $facture)->execute();
+         ')->setParameter('facture', $facture)->execute();
 
 //  dump($items);
 //            die();
@@ -1962,7 +1975,7 @@ class FactureController extends Controller
      */
     public function editHsupAction(Request $request, Facture $facture)
     {
-        if ($facture->getId() << 140){
+        if ($facture->getId() << 140) {
 
             return $this->redirectToRoute('facture_index');
         }
@@ -2015,7 +2028,7 @@ class FactureController extends Controller
 
                     ]);
                     $heure_bc = $em->getRepository('AppBundle:FactureHsup')->findOneBy([
-                    //    'facture' => $facture,
+                        //    'facture' => $facture,
                         'heuresup' => $heuresup,
                         'bcfournisseur' => $bcfournisseur,
 
@@ -2048,7 +2061,7 @@ class FactureController extends Controller
 
 
             $facture = $em->getRepository('AppBundle:Facture')->find($facture->getId());
-            $facture->setTotalHT($nbjours*$facture->getMission()->getPrixVente() + $totalHT_hs);
+            $facture->setTotalHT($nbjours * $facture->getMission()->getPrixVente() + $totalHT_hs);
             $facture->setTotalTTC(($facture->getTotalHT()) * 1.2);
 
             $bcfournisseur->setFournisseur($facture->getMission()->getFournisseur());
@@ -2072,20 +2085,20 @@ class FactureController extends Controller
             $em->flush();
             $bcfournisseur->setVenteHT($facture->getTotalHT());
 //            $facturefournisseur->setVenteHT($facture->getTotalHT());
-            $bcfournisseur->setAchatHT($nbjours*$facture->getMission()->getPrixAchat() + $totalHT_hs_fournisseur);
-            $bcfournisseur->setAchatTTC($bcfournisseur->getAchatHT()*1.2);
+            $bcfournisseur->setAchatHT($nbjours * $facture->getMission()->getPrixAchat() + $totalHT_hs_fournisseur);
+            $bcfournisseur->setAchatTTC($bcfournisseur->getAchatHT() * 1.2);
 
-            $facturefournisseur->setAchatHT($nbjours*$facture->getMission()->getPrixVente() + $totalHT_hs_fournisseur);
-            $facturefournisseur->setAchatTTC($facturefournisseur->getAchatHT()*1.2);
+            $facturefournisseur->setAchatHT($nbjours * $facture->getMission()->getPrixVente() + $totalHT_hs_fournisseur);
+            $facturefournisseur->setAchatTTC($facturefournisseur->getAchatHT() * 1.2);
 //            $facturefournisseur->setAchatTTC(($facturefournisseur->getAchatHT() + $totalTTC_hs_fournisseur) * 1.2);
-            $bcfournisseur->setTaxe($bcfournisseur->getAchatHT()*0.2);
-            $facturefournisseur->setTaxe($bcfournisseur->getAchatHT()*0.2);
+            $bcfournisseur->setTaxe($bcfournisseur->getAchatHT() * 0.2);
+            $facturefournisseur->setTaxe($bcfournisseur->getAchatHT() * 0.2);
 //            $facturefournisseur->setTaxe($facturefournisseur->getAchatTTC() - $facturefournisseur->getAchatHT());
             $em->persist($bcfournisseur);
             $em->flush();
             $em->persist($facturefournisseur);
             $em->flush();
-            if($facture->getProductions()->count() != 0){
+            if ($facture->getProductions()->count() != 0) {
 
                 $production = $facture->getProductions()->first();
                 $production->setConsultant($mission->getConsultant());
@@ -2129,7 +2142,7 @@ class FactureController extends Controller
      */
     public function editAction(Request $request, Facture $facture)
     {
-        if ($facture->getId() << 140){
+        if ($facture->getId() << 140) {
 
             return $this->redirectToRoute('facture_index');
         }
@@ -2170,8 +2183,6 @@ class FactureController extends Controller
             }
 
 
-
-
             if ($mission->getDevise() == 'DH') {
 
                 if ($mission->getType() == 'journaliere') {
@@ -2198,6 +2209,7 @@ class FactureController extends Controller
 
                         $bcclient->setNbJrsR($bcclient->getNbJrsR() - $facture->getNbjour());
                         $em->persist($bcclient);
+//                        dump($facture);die();
 
                     }
                 } else {
@@ -2221,19 +2233,21 @@ class FactureController extends Controller
 
 
             } else {
+//                dump($facture);die();
+
                 if ($mission->getType() == 'journaliere') {
 
                     $totalHT = $prixVenteHT * $facture->getNbjour();
                     $achatHT = $prixAchatHT * $facture->getNbjour();
                     $TVA = 0;
                     $TVA_Achat = 0;
-                    $bcfournisseur->setAchatHT($achatHT);
-                    $facturefournisseur->setAchatHT($achatHT);
-                    $bcfournisseur->setTaxe($TVA_Achat);
-                    $facturefournisseur->setTaxe($TVA_Achat);
-                    $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
-                    $bcfournisseur->setVenteHT($totalHT);
-                    $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                    /* $bcfournisseur->setAchatHT($achatHT);
+                     $facturefournisseur->setAchatHT($achatHT);
+                     $bcfournisseur->setTaxe($TVA_Achat);
+                     $facturefournisseur->setTaxe($TVA_Achat);
+                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
+                     $bcfournisseur->setVenteHT($totalHT);
+                     $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);*/
                     $facture->setTotalHT($totalHT);
                     $facture->setTaxe($TVA);
                     $facture->setTotalTTC($TVA + $totalHT);
@@ -2245,24 +2259,26 @@ class FactureController extends Controller
                         $em->persist($bcclient);
                         $em->flush();
                     }
+//                    dump($facture);die();
+
                 } else {
                     $totalHT = $prixVenteHT;
                     $achatHT = $prixAchatHT;
                     $TVA_Achat = 0;
-                    $bcfournisseur->setAchatHT($achatHT);
+                    /*$bcfournisseur->setAchatHT($achatHT);
                     $facturefournisseur->setAchatHT($achatHT);
                     $bcfournisseur->setTaxe($TVA_Achat);
                     $facturefournisseur->setTaxe($TVA_Achat);
                     $bcfournisseur->setAchatTTC($achatHT + $TVA_Achat);
                     $bcfournisseur->setVenteHT($totalHT);
                     $facturefournisseur->setAchatTTC($achatHT + $TVA_Achat);
-                    $facturefournisseur->setBcfournisseur($bcfournisseur);
+                    $facturefournisseur->setBcfournisseur($bcfournisseur);*/
                     $TVA = 0;
                     $facture->setTaxe($TVA);
 
                     $facture->setTotalHT($totalHT);
                     $facture->setTotalTTC($TVA + $totalHT);
-
+//                    dump($facture);die();
                 }
 
 
@@ -2315,7 +2331,7 @@ class FactureController extends Controller
      */
     public function editProjetOrangeAction(Request $request, Facture $facture)
     {
-        if ($facture->getId() << 140){
+        if ($facture->getId() << 140) {
 
             return $this->redirectToRoute('facture_index');
         }
@@ -2423,8 +2439,8 @@ class FactureController extends Controller
 
             $this->getDoctrine()->getManager()->flush();
 
-          /*  dump($facture, $facture->getLignes(), $totalHt, $bcfournisseurs);
-            die();*/
+            /*  dump($facture, $facture->getLignes(), $totalHt, $bcfournisseurs);
+              die();*/
 
             return $this->redirectToRoute('facture_edit', array('id' => $facture->getId()));
         }

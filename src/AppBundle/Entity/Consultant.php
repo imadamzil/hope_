@@ -137,7 +137,10 @@ class Consultant
      */
     private $createdAt;
 
-
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", mappedBy="consultant")
+     */
+    protected $user;
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
@@ -844,5 +847,29 @@ class Consultant
     public function getProductions()
     {
         return $this->productions;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Consultant
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

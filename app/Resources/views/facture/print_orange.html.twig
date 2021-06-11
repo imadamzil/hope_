@@ -273,20 +273,26 @@
             {% else %}
                 <span class="YYY">Mois :
                 </span><br>
-               {{ mois }}-{{ facture.year }}
+                {{ mois }}-{{ facture.year }}
             {% endif %}
-            {% if items[0]['ligne'].bcclient is not null %}
-                <p>
+            {% set break = false %}
+
+            {% for item in items %}
+                {% if item['ligne'].bcclient is not null and break == false %}
+                    <p>
                 <span class="YYY">Bon de commande:
                 </span><br>
 
-                    <strong>
-                        {{ items[0]['ligne'].bcclient.code }}
-                    </strong>
+                        <strong>
+                            {{ item['ligne'].bcclient.code }}
+                        </strong>
 
 
-                </p>
-            {% endif %}
+                    </p>
+                    {% set break = true %}
+                {% endif %}
+
+            {% endfor %}
 
 
         </td>
