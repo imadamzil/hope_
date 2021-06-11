@@ -1902,7 +1902,6 @@ class FactureController extends Controller
           JOIN AppBundle:Projetconsultant p
           WHERE l.facture = :facture
           AND l.projetconsultant = p.id
-         
           GROUP BY p.job
          ')->setParameter('facture', $facture)->execute();
 
