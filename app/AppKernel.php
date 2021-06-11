@@ -22,7 +22,7 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle(),
             new CMEN\GoogleChartsBundle\CMENGoogleChartsBundle(),
-            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
+//            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
 
         ];
 
