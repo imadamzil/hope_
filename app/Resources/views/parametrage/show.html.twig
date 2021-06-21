@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Parametrage</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ parametrage.id }}</td>
+            </tr>
+            <tr>
+                <th>Motif</th>
+                <td>{{ parametrage.motif }}</td>
+            </tr>
+            <tr>
+                <th>Valeur</th>
+                <td>{{ parametrage.valeur }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('parametrage_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('parametrage_edit', { 'id': parametrage.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

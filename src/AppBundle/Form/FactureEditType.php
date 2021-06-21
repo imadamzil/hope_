@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+
 
 class FactureEditType extends AbstractType
 {
@@ -122,7 +124,16 @@ class FactureEditType extends AbstractType
 
                 )
             ))
+            ->add('documentFile', VichFileType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'allow_file_upload'=>true,
+//                'delete_label' => 'Supprimer l\'ancien document',
+//                'download_uri' => true,
+                'label' => 'Timesheet'
+                //   'delete_label' => 'form.label.delete',
 
+            ])
         ;
     }
 

@@ -1,0 +1,68 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | Echeance {% endblock %}
+{% block menu %}
+    <a
+            href="{{ path('echeance_index') }}">Echeance</a>   {% endblock %}
+{% block menu_active %}    Détails {% endblock %}{% block content %}
+
+
+
+    <div class="col-md-10 col-md-offset-1">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">Echeance</h4>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main no-padding">
+
+                    <table class="table table-detail">
+                        <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ echeance.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ echeance.nom }}</td>
+                        </tr>
+                        <tr>
+                            <th>Min</th>
+                            <td>{{ echeance.min }}</td>
+                        </tr>
+                        <tr>
+                            <th>Max</th>
+                            <td>{{ echeance.max }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <ul>
+                        <li>
+                            <a href="{{ path('echeance_index') }}">Back to the list</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('echeance_edit', { 'id': echeance.id }) }}">Edit</a>
+                        </li>
+                        <li>
+                            {{ form_start(delete_form) }}
+                            <input type="submit" value="Delete">
+                            {{ form_end(delete_form) }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+
+
+
+

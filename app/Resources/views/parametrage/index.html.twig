@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Parametrages list</h1>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+            <a href="{{ path('parametrage_new') }}" class="btn btn-white btn-primary btn-block"><i class="fa fa-plus"></i> Ajouter un parametrage</a>
+
+        </div>
+    </div>
+    <hr>
+
+    <table class="table table-detail">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Motif</th>
+                <th>Valeur</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for parametrage in parametrages %}
+            <tr>
+                <td><a href="{{ path('parametrage_show', { 'id': parametrage.id }) }}">{{ parametrage.id }}</a></td>
+                <td>{{ parametrage.motif }}</td>
+                <td>{{ parametrage.valeur }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('parametrage_show', { 'id': parametrage.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('parametrage_edit', { 'id': parametrage.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}

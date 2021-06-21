@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
+{% block title %} Hope3k | Compte bancaire {% endblock %}{% block menu %}  <a href="{{ path('comptebancaire_index') }}">Compte bancaire</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+
     <h1>Liste des Compte bancaires</h1>
     <div class="row">
         <div class="col-md-3 col-md-offset-9">

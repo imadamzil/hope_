@@ -59,6 +59,37 @@ class Consultant
      * @ORM\Column(name="tjm", type="string", length=255, nullable=true)
      */
     private $tjm;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="echeance", type="string", length=255, nullable=true)
+     */
+    private $marge;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="anciennte", type="integer", nullable=true)
+     */
+    private $anciennte;
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="poids", type="float", nullable=true)
+     */
+    private $poids;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="auto_virement", type="boolean", nullable=true)
+     */
+    private $autoVirement;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="nature_mission", type="boolean", nullable=true)
+     */
+    private $natureMission;
     /**
      * @var string
      *
@@ -86,7 +117,11 @@ class Consultant
      * @ORM\Column(name="adresse", type="text",nullable=true)
      */
     private $adresse;
-
+    /**
+     * @ORM\ManyToOne(targetEntity="Echeance", inversedBy="consultants")
+     * @ORM\JoinColumn(name="id_echeance", referencedColumnName="id")
+     */
+    private $echeance;
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Mission", mappedBy="consultant",cascade={"persist", "remove"})
      */
@@ -101,7 +136,7 @@ class Consultant
      */
     private $factures;
 
- /**
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Bcclient", mappedBy="consultant",cascade={"persist", "remove"})
      */
     private $bcclients;
@@ -192,6 +227,7 @@ class Consultant
     {
         return $this->cvName;
     }
+
     /**
      * Get id
      *
@@ -369,6 +405,7 @@ class Consultant
     {
         return $this->adresse;
     }
+
     /**
      * Constructor
      */
@@ -376,6 +413,8 @@ class Consultant
     {
         $this->mission = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->autoVirement = false;
+        $this->natureMission = false;
     }
 
     /**
@@ -871,5 +910,162 @@ class Consultant
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set marge
+     *
+     * @param string $marge
+     *
+     * @return Consultant
+     */
+    public function setMarge($marge)
+    {
+        $this->marge = $marge;
+
+        return $this;
+    }
+
+    /**
+     * Get marge
+     *
+     * @return string
+     */
+    public function getMarge()
+    {
+        return $this->marge;
+    }
+
+    /**
+     * Set echeance
+     *
+     * @param \AppBundle\Entity\Echeance $echeance
+     *
+     * @return Consultant
+     */
+    public function setEcheance(\AppBundle\Entity\Echeance $echeance = null)
+    {
+        $this->echeance = $echeance;
+
+        return $this;
+    }
+
+    /**
+     * Get echeance
+     *
+     * @return \AppBundle\Entity\Echeance
+     */
+    public function getEcheance()
+    {
+        return $this->echeance;
+    }
+
+    /**
+     * Set anciennte
+     *
+     * @param integer $anciennte
+     *
+     * @return Consultant
+     */
+    public function setAnciennte($anciennte)
+    {
+        $this->anciennte = $anciennte;
+
+        return $this;
+    }
+
+    /**
+     * Get anciennte
+     *
+     * @return integer
+     */
+    public function getAnciennte()
+    {
+        return $this->anciennte;
+    }
+
+    /**
+     * Set autoVirement
+     *
+     * @param boolean $autoVirement
+     *
+     * @return Consultant
+     */
+    public function setAutoVirement($autoVirement)
+    {
+        $this->autoVirement = $autoVirement;
+
+        return $this;
+    }
+
+    /**
+     * Get autoVirement
+     *
+     * @return boolean
+     */
+    public function getAutoVirement()
+    {
+        return $this->autoVirement;
+    }
+
+    /**
+     * Set natureMission
+     *
+     * @param boolean $natureMission
+     *
+     * @return Consultant
+     */
+    public function setNatureMission($natureMission)
+    {
+        $this->natureMission = $natureMission;
+
+        return $this;
+    }
+
+    /**
+     * Get natureMission
+     *
+     * @return boolean
+     */
+    public function getNatureMission()
+    {
+        return $this->natureMission;
+    }
+
+    /**
+     * Set poids
+     *
+     * @param float $poids
+     *
+     * @return Consultant
+     */
+    public function setPoids($poids)
+    {
+        $this->poids = $poids;
+
+        return $this;
+    }
+
+    /**
+     * Get poids
+     *
+     * @return float
+     */
+    public function getPoids()
+    {
+        return $this->poids;
+    }
+
+    public function calculePoids()
+    {
+        $poids = null;
+        $anciente = $this->getAnciennte();
+        $this->getNatureMission() ? $natureMission = 1 : $natureMission = 0;
+        $marge = $this->getMarge();
+        $somme = $anciente + $natureMission + $marge;
+        $poids = floatval($somme);
+
+
+        return $poids;
     }
 }

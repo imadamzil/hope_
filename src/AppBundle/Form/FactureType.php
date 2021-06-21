@@ -133,7 +133,9 @@ class FactureType extends AbstractType
 
                 'by_reference' => false,
 
-            ]);
+            ])
+
+        ;
     }
 
     /**

@@ -737,6 +737,22 @@
 
                         <b class="arrow"></b>
                     </li>
+                    <li class="">
+                        <a href="{{ path('parametrage_new') }}">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Paramétrage
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('echeance_index') }}">
+                            <i class="menu-icon fa fa-calendar"></i>
+                            Echeance
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
                     {% if  is_granted('ROLE_ADMIN') %}
                         <li class="">
                             <a href="{{ path('execute_commande') }}">

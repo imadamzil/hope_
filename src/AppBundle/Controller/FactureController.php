@@ -467,7 +467,7 @@ class FactureController extends Controller
                     $heure->setFacture($facture);
                     $heuresup = $heure->getHeuresup();
                     $heure->setTotalHT($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $facture->getMission()->getVente());
-                    $heure->setTotalTTC(($nb_jour_sup * ($heuresup->getPourcentage() / 100 + 1) * $facture->getMission()->getVente()) * 1.2);
+                    $heure->setTotalTTC($heure->getTotalHT()* 1.2);
 
                     $em->persist($heure);
                     $em->flush();
@@ -746,7 +746,7 @@ class FactureController extends Controller
                 $bcfournisseur->setAchatTTC($bcfournisseur->getAchatTTC() + $totalTTC_hs_fournisseur);
                 $facturefournisseur->setAchatHT($facturefournisseur->getAchatHT() + $totalHT_hs_fournisseur);
                 $bcfournisseur->setAchatTTC($facturefournisseur->getAchatTTC() + $totalTTC_hs_fournisseur);
-                $facturefournisseur->setAchatTTC(($facturefournisseur->getAchatHT() + $totalTTC_hs_fournisseur) * 1.2);
+                $facturefournisseur->setAchatTTC($facturefournisseur->getAchatHT() * 1.2);
                 $bcfournisseur->setTaxe($bcfournisseur->getAchatTTC() - $bcfournisseur->getAchatHT());
                 $facturefournisseur->setTaxe($facturefournisseur->getAchatTTC() - $facturefournisseur->getAchatHT());
                 $em->persist($bcfournisseur);
@@ -2585,13 +2585,15 @@ class FactureController extends Controller
 
     /**
      *
-     * @Route("/convert_devise", name="route_to_convert_devise", options={"expose"=true})
+     * @Route("/convert/devise", name="route_to_convert_devise", options={"expose"=true})
      ** @Method({"GET","POST"})
      */
     public function convertDevise(Request $request)
     {
         $id = $request->get('id');
+//        $id = 453;
         $montant = $request->get('montant');
+//        $montant = 2000;
 
         $em = $this->getDoctrine()->getManager();
 
@@ -2600,6 +2602,61 @@ class FactureController extends Controller
         $facture->setEtat('payé');
         $em->persist($facture);
         $em->flush();
+//        dump($facture);
+//die();
+        // get taux
+        $taux_object = $em->getRepository('AppBundle:Parametrage')->findOneBy([
+
+            'motif' => 'taux_devise'
+        ]);
+
+        if ($taux_object != null) {
+
+            $taux = floatval($taux_object->getValeur());
+        } else {
+
+            $taux = 0.95;
+        }
+
+        // creation bc fournisseur & facture fournisseur
+//        $facture = new Facture();
+        $bcfournisseur = new Bcfournisseur();
+        $bcfournisseur->setMois($facture->getMois());
+        $bcfournisseur->setYear($facture->getYear());
+        $bcfournisseur->setUpdatedAt(new \DateTime());
+        $bcfournisseur->setNbjours($facture->getNbjour());
+        $bcfournisseur->setFacture($facture);
+        $bcfournisseur->setConsultant($facture->getConsultant());
+        $bcfournisseur->setFournisseur($facture->getMission()->getFournisseur());
+        $bcfournisseur->setDate($facture->getDate());
+        $bcfournisseur->setMission($facture->getMission());
+        $bcfournisseur->setVenteHT($facture->getTotalDH());
+        $bcfournisseur->setAchatTTC($facture->getTotalDH() * $taux);
+        $bcfournisseur->setAchatHT($bcfournisseur->getAchatTTC() / 1.2);
+        $bcfournisseur->setTaxe($bcfournisseur->getAchatHT() * 0.2);
+
+
+        $em->persist($bcfournisseur);
+        $em->flush();
+        $facturefournisseur = new Facturefournisseur();
+        $facturefournisseur->setBcfournisseur($bcfournisseur);
+        $facturefournisseur->setMois($facture->getMois());
+        $facturefournisseur->setYear($facture->getYear());
+        $facturefournisseur->setUpdatedAt(new \DateTime());
+        $facturefournisseur->setNbjours($facture->getNbjour());
+        $facturefournisseur->setFacture($facture);
+        $facturefournisseur->setConsultant($facture->getConsultant());
+        $facturefournisseur->setFournisseur($facture->getMission()->getFournisseur());
+        $facturefournisseur->setDate($facture->getDate());
+        $facturefournisseur->setMission($facture->getMission());
+//        $facturefournisseur->setVenteHT($facture->getTotalDH());
+        $facturefournisseur->setAchatTTC($facture->getTotalDH() * $taux);
+        $facturefournisseur->setAchatHT($facturefournisseur->getAchatTTC() / 1.2);
+        $facturefournisseur->setTaxe($facturefournisseur->getAchatHT() * 0.2);
+        $em->persist($facturefournisseur);
+//        dump($facture,$bcfournisseur,$facturefournisseur);die();
+        $em->flush();
+
         $response = json_encode(array('data' => 'ok'));
 
         return new Response($response, 200, array(

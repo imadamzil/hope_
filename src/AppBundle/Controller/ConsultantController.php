@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Consultant;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Consultant controller.
@@ -25,10 +27,30 @@ class ConsultantController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $consultants = $em->getRepository('AppBundle:Consultant')->findAll();
-//dump($consultants);
+        dump($consultants[0]->calculePoids());
         return $this->render('consultant/index.html.twig', array(
             'consultants' => $consultants,
         ));
+    }
+
+    /**
+     * Lists all consultant entities.
+     *
+     * @Route("/update/poids", name="consultant_update_poids")
+     * @Method("GET")
+     */
+    public function updateAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $consultants = $em->getRepository('AppBundle:Consultant')->findAll();
+        foreach ($consultants as $consultant) {
+            $consultant->setPoids($consultant->calculePoids());
+            $em->persist($consultant);
+            $em->flush();
+        }
+//        dump($consultants[0]->calculePoids());
+        return $this->redirectToRoute('consultant_index');
     }
 
     /**
@@ -119,6 +141,24 @@ class ConsultantController extends Controller
     }
 
     /**
+     * Deletes a consultant entity.
+     *
+     * @Route("/{id}/setAutoVirement", name="make_autovirement_true_or_false",options={"expose"=true}))
+     * @Method({"GET", "POST"})
+     */
+    public function autovirementAction(Request $request, Consultant $consultant)
+    {
+
+        $consultant->setAutoVirement(!$consultant->getAutoVirement());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($consultant);
+        $em->flush();
+
+
+        return new JsonResponse('ok');
+    }
+
+    /**
      * Creates a form to delete a consultant entity.
      *
      * @param Consultant $consultant The consultant entity
@@ -130,7 +170,6 @@ class ConsultantController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('consultant_delete', array('id' => $consultant->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

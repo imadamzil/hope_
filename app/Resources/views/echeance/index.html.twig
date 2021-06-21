@@ -1,0 +1,53 @@
+
+{% extends 'base.html.twig' %}
+{% block title %} Hope3k | Echeance {% endblock %}{% block menu %}  <a href="{{ path('echeance_index') }}">Echeance</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+
+
+    <h1>Echeance list</h1>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+            <a href="{{ path('echeance_new') }}" class="btn btn-white btn-primary btn-block"><i class="fa fa-plus"></i> Ajouter une écheance</a>
+
+        </div>
+    </div>
+    <hr>
+
+    <table class="table table-detail">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Min</th>
+            <th>Max</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for echeance in echeances %}
+            <tr>
+                <td><a href="{{ path('echeance_show', { 'id': echeance.id }) }}">{{ echeance.id }}</a></td>
+                <td>{{ echeance.nom }}</td>
+                <td>{{ echeance.min }}</td>
+                <td>{{ echeance.max }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('echeance_show', { 'id': echeance.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('echeance_edit', { 'id': echeance.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+{% endblock %}

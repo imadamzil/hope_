@@ -14,5 +14,6 @@
 !var/SymfonyRequirements.php
 /.idea/*
 /web/backup/*
+/web/uploads/*
 
 vendor/*

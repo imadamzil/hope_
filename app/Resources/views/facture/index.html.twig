@@ -171,7 +171,6 @@
                                             </th>
 
 
-
                                             <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="">devise
                                             </th>
 
@@ -310,7 +309,6 @@
                                                 </td>
 
 
-
                                                 <td>
                                                     <div class="hidden-sm hidden-xs action-buttons">
                                                         <a class="blue"
@@ -352,7 +350,19 @@
                                                                 <i class="ace-icon fa fa-print bigger-130"></i>
                                                             </a>
                                                         {% endif %}
+                                                        {% if facture.etat !='payé' %}
 
+                                                            <a href="{{ path('facture_payer', { 'id': facture.id }) }}"
+                                                               onclick="return confirm('Etes Vous sur que cette Facture est payée ?');"
+                                                               class="tooltip-error" data-rel="tooltip"
+                                                               title="" id=""
+                                                               data-original-title="-> DH">
+																				<span class="green">
+																					<i class="ace-icon fa fa-check-square bigger-120"></i>
+																				</span>
+                                                            </a>
+
+                                                        {% endif %}
                                                         {% if is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') %}
                                                         {% if facture.projet is null and facture.etat != 'payé' %}
 
@@ -362,12 +372,12 @@
                                                                    title="modifier">
                                                                     <i class="ace-icon fa fa-pencil bigger-130"></i>
                                                                 </a>
-                                                                {% else %}
-                                                                    <a class="orange"
-                                                                       href="{{ path('facture_edit', { 'id': facture.id }) }}"
-                                                                       title="modifier">
-                                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                                    </a>
+                                                            {% else %}
+                                                                <a class="orange"
+                                                                   href="{{ path('facture_edit', { 'id': facture.id }) }}"
+                                                                   title="modifier">
+                                                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                                </a>
                                                             {% endif %}
                                                         {% else %}
                                                             {% if facture.client =='MEDI TELECOM' and facture.etat != 'payé' %}
@@ -438,19 +448,7 @@
                                                     </div>
 
                                                     {% endif %}
-                                                    {% if facture.etat !='payé' %}
 
-                                                        <a href="{{ path('facture_payer', { 'id': facture.id }) }}"
-                                                           onclick="return confirm('Etes Vous sur que cette Facture est payée ?');"
-                                                           class="tooltip-error" data-rel="tooltip"
-                                                           title="" id=""
-                                                           data-original-title="-> DH">
-																				<span class="green">
-																					<i class="ace-icon fa fa-check-square bigger-120"></i>
-																				</span>
-                                                        </a>
-
-                                                    {% endif %}
                                                     {% endif %}
 
                                                     <div class="hidden-md hidden-lg">
@@ -536,6 +534,8 @@
                 src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <script type="text/javascript">
             jQuery(function ($) {
 
@@ -559,7 +559,22 @@
 
                             console.log(response);
                             $('#my-moda' + Id).modal('hide');
-                            location.href = Routing.generate('facture_index');
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: " la montant est convertie en MAD, BC fournisseur & facture fournisseur sont crées avec succés",
+                                icon: 'succes',
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+
+                                confirmButtonText: 'OK !'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+
+                                    location.href = Routing.generate('facture_index');
+                                }
+                            })
+
+
                         },
                         error: function (error) {
 
@@ -610,8 +625,7 @@
                             bAutoWidth: false,
                             "aoColumns": [
                                 {"bSortable": false},
-                                null, null, null, null, null, null, null, null, null, null,
-                                {"bSortable": false}
+                                null, null, null, null, null, null, null, null, null, null, null,
                             ],
                             "aaSorting": [],
 

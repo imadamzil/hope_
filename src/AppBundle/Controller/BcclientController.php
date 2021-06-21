@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Bcclient;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Bcclient controller.
@@ -37,11 +38,12 @@ class BcclientController extends Controller
 //dump($bcclients,$alerts);
         return $this->render('bcclient/index.html.twig', array(
             'bcclients' => $bcclients,
-            'count'=>$count,
+            'count' => $count,
 
         ));
     }
- /**
+
+    /**
      * Lists all bcclient entities.
      *
      * @Route("/bcclient_alerts", name="bcclient_alert")
@@ -172,7 +174,6 @@ class BcclientController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('bcclient_delete', array('id' => $bcclient->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

@@ -1,0 +1,46 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %} Hope3k | Echeance {% endblock %}
+{% block menu %}
+    <a
+            href="{{ path('echeance_index') }}">Echeance</a>   {% endblock %}
+{% block menu_active %}    Modifier {% endblock %}{% block content %}
+
+
+
+    <div class="col-md-10 col-md-offset-1">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">Echeance</h4>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main no-padding">
+
+                    <div class="row">
+
+                        {{ form_start(edit_form) }}
+                        {{ form_widget(edit_form) }}
+                        <input type="submit" value="Edit" />
+                        {{ form_end(edit_form) }}
+
+                        <ul>
+                            <li>
+                                <a href="{{ path('echeance_index') }}">Back to the list</a>
+                            </li>
+                            <li>
+                                {{ form_start(delete_form) }}
+                                <input type="submit" value="Delete">
+                                {{ form_end(delete_form) }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

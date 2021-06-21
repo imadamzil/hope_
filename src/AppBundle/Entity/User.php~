@@ -106,4 +106,28 @@ class User extends BaseUser
     {
         return $this->facturesmodifies;
     }
+
+    /**
+     * Set consultant
+     *
+     * @param \AppBundle\Entity\Consultant $consultant
+     *
+     * @return User
+     */
+    public function setConsultant(\AppBundle\Entity\Consultant $consultant = null)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \AppBundle\Entity\Consultant
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
+    }
 }

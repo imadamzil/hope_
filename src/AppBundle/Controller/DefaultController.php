@@ -12,6 +12,7 @@ use AppBundle\Entity\Fournisseur;
 use AppBundle\Entity\Job;
 use AppBundle\Entity\Mission;
 use DateTime;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\AreaChart;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Histogram;
@@ -529,56 +530,63 @@ class DefaultController extends Controller
      */
     public function migrationClient()
     {
+        $host = '41.77.112.55';
+        $port = '21';
+        $timeout = 5000;
+        $user = 'hopeknet';
+        $pass = 'AcQB9?x6ORzB';
+        $dest_file = 'mail/fs.sql';
+        $source_file = 'C:\wamp64\www\hope3k\web\backup\20_05_2021_10_29_20.sql';
 
+        /*  $ftp = ftp_connect($host, $port);
+          ftp_login($ftp, $user, $pass);
+  //        dump(ftp_login($ftp, $user, $pass));
+          $ret = ftp_put($ftp, $dest_file, $source_file, FTP_BINARY, FTP_AUTORESUME);
+  //dump($ret);
+          while (FTP_MOREDATA == $ret) {
+              // display progress bar, or something
+              $ret = ftp_nb_continue($ftp);
+          }*/
 
-        $em = $this->getDoctrine()->getManager();
+//      all done :-)
 
-        ini_set('memory_limit', '1024M');
-        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\client.xlsx';
-        $spreadsheet = IOFactory::load($inputFileName);
+//      Mise en place d'une connexion basique
+        $conn_id = ftp_connect($host);
 
-        set_time_limit(10000); //
-        ini_set('memory_limit', '1024M');
+//      Identification avec un nom d'utilisateur et un mot de passe
+        $login_result = ftp_login($conn_id, $user, $pass);
+        ftp_pasv($conn_id, true);
+//      Vérification de la connexion
+        if ((!$conn_id) || (!$login_result)) {
+            echo "La connexion FTP a échoué !<br>";
+            echo "Tentative de connexion au serveur $host pour l'utilisateur $user";
+            exit;
+        } else {
+            echo "Connexion au serveur $host, pour l'utilisateur $user";
+        }
+        /*
+                // Chargement d'un fichier
+                 $upload = ftp_put($conn_id, $dest_file, $source_file, FTP_BINARY);
 
+                // Vérification du status du chargement.
+                if (!$upload) {
+                   echo "Le chargement FTP a échoué!";
+                }  else {
+                   echo "Chargement de $source_file vers $host en tant que $dest_file";
+                }*/
+        $file = "mail/fs.sql";
 
-        $sheetData = $spreadsheet->getActiveSheet()->toArray();
-//        dump($sheetData);
-
-        foreach ($sheetData as $row) {
-
-            if ($row[0] == 'id') {
-
-
-            } else {
-                $id = intval($row[0]);
-                $nom = $row[1];
-                $tel = $row[2];
-                $fax = $row[3];
-                $email = $row[4];
-                $adresse = $row[5];
-                $contrat_cadre = $row[6];
-
-                $ice = $row[9];
-
-                $echeance = $row[10];
-                $client = new Client();
-                $client->setNom($nom);
-                $client->setTel($tel);
-                $client->setFax($fax);
-                $client->setEmail($email);
-                $client->setAdresse($adresse);
-                $client->setContratCadre($contrat_cadre);
-                $client->setIce($ice);
-                $client->setEcheance($echeance);
-                $em->persist($client);
-                $em->flush();
-
-
-            }
-
+        // try to delete file
+        if (ftp_delete($conn_id, $file)) {
+            echo "$file deleted";
+        } else {
+            echo "Could not delete $file";
         }
 
-        return $this->render('production.html.twig', array());
+        // Fermeture du flux FTP
+        ftp_close($conn_id);
+
+        return new Response('ok');
     }
 
     /**
@@ -677,11 +685,64 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/commande", name="commande")
+     * @Route("/backup_remote", name="bd_backup_remote")
+     */
+    public function executeBackupDbforRemoteAppAction()
+    {
+        $db = $this->container->getParameter('database_name');
+        $user = $this->container->getParameter('database_user');
+        $tables = ' fos_user mission fournisseur facture_fournisseur';
+        $path = $this->get('kernel')->getRootDir() . '/../web/backup/';
+//        $files = scandir($path, SCANDIR_SORT_ASCENDING);
+
+
+        $newest_file = array_filter(scandir($path, SCANDIR_SORT_ASCENDING), function ($item) {
+            $path = $this->get('kernel')->getRootDir() . '/../web/backup/';
+
+            $t = $path . $item;
+
+            return !is_dir($t);
+        });
+        dump($newest_file[2]);
+        die();
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        $date = new DateTime('now');
+        $date_string = $date->format('d_m_Y_H_i_s');
+        $fileName = $date_string . '.sql';
+
+        $command = 'mysqldump --user=' . $user . ' ' . $db . $tables . ' >' . $path . $fileName;
+//        dump($command);
+//        die();
+        $process = new Process($command);
+        $pathtomysql = 'C:\wamp64\bin\mysql\mysql5.7.21\bin';
+
+        file_exists($pathtomysql) ? true : $pathtomysql = 'C:\wamp\bin\mysql\mysql5.6.17\bin';
+        $process->setWorkingDirectory($pathtomysql);
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+        echo $process->getOutput();
+
+        return new Response('success');
+    }
+
+    /**
+     * @Route("/test", name="commande")
      */
     public function commandeAction()
     {
-        $res = 'ok';
+        $em = $this->getDoctrine()->getManager();
+        $vir = $em->getRepository('AppBundle:Virement')->findOneBy([
+
+            'etat' => 'en attente'
+        ]);
+
+        dump($vir->getFacturefournisseur()->getBcfournisseur()->getFacture()->getTotalHT());
+        die();
         return new Response($res);
     }
 
@@ -1125,5 +1186,174 @@ class DefaultController extends Controller
             'output' => $output
 
         ]);
+
+
+    }
+
+
+    public function pushDB($dest_file, $source_file)
+    {
+        $host = '41.77.112.55';
+        $port = '21';
+        $timeout = 5000;
+        $user = 'hopeknet';
+        $pass = 'AcQB9?x6ORzB';
+//        $dest_file = 'mail/fs.sql';
+//        $source_file = 'C:\wamp64\www\hope3k\web\backup\20_05_2021_10_29_20.sql';
+
+        /*  $ftp = ftp_connect($host, $port);
+          ftp_login($ftp, $user, $pass);
+  //        dump(ftp_login($ftp, $user, $pass));
+          $ret = ftp_put($ftp, $dest_file, $source_file, FTP_BINARY, FTP_AUTORESUME);
+  //dump($ret);
+          while (FTP_MOREDATA == $ret) {
+              // display progress bar, or something
+              $ret = ftp_nb_continue($ftp);
+          }*/
+
+//      all done :-)
+//      Mise en place d'une connexion basique
+        $conn_id = ftp_connect($host);
+
+//      Identification avec un nom d'utilisateur et un mot de passe
+        $login_result = ftp_login($conn_id, $user, $pass);
+        ftp_pasv($conn_id, true);
+//      Vérification de la connexion
+        if ((!$conn_id) || (!$login_result)) {
+            echo "La connexion FTP a échoué !<br>";
+            echo "Tentative de connexion au serveur $host pour l'utilisateur $user";
+            exit;
+        } else {
+            echo "Connexion au serveur $host, pour l'utilisateur $user";
+        }
+
+        //1- try to delete file
+        if (ftp_delete($conn_id, $source_file)) {
+            echo "$source_file deleted";
+        } else {
+            echo "Could not delete $source_file";
+        }
+        // 2- Chargement d'un fichier
+        $upload = ftp_put($conn_id, $dest_file, $source_file, FTP_BINARY);
+
+        //3- Vérification du status du chargement.
+        if (!$upload) {
+            echo "Le chargement FTP a échoué!";
+        } else {
+            echo "Chargement de $source_file vers $host en tant que $dest_file";
+        }
+
+
+        // Fermeture du flux FTP
+        ftp_close($conn_id);
+
+        return true;
+
+    }
+
+    /**
+     * @Route("/test/api", name="test_api")
+     */
+    public function TestApi()
+    {
+
+
+        $this->call_API();
+
+        die();
+        return new Response($token);
+    }
+
+    public function getTokenFromAPi()
+    {
+        $postRequest = array(
+            'username' => 'admin',
+            'password' => 'admin'
+        );
+        $url = 'http://localhost/prod_mobile/web/app_dev.php/api/login_check';
+        $cURLConnection = curl_init($url);
+        curl_setopt($cURLConnection, CURLOPT_POSTFIELDS, $postRequest);
+        curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
+
+        $apiResponse = curl_exec($cURLConnection);
+        $httpcode = curl_getinfo($cURLConnection, CURLINFO_HTTP_CODE);
+
+
+        curl_close($cURLConnection);
+
+// $apiResponse - available data from the API request
+        $jsonArrayResponse = json_decode($apiResponse);
+        if ($httpcode == 200) {
+
+            $token = $jsonArrayResponse->token;
+        } else {
+
+            $token = null;
+        }
+        return $token;
+    }
+
+    public function call_API()
+    {
+//The URL that accepts the file upload.
+        $url = 'http://localhost/prod_mobile/web/app_dev.php/api/test_api';
+
+//The name of the field for the uploaded file.
+        $uploadFieldName = 'data';
+
+//The full path to the file that you want to upload
+        $filePath = 'C:\wamp64\www\hope3k\web\backup\11_06_2021_15_58_59.sql';
+        $authorization = "Authorization: Bearer " . $this->getTokenFromAPi();
+
+        dump($authorization);
+//Initiate cURL
+        $ch = curl_init();
+
+//Set the URL
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data', $authorization));
+
+//Set the HTTP request to POST
+        curl_setopt($ch, CURLOPT_POST, true);
+
+//Tell cURL to return the output as a string.
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+//If the function curl_file_create exists
+        if (function_exists('curl_file_create')) {
+            //Use the recommended way, creating a CURLFile object.
+            $filePath = curl_file_create($filePath);
+        } else {
+            //Otherwise, do it the old way.
+            //Get the canonicalized pathname of our file and prepend
+            //the @ character.
+            $filePath = '@' . realpath($filePath);
+            //Turn off SAFE UPLOAD so that it accepts files
+            //starting with an @
+            curl_setopt($ch, CURLOPT_SAFE_UPLOAD, false);
+        }
+
+//Setup our POST fields
+        $postFields = array(
+            $uploadFieldName => $filePath,
+//            'blahblah' => 'Another POST FIELD'
+        );
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+
+//Execute the request
+        $result = curl_exec($ch);
+
+//If an error occured, throw an exception
+//with the error message.
+        if (curl_errno($ch)) {
+
+
+            throw new Exception(curl_error($ch));
+        }
+        echo ' im here';
+//Print out the response from the page
+        echo $result;
+
     }
 }

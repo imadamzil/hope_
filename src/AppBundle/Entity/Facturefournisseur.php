@@ -32,7 +32,7 @@ class Facturefournisseur
      */
     private $achatHT;
     /**
-     * @var integer
+     * @var float
      *
      * @ORM\Column(name="nb_jours", type="float", nullable=true)
      */
