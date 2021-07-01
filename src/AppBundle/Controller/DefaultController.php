@@ -637,6 +637,7 @@ class DefaultController extends Controller
 
 //                    $consultant = new Consultant();
                     $consultant->setMarge($marge);
+                    $consultant->setAutoVirement(true);
                     $consultant->setEcheance($echeance);
                     $consultant->setClient($client);
                     $consultant->setNatureMission($natureMission);
