@@ -20661,3 +20661,15 @@ input.typeahead.scrollable ~ .tt-menu {
     align-items: center;
 
 }
+.virement-auto a{
+
+    background-color: #336595 !important;
+    color: white !important;
+    border-radius: 10px !important;
+
+
+}.virement-auto{
+
+   border: white solid 1px !important;
+
+}

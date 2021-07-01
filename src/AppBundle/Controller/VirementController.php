@@ -187,7 +187,7 @@ class VirementController extends Controller
                 'maxday' => $echeance_immediat->getMax(),
             ])->execute();
 
-            dump($virement_echeance_immediat);
+//            dump($virement_echeance_immediat);
             foreach ($virement_echeance_immediat as $value) {
 
                 $final_virement[] = [
@@ -227,7 +227,7 @@ class VirementController extends Controller
                 'maxday' => $echeance_15_30->getMax(),
             ])->execute();
 
-            dump($virement_echeance_15_30);
+//            dump($virement_echeance_15_30);
             foreach ($virement_echeance_15_30 as $value) {
 
                 $final_virement[] = [
@@ -332,7 +332,7 @@ class VirementController extends Controller
                 'maxday' => $echeance_15_30->getMax(),
             ])->execute();
 
-            dump($virement_echeance_15_30);
+//            dump($virement_echeance_15_30);
             foreach ($virement_echeance_15_30 as $value) {
 
                 $final_virement[] = [
@@ -373,7 +373,7 @@ class VirementController extends Controller
                 'maxday' => $echeance_immediat->getMax(),
             ])->execute();
 
-            dump($virement_echeance_immediat);
+//            dump($virement_echeance_immediat);
             foreach ($virement_echeance_immediat as $value) {
 
                 $final_virement[] = [
@@ -424,7 +424,7 @@ class VirementController extends Controller
 //                'minday' => $echeance_31_60->getCondition(),
                 'maxday' => $echeance_31_60->getMax(),
             ])->execute();
-            dump($virement_timesheeet);
+//            dump($virement_timesheeet);
             foreach ($virement_timesheeet as $value) {
 
                 $final_virement[] = [
@@ -470,7 +470,7 @@ class VirementController extends Controller
             ->getForm();
 
 
-        dump($virements, $final_virement);
+//        dump($virements, $final_virement);
 
         return $this->render('virement/auto_virement.html.twig', array(
             'virements' => $final_virement,
