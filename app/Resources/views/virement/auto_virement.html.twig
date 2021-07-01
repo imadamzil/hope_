@@ -1,19 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Hope3k | BC fournisseur {% endblock %}{% block menu %}  <a
-        href="{{ path('bcfournisseur_index') }}">BC
-    fournisseur</a>   {% endblock %}   {% block menu_active %}    Liste {% endblock %}{% block content1 %}
+{% block title %} Hope3k | Virement {% endblock %}
+{% block stylsheets %}
 
+    {{ parent() }}
+
+    <style>
+
+        .chosen-container-single .chosen-single {
+            width: 100px;
+        !important;
+        }
+
+
+
+    </style>
+{% endblock %}
+{% block menu %}
+    <a href="{{ path('virement_index') }}">Virement</a>   {% endblock %}
+
+{% block menu_active %}    Liste {% endblock %}
+
+{% block content %}
     <div class="col-md-12  widget-container-col ui-sortable" id="widget-container-col-1">
 
         <div class="widget-box ui-sortable-handle" id="widget-box-1">
             <div class="widget-header">
-                <h5 class="widget-title">Liste des BC fournisseur :</h5>
+                <h5 class="widget-title">Liste des Virements Automatique :</h5>
 
                 <div class="widget-toolbar">
                     <div class="widget-menu">
-                        <a href="#" data-action="settings" data-toggle="dropdown">
-                            <i class="ace-icon fa fa-bars"></i>
+                        <a href="#" data-action="settings">
+                            <i class="ace-icon fa fa-check-circle green"></i>
                         </a>
 
 
@@ -32,6 +50,7 @@
 
             <div class="widget-body">
                 <div class="widget-main">
+
                     <div class="row">
                         <div class="col-xs-12">
 
@@ -39,13 +58,37 @@
                                 <div class="pull-right tableTools-container">
                                 </div>
                             </div>
-                            <div class="table-header">
-                                BC fournisseurs : <a href="{{ path('bcfournisseur_new') }}"
-                                                     class="btn btn-white btn-default pull-right"
-                                                     style="margin-top: 2px;margin-right: 3px;">
-                                    <i class="fa fa-plus"></i>
-                                    Nouveau BC fournisseur
-                                </a>
+                            <div class="table-header flex-header">
+                                Virements :
+
+                                {% if fiche.active is null %}
+                                    --
+
+                                {% else %}
+
+
+
+                                    <div class="text-center">
+                                        <label class="text-center">
+                                            Trésorie active ?
+                                            <input id="gritter-light"
+                                                    {% if fiche.active == 1 %}
+
+                                                        checked="checked"
+
+                                                    {% endif %}
+                                                   value="{{ fiche.active }}"
+                                                   type="checkbox" data-id="{{ fiche.id }}"
+                                                   class="ace ace-switch ace-switch-5 switch">
+                                            <span class="lbl middle"></span>
+                                        </label>
+                                    </div>
+
+
+
+
+
+                                {% endif %}
 
                             </div>
 
@@ -60,27 +103,38 @@
                                         <thead style="font-weight: bold;">
                                         <tr role="row">
 
+                                            <th class="center sorting_disabled" rowspan="1" colspan="1" aria-label="
+
+
+
+
+														">
+                                                <label class="pos-rel">
+                                                    <input type="checkbox" class="ace">
+                                                    <span class="lbl"></span>
+                                                </label>
+                                            </th>
                                             <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1"
                                                 colspan="1" style="color: #707070;"
                                                 aria-label="Domain: activate to sort column ascending">
-                                                Réference
+                                                Code
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="dynamic-table" rowspan="1"
                                                 colspan="1"
                                                 aria-label="Domain: activate to sort column ascending">
+                                                Date
+                                            </th>
+                                            <th class="sorting_desc" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Price: activate to sort column ascending"
+                                                aria-sort="descending">
                                                 Fournisseur
                                             </th>
                                             <th class="sorting_desc" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1" colspan="1"
                                                 aria-label="Price: activate to sort column ascending"
                                                 aria-sort="descending">
-                                                consultant
-                                            </th>
-                                            <th class="sorting_desc" tabindex="0" aria-controls="dynamic-table"
-                                                rowspan="1" colspan="1"
-                                                aria-label="Price: activate to sort column ascending"
-                                                aria-sort="descending">
-                                                date
+                                                Consultant
                                             </th>
 
 
@@ -92,167 +146,161 @@
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
-                                                nb jours
+                                                Nb jours
                                             </th>
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
-                                                TJM
+                                                AchatTTC
                                             </th>
+
                                             <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
-                                                Achat HT
-                                            </th>
-                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
-                                                rowspan="1"
-                                                colspan="1" aria-label="Status: activate to sort column ascending">
-                                                Achat TTC
+                                                Etat
                                             </th>
 
 
-                                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label=""></th>
-
+                                            <th class="sorting_disabled not-export-col" rowspan="1" colspan="1" aria-label=""></th>
+                                            <th class="hiide">Raison</th>
                                         </tr>
                                         </thead>
 
                                         <tbody>
-                                        {% for bcfournisseur in bcfournisseurs %}
+                                        {% for virement in virements %}
 
                                             <tr role="row" class="odd">
-
-
+                                                <td class="center">
+                                                    <label class="pos-rel">
+                                                        <input type="checkbox" class="ace" value="{{ virement['virement'].id }}">
+                                                        <span class="lbl"></span>
+                                                    </label>
+                                                </td>
                                                 <td>
 
 
-                                                    #{{ bcfournisseur.code }}
+                                                    #virement_ {{ virement['virement'].id }}
 
 
                                                 </td>
 
+
                                                 <td>
-                                                    {% if bcfournisseur.fournisseur is null %}
+                                                    {% if virement['virement'].date is null %}
+                                                        --
+                                                    {% else %}
+                                                        {{ virement['virement'].date|date('Y-m-d') }}
+
+                                                    {% endif %}
+
+                                                </td>
+                                                <td>
+
+                                                    {% if virement['virement'].bcfournisseur is null %}
                                                         --
 
                                                     {% else %}
 
-                                                        {{ bcfournisseur.fournisseur }}
-
-
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-
-                                                    {% if bcfournisseur.consultant is null %}
-
-
-                                                    {% else %}
-
-                                                        {{ bcfournisseur.consultant }}
-
-
-                                                    {% endif %}
-
-
-                                                </td>
-
-
-                                                <td class="hidden-480">
-                                                    {% if bcfournisseur.date is null %}
-                                                        --
-                                                    {% else %}
-                                                        {{ bcfournisseur.date|date('Y-m-d') }}
-
-                                                    {% endif %}
-
-
-                                                </td>
-                                                <td>
-                                                    {% if bcfournisseur.mois is null %}
-                                                        --
-
-                                                    {% else %}
-
-                                                        {{ bcfournisseur.mois }}/{{ bcfournisseur.year }}
-
-
-                                                    {% endif %}
-
-                                                </td>
-
-                                                <td class="hidden-480">
-                                                    {% if bcfournisseur.nbjours is null %}
-                                                        --
-                                                    {% else %}
-                                                        {{ bcfournisseur.nbjours }}
-
-                                                    {% endif %}
-
-
-                                                </td>
-                                                <td class="hidden-480">
-                                                    {% if bcfournisseur.mission is null %}
-
-                                                        {% if bcfournisseur.projet %}
-                                                            {% if bcfournisseur.nbjours != 0 %}
-                                                                {% set tjm = bcfournisseur.achatHT/bcfournisseur.nbjours %}
-                                                                {{ tjm | number_format(2, ',', ' ') }}
-                                                            {% endif %}
+                                                        {% if virement['virement'].bcfournisseur is null %}
+                                                            --
                                                         {% else %}
 
-                                                            --
+                                                            {{ virement['virement'].bcfournisseur.fournisseur }}
                                                         {% endif %}
 
-                                                    {% else %}
-                                                        {{ bcfournisseur.mission.prixAchat }}
-
                                                     {% endif %}
 
 
                                                 </td>
+
+
                                                 <td>
-                                                    {% if bcfournisseur.achatHT is null %}
+                                                    {% if virement['virement'].consultant is null %}
                                                         --
 
                                                     {% else %}
 
-                                                        {{ bcfournisseur.achatHT }}
+                                                        {{ virement['virement'].consultant.nom }}
 
 
                                                     {% endif %}
+
                                                 </td>
+
+                                                <td class="hidden-480">
+                                                    {% if virement['virement'].bcfournisseur is null %}
+                                                        --
+                                                    {% else %}
+                                                        {{ "%02d"|format(virement['virement'].bcfournisseur.mois) }}/{{ virement['virement'].bcfournisseur.year }}
+
+
+                                                    {% endif %}
+
+
+                                                </td>
+                                                <td class="hidden-480">
+                                                    {% if virement['virement'].facturefournisseur is null %}
+                                                        --
+                                                    {% else %}
+                                                        {{ virement['virement'].facturefournisseur.nbjours }}
+
+                                                    {% endif %}
+
+
+                                                </td>
+                                                <td class="hidden-480 totalAchat">
+                                                    {% if virement['virement'].achat is null %}
+                                                        --
+                                                    {% else %}
+                                                        {{ virement['virement'].achat }}
+
+                                                    {% endif %}
+
+
+                                                </td>
+
                                                 <td>
-                                                    {% if bcfournisseur.achatTTC is null %}
+
+                                                    {% if virement['virement'].etat is null %}
                                                         --
 
                                                     {% else %}
+                                                        {% if virement['virement'].etat == 'en attente' %}
+                                                            <span class="label label-warning arrowed arrowed-right"> {{ virement['virement'].etat }}</span>
+                                                        {% elseif virement['virement'].etat == 'executé' %}
 
-                                                        {{ bcfournisseur.achatTTC }}
+                                                            <span class="label label-primary arrowed arrowed-right"> {{ virement['virement'].etat }}</span>
+                                                        {% else %}
+                                                            <span class="label label-success arrowed arrowed-right"> {{ virement['virement'].etat }}</span>
+                                                        {% endif %}
+
 
 
                                                     {% endif %}
-                                                </td>
 
+
+                                                </td>
 
                                                 <td>
                                                     <div class="hidden-sm hidden-xs action-buttons">
                                                         <a class="blue"
-                                                           href="{{ path('bcfournisseur_show', { 'id': bcfournisseur.id }) }}"
+                                                           href="{{ path('virement_show', { 'id': virement['virement'].id }) }}"
                                                            title="voir">
                                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                         </a>
 
                                                         <a class="orange"
-                                                           href="{{ path('bcfournisseur_edit', { 'id': bcfournisseur.id }) }}"
+                                                           href="{{ path('virement_edit', { 'id': virement['virement'].id }) }}"
                                                            title="modifier">
                                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                                         </a>
-                                                        <a class="orange"
-                                                           href="{{ path('bcfournisseur_print', { 'id': bcfournisseur.id }) }}"
-                                                           title="imprimer">
-                                                            <i class="ace-icon fa fa-print bigger-130"></i>
-                                                        </a>
 
+
+                                                        <a class="red delete-confirm"
+                                                           href="{{ path('virement_remove', { 'id': virement['virement'].id }) }}"
+                                                           onclick="return confirm('Vous êtes sûr que vous voulez le supprimé?');">
+                                                            <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                                        </a>
 
                                                     </div>
 
@@ -298,14 +346,80 @@
                                                         </div>
                                                     </div>
                                                 </td>
+                                                <td class="hiide text-info bolder">{{ virement['raison'] }}</td>
+
                                             </tr>
                                         {% endfor %}
 
                                         </tbody>
 
                                     </table>
+                                    {% if is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') %}
+                                        <div class="row">
+                                            <div class="col-md-4 count"></div>
+                                            <div class="col-md-4">
 
+                                                <a href="#" data-action="settings" id="vir"
+                                                   class=" btn btn-success text-center btn-block ">
+                                                    <i class="ace-icon fa fa-check-circle"></i> Valider
+                                                </a>
+                                                <a href="#" data-action="settings" id="virement"
+                                                   class=" btn btn-primary text-center btn-block ">
+                                                    <i class="ace-icon fa fa-exchange "></i> Virements
+                                                </a>
+
+                                            </div>
+
+                                        </div>
+                                    {% endif %}
                                 </div>
+                            </div>
+
+                            <a href="#my-modal" role="button" class="invisible"
+                               data-toggle="modal" id="compte_button">
+                                <i class="ace-icon fa fa-exchange bigger-100 purple"></i>
+                            </a>
+                            <div id="my-modal" class="modal fade"
+                                 tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close"
+                                                    data-dismiss="modal"
+                                                    aria-hidden="true">&times;
+                                            </button>
+                                            <h3 class="smaller lighter blue no-margin">
+                                                Choisir le compte bancaire </h3>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    {{ form_start(form) }}
+                                                    {{ form_widget(form) }}
+                                                    <input type="submit" value="Create" style="display: none"/>
+                                                    {{ form_end(form) }}
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button class="btn btn-sm btn-success ok pull-right"
+                                                    id="id_test" data-dismiss="modal">
+                                                <i class="ace-icon fa fa-check"></i>
+                                                Enregistrer
+                                            </button>
+                                            <button class="btn btn-sm btn-danger pull-left"
+                                                    data-dismiss="modal">
+                                                <i class="ace-icon fa fa-times"></i>
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
                             </div>
                         </div>
 
@@ -318,9 +432,9 @@
         </div>
     </div>
 
+
+
 {% endblock %}
-
-
 {% block javascripts %}
     {{ parent() }}
     <!-- page specific plugin scripts -->
@@ -333,13 +447,34 @@
     <script src="{{ asset('') }}assets/js/buttons.print.min.js"></script>
     <script src="{{ asset('') }}assets/js/buttons.colVis.min.js"></script>
     <script src="{{ asset('') }}assets/js/dataTables.select.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script type="text/javascript">
         jQuery(function ($) {
+            $('.hiide').hide();
+            $(".dataTable tr").not(':first')
+                .mouseover(function () {
+
+                    $(this).children(":last").show();
+                });
+            $(".dataTable tr")
+                .mouseleave(function () {
+
+
+                    $('.hiide').hide();
+                });
             var rowCount = $('#dynamic-table').length;
-            console.log(rowCount);
+            $('.switch').click(function () {
+                valeur = $(this).val();
+//                alert('ok');
+                var url = Routing.generate('fiche_active1', {id: $(this).data("id")});
+                location.href = url;
+
+            });
 
             //initiate dataTables plugin
             var myTable =
@@ -347,7 +482,7 @@
                     .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                     .DataTable({
                         initComplete: function () {
-                            this.api().columns([]).every(function () {
+                            this.api().columns([4]).every(function () {
                                 var column = this;
                                 var select = $('<select><option value="" class="pull_right">-- filtrer --</option></select>')
                                     .appendTo($(column.header()))
@@ -375,7 +510,7 @@
                         bAutoWidth: false,
                         "aoColumns": [
                             {"bSortable": true},
-                            null, null, null, null, null, null, null, null,
+                            null, null, null, null, null, null, null, null,null,
                             {"bSortable": false}
                         ],
                         "aaSorting": [],
@@ -422,8 +557,11 @@
                     },
                     {
                         "extend": "excel",
-                        "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to CSV</span>",
-                        "className": "btn btn-white btn-primary btn-bold"
+                        "text": "<i class='fa fa-file-excel-o bigger-110 green'></i> <span class='hidden'>Export to Excel</span>",
+                        "className": "btn btn-white btn-primary btn-bold",
+                        exportOptions: {
+                            columns: ':not(.notPrintable)'
+                        }
                     },
 
                     {
@@ -495,17 +633,35 @@
                 return 'left';
             }
 
+            var checked_array = $("#dynamic-table input:checkbox:checked");
+//            console.log(checked_array);
+            var total_virement = 0;
             myTable.on('select', function (e, dt, type, index) {
                 if (type === 'row') {
                     $(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
+                    var index_achat = parseInt($(myTable.row(index).node()).find('td.totalAchat').text());
+
+                    total_virement += index_achat;
+
                 }
+//                console.log(total_virement);
+                $('.count').empty();
+                $('.count').append('<span class="text-center green bold"><i class="fa fa-info"></i> Total virements : ' + total_virement + ' DH</span>');
+
             });
             myTable.on('deselect', function (e, dt, type, index) {
                 if (type === 'row') {
                     $(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
-                }
-            });
+                    var index_achat1 = parseInt($(myTable.row(index).node()).find('td.totalAchat').text());
+                    total_virement = total_virement - index_achat1;
 
+                }
+//                console.log(total_virement);
+
+                $('.count').empty();
+                $('.count').append('<span class="text-center green bold"><i class="fa fa-info"></i> Total virements : ' + total_virement + ' DH</span>');
+
+            });
 
             /////////////////////////////////
             //table checkboxes
@@ -514,13 +670,15 @@
             //select/deselect all rows according to table header checkbox
             $('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function () {
                 var th_checked = this.checked;//checkbox inside "TH" table header
-
                 $('#dynamic-table').find('tbody > tr').each(function () {
+
                     var row = this;
+//                    console.log(myTable.row(row));debugger
                     if (th_checked) myTable.row(row).select();
                     else  myTable.row(row).deselect();
                 });
             });
+//            console.log(total_virement);
 
             //select/deselect a row when the checkbox is checked/unchecked
             $('#dynamic-table').on('click', 'td input[type=checkbox]', function () {
@@ -547,6 +705,7 @@
                     var row = this;
                     if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
                     else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+                    //$('#vir').hide();
                 });
             });
 
@@ -562,26 +721,17 @@
                 event.preventDefault();
                 var searchIDs = $("#dynamic-table input:checkbox:checked").map(function () {
                     return $(this).val();
-                }).get(); // <----
+                }).get();
+
+//                console.log(searchIDs);
 
 
-                var url = Routing.generate('route_to_retrieve_bc');
+                var url = Routing.generate('route_to_validate_virement');
 
-                /*  $.post(url,
-                 { 'idClass': Id
-                 }, function(data, status){
-                 if(status=='200'){
-                 alert("Data: " + data + "\nStatus: " + status);
-                 }else {
-                 alert("erreur");
-                 }
-
-                 });
-                 */
                 $.ajax({
                     type: "POST",
                     data: {
-                        idBCfournisseur: searchIDs,
+                        idVirments: searchIDs,
 
                     }, // no need to stringify the data, jquery does it for you
                     url: url,
@@ -590,6 +740,59 @@
                         console.log(response);
                         location.href = Routing.generate('virement_index');
 
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+
+                    }
+                });
+
+
+                ///////////////////////////////////////////
+
+
+
+                ////////////////////
+
+            });
+
+            // model compte bancaire form
+            $('#form_client').chosen({width: '100%'});
+            // end modal
+            $("#virement").click(function (event) {
+
+                $('#compte_button').click();
+
+            });
+            $("#id_test").click(function (event) {
+                event.preventDefault();
+                var searchIDs = $("#dynamic-table input:checkbox:checked").map(function () {
+                    return $(this).val();
+                }).get();
+
+                let compte_bancaire = $('#form_client').val();
+                let date_virement = $('#form_date').val();
+
+                var urls = Routing.generate('route_to_add_virement');
+                console.log(searchIDs, urls, 'ok');
+
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        idVirments: searchIDs,
+                        date: date_virement,
+                        compte: compte_bancaire
+                    },
+                    url: urls,
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+
+
+                        location.href = Routing.generate('virementf_show', {'id': response.id});
+
+//
 
                     },
                     error: function (error) {
@@ -625,7 +828,20 @@
                     name: $('#avatar').attr('src')
                 }]);
 
-
+                $('.delete-confirm').on('click', function (event) {
+                    event.preventDefault();
+                    const url = $(this).attr('href');
+                    swal({
+                        title: 'Are you sure?',
+                        text: 'This record and it`s details will be permanantly deleted!',
+                        icon: 'warning',
+                        buttons: ["Cancel", "Yes!"],
+                    }).then(function (value) {
+                        if (value) {
+                            window.location.href = url;
+                        }
+                    });
+                });
                 ////////////////////
 
             });

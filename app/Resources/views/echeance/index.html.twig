@@ -1,6 +1,6 @@
-
 {% extends 'base.html.twig' %}
-{% block title %} Hope3k | Echeance {% endblock %}{% block menu %}  <a href="{{ path('echeance_index') }}">Echeance</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
+{% block title %} Hope3k | Echeance {% endblock %}{% block menu %}  <a
+        href="{{ path('echeance_index') }}">Echeance</a>   {% endblock %}   {% block menu_active %}    Ajouter {% endblock %}{% block content %}
 
 
     <h1>Echeance list</h1>
@@ -9,7 +9,8 @@
         <div class="col-md-4"></div>
         <div class="col-md-1"></div>
         <div class="col-md-3">
-            <a href="{{ path('echeance_new') }}" class="btn btn-white btn-primary btn-block"><i class="fa fa-plus"></i> Ajouter une écheance</a>
+            <a href="{{ path('echeance_new') }}" class="btn btn-white btn-primary btn-block"><i class="fa fa-plus"></i>
+                Ajouter une écheance</a>
 
         </div>
     </div>
@@ -21,6 +22,7 @@
             <th>Id</th>
             <th>Nom</th>
             <th>Min</th>
+            <th>Condition</th>
             <th>Max</th>
             <th>Actions</th>
         </tr>
@@ -31,16 +33,22 @@
                 <td><a href="{{ path('echeance_show', { 'id': echeance.id }) }}">{{ echeance.id }}</a></td>
                 <td>{{ echeance.nom }}</td>
                 <td>{{ echeance.min }}</td>
+                <td>{{ echeance.condition }}</td>
                 <td>{{ echeance.max }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('echeance_show', { 'id': echeance.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('echeance_edit', { 'id': echeance.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <div class="hidden-sm hidden-xs action-buttons">
+                        <a class="blue"
+                           href="{{ path('echeance_show', { 'id': echeance.id }) }}"
+                           title="voir">
+                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                        </a>
+
+                        <a class="orange"
+                           href="{{ path('echeance_edit', { 'id': echeance.id }) }}"
+                           title="modifier">
+                            <i class="ace-icon fa fa-pencil bigger-130"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
         {% endfor %}

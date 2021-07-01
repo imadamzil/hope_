@@ -27,7 +27,7 @@ class ConsultantController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $consultants = $em->getRepository('AppBundle:Consultant')->findAll();
-        dump($consultants[0]->calculePoids());
+//        dump($consultants[0]->calculePoids());
         return $this->render('consultant/index.html.twig', array(
             'consultants' => $consultants,
         ));
@@ -67,6 +67,7 @@ class ConsultantController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $consultant->setPoids($consultant->calculePoids());
             $em->persist($consultant);
             $em->flush();
 
@@ -106,11 +107,11 @@ class ConsultantController extends Controller
         $deleteForm = $this->createDeleteForm($consultant);
         $editForm = $this->createForm('AppBundle\Form\ConsultantType', $consultant);
         $editForm->handleRequest($request);
+        $consultant->setPoids($consultant->calculePoids());
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('consultant_edit', array('id' => $consultant->getId()));
+            return $this->redirectToRoute('consultant_index');
         }
 
         return $this->render('consultant/edit.html.twig', array(

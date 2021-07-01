@@ -6,6 +6,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 /**
  * Facture
  *
@@ -36,6 +37,12 @@ class Facture
      * @ORM\Column(name="numero", type="string", length=255, nullable=true)
      */
     private $numero;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="devise", type="boolean", nullable=true)
+     */
+    private $devise;
     /**
      * @var integer
      *
@@ -113,6 +120,24 @@ class Facture
      * @ORM\Column(name="date", type="date", nullable=true)
      */
     private $date;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_depot", type="date", nullable=true)
+     */
+    private $datedepot;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_paiement", type="date", nullable=true)
+     */
+    private $datepaiement;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_timesheet", type="date", nullable=true)
+     */
+    private $datetimesheet;
     /**
      * @var \DateTime
      *
@@ -734,7 +759,8 @@ class Facture
         $this->createdAt = new \DateTime();
 
         $this->lignes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->setEtat('non payé');
+        $this->etat = 'non payé';
+        $this->devise = false;
     }
 
     /**
@@ -1012,7 +1038,6 @@ class Facture
     }
 
 
-
     /**
      * Set addedby
      *
@@ -1059,5 +1084,101 @@ class Facture
     public function getEditedby()
     {
         return $this->editedby;
+    }
+
+    /**
+     * Set datedepot
+     *
+     * @param \DateTime $datedepot
+     *
+     * @return Facture
+     */
+    public function setDatedepot($datedepot)
+    {
+        $this->datedepot = $datedepot;
+
+        return $this;
+    }
+
+    /**
+     * Get datedepot
+     *
+     * @return \DateTime
+     */
+    public function getDatedepot()
+    {
+        return $this->datedepot;
+    }
+
+    /**
+     * Set datepaiement
+     *
+     * @param \DateTime $datepaiement
+     *
+     * @return Facture
+     */
+    public function setDatepaiement($datepaiement)
+    {
+        $this->datepaiement = $datepaiement;
+
+        return $this;
+    }
+
+    /**
+     * Get datepaiement
+     *
+     * @return \DateTime
+     */
+    public function getDatepaiement()
+    {
+        return $this->datepaiement;
+    }
+
+    /**
+     * Set datetimesheet
+     *
+     * @param \DateTime $datetimesheet
+     *
+     * @return Facture
+     */
+    public function setDatetimesheet($datetimesheet)
+    {
+        $this->datetimesheet = $datetimesheet;
+
+        return $this;
+    }
+
+    /**
+     * Get datetimesheet
+     *
+     * @return \DateTime
+     */
+    public function getDatetimesheet()
+    {
+        return $this->datetimesheet;
+    }
+
+    /**
+     * Set devise
+     *
+     * @param boolean $devise
+     *
+     * @return Facture
+     */
+    public function setDevise($devise)
+    {
+        $this->devise = $devise;
+
+        return $this;
+    }
+
+    /**
+     * Get devise
+     *
+     * @return boolean
+     */
+    public function getDevise()
+    {
+        return $this->devise;
     }
 }

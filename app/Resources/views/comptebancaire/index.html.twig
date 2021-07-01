@@ -18,6 +18,12 @@
             <th>Banque</th>
             <th>Agence</th>
             <th>Label</th>
+            <th>Code</th>
+            <th>Adresse</th>
+            <th>Pays</th>
+            <th>Numéro de compte</th>
+            <th>Swift Code</th>
+            <th>Code Rib</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -30,6 +36,12 @@
                 <td>{{ comptebancaire.banque }}</td>
                 <td>{{ comptebancaire.agence }}</td>
                 <td>{{ comptebancaire.label }}</td>
+                <td>{{ comptebancaire.code }}</td>
+                <td>{{ comptebancaire.adresse }}</td>
+                <td>{{ comptebancaire.pays }}</td>
+                <td>{{ comptebancaire.numeroCompte }}</td>
+                <td>{{ comptebancaire.swiftCode }}</td>
+                <td>{{ comptebancaire.codeRib }}</td>
                 <td>
 
                     <a href="{{ path('comptebancaire_show', { 'id': comptebancaire.id }) }}"><i class="fa fa-search-plus bigger-140"></i></a>

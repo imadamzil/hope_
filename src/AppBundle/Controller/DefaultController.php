@@ -599,7 +599,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         ini_set('memory_limit', '1024M');
-        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\consultant.xlsx';
+        $inputFileName = $this->get('kernel')->getRootDir() . '\..\web\ECHEANCE_HOPE3K.xlsx';
         $spreadsheet = IOFactory::load($inputFileName);
 
         set_time_limit(10000); //
@@ -610,44 +610,48 @@ class DefaultController extends Controller
 //        dump($sheetData);
 //        die();
 
-        foreach ($sheetData as $row) {
+        foreach ($sheetData as $key => $row) {
 
-            if ($row[0] == 'id') {
+            if ($row[0] == 'consultant') {
 
 
             } else {
-                $id = intval($row[0]);
-                $nom = $row[1];
-                $type = $row[2];
-                $salaire = $row[3];
-                $rib = $row[4];
-                $tel = $row[5];
-                $email = $row[6];
-                $adresse = $row[7];
-                $tjm = $row[10];
 
-                $cin = $row[11];
+                $nom = $row[0];
+                $groupe = $row[2];
+                $marge = floatval($row[4]);
+                $client = $row[5];
+                $natureMission = $row[6];
+                $anciennte = $row[7];
+                $poids = floatval($row[8]);
 
-                $consultant = new Consultant();
-                $consultant->setNom($nom);
-                $consultant->setTel($tel);
-                $consultant->setType($type);
-                $consultant->setEmail($email);
-                $consultant->setRib($rib);
-                $consultant->setAdresse($adresse);
-                $consultant->setSalaire($salaire);
-                $consultant->setTjm($tjm);
-                $consultant->setCin($cin);
 
-                $em->persist($consultant);
-                $em->flush();
+                $consultant = $em->getRepository('AppBundle:Consultant')->findOneBy([
+                    'nom' => $nom
+                ]);
+                $echeance = $em->getRepository('AppBundle:Echeance')->findOneBy([
+                    'nom' => $groupe
+                ]);
+
+                if ($consultant != null) {
+
+//                    $consultant = new Consultant();
+                    $consultant->setMarge($marge);
+                    $consultant->setEcheance($echeance);
+                    $consultant->setClient($client);
+                    $consultant->setNatureMission($natureMission);
+                    $consultant->setAnciennte($anciennte);
+                    $consultant->setPoids($poids);
+
+                    $em->persist($consultant);
+                    $em->flush();
+                }
 
 
             }
 
         }
-
-        return $this->render('production.html.twig', array());
+        die('ok');
     }
 
     /**
@@ -703,7 +707,7 @@ class DefaultController extends Controller
 
             return !is_dir($t);
         });
-        dump($newest_file[2]);
+//        dump($newest_file[2]);
         die();
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
@@ -741,7 +745,7 @@ class DefaultController extends Controller
             'etat' => 'en attente'
         ]);
 
-        dump($vir->getFacturefournisseur()->getBcfournisseur()->getFacture()->getTotalHT());
+//        dump($vir->getFacturefournisseur()->getBcfournisseur()->getFacture()->getTotalHT());
         die();
         return new Response($res);
     }
@@ -1305,7 +1309,7 @@ class DefaultController extends Controller
         $filePath = 'C:\wamp64\www\hope3k\web\backup\11_06_2021_15_58_59.sql';
         $authorization = "Authorization: Bearer " . $this->getTokenFromAPi();
 
-        dump($authorization);
+//        dump($authorization);
 //Initiate cURL
         $ch = curl_init();
 

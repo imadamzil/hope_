@@ -136,6 +136,7 @@ class ProjetController extends Controller
 
             $totalHt = null;
             $facture->setProjet($projet);
+            $facture->setDatetimesheet($facture->getDate());
 
             foreach ($facture->getLignes() as $ligne) {
 

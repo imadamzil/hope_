@@ -13,7 +13,12 @@ class EcheanceType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('min')->add('max');
+        $builder
+            ->add('nom')
+            ->add('min')
+            ->add('condition')
+            ->add('max')
+        ;
     }/**
      * {@inheritdoc}
      */

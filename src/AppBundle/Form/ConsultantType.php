@@ -56,6 +56,11 @@ class ConsultantType extends AbstractType
                     'Oui' => true,
                     'Non' => false
                 ]
+            ]) ->add('direct', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => true,
+                    'Non' => false
+                ]
             ])
             ->add('salaire')
             ->add('rib')

@@ -40,8 +40,9 @@ class BcfournisseurType extends AbstractType
                 ),
             ))
             ->add('year')
-//            ->add('achatTTC')
-//            ->add('taxe')
+            ->add('achatTTC')
+            ->add('achatHT')
+            ->add('taxe')
             ->add('date', DateTimeType::class, [
                 'widget' => 'single_text',
                 'required' => false,
@@ -64,6 +65,34 @@ class BcfournisseurType extends AbstractType
                 'class' => 'AppBundle:Fournisseur',
                 'multiple' => false,
                 'label' => 'Fournisseur',
+                'placeholder' => 'Selectionner',
+                'required' => false,
+
+                'attr' => array(
+                    'class' => 'chosen-select',
+                    'data-placeholder' => 'Selectionner',
+                    'multiple' => false
+
+                )
+            ))
+            ->add('facture', EntityType::class, array(
+                'class' => 'AppBundle:Facture',
+                'multiple' => false,
+                'label' => 'Facture',
+                'placeholder' => 'Selectionner',
+                'required' => true,
+
+                'attr' => array(
+                    'class' => 'chosen-select',
+                    'data-placeholder' => 'Selectionner',
+                    'multiple' => false
+
+                )
+            ))
+            ->add('consultant', EntityType::class, array(
+                'class' => 'AppBundle:Consultant',
+                'multiple' => false,
+                'label' => 'Consultant',
                 'placeholder' => 'Selectionner',
                 'required' => false,
 

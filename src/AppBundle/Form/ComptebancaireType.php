@@ -13,8 +13,20 @@ class ComptebancaireType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('rib')->add('banque')->add('agence')->add('label');
-    }/**
+        $builder
+            ->add('rib')
+            ->add('banque')
+            ->add('agence')
+            ->add('label')
+            ->add('code')
+            ->add('adresse')
+            ->add('pays')
+            ->add('numeroCompte')
+            ->add('swiftCode')
+            ->add('codeRib')
+        ;
+    }
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

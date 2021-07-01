@@ -20630,3 +20630,34 @@ input.typeahead.scrollable ~ .tt-menu {
         border: 1px solid #666 !important
     }
 }
+.infobox-contaier{
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.dataTable tbody tr td:last-child  div{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.count {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    height: 89px;
+}
+.flex-header {
+    display: flex ;
+    align-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+
+}

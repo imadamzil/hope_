@@ -322,3 +322,34 @@ th {
     bottom: -85px;
     /*width: 100%;*/
 }
+
+.div-flex{
+
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+    align-items: center;
+    /*width: 70%;*/
+
+}
+.div-flex table{
+
+
+    width: 90%;
+
+}
+.detail-devise-facture{
+
+    margin-left: 60%;
+}
+.flex-facture-bottom{
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-content: space-between;
+    align-items: center;
+}
+.info-paiement{
+
+    margin-top: -50px;
+}

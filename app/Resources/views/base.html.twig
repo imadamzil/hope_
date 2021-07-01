@@ -63,7 +63,7 @@
             }
 
             #loading {
-                background-color: #350db5;
+                background-color: #2d5a8a;
                 height: 100%;
                 width: 100%;
                 position: fixed;
@@ -280,7 +280,7 @@
     </div>
 
 </div>
-<div id="navbar" class="navbar navbar-default  ace-save-state">
+<div id="navbar" class="navbar navbar-default  ace-save-state navbar-fixed-top">
     <div class="navbar-container ace-save-state" id="navbar-container">
         <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
             <span class="sr-only">Toggle sidebar</span>
@@ -539,7 +539,7 @@
         }
     </script>
 
-    <div id="sidebar" class="sidebar responsive ace-save-state">
+    <div id="sidebar" class="sidebar responsive ace-save-state sidebar-fixed sidebar-scroll" data-sidebar="true" data-sidebar-scroll="true" data-sidebar-hover="true">
         <script type="text/javascript">
             try {
                 ace.settings.loadState('sidebar')
@@ -666,6 +666,14 @@
                 <a href="{{ path('virement_index') }}">
                     <i class="menu-icon fa fa-exchange"></i>
                     <span class="menu-text"> Virement </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+            <li class="">
+                <a href="{{ path('virement_auto') }}">
+                    <i class="menu-icon fa fa-retweet"></i>
+                    <span class="menu-text">Virement Auto </span>
                 </a>
 
                 <b class="arrow"></b>

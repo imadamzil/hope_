@@ -97,9 +97,8 @@
     </div>
 
 </div>
-<div class="row">
+<div class="div-flex">
 
-    <div class="col-md-10 col-md-1-offset-1">
         <table class="table table-bordered" style="width: 100%">
             <thead>
             <tr>
@@ -206,7 +205,8 @@
                     </strong></td>
                 <td class=" text-center  align-middle">
                     <strong>
-                        {{ bcfournisseur.achatHt/bcfournisseur.nbjours }}
+                        {% set tjm = bcfournisseur.achatHT/bcfournisseur.nbjours %}
+                        {{ tjm | number_format(2, ',', ' ') }}
 
                     </strong>
                 </td>
@@ -223,7 +223,7 @@
 
         </table>
 
-    </div>
+
 </div>
 
 
@@ -231,21 +231,21 @@
     <tbody>
     <tr class="">
         <th class=" AZX">TOTAL HT/DH</th>
-        <td class=" AZX">{{ bcfournisseur.achatHT }}.00
+        <td class=" AZX">{{ bcfournisseur.achatHT | number_format(2, ',', ' ')}}
 
         </td>
 
     </tr>
     <tr class="">
         <th class=" AZX">TVA 20%</th>
-        <td class=" AZX">{{ bcfournisseur.taxe }}.00
+        <td class=" AZX">{{ bcfournisseur.taxe | number_format(2, ',', ' ')}}
 
         </td>
 
     </tr>
     <tr class="">
         <th class=" AZX">TOTAL TTC/DH</th>
-        <td class=" AZX">{{ bcfournisseur.achatTTC }}.00</td>
+        <td class=" AZX">{{ bcfournisseur.achatTTC | number_format(2, ',', ' ')}}</td>
 
     </tr>
 

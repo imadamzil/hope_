@@ -28,6 +28,461 @@ class VirementController extends Controller
     /**
      * Lists all virement entities.
      *
+     * @Route("/auto_virement", name="virement_auto",options={"expose"=true}))
+     * @Method("GET")
+     */
+    public function autoVirementAction()
+    {
+        $final_virement = [];
+        $em = $this->getDoctrine()->getManager();
+        $fiche = $em->getRepository('AppBundle:Fiche')->findOneBy([
+            'id' => 1
+        ]);
+        if ($fiche->getActive()) {
+//etat normal tresorie active
+
+            $consultants = $em->getRepository('AppBundle:Consultant')->findBy([
+                'autoVirement' => true
+
+            ]);
+
+            $virements = $em->getRepository('AppBundle:Virement')->findBy([
+
+                'etat' => 'en attente',
+                'consultant' => $consultants
+            ]);
+
+            //1- verif back to back consultant
+            $echeance_back_to_back = $em->getRepository('AppBundle:Echeance')->findOneBy([
+                'nom' => 'Back to back'
+
+            ]);
+            $factures_payes = $em->getRepository('AppBundle:Facture')->findBy([
+                'etat' => 'payé'
+
+            ]);
+            $bc_fournisseurs_with_factures_payes = $em->getRepository('AppBundle:Bcfournisseur')->findBy([
+                'facture' => $factures_payes
+
+            ]);
+            $ordre_consultants = $em->CreateQuery('
+        SELECT c FROM AppBundle:Consultant c 
+        WHERE c IN (:consultants)
+        AND c.autoVirement = true
+       
+        
+        ')->setParameters([
+
+                'consultants' => $echeance_back_to_back->getConsultants()->toArray()
+            ])->execute();
+//        dump($ordre_consultants);
+            $virements_back_to_back1 = $em->getRepository('AppBundle:Virement')->findBy([
+                'bcfournisseur' => $bc_fournisseurs_with_factures_payes,
+                'etat' => 'en attente',
+                'consultant' => $ordre_consultants
+            ]);
+
+            $virements_back_to_back = $em->CreateQuery('
+        SELECT v FROM AppBundle:Virement v 
+        JOIN AppBundle:Consultant c
+        WHERE v.consultant = c.id
+        AND v.consultant IN (:consultants)
+        AND v.etat = :etat
+        AND v.bcfournisseur IN (:bcfournisseurs)
+        ORDER BY c.poids DESC 
+        
+        ')->setParameters([
+                'consultants' => $ordre_consultants,
+                'etat' => 'en attente',
+                'bcfournisseurs' => $bc_fournisseurs_with_factures_payes
+            ])->execute();
+            foreach ($virements_back_to_back as $value) {
+
+                $final_virement[] = [
+                    'virement' => $value,
+                    'raison' => 'back to back | poids: ' . $value->getConsultant()->getPoids() . ' | facture client Payé'
+                ];
+
+
+            }
+//end verif back to back
+            //2- verif echeance 2
+
+            $echeance_31_60 = $em->getRepository('AppBundle:Echeance')->findOneBy([
+                'nom' => '31-60'
+
+            ]);
+
+            $consultants_2nd_echeance = $em->CreateQuery('
+        SELECT c FROM AppBundle:Consultant c 
+        WHERE c IN (:consultants)
+        AND c.autoVirement = true
+       
+        
+        ')->setParameters([
+
+                'consultants' => $echeance_31_60->getConsultants()->toArray()
+            ])->execute();
+
+            $virement_timesheeet = $em->CreateQuery('
+        SELECT v FROM AppBundle:Virement v 
+        JOIN v.consultant c
+        JOIN v.bcfournisseur b
+        JOIN b.facture f      
+        WHERE v.consultant = c.id
+        AND v.bcfournisseur = b.id
+        AND v.etat = :etat
+        AND b.facture = f.id
+        AND v.consultant IN (:consultants)
+        AND f.datetimesheet IS NOT NULL 
+        AND c.autoVirement = true
+        AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) > :minday
+        ORDER BY c.poids DESC, DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) DESC 
+        ')->setParameters([
+                'etat' => 'en attente',
+                'consultants' => $echeance_31_60->getConsultants()->toArray(),
+                'minday' => $echeance_31_60->getCondition(),
+//            'maxday' => $echeance_31_60->getMax(),
+            ])->execute();
+//            dump($virement_timesheeet);
+            foreach ($virement_timesheeet as $value) {
+
+                $final_virement[] = [
+                    'virement' => $value,
+                    'raison' => 'groupe 30-60 | poids: ' . $value->getConsultant()->getPoids() . ' | TS > 53'
+                ];
+
+
+            }
+//end 2nd echeance
+//3- verif immediat groupe
+            $echeance_immediat = $em->getRepository('AppBundle:Echeance')->findOneBy([
+                'nom' => 'immediat'
+
+            ]);
+
+//            dump($echeance_immediat);
+
+
+            $virement_echeance_immediat = $em->CreateQuery('
+        SELECT v FROM AppBundle:Virement v 
+        JOIN v.consultant c
+        JOIN v.bcfournisseur b
+        JOIN b.facture f      
+        WHERE v.consultant = c.id
+        AND v.bcfournisseur = b.id
+        AND v.etat = :etat
+        AND b.facture = f.id
+        AND v.consultant IN (:consultants)
+        AND f.datetimesheet IS NOT NULL 
+        AND c.autoVirement = true
+        AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) > :minday OR DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) = :minday
+        AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) < :maxday
+        
+        ORDER BY c.poids DESC, DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) DESC 
+        ')->setParameters([
+                'etat' => 'en attente',
+                'consultants' => $echeance_immediat->getConsultants()->toArray(),
+                'minday' => $echeance_immediat->getCondition(),
+                'maxday' => $echeance_immediat->getMax(),
+            ])->execute();
+
+            dump($virement_echeance_immediat);
+            foreach ($virement_echeance_immediat as $value) {
+
+                $final_virement[] = [
+                    'virement' => $value,
+                    'raison' => 'groupe Immédiat | poids: ' . $value->getConsultant()->getPoids() . ' | 0 <= TS <15'
+                ];
+
+
+            }
+
+            //end immediat groupe
+//4- verif groupe 15-30
+            $echeance_15_30 = $em->getRepository('AppBundle:Echeance')->findOneBy([
+                'nom' => '15-30'
+
+            ]);
+            $virement_echeance_15_30 = $em->CreateQuery('
+        SELECT v FROM AppBundle:Virement v 
+        JOIN v.consultant c
+        JOIN v.bcfournisseur b
+        JOIN b.facture f      
+        WHERE v.consultant = c.id
+        AND v.bcfournisseur = b.id
+        AND v.etat = :etat
+        AND b.facture = f.id
+        AND v.consultant IN (:consultants)
+        AND f.datetimesheet IS NOT NULL 
+        AND c.autoVirement = true
+        AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) > :minday
+        AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) < :maxday
+        
+        ORDER BY c.poids DESC, DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) DESC 
+        ')->setParameters([
+                'etat' => 'en attente',
+                'consultants' => $echeance_15_30->getConsultants()->toArray(),
+                'minday' => $echeance_15_30->getCondition(),
+                'maxday' => $echeance_15_30->getMax(),
+            ])->execute();
+
+            dump($virement_echeance_15_30);
+            foreach ($virement_echeance_15_30 as $value) {
+
+                $final_virement[] = [
+                    'virement' => $value,
+                    'raison' => 'groupe 15-30 | poids: ' . $value->getConsultant()->getPoids() . ' | 15 < TS <=30'
+                ];
+
+
+            }
+
+        } else {
+            //etat tresorie non active
+            $consultants = $em->getRepository('AppBundle:Consultant')->findBy([
+                'autoVirement' => true
+
+            ]);
+
+            $virements = $em->getRepository('AppBundle:Virement')->findBy([
+
+                'etat' => 'en attente',
+                'consultant' => $consultants
+            ]);
+
+            //1- verif back to back consultant
+            $echeance_back_to_back = $em->getRepository('AppBundle:Echeance')->findOneBy([
+                'nom' => 'Back to back'
+
+            ]);
+            $factures_payes = $em->getRepository('AppBundle:Facture')->findBy([
+                'etat' => 'payé'
+
+            ]);
+            $bc_fournisseurs_with_factures_payes = $em->getRepository('AppBundle:Bcfournisseur')->findBy([
+                'facture' => $factures_payes
+
+            ]);
+            $ordre_consultants = $em->CreateQuery('
+        SELECT c FROM AppBundle:Consultant c 
+        WHERE c IN (:consultants)
+        AND c.autoVirement = true
+       
+        
+        ')->setParameters([
+
+                'consultants' => $echeance_back_to_back->getConsultants()->toArray()
+            ])->execute();
+//        dump($ordre_consultants);
+            $virements_back_to_back1 = $em->getRepository('AppBundle:Virement')->findBy([
+                'bcfournisseur' => $bc_fournisseurs_with_factures_payes,
+                'etat' => 'en attente',
+                'consultant' => $ordre_consultants
+            ]);
+
+            $virements_back_to_back = $em->CreateQuery('
+        SELECT v FROM AppBundle:Virement v 
+        JOIN AppBundle:Consultant c
+        WHERE v.consultant = c.id
+        AND v.consultant IN (:consultants)
+        AND v.etat = :etat
+        AND v.bcfournisseur IN (:bcfournisseurs)
+        ORDER BY c.poids DESC 
+        
+        ')->setParameters([
+                'consultants' => $ordre_consultants,
+                'etat' => 'en attente',
+                'bcfournisseurs' => $bc_fournisseurs_with_factures_payes
+            ])->execute();
+            foreach ($virements_back_to_back as $value) {
+
+                $final_virement[] = [
+                    'virement' => $value,
+                    'raison' => 'back to back | poids: ' . $value->getConsultant()->getPoids() . ' | facture client Payé'
+                ];
+
+
+            }
+//end verif back to back
+//4- verif groupe 15-30
+            $echeance_15_30 = $em->getRepository('AppBundle:Echeance')->findOneBy([
+                'nom' => '15-30'
+
+            ]);
+            $virement_echeance_15_30 = $em->CreateQuery('
+        SELECT v FROM AppBundle:Virement v 
+        JOIN v.consultant c
+        JOIN v.bcfournisseur b
+        JOIN b.facture f      
+        WHERE v.consultant = c.id
+        AND v.bcfournisseur = b.id
+        AND v.etat = :etat
+        AND b.facture = f.id
+        AND v.consultant IN (:consultants)
+        AND f.datetimesheet IS NOT NULL 
+        AND c.autoVirement = true
+        AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) > :maxday
+        
+        ORDER BY c.poids DESC, DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) DESC 
+        ')->setParameters([
+                'etat' => 'en attente',
+                'consultants' => $echeance_15_30->getConsultants()->toArray(),
+//                'minday' => $echeance_15_30->getCondition(),
+                'maxday' => $echeance_15_30->getMax(),
+            ])->execute();
+
+            dump($virement_echeance_15_30);
+            foreach ($virement_echeance_15_30 as $value) {
+
+                $final_virement[] = [
+                    'virement' => $value,
+                    'raison' => 'groupe 15-30 | poids: ' . $value->getConsultant()->getPoids() . ' | 30 < TS | trésorie non active'
+                ];
+
+
+            }
+// end verif 2
+//3- verif immediat groupe
+            $echeance_immediat = $em->getRepository('AppBundle:Echeance')->findOneBy([
+                'nom' => 'immediat'
+
+            ]);
+
+//            dump($echeance_immediat);
+
+
+            $virement_echeance_immediat = $em->CreateQuery('
+        SELECT v FROM AppBundle:Virement v 
+        JOIN v.consultant c
+        JOIN v.bcfournisseur b
+        JOIN b.facture f      
+        WHERE v.consultant = c.id
+        AND v.bcfournisseur = b.id
+        AND v.etat = :etat
+        AND b.facture = f.id
+        AND v.consultant IN (:consultants)
+        AND f.datetimesheet IS NOT NULL 
+        AND c.autoVirement = true
+        AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) > :maxday 
+        ORDER BY c.poids DESC, DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) DESC 
+        ')->setParameters([
+                'etat' => 'en attente',
+                'consultants' => $echeance_immediat->getConsultants()->toArray(),
+//                'minday' => $echeance_immediat->getCondition(),
+                'maxday' => $echeance_immediat->getMax(),
+            ])->execute();
+
+            dump($virement_echeance_immediat);
+            foreach ($virement_echeance_immediat as $value) {
+
+                $final_virement[] = [
+                    'virement' => $value,
+                    'raison' => 'groupe Immédiat | poids: ' . $value->getConsultant()->getPoids() . ' | 15 < TS'
+                ];
+
+
+            }
+
+            //end immediat groupe
+
+            //2- verif echeance 2
+
+            $echeance_31_60 = $em->getRepository('AppBundle:Echeance')->findOneBy([
+                'nom' => '31-60'
+
+            ]);
+
+            $consultants_2nd_echeance = $em->CreateQuery('
+        SELECT c FROM AppBundle:Consultant c 
+        WHERE c IN (:consultants)
+        AND c.autoVirement = true
+       
+        
+        ')->setParameters([
+
+                'consultants' => $echeance_31_60->getConsultants()->toArray()
+            ])->execute();
+
+            $virement_timesheeet = $em->CreateQuery('
+        SELECT v FROM AppBundle:Virement v 
+        JOIN v.consultant c
+        JOIN v.bcfournisseur b
+        JOIN b.facture f      
+        WHERE v.consultant = c.id
+        AND v.bcfournisseur = b.id
+        AND v.etat = :etat
+        AND b.facture = f.id
+        AND v.consultant IN (:consultants)
+        AND f.datetimesheet IS NOT NULL 
+        AND c.autoVirement = true
+        AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) > :maxday
+        ORDER BY c.poids DESC, DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) DESC 
+        ')->setParameters([
+                'etat' => 'en attente',
+                'consultants' => $echeance_31_60->getConsultants()->toArray(),
+//                'minday' => $echeance_31_60->getCondition(),
+                'maxday' => $echeance_31_60->getMax(),
+            ])->execute();
+            dump($virement_timesheeet);
+            foreach ($virement_timesheeet as $value) {
+
+                $final_virement[] = [
+                    'virement' => $value,
+                    'raison' => 'groupe 31-60 | poids: ' . $value->getConsultant()->getPoids() . ' | TS > 60'
+                ];
+
+
+            }
+//end 2nd echeance
+        }
+
+
+        $data = [
+
+            'date' => new \DateTime(),
+
+        ];
+
+        $form = $this->createFormBuilder($data)
+            ->add('date', DateTimeType::class, [
+                'widget' => 'single_text',
+                'placeholder' => 'Date Début mission',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+                'required' => false,
+                // adds a class that can be selected in JavaScript
+                'attr' => ['class' => 'date-timepicker1'],
+            ])
+            ->add('client', EntityType::class, array(
+                'class' => 'AppBundle:Comptebancaire',
+                'multiple' => false,
+                'label' => 'Compte bancaire',
+                'required' => false,
+                'placeholder' => '--',
+                'attr' => array(
+                    'class' => 'chosen-select',
+                    'data-placeholder' => 'Selectionner',
+                    'multiple' => false
+
+                )
+            ))
+            ->getForm();
+
+
+        dump($virements, $final_virement);
+
+        return $this->render('virement/auto_virement.html.twig', array(
+            'virements' => $final_virement,
+            'fiche' => $fiche,
+            'form' => $form->createView()
+
+        ));
+    }
+
+    /**
+     * Lists all virement entities.
+     *
      * @Route("/", name="virement_index",options={"expose"=true}))
      * @Method("GET")
      */

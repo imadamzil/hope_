@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Fiche;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Fiche controller.
@@ -72,7 +73,45 @@ class FicheController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+    /**
+     * Displays a form to edit an existing fiche entity.
+     *
+     * @Route("/{id}/active", name="fiche_active",options={"expose"=true}))
+     * @Method({"GET"})
+     */
+    public function activeAction(Fiche $fiche)
+    {
 
+
+        $fiche->getActive() == false ? $fiche->setActive(true) : $fiche->setActive(false);
+//dump($fiche);die();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($fiche);
+        $em->flush();
+
+        return $this->redirectToRoute('fiche_index');
+
+    }  /**
+     * Displays a form to edit an existing fiche entity.
+     *
+     * @Route("/{id}/active1", name="fiche_active1",options={"expose"=true}))
+     * @Method({"GET"})
+     */
+    public function active1Action(Fiche $fiche)
+    {
+
+
+        $fiche->getActive() == false ? $fiche->setActive(true) : $fiche->setActive(false);
+//dump($fiche);die();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($fiche);
+        $em->flush();
+
+        return $this->redirectToRoute('virement_auto');
+
+    }
     /**
      * Displays a form to edit an existing fiche entity.
      *
@@ -97,6 +136,8 @@ class FicheController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
+
 
     /**
      * Deletes a fiche entity.
@@ -130,7 +171,6 @@ class FicheController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('fiche_delete', array('id' => $fiche->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

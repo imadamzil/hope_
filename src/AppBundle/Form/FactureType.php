@@ -59,6 +59,15 @@ class FactureType extends AbstractType
 
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'date-timepicker1'],
+            ]) ->add('datetimesheet', DateTimeType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date Timesheet',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+                'required' => false,
+
+                // adds a class that can be selected in JavaScript
+                'attr' => ['class' => 'date-timepicker1'],
             ])
             ->add('client', EntityType::class, array(
                 'class' => 'AppBundle:Client',

@@ -34,6 +34,12 @@ class Echeance
      * @ORM\Column(name="min", type="integer", nullable=true)
      */
     private $min;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cond", type="integer", nullable=true)
+     */
+    private $condition;
 
     /**
      * @var int
@@ -175,5 +181,29 @@ class Echeance
     {
 
         return $this->getNom();
+    }
+
+    /**
+     * Set condition
+     *
+     * @param integer $condition
+     *
+     * @return Echeance
+     */
+    public function setCondition($condition)
+    {
+        $this->condition = $condition;
+
+        return $this;
+    }
+
+    /**
+     * Get condition
+     *
+     * @return integer
+     */
+    public function getCondition()
+    {
+        return $this->condition;
     }
 }

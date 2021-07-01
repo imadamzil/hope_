@@ -60,7 +60,7 @@ class BcfournisseurController extends Controller
 
             $projet = $bcfournisseur->getProjet();
 
-            if ($projet) {
+            if ($projet and  $projet->getProjetconsultants()->count() == 1) {
 
                 if ($projet->getProjetconsultants()->count() == 1) {
                     $projet->getFactures()->count() == 1 ? $facture = $projet->getFactures()->last() : $facture = null;
@@ -113,9 +113,32 @@ class BcfournisseurController extends Controller
                 }
 
             }
+            $nb = count($em->getRepository('AppBundle:Bcfournisseur')->findBy(array(
+
+                'mois' => $bcfournisseur->getMois(),
+                'year' => $bcfournisseur->getYear(),
+            )));
+            $bcfournisseur->setCode('BC-' . substr($bcfournisseur->getYear(), -2) . '-' . str_pad($bcfournisseur->getMois(), 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb + 1, 3, '0', STR_PAD_LEFT));
 
 
-            $em->persist($bcfournisseur);
+            $em->persist($bcfournisseur); $em->flush();
+            $facturefournisseur = new Facturefournisseur();
+            $facturefournisseur->setBcfournisseur($bcfournisseur);
+            $facturefournisseur->setYear($bcfournisseur->getYear());
+            $facturefournisseur->setDate($bcfournisseur->getDate());
+            $facturefournisseur->setTaxe($bcfournisseur->getTaxe());
+            $facturefournisseur->setAchatTTC($bcfournisseur->getAchatTTC());
+            $facturefournisseur->setAchatHT($bcfournisseur->getAchatHT());
+            $facturefournisseur->setNbjours($bcfournisseur->getNbjours());
+            $facturefournisseur->setMois($bcfournisseur->getMois());
+            $facturefournisseur->setProjet($projet);
+            $facturefournisseur->setAchatHT($bcfournisseur->getAchatHT());
+            $facturefournisseur->setAchatTTC($facturefournisseur->getAchatHT() * 1.2);
+            $facturefournisseur->setTaxe($facturefournisseur->getAchatHT() * 0.2);
+            $facturefournisseur->setFournisseur($bcfournisseur->getFournisseur());
+            $facturefournisseur->setConsultant($bcfournisseur->getConsultant());
+
+            $em->persist($facturefournisseur);
             $em->flush();
 
 

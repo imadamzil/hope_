@@ -220,7 +220,7 @@
 
 
                                                 </td>
-                                                <td class="hidden-480">
+                                                <td class="hidden-480 totalAchat">
                                                     {% if virement.achat is null %}
                                                         --
                                                     {% else %}
@@ -231,7 +231,7 @@
 
                                                 </td>
 
-                                                <td>
+                                                <td class="etat">
 
                                                     {% if virement.etat is null %}
                                                         --
@@ -268,7 +268,8 @@
                                                         </a>
 
 
-                                                        <a class="red delete-confirm" href="{{ path('virement_remove', { 'id': virement.id }) }}"
+                                                        <a class="red delete-confirm"
+                                                           href="{{ path('virement_remove', { 'id': virement.id }) }}"
                                                            onclick="return confirm('Vous êtes sûr que vous voulez le supprimé?');">
                                                             <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                                         </a>
@@ -325,7 +326,7 @@
                                     </table>
                                     {% if is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') %}
                                         <div class="row">
-                                            <div class="col-md-4"></div>
+                                            <div class="col-md-4 count"></div>
                                             <div class="col-md-4">
 
                                                 <a href="#" data-action="settings" id="vir"
@@ -366,7 +367,7 @@
                                                 <div class="col-md-12">
                                                     {{ form_start(form) }}
                                                     {{ form_widget(form) }}
-                                                    <input type="submit" value="Create"/>
+                                                    <input type="submit" value="Create" style="display: none"/>
                                                     {{ form_end(form) }}
 
                                                 </div>
@@ -458,6 +459,8 @@
                             url: '//cdn.datatables.net/plug-ins/1.10.16/i18n/French.json'
 
                         },
+                        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+
                         bAutoWidth: false,
                         "aoColumns": [
                             {"bSortable": true},
@@ -584,17 +587,48 @@
                 return 'left';
             }
 
+            var checked_array = $("#dynamic-table input:checkbox:checked");
+//            console.log(checked_array);
+            var total_virement = 0;
             myTable.on('select', function (e, dt, type, index) {
                 if (type === 'row') {
                     $(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
+                    var index_achat = parseInt($(myTable.row(index).node()).find('td.totalAchat').text()) ;
+                    var etat = $.trim($(myTable.row(index).node()).find('td.etat').text().toString()) ;
+                    if(etat == 'executé'){
+                        swal({
+                            title: "Attention!",
+                            text: "Vous avez choisi virement avec statut : Executé !",
+                            icon: "error",
+                            button: "compris!",
+                        });
+                    }else {
+
+
+                    }
+//                    console.log(etat);
+
+                    total_virement += index_achat;
+
                 }
+                console.log(total_virement);
+                $('.count').empty();
+                $('.count').append('<span class="text-center green bold"><i class="fa fa-info"></i> Total virements : ' + total_virement + ' DH</span>');
+
             });
             myTable.on('deselect', function (e, dt, type, index) {
                 if (type === 'row') {
                     $(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
-                }
-            });
+                    var index_achat1 = parseInt($(myTable.row(index).node()).find('td.totalAchat').text()) ;
+                    total_virement = total_virement - index_achat1;
 
+                }
+                console.log(total_virement);
+
+                $('.count').empty();
+                $('.count').append('<span class="text-center green bold"><i class="fa fa-info"></i> Total virements : ' + total_virement + ' DH</span>');
+
+            });
 
             /////////////////////////////////
             //table checkboxes
@@ -603,13 +637,14 @@
             //select/deselect all rows according to table header checkbox
             $('#dynamic-table > thead > tr > th input[type=checkbox], #dynamic-table_wrapper input[type=checkbox]').eq(0).on('click', function () {
                 var th_checked = this.checked;//checkbox inside "TH" table header
-
                 $('#dynamic-table').find('tbody > tr').each(function () {
+
                     var row = this;
                     if (th_checked) myTable.row(row).select();
                     else  myTable.row(row).deselect();
                 });
             });
+            console.log(total_virement);
 
             //select/deselect a row when the checkbox is checked/unchecked
             $('#dynamic-table').on('click', 'td input[type=checkbox]', function () {
@@ -743,8 +778,7 @@
                         console.log(response);
 
 
-
-                            location.href = Routing.generate('virementf_show', {'id': response.id});
+                        location.href = Routing.generate('virementf_show', {'id': response.id});
 
 //
 
@@ -790,7 +824,7 @@
                         text: 'This record and it`s details will be permanantly deleted!',
                         icon: 'warning',
                         buttons: ["Cancel", "Yes!"],
-                    }).then(function(value) {
+                    }).then(function (value) {
                         if (value) {
                             window.location.href = url;
                         }

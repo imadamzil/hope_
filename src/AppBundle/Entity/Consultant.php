@@ -61,9 +61,9 @@ class Consultant
     private $tjm;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="echeance", type="string", length=255, nullable=true)
+     * @ORM\Column(name="marge", type="float", nullable=true)
      */
     private $marge;
     /**
@@ -91,6 +91,12 @@ class Consultant
      */
     private $natureMission;
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="client", type="boolean", nullable=true)
+     */
+    private $client;
+    /**
      * @var string
      *
      * @ORM\Column(name="cin", type="string", length=255, nullable=true)
@@ -117,6 +123,12 @@ class Consultant
      * @ORM\Column(name="adresse", type="text",nullable=true)
      */
     private $adresse;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="direct", type="boolean",nullable=true)
+     */
+    private $direct;
     /**
      * @ORM\ManyToOne(targetEntity="Echeance", inversedBy="consultants")
      * @ORM\JoinColumn(name="id_echeance", referencedColumnName="id")
@@ -415,6 +427,7 @@ class Consultant
         $this->createdAt = new \DateTime();
         $this->autoVirement = false;
         $this->natureMission = false;
+        $this->direct = false;
     }
 
     /**
@@ -1060,12 +1073,63 @@ class Consultant
     {
         $poids = null;
         $anciente = $this->getAnciennte();
-        $this->getNatureMission() ? $natureMission = 1 : $natureMission = 0;
+
+        $this->getNatureMission() ==true ? $natureMission = 1 : $natureMission = 0;
+        $this->getDirect()==true ? $direct = 1 : $direct = 0;
+        $this->getClient()==true ? $client = 1 : $client = 0;
         $marge = $this->getMarge();
-        $somme = $anciente + $natureMission + $marge;
+        $somme = $anciente + $natureMission + $marge + $direct +$client;
         $poids = floatval($somme);
 
 
         return $poids;
+    }
+
+    /**
+     * Set direct
+     *
+     * @param string $direct
+     *
+     * @return Consultant
+     */
+    public function setDirect($direct)
+    {
+        $this->direct = $direct;
+
+        return $this;
+    }
+
+    /**
+     * Get direct
+     *
+     * @return string
+     */
+    public function getDirect()
+    {
+        return $this->direct;
+    }
+
+    /**
+     * Set client
+     *
+     * @param boolean $client
+     *
+     * @return Consultant
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return boolean
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 }

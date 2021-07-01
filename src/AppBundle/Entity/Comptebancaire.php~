@@ -48,6 +48,43 @@ class Comptebancaire
      * @ORM\Column(name="label", type="string", length=255, nullable=true)
      */
     private $label;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=255, nullable=true)
+     */
+    private $code;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
+     */
+    private $adresse;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pays", type="string", length=255, nullable=true)
+     */
+    private $pays;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero_compte", type="string", length=255, nullable=true)
+     */
+    private $numeroCompte;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="swift_code", type="string", length=255, nullable=true)
+     */
+    private $swiftCode;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code_rib", type="string", length=255, nullable=true)
+     */
+    private $codeRib;
+
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Facture", mappedBy="comptebancaire",cascade={"persist", "remove"})
@@ -243,5 +280,149 @@ class Comptebancaire
     public function getVirements()
     {
         return $this->virements;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return Comptebancaire
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set adresse
+     *
+     * @param string $adresse
+     *
+     * @return Comptebancaire
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse
+     *
+     * @return string
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     *
+     * @return Comptebancaire
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string
+     */
+    public function getPays()
+    {
+        return $this->pays;
+    }
+
+    /**
+     * Set numeroCompte
+     *
+     * @param string $numeroCompte
+     *
+     * @return Comptebancaire
+     */
+    public function setNumeroCompte($numeroCompte)
+    {
+        $this->numeroCompte = $numeroCompte;
+
+        return $this;
+    }
+
+    /**
+     * Get numeroCompte
+     *
+     * @return string
+     */
+    public function getNumeroCompte()
+    {
+        return $this->numeroCompte;
+    }
+
+    /**
+     * Set swiftCode
+     *
+     * @param string $swiftCode
+     *
+     * @return Comptebancaire
+     */
+    public function setSwiftCode($swiftCode)
+    {
+        $this->swiftCode = $swiftCode;
+
+        return $this;
+    }
+
+    /**
+     * Get swiftCode
+     *
+     * @return string
+     */
+    public function getSwiftCode()
+    {
+        return $this->swiftCode;
+    }
+
+    /**
+     * Set codeRib
+     *
+     * @param string $codeRib
+     *
+     * @return Comptebancaire
+     */
+    public function setCodeRib($codeRib)
+    {
+        $this->codeRib = $codeRib;
+
+        return $this;
+    }
+
+    /**
+     * Get codeRib
+     *
+     * @return string
+     */
+    public function getCodeRib()
+    {
+        return $this->codeRib;
     }
 }

@@ -57,9 +57,39 @@ class FactureEditType extends AbstractType
             ))
             ->add('date', DateTimeType::class, [
                 'widget' => 'single_text',
-                'placeholder' => 'Date Facture',
+                'label' => 'Date Facture',
                 // prevents rendering it as type="date", to avoid HTML5 date pickers
                 'html5' => false,
+                'required' => false,
+
+                // adds a class that can be selected in JavaScript
+                'attr' => ['class' => 'date-timepicker1'],
+            ])
+            ->add('datedepot', DateTimeType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date Dépot',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+                'required' => false,
+
+                // adds a class that can be selected in JavaScript
+                'attr' => ['class' => 'date-timepicker1'],
+            ])
+            ->add('datepaiement', DateTimeType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date Paiement',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+                'required' => false,
+
+                // adds a class that can be selected in JavaScript
+                'attr' => ['class' => 'date-timepicker1'],
+            ])  ->add('datetimesheet', DateTimeType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date Timesheet',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+                'required' => false,
 
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'date-timepicker1'],

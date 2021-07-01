@@ -13,7 +13,7 @@
                 <div class="widget-box transparent">
                     <div class="widget-header widget-header-large">
                         <h3 class="widget-title grey lighter">
-                            <i class="ace-icon fa fa-leaf green"></i>
+                            <i class="ace-icon fa fa-money blue"></i>
                             Facture
                         </h3>
 
@@ -36,12 +36,21 @@
                                 </a>
                             </div>
                         {% endif %}
-                        {% if facture.mission is not null and facture.nbjour == 0 %}
+                        {% if facture.mission is not null and facture.nbjour == 0 and facture.devise ==0 %}
                             <div class="widget-toolbar hidden-480">
                                 <a href="{{ path('facture_print_hs', { 'id': facture.id }) }}" target="_blank">
                                     <i class="ace-icon fa fa-print"></i>
                                 </a>
                             </div>
+
+                        {% endif %}
+                        {% if facture.mission is not null and facture.nbjour == 0 and facture.devise ==1 %}
+                            <div class="widget-toolbar hidden-480">
+                                <a href="{{ path('facture_print', { 'id': facture.id }) }}" target="_blank">
+                                    <i class="ace-icon fa fa-print"></i>
+                                </a>
+                            </div>
+
                         {% endif %}
 
 
@@ -321,7 +330,7 @@
 
                                     <h4 class="">
                                         Taxe :
-                                        <span class="red">{{ facture.totalHT*0.2 }}  {% if facture.mission.devise is not null %}
+                                        <span class="red">{{ facture.taxe }}  {% if facture.mission.devise is not null %}
 
 
                                                 {{ facture.mission.devise }}
@@ -412,5 +421,197 @@
 
         <!-- PAGE CONTENT ENDS -->
     </div>
+    <center>
+        <div class="hidden-sm hidden-xs action-buttons">
+<div class="flex">
 
+
+</div>
+            {% if facture.documentName is null %}
+                <a class="red"
+                   href="{{ path('facture_sheet', { 'id': facture.id }) }}"
+                   title="Uploader le timesheet">
+                    <i class="ace-icon fa fa-cloud-upload bigger-130"></i>
+                </a>
+            {% else %}
+                <a title="Télécharger le Timesheet" class="purple"
+                   href="{{ asset('uploads/documents/')~facture.documentName }}">
+                   Télécharger TS <i class="ace-icon fa fa-download bigger-130"></i>
+                </a>
+            {% endif %}
+
+            {% if facture.mission is not null and facture.nbjour > 0 %}
+                <a class="grey"
+                   href="{{ path('facture_print', { 'id': facture.id }) }}"
+                   title="Imprimer">
+                  Imprimer  <i class="ace-icon fa fa-print bigger-130"></i>
+                </a>
+            {% endif %}
+            {% if facture.mission is not null and facture.nbjour == 0 %}
+                <a class="grey"
+                   href="{{ path('facture_print_hs', { 'id': facture.id }) }}"
+                   title="Imprimer">
+                    Imprimer<i class="ace-icon fa fa-print bigger-130"></i>
+                </a>
+            {% endif %}
+            {% if facture.projet is not null %}
+                <a class="grey"
+                   href="{{ path('facture_print_projet', { 'id': facture.id }) }}"
+                   title="Imprimer">
+                  Imprimer  <i class="ace-icon fa fa-print bigger-130"></i>
+                </a>
+            {% endif %}
+            {% if facture.etat !='payé' %}
+
+                <a href="{{ path('facture_payer', { 'id': facture.id }) }}"
+                   onclick="return confirm('Etes Vous sur que cette Facture est payée ?');"
+                   class="tooltip-error" data-rel="tooltip"
+                   title="" id=""
+                   data-original-title="-> DH">
+																				<span class="green">
+																				Marquer comme payé	<i class="ace-icon fa fa-check-square bigger-120"></i>
+																				</span>
+                </a>
+
+            {% endif %}
+            {% if is_granted('ROLE_MANAGER') or is_granted('ROLE_ADMIN') %}
+                {% if facture.projet is null and facture.etat != 'payé' %}
+
+                    {% if facture.facturehsups | length != 0 %}
+                        <a class="orange"
+                           href="{{ path('facture_edit_hs', { 'id': facture.id }) }}"
+                           title="modifier">
+                          Modifier  <i class="ace-icon fa fa-pencil bigger-130"></i>
+                        </a>
+                    {% else %}
+                        <a class="orange"
+                           href="{{ path('facture_edit', { 'id': facture.id }) }}"
+                           title="modifier">
+                          Modifier  <i class="ace-icon fa fa-pencil bigger-130"></i>
+                        </a>
+                    {% endif %}
+                {% else %}
+                    {% if facture.client =='MEDI TELECOM' and facture.etat != 'payé' %}
+                        <a class="orange"
+                           href="{{ path('facture_edit_projet', { 'id': facture.id }) }}"
+                           title="modifier">
+                          Modifier  <i class="ace-icon fa fa-pencil bigger-130"></i>
+                        </a>
+
+                    {% endif %}
+                    {% if facture.client =='PCS invest' and facture.etat != 'payé' %}
+                        <a class="orange"
+                           href="{{ path('facture_edit_projet', { 'id': facture.id }) }}"
+                           title="modifier">
+                            <i class="ace-icon fa fa-pencil bigger-130"></i>
+                        </a>
+
+                    {% endif %}
+
+                {% endif %}
+                {% if facture.mission is not null and facture.mission.devise !='DH' and facture.mission.devise is not null and facture.totalDH is null %}
+
+                    <a href="#my-moda{{ facture.id }}" role="button"
+                       class=""
+                       data-toggle="modal">
+                        <i class="ace-icon fa fa-exchange bigger-100 purple"></i>
+                    </a>
+                    <div id="my-moda{{ facture.id }}" class="modal fade"
+                         tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close"
+                                            data-dismiss="modal"
+                                            aria-hidden="true">&times;
+                                    </button>
+                                    <h3 class="smaller lighter blue no-margin">
+                                        {{ facture.totalTTC }} {{ facture.mission.devise }}
+                                        -> DH </h3>
+                                </div>
+
+                                <div class="modal-body">
+
+
+                                    <input type="hidden"
+                                           id="id_val{{ facture.id }}"
+                                           value="{{ facture.id }}"
+                                           class="form-control">
+                                    <input type="text"
+                                           id="montant{{ facture.id }}"
+                                           placeholder="Total en DH"
+                                           class="form-control">
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button class="btn btn-sm btn-success ok pull-right"
+                                            id="{{ facture.id }}">
+                                        <i class="ace-icon fa fa-check"></i>
+                                        Enregistrer
+                                    </button>
+                                    <button class="btn btn-sm btn-danger pull-left"
+                                            data-dismiss="modal">
+                                        <i class="ace-icon fa fa-times"></i>
+                                        Close
+                                    </button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div>
+
+
+                {% endif %}
+
+            {% endif %}
+
+            <div class="hidden-md hidden-lg">
+                <div class="inline pos-rel">
+                    <button class="btn btn-minier btn-yellow dropdown-toggle"
+                            data-toggle="dropdown"
+                            data-position="auto">
+                        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                        <li>
+                            <a href="#" class="tooltip-info"
+                               data-rel="tooltip"
+                               title=""
+                               data-original-title="View">
+                                                    <span class="blue">
+                                                        <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                    </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="tooltip-success"
+                               data-rel="tooltip" title=""
+                               data-original-title="Edit">
+																				<span class="green">
+																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																				</span>
+                            </a>
+                        </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li>
+                                <a href="{{ path('facture_remove', { 'id': facture.id }) }}"
+                                   class="tooltip-error" data-rel="tooltip"
+                                   title=""
+                                   data-original-title="Delete">
+																				<span class="red">
+																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																				</span>
+                                </a>
+                            </li>
+
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </center>
 {% endblock %}

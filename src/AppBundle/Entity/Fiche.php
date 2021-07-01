@@ -41,6 +41,12 @@ class Fiche
      * @ORM\Column(name="activite", type="string", length=255, nullable=true)
      */
     private $activite;
+/**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=true)
+     */
+    private $active;
 
     /**
      * @var string
@@ -340,5 +346,29 @@ class Fiche
     public function getRc()
     {
         return $this->rc;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     *
+     * @return Fiche
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }

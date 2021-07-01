@@ -5,29 +5,33 @@
 
    {% block menu_active %}    Liste {% endblock %}
 {% block content %}
-    <h1 class="text-center">Fiches list</h1>
+    <h1 class="text-center">Fiche Détails</h1>
     <div class="row">
         <div class="col-md-3 col-md-offset-9">
-            <a href="{{ path('fiche_new') }}" class="btn btn-white btn-primary btn-block"><i
-                        class="fa fa-plus-circle"></i> Ajouteur une fiche</a>
+            {% if fiches |length == 0 %}
+                <a href="{{ path('fiche_new') }}" class="btn btn-white btn-primary btn-block"><i
+                            class="fa fa-plus-circle"></i> Ajouteur une fiche</a>
+
+            {% endif %}
         </div>
     </div>
     <hr>
     <table class="table table-striped table-bordered table-hover dataTable no-footer text-left">
         <thead>
-            <tr>
-                <th>#</th>
-                <th>Nom</th>
-                <th>Raisonsocial</th>
-                <th>Activite</th>
-                <th>Adresse</th>
-                <th>Capital</th>
-                <th>Ice</th>
-                <th>Iff</th>
-                <th>Cnss</th>
-                <th>Rib</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Raisonsocial</th>
+            <th>Trésorie active ?</th>
+            <th>Activite</th>
+            <th>Adresse</th>
+            <th>Capital</th>
+            <th>Ice</th>
+            <th>Iff</th>
+            <th>Cnss</th>
+            <th>Rib</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for fiche in fiches %}
@@ -35,6 +39,36 @@
                 <td><a href="{{ path('fiche_show', { 'id': fiche.id }) }}">{{ fiche.id }}</a></td>
                 <td>{{ fiche.nom }}</td>
                 <td>{{ fiche.raisonSocial }}</td>
+                <td>
+                    {% if fiche.active is null %}
+                        --
+
+                    {% else %}
+
+
+
+                        <div class="text-center">
+                            <label class="text-center">
+                                <input id="gritter-light"
+                                        {% if fiche.active == 1 %}
+
+                                            checked="checked"
+
+                                        {% endif %}
+                                       value="{{ fiche.active }}"
+                                       type="checkbox" data-id="{{ fiche.id }}"
+                                       class="ace ace-switch ace-switch-5 switch">
+                                <span class="lbl middle"></span>
+                            </label>
+                        </div>
+
+
+
+
+
+                    {% endif %}
+                </td>
+
                 <td>{{ fiche.activite }}</td>
                 <td>{{ fiche.adresse }}</td>
                 <td>{{ fiche.capital }}</td>
@@ -43,10 +77,10 @@
                 <td>{{ fiche.cnss }}</td>
                 <td>{{ fiche.rib }}</td>
                 <td>
-                            <a href="{{ path('fiche_show', { 'id': fiche.id }) }}"><i class="fa fa-search-plus bigger-140"></i></a>
+                    <a href="{{ path('fiche_show', { 'id': fiche.id }) }}"><i class="fa fa-search-plus bigger-140"></i></a>
 
 
-                            <a href="{{ path('fiche_edit', { 'id': fiche.id }) }}"><i class="fa fa-edit bigger-140 orange"></i></a>
+                    <a href="{{ path('fiche_edit', { 'id': fiche.id }) }}"><i class="fa fa-edit bigger-140 orange"></i></a>
 
 
                 </td>
@@ -55,5 +89,27 @@
         </tbody>
     </table>
 
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery(function ($) {
+//            alert('ok');
+
+
+            $('.switch').click(function () {
+                valeur = $(this).val();
+//                alert('ok');
+                var url = Routing.generate('fiche_active', {id: $(this).data("id")});
+                location.href = url;
+
+            });
+
+        });
+
+
+    </script>
 
 {% endblock %}

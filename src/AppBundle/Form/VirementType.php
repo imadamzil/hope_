@@ -28,6 +28,7 @@ class VirementType extends AbstractType
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'date-timepicker1'],
             ])
+            ->add('code')
             ->add('etat', ChoiceType::class, array(
                 'choices' => array(
                     'Executé' => 'executé',
@@ -50,7 +51,7 @@ class VirementType extends AbstractType
 
                 )
             ))
-           /* ->add('bcfournisseur', EntityType::class, array(
+            ->add('bcfournisseur', EntityType::class, array(
                 'class' => 'AppBundle:Bcfournisseur',
                 'multiple' => false,
                 'label' => 'Bon de commande fournisseur',
@@ -60,7 +61,7 @@ class VirementType extends AbstractType
                     'multiple' => false
 
                 )
-            ))*/
+            ))
 
         /*    ->add('facturefournisseur', EntityType::class, [
                 'class' => 'AppBundle:Facturefournisseur',

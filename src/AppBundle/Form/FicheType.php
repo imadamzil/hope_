@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FicheType extends AbstractType
@@ -16,6 +18,11 @@ class FicheType extends AbstractType
     {
         $builder->add('nom')
             ->add('raisonSocial')
+
+            ->add('active', CheckboxType::class, [
+                'label'    => 'Trésorerie active?',
+                'required' => false,
+            ])
             ->add('activite')
             ->add('adresse')
             ->add('capital')
