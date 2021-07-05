@@ -6,6 +6,10 @@ use AppBundle\Entity\Bcclient;
 use AppBundle\Entity\Bcfournisseur;
 use AppBundle\Entity\Client;
 use AppBundle\Entity\Consultant;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use AppBundle\Entity\Facture;
 use AppBundle\Entity\Facturefournisseur;
 use AppBundle\Entity\Fournisseur;
@@ -741,12 +745,20 @@ class DefaultController extends Controller
     public function commandeAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $vir = $em->getRepository('AppBundle:Virement')->findOneBy([
+        $consultant = $em->getRepository('AppBundle:Facture')->findOneBy([
 
-            'etat' => 'en attente'
+
         ]);
+//        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
 
-//        dump($vir->getFacturefournisseur()->getBcfournisseur()->getFacture()->getTotalHT());
+        $serializer = new Serializer($normalizers);
+        $data = $serializer->normalize($consultant, null, ['groups' => 'group1']);
+
+
+
+        dump($data);
+
         die();
         return new Response($res);
     }

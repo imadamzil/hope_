@@ -398,7 +398,7 @@
                                                                 {% endif %}
 
                                                             {% endif %}
-                                                            {% if facture.mission is not null and facture.mission.devise !='DH' and facture.mission.devise is not null and facture.totalDH is null %}
+                                                            {% if facture.mission is not null and facture.mission.devise !='DH' and facture.totalDH is null %}
 
                                                                 <a href="#my-moda{{ facture.id }}" role="button"
                                                                    class=""
@@ -406,7 +406,7 @@
                                                                     <i class="ace-icon fa fa-exchange bigger-100 purple"></i>
                                                                 </a>
                                                                 <div id="my-moda{{ facture.id }}" class="modal fade"
-                                                                     tabindex="-1">
+                                                                     tabindex="1">
                                                                     <div class="modal-dialog">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">

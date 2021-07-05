@@ -2319,12 +2319,19 @@ class FactureController extends Controller
             }
 
 
-            $em->persist($bcfournisseur);
-            $em->flush();
-            $em->persist($facturefournisseur);
-            $em->flush();
-            $em->persist($virement);
-            $em->flush();
+            if ($bcfournisseur){
+                $em->persist($bcfournisseur);
+                $em->flush();
+            }
+           if ($facturefournisseur){
+               $em->persist($facturefournisseur);
+               $em->flush();
+           }
+           if ($virement){
+               $em->persist($virement);
+               $em->flush();
+           }
+
             if ($production) {
 
                 $production->setConsultant($mission->getConsultant());
