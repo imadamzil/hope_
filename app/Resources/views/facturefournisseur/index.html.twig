@@ -230,7 +230,7 @@
 
                                                     {% else %}
 
-                                                        {{ facturefournisseur.achatHT }}
+                                                        {{ facturefournisseur.achatHT | number_format(2, ',', ' ') }}
 
 
                                                     {% endif %}
@@ -241,7 +241,7 @@
 
                                                     {% else %}
 
-                                                        {{ facturefournisseur.achatTTC }}
+                                                        {{ facturefournisseur.achatTTC | number_format(2, ',', ' ') }}
 
 
                                                     {% endif %}
