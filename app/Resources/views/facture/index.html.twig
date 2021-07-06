@@ -603,7 +603,7 @@
                         .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                         .DataTable({
                             initComplete: function () {
-                                this.api().columns([4, 8]).every(function () {
+                                this.api().columns([4, 9]).every(function () {
                                     var column = this;
                                     var select = $('<select><option value="">--</option></select>')
                                         .appendTo($(column.header()))

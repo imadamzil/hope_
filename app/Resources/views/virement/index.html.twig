@@ -110,7 +110,7 @@
                                             </th>
 
 
-                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                            <th class="hidden-480 sorting_disabled" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
                                                 Mois
@@ -126,7 +126,7 @@
                                                 AchatTTC
                                             </th>
 
-                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                            <th class="hidden-480 no-sort sorting_disabled" tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
                                                 Etat
@@ -151,7 +151,7 @@
                                                 <td>
 
 
-                                                    #virement_ {{ virement.id }}
+                                                    #{{ virement.id }}
 
 
                                                 </td>
@@ -467,7 +467,10 @@
                             {"bSortable": false}
                         ],
                         "aaSorting": [],
-
+                        "columnDefs": [ {
+                            "targets": 'no-sort',
+                            "orderable": false,
+                        } ],
 
                         //"bProcessing": true,
                         //"bServerSide": true,
