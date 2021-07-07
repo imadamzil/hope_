@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Facturefournisseur controller.
@@ -59,6 +61,8 @@ class FacturefournisseurController extends Controller
 
         ));
     }
+
+
 
     /**
      * Creates a new facturefournisseur entity.

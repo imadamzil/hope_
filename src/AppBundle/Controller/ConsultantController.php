@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -52,7 +53,63 @@ class ConsultantController extends Controller
 //        dump($consultants[0]->calculePoids());
         return $this->redirectToRoute('consultant_index');
     }
+    /**
+     * Creates a new facturefournisseur entity.
+     *
+     * @Route("/getData", name="consultant_data")
+     * @Method({"GET", "POST"})
+     */
+    public function getDataAction(Request $request)
+    {
 
+        $em = $this->getDoctrine()->getManager();
+
+        $facturefournisseurs = $em->getRepository('AppBundle:Consultant')->findAll();
+
+        foreach ($facturefournisseurs as $key=>$facturefournisseur) {
+
+//            $array[$key][]= $facturefournisseur->getId();
+            $array[$key][]= $facturefournisseur->getNom();
+            $array[$key][]= $facturefournisseur->getEmail();
+            $array[$key][]= $facturefournisseur->getAdresse();
+            $array[$key][]= $facturefournisseur->getTel();
+            $array[$key][]= $facturefournisseur->getType();
+            $array[$key][]= $facturefournisseur->getRib();
+            if ($facturefournisseur->getEcheance()){
+                $array[$key][]= $facturefournisseur->getEcheance()->getNom();
+
+            }else{
+                $array[$key][]= null;
+            }
+
+          if ($facturefournisseur->getAutoVirement()){
+              $array[$key][]='--';
+
+          }else{
+              if ($facturefournisseur->getAutoVirement() == 1){
+                  $array[$key][]='<div class="text-center"><label class="text-center"><input id="gritter-light" value="'.$facturefournisseur->getAutoVirement().'" type="checkbox" checked="checked" data-id="'.$facturefournisseur->getId().'" class="ace ace-switch ace-switch-5 switch"> <span class="lbl middle"></span></label></div>';
+
+              }else{
+                  $array[$key][]='<div class="text-center"><label class="text-center"><input id="gritter-light" value="'.$facturefournisseur->getAutoVirement().'" type="checkbox" data-id="'.$facturefournisseur->getId().'" class="ace ace-switch ace-switch-5 switch"> <span class="lbl middle"></span></label></div>';
+
+              }
+
+          }
+
+            $array[$key][]= $facturefournisseur->getAnciennte();
+            $array[$key][]= $facturefournisseur->getPoids();
+            $array[$key][]= $facturefournisseur->getPoids();
+
+
+
+        }
+
+        $response = json_encode(array('data' => $array));
+
+        return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
+    }
     /**
      * Creates a new consultant entity.
      *
