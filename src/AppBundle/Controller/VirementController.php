@@ -33,12 +33,13 @@ class VirementController extends Controller
      */
     public function autoVirementAction()
     {
-        $final_virement = [];
+        $final_virement = null;
         $em = $this->getDoctrine()->getManager();
         $fiche = $em->getRepository('AppBundle:Fiche')->findOneBy([
             'id' => 1
         ]);
-        if ($fiche->getActive()) {
+        dump($fiche->getActive());
+        if ($fiche->getActive() == true) {
 //etat normal tresorie active
 
             $consultants = $em->getRepository('AppBundle:Consultant')->findBy([
@@ -97,12 +98,12 @@ class VirementController extends Controller
                 'bcfournisseurs' => $bc_fournisseurs_with_factures_payes
             ])->execute();
             foreach ($virements_back_to_back as $value) {
-
-                $final_virement[] = [
-                    'virement' => $value,
-                    'raison' => 'back to back | poids: ' . $value->getConsultant()->getPoids() . ' | facture client Payé'
-                ];
-
+                if ($value->getEtat() != 'executé') {
+                    $final_virement[] = [
+                        'virement' => $value,
+                        'raison' => 'back to back | poids: ' . $value->getConsultant()->getPoids() . ' | facture client Payé'
+                    ];
+                }
 
             }
 //end verif back to back
@@ -131,7 +132,7 @@ class VirementController extends Controller
         JOIN b.facture f      
         WHERE v.consultant = c.id
         AND v.bcfournisseur = b.id
-        AND v.etat = :etat
+        AND v IN (:etat)
         AND b.facture = f.id
         AND v.consultant IN (:consultants)
         AND f.datetimesheet IS NOT NULL 
@@ -139,19 +140,20 @@ class VirementController extends Controller
         AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) > :minday
         ORDER BY c.poids DESC, DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) DESC 
         ')->setParameters([
-                'etat' => 'en attente',
+                'etat' => $virements,
                 'consultants' => $echeance_31_60->getConsultants()->toArray(),
                 'minday' => $echeance_31_60->getCondition(),
 //            'maxday' => $echeance_31_60->getMax(),
             ])->execute();
 //            dump($virement_timesheeet);
             foreach ($virement_timesheeet as $value) {
+                if ($value->getEtat() != 'executé') {
+                    $final_virement[] = [
 
-                $final_virement[] = [
-                    'virement' => $value,
-                    'raison' => 'groupe 30-60 | poids: ' . $value->getConsultant()->getPoids() . ' | TS > 53'
-                ];
-
+                        'virement' => $value,
+                        'raison' => 'groupe 30-60 | poids: ' . $value->getConsultant()->getPoids() . ' | TS > 53'
+                    ];
+                }
 
             }
 //end 2nd echeance
@@ -166,34 +168,37 @@ class VirementController extends Controller
 
             $virement_echeance_immediat = $em->CreateQuery('
         SELECT v FROM AppBundle:Virement v 
-        JOIN v.consultant c
+        JOIN v.consultant cc
         JOIN v.bcfournisseur b
         JOIN b.facture f      
-        WHERE v.consultant = c.id
+        WHERE v.consultant = cc.id
         AND v.bcfournisseur = b.id
         AND v.etat = :etat
         AND b.facture = f.id
         AND v.consultant IN (:consultants)
         AND f.datetimesheet IS NOT NULL 
-        AND c.autoVirement = true
+        AND cc.autoVirement = true
         AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) > :minday OR DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) = :minday
         AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) < :maxday
         
-        ORDER BY c.poids DESC, DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) DESC 
+        ORDER BY cc.poids DESC, DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) DESC 
         ')->setParameters([
                 'etat' => 'en attente',
+
                 'consultants' => $echeance_immediat->getConsultants()->toArray(),
                 'minday' => $echeance_immediat->getCondition(),
                 'maxday' => $echeance_immediat->getMax(),
             ])->execute();
 
-//            dump($virement_echeance_immediat);
+            dump($virement_echeance_immediat);
             foreach ($virement_echeance_immediat as $value) {
-
-                $final_virement[] = [
-                    'virement' => $value,
-                    'raison' => 'groupe Immédiat | poids: ' . $value->getConsultant()->getPoids() . ' | 0 <= TS <15'
-                ];
+                if ($value->getEtat() != 'executé') {
+                    if ($value->getEtat() != 'executé') {
+                    $final_virement[] = [
+                        'virement' => $value,
+                        'raison' => 'groupe Immédiat | poids: ' . $value->getConsultant()->getPoids() . ' | 0 <= TS <15'
+                    ];
+                }}
 
 
             }
@@ -229,13 +234,14 @@ class VirementController extends Controller
 
 //            dump($virement_echeance_15_30);
             foreach ($virement_echeance_15_30 as $value) {
-
+                if ($value->getEtat() != 'executé') {
                 $final_virement[] = [
                     'virement' => $value,
                     'raison' => 'groupe 15-30 | poids: ' . $value->getConsultant()->getPoids() . ' | 15 < TS <=30'
                 ];
 
 
+            }
             }
 
         } else {
@@ -296,13 +302,14 @@ class VirementController extends Controller
                 'bcfournisseurs' => $bc_fournisseurs_with_factures_payes
             ])->execute();
             foreach ($virements_back_to_back as $value) {
-
+                if ($value->getEtat() != 'executé') {
                 $final_virement[] = [
                     'virement' => $value,
                     'raison' => 'back to back | poids: ' . $value->getConsultant()->getPoids() . ' | facture client Payé'
                 ];
 
 
+            }
             }
 //end verif back to back
 //4- verif groupe 15-30
@@ -334,13 +341,14 @@ class VirementController extends Controller
 
 //            dump($virement_echeance_15_30);
             foreach ($virement_echeance_15_30 as $value) {
-
+                if ($value->getEtat() != 'executé') {
                 $final_virement[] = [
                     'virement' => $value,
                     'raison' => 'groupe 15-30 | poids: ' . $value->getConsultant()->getPoids() . ' | 30 < TS | trésorie non active'
                 ];
 
 
+            }
             }
 // end verif 2
 //3- verif immediat groupe
@@ -352,14 +360,14 @@ class VirementController extends Controller
 //            dump($echeance_immediat);
 
 
-            $virement_echeance_immediat = $em->CreateQuery('
+            $virement_echeance_immediat1 = $em->CreateQuery('
         SELECT v FROM AppBundle:Virement v 
         JOIN v.consultant c
         JOIN v.bcfournisseur b
         JOIN b.facture f      
         WHERE v.consultant = c.id
         AND v.bcfournisseur = b.id
-        AND v.etat = :etat
+        AND v.etat != :etat
         AND b.facture = f.id
         AND v.consultant IN (:consultants)
         AND f.datetimesheet IS NOT NULL 
@@ -367,21 +375,22 @@ class VirementController extends Controller
         AND DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) > :maxday 
         ORDER BY c.poids DESC, DATE_DIFF(CURRENT_TIMESTAMP(),f.datetimesheet) DESC 
         ')->setParameters([
-                'etat' => 'en attente',
+                'etat' => 'executé',
                 'consultants' => $echeance_immediat->getConsultants()->toArray(),
 //                'minday' => $echeance_immediat->getCondition(),
                 'maxday' => $echeance_immediat->getMax(),
             ])->execute();
 
-//            dump($virement_echeance_immediat);
-            foreach ($virement_echeance_immediat as $value) {
-
+            dump($virement_echeance_immediat1);
+            foreach ($virement_echeance_immediat1 as $value) {
+                if ($value->getEtat() != 'executé') {
                 $final_virement[] = [
                     'virement' => $value,
                     'raison' => 'groupe Immédiat | poids: ' . $value->getConsultant()->getPoids() . ' | 15 < TS'
                 ];
 
 
+            }
             }
 
             //end immediat groupe
@@ -426,13 +435,14 @@ class VirementController extends Controller
             ])->execute();
 //            dump($virement_timesheeet);
             foreach ($virement_timesheeet as $value) {
-
+                if ($value->getEtat() != 'executé') {
                 $final_virement[] = [
                     'virement' => $value,
                     'raison' => 'groupe 31-60 | poids: ' . $value->getConsultant()->getPoids() . ' | TS > 60'
                 ];
 
 
+            }
             }
 //end 2nd echeance
         }
@@ -470,7 +480,7 @@ class VirementController extends Controller
             ->getForm();
 
 
-//        dump($virements, $final_virement);
+        dump($virements, $final_virement);
 
         return $this->render('virement/auto_virement.html.twig', array(
             'virements' => $final_virement,
@@ -599,7 +609,7 @@ class VirementController extends Controller
 
                 $em->flush();
             } else {
-                $msg .= 'Virement déjà existe pour le consultant: <em class="text-info">' . $bc->getConsultant()->getNom() . '</em> mois : <b>'.$bc->getMois().'</b> <hr> ' ;
+                $msg .= 'Virement déjà existe pour le consultant: <em class="text-info">' . $bc->getConsultant()->getNom() . '</em> mois : <b>' . $bc->getMois() . '</b> <hr> ';
 
 
             }
@@ -607,7 +617,7 @@ class VirementController extends Controller
 
         }
 
-        $response = json_encode(array('data' => $Ids, 'bc' => $facturefournisseurs ,'msg'=>$msg));
+        $response = json_encode(array('data' => $Ids, 'bc' => $facturefournisseurs, 'msg' => $msg));
 
         return new Response($response, 200, array(
             'Content-Type' => 'application/json'

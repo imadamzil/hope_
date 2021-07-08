@@ -154,7 +154,7 @@
                                                 AchatTTC
                                             </th>
 
-                                            <th class="hidden-480 sorting" tabindex="0" aria-controls="dynamic-table"
+                                            <th class="hidden-480 sorting " tabindex="0" aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
                                                 Etat
@@ -259,7 +259,7 @@
 
                                                 </td>
 
-                                                <td>
+                                                <td class="etat">
 
                                                     {% if virement['virement'].etat is null %}
                                                         --
@@ -482,7 +482,7 @@
                     .wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                     .DataTable({
                         initComplete: function () {
-                            this.api().columns([4]).every(function () {
+                            this.api().columns([8]).every(function () {
                                 var column = this;
                                 var select = $('<select><option value="" class="pull_right">-- filtrer --</option></select>')
                                     .appendTo($(column.header()))
@@ -640,11 +640,24 @@
                 if (type === 'row') {
                     $(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
                     var index_achat = parseInt($(myTable.row(index).node()).find('td.totalAchat').text());
+                    var etat = $.trim($(myTable.row(index).node()).find('td.etat').text().toString());
+                    if (etat == 'executé') {
+                        swal({
+                            title: "Attention!",
+                            text: "Vous avez choisi virement avec statut : Executé !",
+                            icon: "error",
+                            button: "compris!",
+                        });
+                    } else {
+
+
+                    }
+//                    console.log(etat);
 
                     total_virement += index_achat;
 
                 }
-//                console.log(total_virement);
+                console.log(total_virement);
                 $('.count').empty();
                 $('.count').append('<span class="text-center green bold"><i class="fa fa-info"></i> Total virements : ' + total_virement + ' DH</span>');
 
