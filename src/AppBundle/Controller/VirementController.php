@@ -38,7 +38,7 @@ class VirementController extends Controller
         $fiche = $em->getRepository('AppBundle:Fiche')->findOneBy([
             'id' => 1
         ]);
-        dump($fiche->getActive());
+//        dump($fiche->getActive());
         if ($fiche->getActive() == true) {
 //etat normal tresorie active
 
@@ -190,7 +190,7 @@ class VirementController extends Controller
                 'maxday' => $echeance_immediat->getMax(),
             ])->execute();
 
-            dump($virement_echeance_immediat);
+//            dump($virement_echeance_immediat);
             foreach ($virement_echeance_immediat as $value) {
                 if ($value->getEtat() != 'executé') {
                     if ($value->getEtat() != 'executé') {
@@ -381,7 +381,7 @@ class VirementController extends Controller
                 'maxday' => $echeance_immediat->getMax(),
             ])->execute();
 
-            dump($virement_echeance_immediat1);
+//            dump($virement_echeance_immediat1);
             foreach ($virement_echeance_immediat1 as $value) {
                 if ($value->getEtat() != 'executé') {
                 $final_virement[] = [
@@ -480,7 +480,7 @@ class VirementController extends Controller
             ->getForm();
 
 
-        dump($virements, $final_virement);
+//        dump($virements, $final_virement);
 
         return $this->render('virement/auto_virement.html.twig', array(
             'virements' => $final_virement,
