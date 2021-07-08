@@ -569,49 +569,50 @@ class VirementController extends Controller
 
 
         $Ids = $request->get('idfacturefournisseur');
-//        $Ids = [3,2];
+//        $Ids = [575,577,578];
         $em = $this->getDoctrine()->getManager();
 
         $facturefournisseurs = $em->getRepository('AppBundle:Facturefournisseur')->findBy(array('id' => $Ids));
 
 //        $form = $this->createForm('AppBundle\Form\VirementType', $virement);
 //        $form->handleRequest($request);
+        $msg = null;
         foreach ($facturefournisseurs as $bc) {
-            $virement = new Virement();
-            $virement->setEtat('en attente');
 
-            $virement->setBcfournisseur($bc->getBcfournisseur());
-            $virement->setFacturefournisseur($bc);
-            if ($bc->getProjet()) {
-                $virement->setConsultant($bc->getConsultant());
+            if ($bc->getVirements()->count() == 0) {
+                $virement = new Virement();
+                $virement->setEtat('en attente');
 
+                $virement->setBcfournisseur($bc->getBcfournisseur());
+                $virement->setFacturefournisseur($bc);
+                if ($bc->getProjet()) {
+                    $virement->setConsultant($bc->getConsultant());
+
+                } else {
+
+                    $virement->setConsultant($bc->getMission()->getConsultant());
+
+                }
+                $virement->setAchat($bc->getAchatTTC());
+                $virement->setDate(new \DateTime('now'));
+                $em->persist($virement);
+
+                $em->flush();
             } else {
+                $msg .= 'Virement déjà existe pour le consultant: <em class="text-info">' . $bc->getConsultant()->getNom() . '</em> mois : <b>'.$bc->getMois().'</b> <hr> ' ;
 
-                $virement->setConsultant($bc->getMission()->getConsultant());
 
             }
-            $virement->setAchat($bc->getAchatTTC());
-            $virement->setDate(new \DateTime('now'));
-            $em->persist($virement);
 
-            $em->flush();
 
         }
 
-        $response = json_encode(array('data' => $Ids, 'bc' => $facturefournisseurs));
+        $response = json_encode(array('data' => $Ids, 'bc' => $facturefournisseurs ,'msg'=>$msg));
 
         return new Response($response, 200, array(
             'Content-Type' => 'application/json'
         ));
-        /* if ($form->isSubmitted() && $form->isValid()) {
 
-
-         }
-
-         return $this->render('virement/new.html.twig', array(
-             'virement' => $virement,
-             'form' => $form->createView(),
-         ));*/
     }
 
     /**

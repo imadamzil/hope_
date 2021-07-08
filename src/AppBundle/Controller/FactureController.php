@@ -8,6 +8,7 @@ use AppBundle\Entity\Facturefournisseur;
 use AppBundle\Entity\FactureHsup;
 use AppBundle\Entity\Mission;
 use AppBundle\Entity\Production;
+use AppBundle\Entity\Virement;
 use AppBundle\Form\FactureHsupType;
 use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -796,6 +797,16 @@ class FactureController extends Controller
                 $em->flush();
                 $facture->setEtat('non payé');
                 $em->persist($facture);
+                $em->flush();
+                $virement = new Virement();
+                $virement->setBcfournisseur($bcfournisseur);
+                $virement->setAchat($bcfournisseur->getAchatTTC());
+                $virement->setDate($bcfournisseur->getDate());
+                $virement->setConsultant($bcfournisseur->getConsultant());
+                $virement->setEtat('en attente');
+
+                $virement->setFacturefournisseur($facturefournisseur);
+                $em->persist($virement);
                 $em->flush();
             }
 
@@ -2706,7 +2717,16 @@ class FactureController extends Controller
         $em->persist($facturefournisseur);
 //        dump($facture,$bcfournisseur,$facturefournisseur);die();
         $em->flush();
+        $virement = new Virement();
+        $virement->setBcfournisseur($bcfournisseur);
+        $virement->setAchat($bcfournisseur->getAchatTTC());
+        $virement->setDate($bcfournisseur->getDate());
+        $virement->setEtat('en attente');
 
+        $virement->setConsultant($bcfournisseur->getConsultant());
+        $virement->setFacturefournisseur($facturefournisseur);
+        $em->persist($virement);
+        $em->flush();
         $response = json_encode(array('data' => 'ok'));
 
         return new Response($response, 200, array(

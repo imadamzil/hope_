@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Bcfournisseur;
 use AppBundle\Entity\Facturefournisseur;
+use AppBundle\Entity\Virement;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -60,7 +61,7 @@ class BcfournisseurController extends Controller
 
             $projet = $bcfournisseur->getProjet();
 
-            if ($projet and  $projet->getProjetconsultants()->count() == 1) {
+            if ($projet and $projet->getProjetconsultants()->count() == 1) {
 
                 if ($projet->getProjetconsultants()->count() == 1) {
                     $projet->getFactures()->count() == 1 ? $facture = $projet->getFactures()->last() : $facture = null;
@@ -105,6 +106,16 @@ class BcfournisseurController extends Controller
                     $facturefournisseur->setConsultant($projet_consultant->getConsultant());
 
                     $em->persist($facturefournisseur);
+                    $virement = new Virement();
+                    $virement->setBcfournisseur($bcfournisseur);
+                    $virement->setAchat($bcfournisseur->getAchatTTC());
+                    $virement->setDate($bcfournisseur->getDate());
+                    $virement->setEtat('en attente');
+
+                    $virement->setConsultant($bcfournisseur->getConsultant());
+                    $virement->setFacturefournisseur($facturefournisseur);
+                    $em->persist($virement);
+                    $em->flush();
 //                    $em->flush();
 // end facture_fournisseur
                 } else {
@@ -121,7 +132,8 @@ class BcfournisseurController extends Controller
             $bcfournisseur->setCode('BC-' . substr($bcfournisseur->getYear(), -2) . '-' . str_pad($bcfournisseur->getMois(), 2, '0', STR_PAD_LEFT) . '-' . str_pad($nb + 1, 3, '0', STR_PAD_LEFT));
 
 
-            $em->persist($bcfournisseur); $em->flush();
+            $em->persist($bcfournisseur);
+            $em->flush();
             $facturefournisseur = new Facturefournisseur();
             $facturefournisseur->setBcfournisseur($bcfournisseur);
             $facturefournisseur->setYear($bcfournisseur->getYear());
@@ -140,7 +152,16 @@ class BcfournisseurController extends Controller
 
             $em->persist($facturefournisseur);
             $em->flush();
+            $virement = new Virement();
+            $virement->setBcfournisseur($bcfournisseur);
+            $virement->setAchat($bcfournisseur->getAchatTTC());
+            $virement->setDate($bcfournisseur->getDate());
+            $virement->setEtat('en attente');
 
+            $virement->setConsultant($bcfournisseur->getConsultant());
+            $virement->setFacturefournisseur($facturefournisseur);
+            $em->persist($virement);
+            $em->flush();
 
             return $this->redirectToRoute('bcfournisseur_show', array('id' => $bcfournisseur->getId()));
         }

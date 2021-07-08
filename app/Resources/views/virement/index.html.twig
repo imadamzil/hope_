@@ -110,7 +110,8 @@
                                             </th>
 
 
-                                            <th class="hidden-480 sorting_disabled" tabindex="0" aria-controls="dynamic-table"
+                                            <th class="hidden-480 sorting_disabled" tabindex="0"
+                                                aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
                                                 Mois
@@ -126,7 +127,8 @@
                                                 AchatTTC
                                             </th>
 
-                                            <th class="hidden-480 no-sort sorting_disabled" tabindex="0" aria-controls="dynamic-table"
+                                            <th class="hidden-480 no-sort sorting_disabled" tabindex="0"
+                                                aria-controls="dynamic-table"
                                                 rowspan="1"
                                                 colspan="1" aria-label="Status: activate to sort column ascending">
                                                 Etat
@@ -467,10 +469,10 @@
                             {"bSortable": false}
                         ],
                         "aaSorting": [],
-                        "columnDefs": [ {
+                        "columnDefs": [{
                             "targets": 'no-sort',
                             "orderable": false,
-                        } ],
+                        }],
 
                         //"bProcessing": true,
                         //"bServerSide": true,
@@ -595,16 +597,16 @@
             myTable.on('select', function (e, dt, type, index) {
                 if (type === 'row') {
                     $(myTable.row(index).node()).find('input:checkbox').prop('checked', true);
-                    var index_achat = parseInt($(myTable.row(index).node()).find('td.totalAchat').text()) ;
-                    var etat = $.trim($(myTable.row(index).node()).find('td.etat').text().toString()) ;
-                    if(etat == 'executé'){
+                    var index_achat = parseInt($(myTable.row(index).node()).find('td.totalAchat').text());
+                    var etat = $.trim($(myTable.row(index).node()).find('td.etat').text().toString());
+                    if (etat == 'executé') {
                         swal({
                             title: "Attention!",
                             text: "Vous avez choisi virement avec statut : Executé !",
                             icon: "error",
                             button: "compris!",
                         });
-                    }else {
+                    } else {
 
 
                     }
@@ -621,7 +623,7 @@
             myTable.on('deselect', function (e, dt, type, index) {
                 if (type === 'row') {
                     $(myTable.row(index).node()).find('input:checkbox').prop('checked', false);
-                    var index_achat1 = parseInt($(myTable.row(index).node()).find('td.totalAchat').text()) ;
+                    var index_achat1 = parseInt($(myTable.row(index).node()).find('td.totalAchat').text());
                     total_virement = total_virement - index_achat1;
 
                 }

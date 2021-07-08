@@ -20,7 +20,7 @@ class FacturefournisseurController extends Controller
     /**
      * Lists all facturefournisseur entities.
      *
-     * @Route("/", name="facturefournisseur_index")
+     * @Route("/", name="facturefournisseur_index",options={"expose"=true}))
      * @Method("GET")
      */
     public function indexAction()

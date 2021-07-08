@@ -8,6 +8,7 @@ use AppBundle\Entity\Facturefournisseur;
 use AppBundle\Entity\LigneFacture;
 use AppBundle\Entity\Production;
 use AppBundle\Entity\Projet;
+use AppBundle\Entity\Virement;
 use AppBundle\Form\LignebcfournisseurType;
 use AppBundle\Form\LigneFactureType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -414,6 +415,15 @@ class ProjetController extends Controller
                 $factureFournisseur->setBcfournisseur($bc);
 
                 $em->persist($factureFournisseur);
+                $em->flush();
+                $virement = new Virement();
+                $virement->setBcfournisseur($bc);
+                $virement->setAchat($bc->getAchatTTC());
+                $virement->setDate($bc->getDate());
+                $virement->setConsultant($bc->getConsultant());
+                $virement->setEtat('en attente');
+                $virement->setFacturefournisseur($factureFournisseur);
+                $em->persist($virement);
                 $em->flush();
 //                $production
                 // add new production
