@@ -201,6 +201,7 @@ WHERE p.virementf = :id
         //dump($details, $query);
         return $this->render('virementf/print.html.twig', array(
             'virementf' => $virementf,
+            'count' => count($details),
             'details' => $details,
             'total' => $query,
             'fiche' => $fiche,

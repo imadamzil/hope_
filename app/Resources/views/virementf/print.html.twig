@@ -3,7 +3,9 @@
 <head>
     <link rel="stylesheet" type="text/css" href="web/assets/css/Style_Page_Mission_Imprimer.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <link rel="stylesheet" type="text/css"
@@ -46,7 +48,7 @@
     <div class="col-md-4">
         <p class="text-center">
 
-            <strong class="SQ">Virement </strong>  {% if virementf.auto == true %}
+            <strong class="SQ">Virement </strong> {% if virementf.auto == true %}
             <span><em><i class="fa fa-sync"></i> Auto</em></span>
             {% endif %}<br>
 
@@ -108,7 +110,15 @@
             <tbody>
             {% set num = 0 %}
             {% for detail in details %}
-                <tr class="center" style="line-height: 70px;height: 15px">
+                <tr class="center"
+                        {% if count < 9 %}
+                            style="line-height: 70px;height: 15px"
+                            {% else %}
+                                style="line-height: 20px;height: 15px"
+
+                        {% endif %}
+
+                >
                     <td class="lmk center">
                         {{ loop.index }}
 
