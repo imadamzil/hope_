@@ -57,31 +57,43 @@
                                         <tr role="row " class=" text-center">
 
 
-                                            <th class="sorting text-center" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                            <th class="sorting text-center" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
                                                 colspan="1"
                                                 aria-label="Domain: activate to sort column ascending">
                                                 Numero
                                             </th>
-                                            <th class="sorting text-center" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                            <th class="sorting text-center" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
                                                 colspan="1"
                                                 aria-label="Domain: activate to sort column ascending">
                                                 Fournisseurs
                                             </th>
-                                            <th class="sorting text-center" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                            <th class="sorting text-center" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
                                                 colspan="1"
                                                 aria-label="Domain: activate to sort column ascending">
                                                 Date
                                             </th>
-                                            <th class="sorting text-center" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                            <th class="sorting text-center" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
                                                 colspan="1"
                                                 aria-label="Domain: activate to sort column ascending">
                                                 Total
                                             </th>
-                                            <th class="sorting text-center" tabindex="0" aria-controls="dynamic-table" rowspan="1"
+                                            <th class="sorting text-center" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
                                                 colspan="1"
                                                 aria-label="Domain: activate to sort column ascending">
                                                 Compte bancaire
                                             </th>
+                                            <th class="sorting text-center" tabindex="0" aria-controls="dynamic-table"
+                                                rowspan="1"
+                                                colspan="1"
+                                                aria-label="Domain: activate to sort column ascending">
+                                                Type
+                                            </th>
+
 
                                             <th></th>
 
@@ -126,6 +138,15 @@
 
                                                     {% endif %}</td>
 
+
+                                                <td>
+                                                    {% if virementf.auto == true %}
+                                                        Auto
+                                                    {% else %}
+                                                        Manuel
+                                                    {% endif %}
+                                                </td>
+
                                                 <td>
 
                                                     <a href="{{ path('virementf_show', { 'id': virementf.id }) }}"
@@ -137,7 +158,7 @@
                                                            class="orange"><i class="fa fa-edit bigger-150"></i></a>
                                                     {% endif %}
                                                     <a href="{{ path('virementf_print', { 'id': virementf.id }) }}"
-                                                                    class="purple"><i class="fa fa-print bigger-150">
+                                                       class="purple"><i class="fa fa-print bigger-150">
                                                         </i>
                                                     </a>
                                                 </td>
@@ -219,7 +240,7 @@
                         bAutoWidth: true,
                         "aoColumns": [
                             {"bSortable": true},
-                            null, null, null, null,
+                            null, null, null, null,null,
                             {"bSortable": false}
                         ],
                         "aaSorting": [],
