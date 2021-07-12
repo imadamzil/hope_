@@ -316,6 +316,11 @@
                                                            title="voir">
                                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                         </a>
+                                                        <a class="brown"
+                                                           href="{{ path('facture_edit_date', { 'id': facture.id }) }}"
+                                                           title="Modifier les dates">
+                                                            <i class="ace-icon fa fa-calendar bigger-130"></i>
+                                                        </a>
                                                         {% if facture.documentName is null %}
                                                             <a class="red"
                                                                href="{{ path('facture_sheet', { 'id': facture.id }) }}"

@@ -2188,13 +2188,13 @@ class FactureController extends Controller
             $bcfournisseur = $em->getRepository('AppBundle:Bcfournisseur')->findOneBy([
                 'mission' => $mission,
                 'mois' => $facture->getMois(),
-                'facture'=>$facture
+                'facture' => $facture
 
             ]);
             $facturefournisseur = $em->getRepository('AppBundle:Facturefournisseur')->findOneBy([
                 'mission' => $mission,
                 'mois' => $facture->getMois(),
-                'facture'=>$facture
+                'facture' => $facture
 
             ]);
             $production = $em->getRepository('AppBundle:Production')->findOneBy([
@@ -2207,7 +2207,7 @@ class FactureController extends Controller
 
 
                 'bcfournisseur' => $bcfournisseur,
-                'etat'=>'en attente'
+                'etat' => 'en attente'
 
             ]);
 
@@ -2250,8 +2250,7 @@ class FactureController extends Controller
 //                        dump($facture);die();
 
                     }
-                }
-                else {
+                } else {
                     $totalHT = $prixVenteHT;
                     $achatHT = $prixAchatHT;
                     $TVA_Achat = $achatHT * 0.2;
@@ -2269,15 +2268,14 @@ class FactureController extends Controller
                     $facture->setTotalTTC($TVA + $totalHT);
 
                 }
-                if ($virement != null){
+                if ($virement != null) {
 
                     $virement->setAchat($bcfournisseur->getAchatTTC());
 
                 }
 //                dump($bcfournisseur,$facture,$virement,$facturefournisseur,$production);
 //                die();
-            }
-            else {
+            } else {
 
 
                 if ($mission->getType() == 'journaliere') {
@@ -2330,18 +2328,18 @@ class FactureController extends Controller
             }
 
 
-            if ($bcfournisseur){
+            if ($bcfournisseur) {
                 $em->persist($bcfournisseur);
                 $em->flush();
             }
-           if ($facturefournisseur){
-               $em->persist($facturefournisseur);
-               $em->flush();
-           }
-           if ($virement){
-               $em->persist($virement);
-               $em->flush();
-           }
+            if ($facturefournisseur) {
+                $em->persist($facturefournisseur);
+                $em->flush();
+            }
+            if ($virement) {
+                $em->persist($virement);
+                $em->flush();
+            }
 
             if ($production) {
 
@@ -2374,6 +2372,39 @@ class FactureController extends Controller
 
 
             return $this->redirectToRoute('facture_edit', array('id' => $facture->getId()));
+        }
+
+        return $this->render('facture/edit.html.twig', array(
+            'facture' => $facture,
+            'edit_form' => $editForm->createView(),
+
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing facture entity.
+     *
+     * @Route("/{id}/edit_date", name="facture_edit_date")
+     * @Method({"GET", "POST"})
+     */
+    public function editDateAction(Request $request, Facture $facture)
+    {
+
+        $editForm = $this->createForm('AppBundle\Form\FactureEditDatesType', $facture);
+        $editForm->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+
+            $facture->setEditedby($this->getUser());
+            $facture->setUpdatedAt(new \DateTime());
+//            dump($facture, $bcfournisseur, $facturefournisseur, $mission, $production);
+
+            $this->getDoctrine()->getManager()->flush();
+
+
+            return $this->redirectToRoute('facture_index');
         }
 
         return $this->render('facture/edit.html.twig', array(

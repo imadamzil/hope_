@@ -315,6 +315,10 @@ th {
     position: fixed;
     bottom: 0;
     /*width: 100%;*/
+}#footer2 {
+    position: fixed;
+     bottom: -100px;
+    /*width: 100%;*/
 }
 
 #footer1 {

@@ -34,6 +34,12 @@ class Virementf
      * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
+ /**
+     * @var boolean
+     *
+     * @ORM\Column(name="auto", type="boolean", nullable=true)
+     */
+    private $auto;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="virementf",cascade={"persist", "remove"})

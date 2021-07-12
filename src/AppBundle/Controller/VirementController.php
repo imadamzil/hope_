@@ -706,6 +706,7 @@ class VirementController extends Controller
         $comptebancaire ? $virementf->setComptebancaire($comptebancaire) : true;
         $virementf->setNumero(substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad(count($nb_query) + 1, 3, '0', STR_PAD_LEFT));
         $virementf->setDate($datego);
+//        $virementf->setAuto(false);
 
 
         foreach ($virements as $virement) {
@@ -714,6 +715,90 @@ class VirementController extends Controller
             $em->flush();
             if ($virement->getFacturefournisseur()) {
                 $virement->getFacturefournisseur()->setEtat('Payé');
+
+                $em->persist($virement->getFacturefournisseur());
+                $em->flush();
+
+            }
+            $virement->setVirementf($virementf);
+            $virement->setEtat('executé');
+            $em->persist($virement);
+            $em->flush();
+
+
+        }
+        $query = $em->createQuery('
+            SELECT c as fournisseur,sum(p.achat) as total FROM AppBundle:Virement p 
+            JOIN AppBundle:Bcfournisseur c 
+            WHERE p.bcfournisseur = c.id AND p.id IN (:ids)
+                    
+            GROUP BY c.fournisseur
+                    ')->setParameter('ids', $Ids)->getResult(Query::HYDRATE_OBJECT);
+
+        foreach ($query as $item) {
+            $detail = new Detailvirement();
+            $detail->setFournisseur($item['fournisseur']->getFournisseur());
+            $detail->setTotal($item['total']);
+            $detail->setVirementf($virementf);
+
+            $em->persist($detail);
+            $em->flush();
+        }
+
+        $response = json_encode(array('data' => $Ids, 'id' => $virementf->getId()));
+
+        return new Response($response, 200, array(
+            'Content-Type' => 'application/json'
+        ));
+    }
+ /**
+     *
+     * @Route("/add_virement2", name="route_to_add_virement2",options={"expose"=true})
+     ** @Method({"GET", "POST"})
+     */
+    public function addVirements2Action(Request $request)
+
+    {
+
+
+        $Ids = $request->get('idVirments');
+        $compte_id = $request->get('compte');
+        $date = $request->get('date');
+        $datego = DateTime::createFromFormat('Y-m-d H:i', $date);
+        $datego ? $datego->format('Y-m-d H:i') : false;
+//        $Ids = [22,24];
+
+        $mois = $datego->format('m');
+        $year = $datego->format('Y');
+        $em = $this->getDoctrine()->getManager();
+        $comptebancaire = $em->getRepository('AppBundle:Comptebancaire')->find($compte_id);
+
+        $virements = $em->getRepository('AppBundle:Virement')->findBy(array('id' => $Ids));
+        $nb_query = $em->createQuery('
+        SELECT v from AppBundle:Virementf v 
+        WHERE MONTH (v.date) = :mois and YEAR (v.date) = :year
+        ')->setParameters(
+            array(
+                'mois' => $mois,
+                'year' => $year
+            )
+
+
+        )->getResult();
+        $virementf = new Virementf();
+        $comptebancaire ? $virementf->setComptebancaire($comptebancaire) : true;
+        $virementf->setNumero(substr($year, -2) . '-' . str_pad($mois, 2, '0', STR_PAD_LEFT) . '-' . str_pad(count($nb_query) + 1, 3, '0', STR_PAD_LEFT));
+        $virementf->setDate($datego);
+        $virementf->setAuto(true);
+
+
+        foreach ($virements as $virement) {
+            $em->persist($virementf);
+
+            $em->flush();
+            if ($virement->getFacturefournisseur()) {
+                $virement->getFacturefournisseur()->setEtat('Payé');
+
                 $em->persist($virement->getFacturefournisseur());
                 $em->flush();
 

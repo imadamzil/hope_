@@ -34,6 +34,12 @@ class Virementf
      * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="auto", type="boolean", nullable=true)
+     */
+    private $auto;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Virement", mappedBy="virementf",cascade={"persist", "remove"})
@@ -49,6 +55,7 @@ class Virementf
      * @ORM\JoinColumn(name="id_compte", referencedColumnName="id")
      */
     private $comptebancaire;
+
     /**
      * Get id
      *
@@ -89,6 +96,7 @@ class Virementf
     public function __construct()
     {
         $this->virements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->auto = false;
     }
 
     /**
@@ -163,18 +171,20 @@ class Virementf
     {
         $liste = $this->detailfournisseurs;
 
-       foreach ($liste as $item){
+        foreach ($liste as $item) {
 
-           $arr_fournisseurs [] = $item->getFournisseur();
-       }
+            $arr_fournisseurs [] = $item->getFournisseur();
+        }
 
         return $arr_fournisseurs;
 
     }
-    public function getTotalVirements( ){
+
+    public function getTotalVirements()
+    {
         $total = null;
         $liste = $this->detailfournisseurs;
-        foreach ($liste as $item){
+        foreach ($liste as $item) {
 
             $total += $item->getTotal();
         }
@@ -228,5 +238,29 @@ class Virementf
     public function getComptebancaire()
     {
         return $this->comptebancaire;
+    }
+
+    /**
+     * Set auto
+     *
+     * @param boolean $auto
+     *
+     * @return Virementf
+     */
+    public function setAuto($auto)
+    {
+        $this->auto = $auto;
+
+        return $this;
+    }
+
+    /**
+     * Get auto
+     *
+     * @return boolean
+     */
+    public function getAuto()
+    {
+        return $this->auto;
     }
 }

@@ -63,7 +63,7 @@ class Consultant
     /**
      * @var float
      *
-     * @ORM\Column(name="echeance", type="float", nullable=true)
+     * @ORM\Column(name="marge", type="float", nullable=true)
      */
     private $marge;
     /**
@@ -1078,7 +1078,7 @@ class Consultant
         $this->getDirect()==true ? $direct = 1 : $direct = 0;
         $this->getClient()==true ? $client = 1 : $client = 0;
         $marge = $this->getMarge();
-        $somme = $anciente + $natureMission + $marge + $direct;
+        $somme = $anciente + $natureMission + $marge + $direct +$client;
         $poids = floatval($somme);
 
 
